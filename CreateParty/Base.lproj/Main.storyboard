@@ -208,14 +208,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="6ja-Gf-Mqe">
-                                <rect key="frame" x="47" y="466" width="320" height="216"/>
+                                <rect key="frame" x="47" y="463" width="320" height="216"/>
                                 <date key="minimumDate" timeIntervalSinceReferenceDate="-3187254617">
                                     <!--1900-01-01 11:29:43 +0000-->
                                 </date>
-                                <locale key="locale" localeIdentifier="ru"/>
                             </datePicker>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="BlJ-zM-6pl">
-                                <rect key="frame" x="40" y="239.5" width="334" height="166"/>
+                                <rect key="frame" x="40" y="236.5" width="334" height="166"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Имя" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="DYl-mm-8ds">
                                         <rect key="frame" x="0.0" y="0.0" width="334" height="34"/>
@@ -252,7 +251,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gtX-L6-ehh">
-                                <rect key="frame" x="49.5" y="756" width="315" height="50"/>
+                                <rect key="frame" x="49.5" y="753" width="315" height="50"/>
                                 <color key="backgroundColor" name="AccentColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="gtX-L6-ehh" secondAttribute="height" multiplier="63:10" id="PxP-wx-JXn"/>
@@ -267,7 +266,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e18-TO-JAw">
-                                <rect key="frame" x="107" y="702" width="200" height="34"/>
+                                <rect key="frame" x="107" y="699" width="200" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Отменить регистрацию"/>
                                 <connections>
@@ -276,7 +275,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="z6r-bf-ekZ">
-                                <rect key="frame" x="40" y="198.5" width="334" height="31"/>
+                                <rect key="frame" x="40" y="195.5" width="334" height="31"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" text="Пол" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rcx-kc-5aD">
                                         <rect key="frame" x="0.0" y="0.0" width="31.5" height="31"/>
@@ -294,9 +293,15 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Дата рождения" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WYP-MX-q3x">
-                                <rect key="frame" x="145.5" y="435.5" width="123" height="20.5"/>
+                                <rect key="frame" x="145.5" y="432.5" width="123" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Подтверждая регистрацию, вы также соглашаетесь с обработкой и хранением ваших персональных данных" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6bl-fO-2Es">
+                                <rect key="frame" x="30" y="833" width="354" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" systemColor="systemGrayColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -304,6 +309,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="wIB-Yf-pMM" firstAttribute="trailing" secondItem="BlJ-zM-6pl" secondAttribute="trailing" constant="40" id="672-wz-hm9"/>
+                            <constraint firstItem="6bl-fO-2Es" firstAttribute="centerX" secondItem="wIB-Yf-pMM" secondAttribute="centerX" id="8Z6-qE-HSe"/>
                             <constraint firstItem="WYP-MX-q3x" firstAttribute="centerX" secondItem="wIB-Yf-pMM" secondAttribute="centerX" id="8gJ-nd-hwy"/>
                             <constraint firstItem="z6r-bf-ekZ" firstAttribute="centerX" secondItem="wIB-Yf-pMM" secondAttribute="centerX" id="DUb-ba-1ne"/>
                             <constraint firstItem="e18-TO-JAw" firstAttribute="top" secondItem="6ja-Gf-Mqe" secondAttribute="bottom" constant="20" id="EPi-eA-wXh"/>
@@ -312,13 +318,16 @@
                             <constraint firstItem="gtX-L6-ehh" firstAttribute="centerX" secondItem="wIB-Yf-pMM" secondAttribute="centerX" id="JeS-Pn-Jdo"/>
                             <constraint firstItem="6ja-Gf-Mqe" firstAttribute="centerX" secondItem="wIB-Yf-pMM" secondAttribute="centerX" id="MOn-Z2-kLi"/>
                             <constraint firstItem="BlJ-zM-6pl" firstAttribute="leading" secondItem="wIB-Yf-pMM" secondAttribute="leading" constant="40" id="Oe6-wb-0yD"/>
-                            <constraint firstItem="wIB-Yf-pMM" firstAttribute="bottom" secondItem="gtX-L6-ehh" secondAttribute="bottom" constant="56" id="S4P-tb-csR"/>
+                            <constraint firstItem="6bl-fO-2Es" firstAttribute="top" secondItem="gtX-L6-ehh" secondAttribute="bottom" constant="30" id="W3C-DK-FaE"/>
                             <constraint firstItem="wIB-Yf-pMM" firstAttribute="trailing" secondItem="z6r-bf-ekZ" secondAttribute="trailing" constant="40" id="W3a-ep-c1i"/>
                             <constraint firstItem="WYP-MX-q3x" firstAttribute="top" secondItem="BlJ-zM-6pl" secondAttribute="bottom" constant="30" id="XsA-Qh-6aK"/>
                             <constraint firstItem="BlJ-zM-6pl" firstAttribute="centerX" secondItem="wIB-Yf-pMM" secondAttribute="centerX" id="cjd-v3-mU8"/>
                             <constraint firstItem="e18-TO-JAw" firstAttribute="centerX" secondItem="wIB-Yf-pMM" secondAttribute="centerX" id="d8f-4a-WKr"/>
                             <constraint firstItem="gtX-L6-ehh" firstAttribute="top" secondItem="e18-TO-JAw" secondAttribute="bottom" constant="20" id="f3Y-78-u31"/>
+                            <constraint firstItem="wIB-Yf-pMM" firstAttribute="trailing" secondItem="6bl-fO-2Es" secondAttribute="trailing" constant="30" id="fCz-TA-fwz"/>
+                            <constraint firstItem="wIB-Yf-pMM" firstAttribute="bottom" secondItem="6bl-fO-2Es" secondAttribute="bottom" id="reH-vb-9Og"/>
                             <constraint firstItem="BlJ-zM-6pl" firstAttribute="top" secondItem="z6r-bf-ekZ" secondAttribute="bottom" constant="10" id="u4p-Ru-Cdg"/>
+                            <constraint firstItem="6bl-fO-2Es" firstAttribute="leading" secondItem="wIB-Yf-pMM" secondAttribute="leading" constant="30" id="xip-2t-DH8"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Icy-Px-zdr"/>
@@ -327,6 +336,7 @@
                         <outlet property="birthdayWheels" destination="6ja-Gf-Mqe" id="14P-C8-LBY"/>
                         <outlet property="emailTextField" destination="ORh-LP-g3c" id="0jX-BB-ozQ"/>
                         <outlet property="genderSegments" destination="OkE-ff-vsa" id="Dwg-ix-7Kt"/>
+                        <outlet property="informationLabel" destination="6bl-fO-2Es" id="IUc-x8-QfR"/>
                         <outlet property="nameTextField" destination="DYl-mm-8ds" id="kVn-WS-Xnv"/>
                         <outlet property="passwordTextField" destination="MTA-yP-DDF" id="AZK-hy-N8E"/>
                         <outlet property="registerButton" destination="gtX-L6-ehh" id="BBg-Jf-lhv"/>
@@ -340,7 +350,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="sHx-1h-bNT"/>
+        <segue reference="Qu0-dJ-76L"/>
     </inferredMetricsTieBreakers>
     <resources>
         <namedColor name="AccentColor">
@@ -348,6 +358,9 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

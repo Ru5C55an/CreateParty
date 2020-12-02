@@ -24,6 +24,7 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var birthdayWheels: UIDatePicker!
+    @IBOutlet weak var informationLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +32,9 @@ class RegisterViewController: UIViewController {
         registerButton.layer.cornerRadius = registerButton.frame.size.height / 2
         
         birthdayWheels.maximumDate = NSDate() as Date
+        birthdayWheels.locale = Locale(identifier: "ru_RU")
+        
+        informationLabel.isHidden = false
         
         nameTextField.text = savedName
         surnameTextField.text = savedSurname
@@ -54,6 +58,8 @@ class RegisterViewController: UIViewController {
         let passwordText = emailTextField.text ?? ""
     
         registerButton.isEnabled = !nameText.isEmpty && !surnameText.isEmpty && !emailText.isEmpty && !passwordText.isEmpty
+        
+        informationLabel.isHidden = nameText.isEmpty && surnameText.isEmpty && emailText.isEmpty && passwordText.isEmpty
     }
     
     @IBAction func tappedButton(_ sender: UIButton) {
