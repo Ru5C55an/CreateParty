@@ -103,6 +103,9 @@
                                     <constraint firstAttribute="width" constant="374" id="XqB-aD-ggX"/>
                                     <constraint firstAttribute="width" secondItem="Ot7-qf-dcQ" secondAttribute="height" multiplier="17:12" id="unS-iQ-Sf9"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="animationName" value="WaitingDots"/>
+                                </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vWS-Qe-tJe">
                                 <rect key="frame" x="167" y="781" width="80" height="41"/>
@@ -214,7 +217,7 @@
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Имя" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="DYl-mm-8ds">
                                         <rect key="frame" x="0.0" y="0.0" width="334" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" textContentType="name"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" textContentType="name"/>
                                         <connections>
                                             <action selector="textChanged:" destination="Pk4-aA-QDs" eventType="editingDidEnd" id="dzJ-UU-5k9"/>
                                         </connections>
@@ -222,7 +225,7 @@
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Фамилия" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="3xi-4d-pM3">
                                         <rect key="frame" x="0.0" y="44" width="334" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" textContentType="family-name"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" textContentType="family-name"/>
                                         <connections>
                                             <action selector="textChanged:" destination="Pk4-aA-QDs" eventType="editingDidEnd" id="QGu-EZ-uGP"/>
                                         </connections>
@@ -230,7 +233,7 @@
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Адрес эл. почты" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ORh-LP-g3c">
                                         <rect key="frame" x="0.0" y="88" width="334" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" textContentType="email"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
                                         <connections>
                                             <action selector="textChanged:" destination="Pk4-aA-QDs" eventType="editingDidEnd" id="CnN-Pe-Dhu"/>
                                         </connections>
@@ -334,7 +337,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Qu0-dJ-76L"/>
+        <segue reference="sHx-1h-bNT"/>
     </inferredMetricsTieBreakers>
     <resources>
         <namedColor name="AccentColor">
