@@ -209,6 +209,9 @@
                         <subviews>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="6ja-Gf-Mqe">
                                 <rect key="frame" x="47" y="466" width="320" height="216"/>
+                                <date key="minimumDate" timeIntervalSinceReferenceDate="-3187254617">
+                                    <!--1900-01-01 11:29:43 +0000-->
+                                </date>
                                 <locale key="locale" localeIdentifier="ru"/>
                             </datePicker>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="BlJ-zM-6pl">

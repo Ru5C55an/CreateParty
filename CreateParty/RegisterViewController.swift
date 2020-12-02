@@ -30,6 +30,8 @@ class RegisterViewController: UIViewController {
         registerButton.isEnabled = false
         registerButton.layer.cornerRadius = registerButton.frame.size.height / 2
         
+        birthdayWheels.maximumDate = NSDate() as Date
+        
         nameTextField.text = savedName
         surnameTextField.text = savedSurname
         emailTextField.text = savedEmail
