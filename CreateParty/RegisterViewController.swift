@@ -19,10 +19,26 @@ class RegisterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        registerButton.isEnabled = false
         registerButton.layer.cornerRadius = registerButton.frame.size.height / 2
+        
+        updateLoginButtonState()
     }
 
+    
+    @IBAction func textChanged(_ sender: UITextField) {
+        updateLoginButtonState()
+    }
+    
+    private func updateLoginButtonState() {
+        let nameText = nameTextField.text ?? ""
+        let surnameText = surnameTextField.text ?? ""
+        let emailText = emailTextField.text ?? ""
+        let passwordText = emailTextField.text ?? ""
+    
+        registerButton.isEnabled = !nameText.isEmpty && !surnameText.isEmpty && !emailText.isEmpty && !passwordText.isEmpty
+    }
+    
     @IBAction func submitRegister(_ sender: UIButton) {
         performSegue(withIdentifier: "registerViewSegue", sender: nil)
     }
