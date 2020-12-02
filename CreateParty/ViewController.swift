@@ -36,6 +36,7 @@ class ViewController: UIViewController {
         animationView?.play(toFrame: HelloScreenAnimationKeyFrames.end.rawValue)
         animationView?.animationSpeed = 0.5
         animationView?.loopMode = .playOnce
+        animationView.sizeToFit()
         //animationView?.sizeToFit()
 //        Программное добавление анимации
 //        var animationView: AnimationView?
@@ -68,7 +69,6 @@ class ViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        super.prepare(for: segue, sender: sender)
         guard let dvc = segue.destination as? RegisterViewController else { return }
         dvc.savedName = savedName
         dvc.savedSurname = savedSurname

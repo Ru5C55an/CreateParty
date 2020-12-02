@@ -24,19 +24,17 @@ class LoginViewController: UIViewController {
             performSegue(withIdentifier: "registerViewSegueFromLoginView", sender: nil)
         }
         
+        if sender == loginButton {
+            animationView.backgroundColor = .clear
+            animationView?.play(toFrame: 40)
+            animationView?.animationSpeed = 1
+            animationView?.loopMode = .loop
+        }
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        animationView.play(fromFrame: 0, toFrame: 40, loopMode: .loop) { (_) in
-            
-        }
         
         loginButton.layer.cornerRadius = loginButton.frame.size.height / 2
     }
-    
-
-
 }
