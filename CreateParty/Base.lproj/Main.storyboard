@@ -199,36 +199,49 @@
         <!--Register View Controller-->
         <scene sceneID="3oh-Cb-ErS">
             <objects>
-                <viewController modalTransitionStyle="flipHorizontal" modalPresentationStyle="fullScreen" id="Pk4-aA-QDs" customClass="RegisterViewController" customModule="CreateParty" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="Pk4-aA-QDs" customClass="RegisterViewController" customModule="CreateParty" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="873-kx-4x3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="6ja-Gf-Mqe">
                                 <rect key="frame" x="47" y="466" width="320" height="216"/>
+                                <locale key="locale" localeIdentifier="ru"/>
                             </datePicker>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="BlJ-zM-6pl">
                                 <rect key="frame" x="40" y="239.5" width="334" height="166"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Имя" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DYl-mm-8ds">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Имя" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="DYl-mm-8ds">
                                         <rect key="frame" x="0.0" y="0.0" width="334" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" textContentType="name"/>
+                                        <connections>
+                                            <action selector="textChanged:" destination="Pk4-aA-QDs" eventType="editingDidEnd" id="dzJ-UU-5k9"/>
+                                        </connections>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Фамилия" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3xi-4d-pM3">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Фамилия" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="3xi-4d-pM3">
                                         <rect key="frame" x="0.0" y="44" width="334" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" textContentType="family-name"/>
+                                        <connections>
+                                            <action selector="textChanged:" destination="Pk4-aA-QDs" eventType="editingDidEnd" id="QGu-EZ-uGP"/>
+                                        </connections>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Адрес эл. почты" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ORh-LP-g3c">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Адрес эл. почты" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ORh-LP-g3c">
                                         <rect key="frame" x="0.0" y="88" width="334" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" textContentType="email"/>
+                                        <connections>
+                                            <action selector="textChanged:" destination="Pk4-aA-QDs" eventType="editingDidEnd" id="CnN-Pe-Dhu"/>
+                                        </connections>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Пароль (мин. 8 символов)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MTA-yP-DDF">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Пароль (мин. 8 символов)" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="MTA-yP-DDF">
                                         <rect key="frame" x="0.0" y="132" width="334" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" textContentType="password"/>
+                                        <connections>
+                                            <action selector="textChanged:" destination="Pk4-aA-QDs" eventType="editingDidEnd" id="CRZ-A8-SM1"/>
+                                        </connections>
                                     </textField>
                                 </subviews>
                             </stackView>
@@ -244,7 +257,7 @@
                                     <color key="titleColor" systemColor="systemBackgroundColor"/>
                                 </state>
                                 <connections>
-                                    <action selector="submitRegister:" destination="Pk4-aA-QDs" eventType="touchUpInside" id="MKl-5I-cCO"/>
+                                    <action selector="tappedButton:" destination="Pk4-aA-QDs" eventType="touchUpInside" id="xAb-bU-hJK"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e18-TO-JAw">
@@ -252,6 +265,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Отменить регистрацию"/>
                                 <connections>
+                                    <action selector="tappedButton:" destination="Pk4-aA-QDs" eventType="touchUpInside" id="b9P-9T-5Wq"/>
                                     <segue destination="8fK-nK-ZpX" kind="unwind" identifier="unwindSegueToMainScreen" unwindAction="unwindSegueToMainScreenWithSegue:" id="azA-F6-A2n"/>
                                 </connections>
                             </button>
@@ -303,6 +317,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Icy-Px-zdr"/>
                     <connections>
+                        <outlet property="abortButton" destination="e18-TO-JAw" id="DbB-5N-40i"/>
                         <outlet property="birthdayWheels" destination="6ja-Gf-Mqe" id="14P-C8-LBY"/>
                         <outlet property="emailTextField" destination="ORh-LP-g3c" id="0jX-BB-ozQ"/>
                         <outlet property="genderSegments" destination="OkE-ff-vsa" id="Dwg-ix-7Kt"/>
@@ -319,7 +334,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="sHx-1h-bNT"/>
+        <segue reference="Qu0-dJ-76L"/>
     </inferredMetricsTieBreakers>
     <resources>
         <namedColor name="AccentColor">

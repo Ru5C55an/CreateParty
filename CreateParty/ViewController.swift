@@ -16,12 +16,12 @@ enum HelloScreenAnimationKeyFrames: CGFloat {
 
 class ViewController: UIViewController {
     
-    var savedName = "sad"
-//    var savedSurname = ""
-//    var savedEmail = ""
-//    var savedPassword = ""
-//    var savedBirthday = NSDate() as Date
-//    var savedGender = 1
+    var savedName: String?
+    var savedSurname: String?
+    var savedEmail: String?
+    var savedPassword: String?
+    var savedBirthday = NSDate() as Date
+    var savedGender: Int?
     
     
     @IBOutlet weak var animationView: AnimationView!
@@ -36,7 +36,7 @@ class ViewController: UIViewController {
         animationView?.play(toFrame: HelloScreenAnimationKeyFrames.end.rawValue)
         animationView?.animationSpeed = 0.5
         animationView?.loopMode = .playOnce
-        animationView?.sizeToFit()
+        //animationView?.sizeToFit()
 //        Программное добавление анимации
 //        var animationView: AnimationView?
 //        animationView = .init(name: "HelloScreen")
@@ -66,17 +66,16 @@ class ViewController: UIViewController {
             performSegue(withIdentifier: "loginViewSegue", sender: nil)
         }
     }
-   
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
         guard let dvc = segue.destination as? RegisterViewController else { return }
-        
-        //dvc.nameTextField.text. = " 12 "
-        //dvc.nameTextField.text = savedName
-        //dvc.surnameTextField.text = savedSurname
-        //dvc.emailTextField.text = savedEmail
-        //dvc.passwordTextField.text = savedPassword
-        //dvc.birthdayWheels.date = savedBirthday
-        //dvc.genderSegments.selectedSegmentIndex = savedGender
+        dvc.savedName = savedName
+        dvc.savedSurname = savedSurname
+        dvc.savedEmail = savedEmail
+        dvc.savedPassword = savedPassword
+        dvc.savedGender = savedGender
+        dvc.savedBirthday = savedBirthday
     }
     
     
@@ -84,12 +83,12 @@ class ViewController: UIViewController {
         guard segue.identifier == "unwindSegueToMainScreen" else { return }
         guard let svc = segue.source as? RegisterViewController else { return } // через svc можем обращаться к объектам viewContoller с которого выполнено возвращение
         
-//        savedName = svc.nameTextField.text ?? ""
-//        savedSurname = svc.surnameTextField.text ?? ""
-//        savedEmail = svc.emailTextField.text ?? ""
-//        savedPassword = svc.passwordTextField.text ?? ""
-//        savedBirthday = svc.birthdayWheels.date
-//        savedGender = svc.genderSegments.numberOfSegments
+        savedName = svc.nameTextField.text ?? ""
+        savedSurname = svc.surnameTextField.text ?? ""
+        savedEmail = svc.emailTextField.text ?? ""
+        savedPassword = svc.passwordTextField.text ?? ""
+        savedBirthday = svc.birthdayWheels.date
+        savedGender = svc.genderSegments.selectedSegmentIndex
         
         self.animationView.play(toFrame: HelloScreenAnimationKeyFrames.end.rawValue)
         labelAlreadyHaveAccount.isHidden = false
