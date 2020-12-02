@@ -18,6 +18,9 @@
 		447EE8E2257676AA00D8698F /* CreatePartyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447EE8E1257676AA00D8698F /* CreatePartyUITests.swift */; };
 		448157A42576842B004F06FF /* HelloScreen.json in Resources */ = {isa = PBXBuildFile; fileRef = 448157A32576842B004F06FF /* HelloScreen.json */; };
 		448157AE2576C559004F06FF /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448157AD2576C559004F06FF /* RegisterViewController.swift */; };
+		448157B32576E3A5004F06FF /* MyPartiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448157B22576E3A5004F06FF /* MyPartiesViewController.swift */; };
+		448157B825777EE6004F06FF /* WaitingDots.json in Resources */ = {isa = PBXBuildFile; fileRef = 448157B725777EE6004F06FF /* WaitingDots.json */; };
+		448157BD25777FC9004F06FF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448157BC25777FC9004F06FF /* LoginViewController.swift */; };
 		DC3028ED39165E1D32C235A3 /* Pods_CreateParty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7264F6C241E5081179FE2FC5 /* Pods_CreateParty.framework */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +59,9 @@
 		447EE8E3257676AA00D8698F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		448157A32576842B004F06FF /* HelloScreen.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = HelloScreen.json; sourceTree = "<group>"; };
 		448157AD2576C559004F06FF /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		448157B22576E3A5004F06FF /* MyPartiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPartiesViewController.swift; sourceTree = "<group>"; };
+		448157B725777EE6004F06FF /* WaitingDots.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = WaitingDots.json; sourceTree = "<group>"; };
+		448157BC25777FC9004F06FF /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		7264F6C241E5081179FE2FC5 /* Pods_CreateParty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CreateParty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8553FE85A8F22578EABC790B /* Pods-CreateParty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CreateParty.debug.xcconfig"; path = "Target Support Files/Pods-CreateParty/Pods-CreateParty.debug.xcconfig"; sourceTree = "<group>"; };
 		DA173AF80004CFF4A49FC330 /* Pods-CreateParty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CreateParty.release.xcconfig"; path = "Target Support Files/Pods-CreateParty/Pods-CreateParty.release.xcconfig"; sourceTree = "<group>"; };
@@ -115,7 +121,9 @@
 				447EE8BC257676A700D8698F /* AppDelegate.swift */,
 				447EE8BE257676A700D8698F /* SceneDelegate.swift */,
 				447EE8C2257676A700D8698F /* Main.storyboard */,
+				448157BC25777FC9004F06FF /* LoginViewController.swift */,
 				448157AD2576C559004F06FF /* RegisterViewController.swift */,
+				448157B22576E3A5004F06FF /* MyPartiesViewController.swift */,
 				447EE8C0257676A700D8698F /* ViewController.swift */,
 				4481579025768201004F06FF /* Assets */,
 				447EE8CA257676AA00D8698F /* LaunchScreen.storyboard */,
@@ -148,6 +156,7 @@
 			children = (
 				447EE8C8257676AA00D8698F /* Assets.xcassets */,
 				448157A32576842B004F06FF /* HelloScreen.json */,
+				448157B725777EE6004F06FF /* WaitingDots.json */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -276,6 +285,7 @@
 			files = (
 				448157A42576842B004F06FF /* HelloScreen.json in Resources */,
 				447EE8CC257676AA00D8698F /* LaunchScreen.storyboard in Resources */,
+				448157B825777EE6004F06FF /* WaitingDots.json in Resources */,
 				447EE8C9257676AA00D8698F /* Assets.xcassets in Resources */,
 				447EE8C4257676A700D8698F /* Main.storyboard in Resources */,
 			);
@@ -344,7 +354,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				448157BD25777FC9004F06FF /* LoginViewController.swift in Sources */,
 				447EE8C7257676A700D8698F /* CreateParty.xcdatamodeld in Sources */,
+				448157B32576E3A5004F06FF /* MyPartiesViewController.swift in Sources */,
 				448157AE2576C559004F06FF /* RegisterViewController.swift in Sources */,
 				447EE8C1257676A700D8698F /* ViewController.swift in Sources */,
 				447EE8BD257676A700D8698F /* AppDelegate.swift in Sources */,

@@ -81,93 +81,236 @@
                         <outlet property="loginButton" destination="GeX-Xl-ee9" id="xIp-uF-h6B"/>
                         <outlet property="registerButton" destination="8rS-Dv-W2a" id="nDE-eE-oiX"/>
                         <segue destination="Pk4-aA-QDs" kind="show" identifier="registerViewSegue" id="Qu0-dJ-76L"/>
+                        <segue destination="e0j-s2-ce7" kind="show" identifier="loginViewSegue" id="SbB-6E-JpN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="8.6956521739130448" y="88.392857142857139"/>
         </scene>
-        <!--Register View Controller-->
-        <scene sceneID="3oh-Cb-ErS">
+        <!--Login View Controller-->
+        <scene sceneID="Ff0-SY-Bzd">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="Pk4-aA-QDs" customClass="RegisterViewController" customModule="CreateParty" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="873-kx-4x3">
+                <viewController modalPresentationStyle="fullScreen" id="e0j-s2-ce7" customClass="LoginViewController" customModule="CreateParty" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="j50-cy-0Cs">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Имя" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DYl-mm-8ds">
-                                <rect key="frame" x="61" y="257" width="291" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Фамилия" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3xi-4d-pM3">
-                                <rect key="frame" x="61" y="299" width="291" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Адрес эл. почты" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ORh-LP-g3c">
-                                <rect key="frame" x="61" y="341" width="291" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Пароль (мин. 8 символов)" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MTA-yP-DDF">
-                                <rect key="frame" x="61" y="383" width="291" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="OkE-ff-vsa">
-                                <rect key="frame" x="124" y="184" width="228" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="Мужской"/>
-                                    <segment title="Женский"/>
-                                </segments>
-                            </segmentedControl>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Дата рождения" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WYP-MX-q3x">
-                                <rect key="frame" x="145" y="438" width="123" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ot7-qf-dcQ" customClass="AnimationView" customModule="Lottie">
+                                <rect key="frame" x="20" y="66" width="374" height="264"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="374" id="XqB-aD-ggX"/>
+                                    <constraint firstAttribute="width" secondItem="Ot7-qf-dcQ" secondAttribute="height" multiplier="17:12" id="unS-iQ-Sf9"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vWS-Qe-tJe">
+                                <rect key="frame" x="167" y="781" width="80" height="41"/>
+                                <color key="backgroundColor" name="AccentColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="ERC-1k-kGj"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="Войти">
+                                    <color key="titleColor" systemColor="systemBackgroundColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="tappedButton:" destination="e0j-s2-ce7" eventType="touchUpInside" id="Bf8-OK-cFV"/>
+                                </connections>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9HA-eD-3CF">
+                                <rect key="frame" x="40" y="380" width="334" height="76"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Адрес эл. почты" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4VC-zv-kUm">
+                                        <rect key="frame" x="0.0" y="0.0" width="334" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" textContentType="email"/>
+                                        <connections>
+                                            <action selector="emailTextField:" destination="Cdh-OG-ecw" eventType="editingDidEnd" id="bVs-qd-f9k"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Пароль" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PIh-lD-KqS">
+                                        <rect key="frame" x="0.0" y="42" width="334" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
+                                        <connections>
+                                            <action selector="passwordTextField:" destination="Cdh-OG-ecw" eventType="editingDidEnd" id="cQE-gG-W5f"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7QX-6C-tRG">
+                                <rect key="frame" x="114.5" y="472" width="185" height="30"/>
+                                <state key="normal" title="Забыл данные для входа?"/>
+                                <connections>
+                                    <action selector="tappedButton:" destination="e0j-s2-ce7" eventType="touchUpInside" id="q8j-06-7Gq"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Еще нет аккаунта?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WKf-fv-fuK">
+                                <rect key="frame" x="133" y="625.5" width="148.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gtX-L6-ehh">
-                                <rect key="frame" x="61" y="751" width="315" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OfY-pv-eZr">
+                                <rect key="frame" x="132.5" y="656" width="149" height="30"/>
+                                <state key="normal" title="Зарегистрироваться"/>
+                                <connections>
+                                    <action selector="tappedButton:" destination="e0j-s2-ce7" eventType="touchUpInside" id="6ws-CG-Iec"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="GgW-vd-i0a"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="GgW-vd-i0a" firstAttribute="bottom" secondItem="vWS-Qe-tJe" secondAttribute="bottom" constant="40" id="0Wu-3x-EZ8"/>
+                            <constraint firstItem="GgW-vd-i0a" firstAttribute="trailing" secondItem="9HA-eD-3CF" secondAttribute="trailing" constant="40" id="10G-dd-2PE"/>
+                            <constraint firstItem="Ot7-qf-dcQ" firstAttribute="centerX" secondItem="GgW-vd-i0a" secondAttribute="centerX" id="1yv-S6-UbQ"/>
+                            <constraint firstItem="7QX-6C-tRG" firstAttribute="centerX" secondItem="GgW-vd-i0a" secondAttribute="centerX" id="5KQ-89-Pwf"/>
+                            <constraint firstItem="GgW-vd-i0a" firstAttribute="trailing" secondItem="Ot7-qf-dcQ" secondAttribute="trailing" constant="20" id="GYK-fL-jPT"/>
+                            <constraint firstItem="Ot7-qf-dcQ" firstAttribute="leading" secondItem="GgW-vd-i0a" secondAttribute="leading" constant="20" id="MUQ-S8-gm6"/>
+                            <constraint firstItem="9HA-eD-3CF" firstAttribute="leading" secondItem="GgW-vd-i0a" secondAttribute="leading" constant="40" id="PNh-9P-FIX"/>
+                            <constraint firstItem="OfY-pv-eZr" firstAttribute="centerX" secondItem="GgW-vd-i0a" secondAttribute="centerX" id="QoN-lR-jde"/>
+                            <constraint firstItem="9HA-eD-3CF" firstAttribute="top" secondItem="Ot7-qf-dcQ" secondAttribute="bottom" constant="50" id="Sk3-bV-sjI"/>
+                            <constraint firstItem="OfY-pv-eZr" firstAttribute="top" secondItem="WKf-fv-fuK" secondAttribute="bottom" constant="10" id="Tub-0E-9U0"/>
+                            <constraint firstItem="7QX-6C-tRG" firstAttribute="top" secondItem="9HA-eD-3CF" secondAttribute="bottom" constant="16" id="YII-jN-yVk"/>
+                            <constraint firstItem="9HA-eD-3CF" firstAttribute="centerX" secondItem="GgW-vd-i0a" secondAttribute="centerX" id="Zce-XB-FJf"/>
+                            <constraint firstItem="vWS-Qe-tJe" firstAttribute="centerX" secondItem="GgW-vd-i0a" secondAttribute="centerX" id="b36-bG-qdw"/>
+                            <constraint firstItem="WKf-fv-fuK" firstAttribute="top" secondItem="7QX-6C-tRG" secondAttribute="bottom" constant="123.5" id="jAJ-nI-cpe"/>
+                            <constraint firstItem="WKf-fv-fuK" firstAttribute="centerX" secondItem="GgW-vd-i0a" secondAttribute="centerX" id="mPM-NQ-fCv"/>
+                            <constraint firstItem="vWS-Qe-tJe" firstAttribute="top" secondItem="OfY-pv-eZr" secondAttribute="bottom" constant="95" id="txH-hS-gos"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="reY-Jc-HYi"/>
+                    <connections>
+                        <outlet property="animationView" destination="Ot7-qf-dcQ" id="KEf-2X-Sls"/>
+                        <outlet property="emailTextField" destination="4VC-zv-kUm" id="agE-Wk-5T8"/>
+                        <outlet property="loginButton" destination="vWS-Qe-tJe" id="lSC-W0-uu3"/>
+                        <outlet property="passwordTextField" destination="PIh-lD-KqS" id="7ru-6P-2aj"/>
+                        <outlet property="registerButton" destination="OfY-pv-eZr" id="l4g-XV-w5j"/>
+                        <segue destination="Pk4-aA-QDs" kind="show" identifier="registerViewSegueFromLoginView" id="sHx-1h-bNT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QLu-Gw-nWr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="Cdh-OG-ecw" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="9" y="782"/>
+        </scene>
+        <!--Register View Controller-->
+        <scene sceneID="3oh-Cb-ErS">
+            <objects>
+                <viewController modalTransitionStyle="flipHorizontal" modalPresentationStyle="fullScreen" id="Pk4-aA-QDs" customClass="RegisterViewController" customModule="CreateParty" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="873-kx-4x3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="6ja-Gf-Mqe">
+                                <rect key="frame" x="47" y="466" width="320" height="216"/>
+                            </datePicker>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="BlJ-zM-6pl">
+                                <rect key="frame" x="40" y="239.5" width="334" height="166"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Имя" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DYl-mm-8ds">
+                                        <rect key="frame" x="0.0" y="0.0" width="334" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" textContentType="name"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Фамилия" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3xi-4d-pM3">
+                                        <rect key="frame" x="0.0" y="44" width="334" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" textContentType="family-name"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Адрес эл. почты" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ORh-LP-g3c">
+                                        <rect key="frame" x="0.0" y="88" width="334" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" textContentType="email"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Пароль (мин. 8 символов)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MTA-yP-DDF">
+                                        <rect key="frame" x="0.0" y="132" width="334" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" textContentType="password"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gtX-L6-ehh">
+                                <rect key="frame" x="49.5" y="756" width="315" height="50"/>
                                 <color key="backgroundColor" name="AccentColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="gtX-L6-ehh" secondAttribute="height" multiplier="63:10" id="PxP-wx-JXn"/>
+                                    <constraint firstAttribute="width" constant="315" id="icS-Vh-F7j"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Подтвердить регистрацию">
                                     <color key="titleColor" systemColor="systemBackgroundColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="submitRegister:" destination="Pk4-aA-QDs" eventType="touchUpInside" id="MKl-5I-cCO"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e18-TO-JAw">
-                                <rect key="frame" x="108" y="690" width="200" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e18-TO-JAw">
+                                <rect key="frame" x="107" y="702" width="200" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Отменить регистрацию"/>
                                 <connections>
                                     <segue destination="8fK-nK-ZpX" kind="unwind" identifier="unwindSegueToMainScreen" unwindAction="unwindSegueToMainScreenWithSegue:" id="azA-F6-A2n"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Пол" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rcx-kc-5aD">
-                                <rect key="frame" x="61" y="189" width="32" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="z6r-bf-ekZ">
+                                <rect key="frame" x="40" y="198.5" width="334" height="31"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" text="Пол" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rcx-kc-5aD">
+                                        <rect key="frame" x="0.0" y="0.0" width="31.5" height="31"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="OkE-ff-vsa">
+                                        <rect key="frame" x="41.5" y="0.0" width="292.5" height="32"/>
+                                        <segments>
+                                            <segment title="Мужской"/>
+                                            <segment title="Женский"/>
+                                        </segments>
+                                    </segmentedControl>
+                                </subviews>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Дата рождения" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WYP-MX-q3x">
+                                <rect key="frame" x="145.5" y="435.5" width="123" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="6ja-Gf-Mqe">
-                                <rect key="frame" x="-1" y="467" width="414" height="162"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            </datePicker>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="wIB-Yf-pMM"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="wIB-Yf-pMM" firstAttribute="trailing" secondItem="BlJ-zM-6pl" secondAttribute="trailing" constant="40" id="672-wz-hm9"/>
+                            <constraint firstItem="WYP-MX-q3x" firstAttribute="centerX" secondItem="wIB-Yf-pMM" secondAttribute="centerX" id="8gJ-nd-hwy"/>
+                            <constraint firstItem="z6r-bf-ekZ" firstAttribute="centerX" secondItem="wIB-Yf-pMM" secondAttribute="centerX" id="DUb-ba-1ne"/>
+                            <constraint firstItem="e18-TO-JAw" firstAttribute="top" secondItem="6ja-Gf-Mqe" secondAttribute="bottom" constant="20" id="EPi-eA-wXh"/>
+                            <constraint firstItem="6ja-Gf-Mqe" firstAttribute="top" secondItem="WYP-MX-q3x" secondAttribute="bottom" constant="10" id="Fhx-O6-Pht"/>
+                            <constraint firstItem="z6r-bf-ekZ" firstAttribute="leading" secondItem="wIB-Yf-pMM" secondAttribute="leading" constant="40" id="Iji-Qe-pGg"/>
+                            <constraint firstItem="gtX-L6-ehh" firstAttribute="centerX" secondItem="wIB-Yf-pMM" secondAttribute="centerX" id="JeS-Pn-Jdo"/>
+                            <constraint firstItem="6ja-Gf-Mqe" firstAttribute="centerX" secondItem="wIB-Yf-pMM" secondAttribute="centerX" id="MOn-Z2-kLi"/>
+                            <constraint firstItem="BlJ-zM-6pl" firstAttribute="leading" secondItem="wIB-Yf-pMM" secondAttribute="leading" constant="40" id="Oe6-wb-0yD"/>
+                            <constraint firstItem="wIB-Yf-pMM" firstAttribute="bottom" secondItem="gtX-L6-ehh" secondAttribute="bottom" constant="56" id="S4P-tb-csR"/>
+                            <constraint firstItem="wIB-Yf-pMM" firstAttribute="trailing" secondItem="z6r-bf-ekZ" secondAttribute="trailing" constant="40" id="W3a-ep-c1i"/>
+                            <constraint firstItem="WYP-MX-q3x" firstAttribute="top" secondItem="BlJ-zM-6pl" secondAttribute="bottom" constant="30" id="XsA-Qh-6aK"/>
+                            <constraint firstItem="BlJ-zM-6pl" firstAttribute="centerX" secondItem="wIB-Yf-pMM" secondAttribute="centerX" id="cjd-v3-mU8"/>
+                            <constraint firstItem="e18-TO-JAw" firstAttribute="centerX" secondItem="wIB-Yf-pMM" secondAttribute="centerX" id="d8f-4a-WKr"/>
+                            <constraint firstItem="gtX-L6-ehh" firstAttribute="top" secondItem="e18-TO-JAw" secondAttribute="bottom" constant="20" id="f3Y-78-u31"/>
+                            <constraint firstItem="BlJ-zM-6pl" firstAttribute="top" secondItem="z6r-bf-ekZ" secondAttribute="bottom" constant="10" id="u4p-Ru-Cdg"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Icy-Px-zdr"/>
+                    <connections>
+                        <outlet property="birthdayWheels" destination="6ja-Gf-Mqe" id="14P-C8-LBY"/>
+                        <outlet property="emailTextField" destination="ORh-LP-g3c" id="0jX-BB-ozQ"/>
+                        <outlet property="genderSegments" destination="OkE-ff-vsa" id="Dwg-ix-7Kt"/>
+                        <outlet property="nameTextField" destination="DYl-mm-8ds" id="kVn-WS-Xnv"/>
+                        <outlet property="passwordTextField" destination="MTA-yP-DDF" id="AZK-hy-N8E"/>
+                        <outlet property="registerButton" destination="gtX-L6-ehh" id="BBg-Jf-lhv"/>
+                        <outlet property="surnameTextField" destination="3xi-4d-pM3" id="bde-Es-J7x"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B7e-qw-gKk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="8fK-nK-ZpX" userLabel="Exit" sceneMemberID="exit"/>
@@ -175,9 +318,9 @@
             <point key="canvasLocation" x="750.72463768115949" y="87.723214285714278"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="nVa-KK-CMj"/>
-    </designables>
+    <inferredMetricsTieBreakers>
+        <segue reference="sHx-1h-bNT"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
