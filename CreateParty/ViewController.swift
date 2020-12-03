@@ -23,7 +23,6 @@ class ViewController: UIViewController {
     var savedBirthday = NSDate() as Date
     var savedGender: Int?
     
-    
     @IBOutlet weak var animationView: AnimationView!
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var loginButton: UIButton!
@@ -51,7 +50,21 @@ class ViewController: UIViewController {
         labelAlreadyHaveAccount.isHidden = true
         
         registerButton.layer.cornerRadius = registerButton.frame.size.height / 2
+    
+        view.isUserInteractionEnabled = false
+        registerButton.alpha = 0
+        loginButton.alpha = 0
+        
+        UIView.animate(withDuration: 2, delay: 0, options: .curveEaseIn) {
+            self.registerButton.alpha = 1
+            self.loginButton.alpha = 1
+        } completion: { (finished) in
+            self.view.isUserInteractionEnabled = true
+        }
+
     }
+    
+  
     
     @IBAction func tappedButton(_ sender: UIButton) {
         animationView.animationSpeed = 2
@@ -93,5 +106,6 @@ class ViewController: UIViewController {
         self.animationView.play(toFrame: HelloScreenAnimationKeyFrames.end.rawValue)
         labelAlreadyHaveAccount.isHidden = false
     }
+    
 }
 
