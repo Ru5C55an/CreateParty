@@ -199,6 +199,14 @@
             </objects>
             <point key="canvasLocation" x="9" y="782"/>
         </scene>
+        <!--Page View Controller-->
+        <scene sceneID="iEA-5F-Ydn">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="WZV-Jb-VC3" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cM1-Da-p2A" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1248" y="-819"/>
+        </scene>
         <!--Register View Controller-->
         <scene sceneID="3oh-Cb-ErS">
             <objects>
@@ -341,6 +349,7 @@
                         <outlet property="passwordTextField" destination="MTA-yP-DDF" id="AZK-hy-N8E"/>
                         <outlet property="registerButton" destination="gtX-L6-ehh" id="BBg-Jf-lhv"/>
                         <outlet property="surnameTextField" destination="3xi-4d-pM3" id="bde-Es-J7x"/>
+                        <segue destination="6Qc-w6-Ywp" kind="show" id="uei-y2-4a0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B7e-qw-gKk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -348,11 +357,118 @@
             </objects>
             <point key="canvasLocation" x="750.72463768115949" y="87.723214285714278"/>
         </scene>
+        <!--Поиск-->
+        <scene sceneID="go4-o6-eel">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="KDq-Rz-9Vl" customClass="SearchPartyViewController" customModule="CreateParty" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EW7-lg-HVw">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="2nc-QW-aBN"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Поиск" selectedImage="magnifyingglass" catalog="system" id="Mut-ee-gmw"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hEl-dh-WgV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2842" y="662"/>
+        </scene>
+        <!--Создать-->
+        <scene sceneID="fkY-QQ-cmd">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="Dg6-jr-rDJ" customClass="CreatePartyViewController" customModule="CreateParty" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kXI-x6-ImP">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Wi4-px-rLo"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Создать" selectedImage="plus" catalog="system" id="Myz-uq-HCb"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IYX-OB-dLV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2841" y="1302"/>
+        </scene>
+        <!--Профиль-->
+        <scene sceneID="H0z-72-Rkw">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="9RA-Qu-uEM" customClass="UserProfileViewController" customModule="CreateParty" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hpY-GV-Jke">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="IaR-ok-LYx"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Профиль" selectedImage="person.crop.circle" catalog="system" id="3AZ-1D-dvz"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5qR-KB-ACp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3768" y="1277"/>
+        </scene>
+        <!--Сообщения-->
+        <scene sceneID="zcg-VN-JHo">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="bnY-2X-OhQ" customClass="MessagesViewController" customModule="CreateParty" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="O5d-Q5-41Q">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="f36-2Q-FTp"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Сообщения" selectedImage="message" catalog="system" id="kOR-y2-xRf"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fXz-SH-6Yh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2036" y="1302"/>
+        </scene>
+        <!--Мои вечеринки-->
+        <scene sceneID="QVN-TN-atZ">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="BzM-XK-8xN" customClass="MyPartiesViewController" customModule="CreateParty" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5VD-ZN-qK6">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="tbq-jD-NbS"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Мои вечеринки" selectedImage="calendar" catalog="system" id="gdY-X5-VOP"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="B9d-Bf-svt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2842" y="56"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="Fqg-Zu-XFQ">
+            <objects>
+                <tabBarController modalPresentationStyle="fullScreen" id="6Qc-w6-Ywp" customClass="TabBarController" customModule="CreateParty" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="mxY-pb-F1U"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Y8V-dG-DpL">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="BzM-XK-8xN" kind="relationship" relationship="viewControllers" id="wha-pF-N8q"/>
+                        <segue destination="KDq-Rz-9Vl" kind="relationship" relationship="viewControllers" id="TM1-7e-qDx"/>
+                        <segue destination="Dg6-jr-rDJ" kind="relationship" relationship="viewControllers" id="b8W-Q0-kup"/>
+                        <segue destination="bnY-2X-OhQ" kind="relationship" relationship="viewControllers" id="sSu-W5-grV"/>
+                        <segue destination="9RA-Qu-uEM" kind="relationship" relationship="viewControllers" id="Z9D-Zf-wXr"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4nx-9M-4l9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1949" y="359"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="Qu0-dJ-76L"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="calendar" catalog="system" width="128" height="106"/>
+        <image name="magnifyingglass" catalog="system" width="128" height="115"/>
+        <image name="message" catalog="system" width="128" height="113"/>
+        <image name="person.crop.circle" catalog="system" width="128" height="121"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
