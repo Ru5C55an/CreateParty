@@ -424,7 +424,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hEl-dh-WgV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2842" y="662"/>
+            <point key="canvasLocation" x="3750.7246376811595" y="661.60714285714278"/>
         </scene>
         <!--Создать-->
         <scene sceneID="fkY-QQ-cmd">
@@ -474,7 +474,7 @@
             </objects>
             <point key="canvasLocation" x="2036" y="1302"/>
         </scene>
-        <!--Мои вечеринки-->
+        <!--My Parties View Controller-->
         <scene sceneID="QVN-TN-atZ">
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="BzM-XK-8xN" customClass="MyPartiesViewController" customModule="CreateParty" customModuleProvider="target" sceneMemberID="viewController">
@@ -483,7 +483,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="34E-02-4ja">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="759"/>
+                                <rect key="frame" x="0.0" y="56" width="414" height="703"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="PzM-jW-Z1Z">
@@ -510,11 +510,11 @@
                             <constraint firstItem="34E-02-4ja" firstAttribute="leading" secondItem="tbq-jD-NbS" secondAttribute="leading" id="pCQ-o5-Xf9"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Мои вечеринки" selectedImage="calendar" catalog="system" id="gdY-X5-VOP"/>
+                    <navigationItem key="navigationItem" id="6mv-ZP-rew"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B9d-Bf-svt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2840.579710144928" y="55.580357142857139"/>
+            <point key="canvasLocation" x="3750.7246376811595" y="55.580357142857139"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Fqg-Zu-XFQ">
@@ -527,7 +527,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="BzM-XK-8xN" kind="relationship" relationship="viewControllers" id="wha-pF-N8q"/>
+                        <segue destination="zCB-g3-h6B" kind="relationship" relationship="viewControllers" id="wha-pF-N8q"/>
                         <segue destination="KDq-Rz-9Vl" kind="relationship" relationship="viewControllers" id="TM1-7e-qDx"/>
                         <segue destination="Dg6-jr-rDJ" kind="relationship" relationship="viewControllers" id="b8W-Q0-kup"/>
                         <segue destination="bnY-2X-OhQ" kind="relationship" relationship="viewControllers" id="sSu-W5-grV"/>
@@ -537,6 +537,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4nx-9M-4l9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1949" y="359"/>
+        </scene>
+        <!--Мои вечеринки-->
+        <scene sceneID="x5D-mj-Yt5">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zCB-g3-h6B" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Мои вечеринки" selectedImage="calendar" catalog="system" id="gdY-X5-VOP"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="SmO-z5-Yrk">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BzM-XK-8xN" kind="relationship" relationship="rootViewController" id="D2x-zc-gQA"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wn1-Bv-e06" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2840.579710144928" y="55.580357142857139"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
