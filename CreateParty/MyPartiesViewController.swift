@@ -36,12 +36,14 @@ extension MyPartiesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
-        cell?.textLabel?.text = parties[indexPath.row]
-        cell?.imageView?.image = UIImage(named: "shit")
-        cell?.imageView?.layer.cornerRadius = cell?.frame.size.height / 2
-        cell?.imageView?.clipsToBounds = true
-        return cell!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! PartyTableViewCell
+        
+        cell.nameLabel.text = parties[indexPath.row]
+        cell.imageOfParty.image = UIImage(named: "shit")
+        cell.imageOfParty.layer.cornerRadius = cell.imageOfParty.frame.size.height / 2
+        cell.imageOfParty.clipsToBounds = true
+        
+        return cell
     }
     
     // MARK: - Table view delegate
