@@ -11,6 +11,7 @@ class CreatePartyTableViewController: UITableViewController {
 
     @IBOutlet weak var clearButton: UIBarButtonItem!
     @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var imageOfParty: UIImageView!
     @IBAction func tappedButton(_ sender: UIBarButtonItem) {
         
         if sender == clearButton {
@@ -62,15 +63,24 @@ extension CreatePartyTableViewController: UITextFieldDelegate {
 }
 
 // Mark: - Work with image
-extension CreatePartyTableViewController {
+extension CreatePartyTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func chooseImagePicker(source: UIImagePickerController.SourceType) {
         
         if UIImagePickerController.isSourceTypeAvailable(source) {
             let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self // Делегируем наш класс на выполнение данного протокола
             imagePicker.allowsEditing = true
             imagePicker.sourceType = source
             present(imagePicker, animated: true)
         }
         
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        imageOfParty.image = info[.editedImage] as? UIImage
+        imageOfParty.contentMode = .scaleAspectFill
+        imageOfParty.clipsToBounds = true
+        dismiss(animated: true)
     }
 }

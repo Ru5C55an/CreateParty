@@ -600,6 +600,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="clearButton" destination="thr-eh-ggw" id="tec-J8-JSt"/>
+                        <outlet property="imageOfParty" destination="uPn-nq-pc8" id="Yib-eo-X2t"/>
                         <outlet property="saveButton" destination="YAR-nU-fOT" id="JmA-rK-8F5"/>
                     </connections>
                 </tableViewController>
