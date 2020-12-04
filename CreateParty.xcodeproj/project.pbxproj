@@ -13,6 +13,10 @@
 		4465EB3C257958170096F3B7 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EB3B257958170096F3B7 /* MessagesViewController.swift */; };
 		4465EB412579583A0096F3B7 /* CreatePartyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EB402579583A0096F3B7 /* CreatePartyViewController.swift */; };
 		4465EB462579585A0096F3B7 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EB452579585A0096F3B7 /* UserProfileViewController.swift */; };
+		4465EB4B25795E3E0096F3B7 /* WelcomeCarouselViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EB4A25795E3E0096F3B7 /* WelcomeCarouselViewController.swift */; };
+		4465EB5025795E800096F3B7 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EB4F25795E800096F3B7 /* PageViewController.swift */; };
+		4465EB59257A53270096F3B7 /* GradientBackground.json in Resources */ = {isa = PBXBuildFile; fileRef = 4465EB58257A53270096F3B7 /* GradientBackground.json */; };
+		4465EB5E257A532D0096F3B7 /* Confetti.json in Resources */ = {isa = PBXBuildFile; fileRef = 4465EB5D257A532D0096F3B7 /* Confetti.json */; };
 		447EE8BD257676A700D8698F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447EE8BC257676A700D8698F /* AppDelegate.swift */; };
 		447EE8BF257676A700D8698F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447EE8BE257676A700D8698F /* SceneDelegate.swift */; };
 		447EE8C1257676A700D8698F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447EE8C0257676A700D8698F /* ViewController.swift */; };
@@ -53,6 +57,10 @@
 		4465EB3B257958170096F3B7 /* MessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
 		4465EB402579583A0096F3B7 /* CreatePartyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePartyViewController.swift; sourceTree = "<group>"; };
 		4465EB452579585A0096F3B7 /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		4465EB4A25795E3E0096F3B7 /* WelcomeCarouselViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeCarouselViewController.swift; sourceTree = "<group>"; };
+		4465EB4F25795E800096F3B7 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
+		4465EB58257A53270096F3B7 /* GradientBackground.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = GradientBackground.json; sourceTree = "<group>"; };
+		4465EB5D257A532D0096F3B7 /* Confetti.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Confetti.json; sourceTree = "<group>"; };
 		447EE8B9257676A600D8698F /* CreateParty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CreateParty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		447EE8BC257676A700D8698F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		447EE8BE257676A700D8698F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -103,6 +111,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4465EB5425795E9D0096F3B7 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				4465EB5D257A532D0096F3B7 /* Confetti.json */,
+				4465EB58257A53270096F3B7 /* GradientBackground.json */,
+				448157A32576842B004F06FF /* HelloScreen.json */,
+				448157B725777EE6004F06FF /* WaitingDots.json */,
+			);
+			path = Animations;
+			sourceTree = "<group>";
+		};
 		447EE8B0257676A600D8698F = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +150,8 @@
 				447EE8BC257676A700D8698F /* AppDelegate.swift */,
 				447EE8BE257676A700D8698F /* SceneDelegate.swift */,
 				447EE8C2257676A700D8698F /* Main.storyboard */,
+				4465EB4A25795E3E0096F3B7 /* WelcomeCarouselViewController.swift */,
+				4465EB4F25795E800096F3B7 /* PageViewController.swift */,
 				4465EB452579585A0096F3B7 /* UserProfileViewController.swift */,
 				4465EB402579583A0096F3B7 /* CreatePartyViewController.swift */,
 				4465EB3B257958170096F3B7 /* MessagesViewController.swift */,
@@ -169,9 +190,8 @@
 		4481579025768201004F06FF /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				4465EB5425795E9D0096F3B7 /* Animations */,
 				447EE8C8257676AA00D8698F /* Assets.xcassets */,
-				448157A32576842B004F06FF /* HelloScreen.json */,
-				448157B725777EE6004F06FF /* WaitingDots.json */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -302,7 +322,9 @@
 				447EE8CC257676AA00D8698F /* LaunchScreen.storyboard in Resources */,
 				448157B825777EE6004F06FF /* WaitingDots.json in Resources */,
 				447EE8C9257676AA00D8698F /* Assets.xcassets in Resources */,
+				4465EB5E257A532D0096F3B7 /* Confetti.json in Resources */,
 				447EE8C4257676A700D8698F /* Main.storyboard in Resources */,
+				4465EB59257A53270096F3B7 /* GradientBackground.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,6 +391,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4465EB4B25795E3E0096F3B7 /* WelcomeCarouselViewController.swift in Sources */,
+				4465EB5025795E800096F3B7 /* PageViewController.swift in Sources */,
 				4465EB3C257958170096F3B7 /* MessagesViewController.swift in Sources */,
 				4465EB462579585A0096F3B7 /* UserProfileViewController.swift in Sources */,
 				448157BD25777FC9004F06FF /* LoginViewController.swift in Sources */,

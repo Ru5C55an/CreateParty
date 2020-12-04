@@ -202,10 +202,63 @@
         <!--Page View Controller-->
         <scene sceneID="iEA-5F-Ydn">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="WZV-Jb-VC3" sceneMemberID="viewController"/>
+                <pageViewController storyboardIdentifier="PageViewController" autoresizesArchivedViewToFullSize="NO" modalPresentationStyle="fullScreen" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="WZV-Jb-VC3" customClass="PageViewController" customModule="CreateParty" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cM1-Da-p2A" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1248" y="-819"/>
+        </scene>
+        <!--Welcome Carousel View Controller-->
+        <scene sceneID="26p-Tv-cFB">
+            <objects>
+                <viewController storyboardIdentifier="WelcomeCarouselViewController" id="9UH-9H-HaD" customClass="WelcomeCarouselViewController" customModule="CreateParty" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XUQ-fS-d3K">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="SUX-dQ-Bnl">
+                                <rect key="frame" x="145.5" y="834" width="123" height="28"/>
+                                <color key="pageIndicatorTintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="currentPageIndicatorTintColor" name="AccentColor"/>
+                            </pageControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nRT-jY-0LM">
+                                <rect key="frame" x="186" y="222" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="😀" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2wO-BB-J6e">
+                                <rect key="frame" x="159" y="531" width="96" height="107"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="89"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="close" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yvh-gL-IE4">
+                                <rect key="frame" x="336" y="93" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="tappedButton:" destination="9UH-9H-HaD" eventType="touchUpInside" id="bJP-1v-vkL"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="2IR-mP-8LW"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="SUX-dQ-Bnl" firstAttribute="bottom" secondItem="2IR-mP-8LW" secondAttribute="bottom" id="5ZG-DF-yOK"/>
+                            <constraint firstItem="SUX-dQ-Bnl" firstAttribute="centerX" secondItem="2IR-mP-8LW" secondAttribute="centerX" id="orr-ng-UFf"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="closeButton" destination="yvh-gL-IE4" id="yXh-hb-eqB"/>
+                        <outlet property="emojiLabel" destination="2wO-BB-J6e" id="uAO-00-hFq"/>
+                        <outlet property="pageControl" destination="SUX-dQ-Bnl" id="uKA-Yf-4bN"/>
+                        <outlet property="presentTextLabel" destination="nRT-jY-0LM" id="79L-X5-f2Y"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uoo-fb-ESz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2035" y="-820"/>
         </scene>
         <!--Register View Controller-->
         <scene sceneID="3oh-Cb-ErS">
@@ -349,7 +402,7 @@
                         <outlet property="passwordTextField" destination="MTA-yP-DDF" id="AZK-hy-N8E"/>
                         <outlet property="registerButton" destination="gtX-L6-ehh" id="BBg-Jf-lhv"/>
                         <outlet property="surnameTextField" destination="3xi-4d-pM3" id="bde-Es-J7x"/>
-                        <segue destination="6Qc-w6-Ywp" kind="show" id="uei-y2-4a0"/>
+                        <segue destination="6Qc-w6-Ywp" kind="show" identifier="tabBarSegue" id="uei-y2-4a0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B7e-qw-gKk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -428,14 +481,40 @@
                     <view key="view" contentMode="scaleToFill" id="5VD-ZN-qK6">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="34E-02-4ja">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="759"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="PzM-jW-Z1Z">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PzM-jW-Z1Z" id="FfS-0o-qeE">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BzM-XK-8xN" id="bsa-qe-IPl"/>
+                                    <outlet property="delegate" destination="BzM-XK-8xN" id="HPp-ta-bd3"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="tbq-jD-NbS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="tbq-jD-NbS" firstAttribute="trailing" secondItem="34E-02-4ja" secondAttribute="trailing" id="9fc-Eh-MVM"/>
+                            <constraint firstItem="34E-02-4ja" firstAttribute="top" secondItem="tbq-jD-NbS" secondAttribute="top" id="bL4-S4-2eG"/>
+                            <constraint firstItem="tbq-jD-NbS" firstAttribute="bottom" secondItem="34E-02-4ja" secondAttribute="bottom" id="lv9-na-TiT"/>
+                            <constraint firstItem="34E-02-4ja" firstAttribute="leading" secondItem="tbq-jD-NbS" secondAttribute="leading" id="pCQ-o5-Xf9"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Мои вечеринки" selectedImage="calendar" catalog="system" id="gdY-X5-VOP"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B9d-Bf-svt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2842" y="56"/>
+            <point key="canvasLocation" x="2840.579710144928" y="55.580357142857139"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Fqg-Zu-XFQ">

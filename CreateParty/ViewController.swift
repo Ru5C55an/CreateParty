@@ -30,6 +30,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(false, forKey: "presentationWasViewed")
         
         animationView.backgroundColor = .clear
         animationView?.play(toFrame: HelloScreenAnimationKeyFrames.end.rawValue)
@@ -61,10 +63,8 @@ class ViewController: UIViewController {
         } completion: { (finished) in
             self.view.isUserInteractionEnabled = true
         }
-
+        
     }
-    
-  
     
     @IBAction func tappedButton(_ sender: UIButton) {
         animationView.animationSpeed = 2
@@ -107,5 +107,26 @@ class ViewController: UIViewController {
         labelAlreadyHaveAccount.isHidden = false
     }
     
+    // Данный метод срабатывает при открытии ViewController
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        startPresentationCarousel()
+    }
+    
+    func startPresentationCarousel() {
+        
+        let userDefaults = UserDefaults.standard
+        let presentationWasViewed = userDefaults.bool(forKey: "presentationWasViewed") // Если в настройках есть значение для ключа presentationWasViewed, то константа получить True
+        if presentationWasViewed == false {
+            if let pageViewController = storyboard?.instantiateViewController(
+                identifier: "PageViewController") as? PageViewController {
+                present(pageViewController, animated: true, completion: nil)
+            }
+        }
+    
+    }
+    
 }
+
 

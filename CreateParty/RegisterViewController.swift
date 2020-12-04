@@ -74,7 +74,7 @@ class RegisterViewController: UIViewController {
         }
         
         if sender == registerButton {
-            performSegue(withIdentifier: "", sender: nil)
+            performSegue(withIdentifier: "tabBarSegue", sender: nil)
         }
     }
     
