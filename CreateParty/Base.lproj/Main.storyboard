@@ -474,7 +474,7 @@
             </objects>
             <point key="canvasLocation" x="2036" y="1302"/>
         </scene>
-        <!--My Parties View Controller-->
+        <!--Список актуальных вечеринок-->
         <scene sceneID="QVN-TN-atZ">
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="BzM-XK-8xN" customClass="MyPartiesViewController" customModule="CreateParty" customModuleProvider="target" sceneMemberID="viewController">
@@ -510,7 +510,7 @@
                             <constraint firstItem="34E-02-4ja" firstAttribute="leading" secondItem="tbq-jD-NbS" secondAttribute="leading" id="pCQ-o5-Xf9"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="6mv-ZP-rew"/>
+                    <navigationItem key="navigationItem" title="Список актуальных вечеринок" id="6mv-ZP-rew"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B9d-Bf-svt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -558,6 +558,10 @@
             <point key="canvasLocation" x="2840.579710144928" y="55.580357142857139"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="Ot7-qf-dcQ"/>
+        <designable name="nVa-KK-CMj"/>
+    </designables>
     <inferredMetricsTieBreakers>
         <segue reference="Qu0-dJ-76L"/>
     </inferredMetricsTieBreakers>
