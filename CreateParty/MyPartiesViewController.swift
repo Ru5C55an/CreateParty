@@ -9,15 +9,7 @@ import UIKit
 
 class MyPartiesViewController: UIViewController {
     
-    let parties = [
-        "Вечеринка",
-        "Мазукальный вечер",
-        "Поэтический вечер",
-        "Игра в настольные игры",
-        "Спортивный вечер",
-        "Игра в компьютерные игры",
-        "Игра в мобильные игры",
-    ]
+    let parties = [Party(name: "какашка", location: "унитаз", type: "Смывка", image: "shit")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,8 +30,10 @@ extension MyPartiesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! PartyTableViewCell
         
-        cell.nameLabel.text = parties[indexPath.row]
-        cell.imageOfParty.image = UIImage(named: "shit")
+        cell.nameLabel.text = parties[indexPath.row].name
+        cell.locationLabel.text = parties[indexPath.row].location
+        cell.typeLabel.text = parties[indexPath.row].type
+        cell.imageOfParty.image = UIImage(named: parties[indexPath.row].image)
         cell.imageOfParty.layer.cornerRadius = cell.imageOfParty.frame.size.height / 2
         cell.imageOfParty.clipsToBounds = true
         
@@ -47,9 +41,5 @@ extension MyPartiesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     // MARK: - Table view delegate
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 85
-    }
     
 }

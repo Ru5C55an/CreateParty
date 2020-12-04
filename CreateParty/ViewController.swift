@@ -33,22 +33,28 @@ class ViewController: UIViewController {
         let userDefaults = UserDefaults.standard
         userDefaults.set(false, forKey: "presentationWasViewed")
         
-        animationView.backgroundColor = .clear
-        animationView?.play(toFrame: HelloScreenAnimationKeyFrames.end.rawValue)
-        animationView?.animationSpeed = 0.5
-        animationView?.loopMode = .playOnce
-        animationView.sizeToFit()
-        //animationView?.sizeToFit()
-//        Программное добавление анимации
-//        var animationView: AnimationView?
-//        animationView = .init(name: "HelloScreen")
-//        animationView?.frame = view.bounds
-//        view.addSubview(animationView!)
-//        animationView?.play(toFrame: 40)
-//        animationView?.animationSpeed = 0.5
-//        animationView?.loopMode = .playOnce
-//        view.sendSubviewToBack(animationView!)
-        
+        if userDefaults.bool(forKey: "presentationWasViewed") == true {
+            animationView.backgroundColor = .clear
+            animationView?.play(toFrame: HelloScreenAnimationKeyFrames.end.rawValue)
+            animationView?.animationSpeed = 0.5
+            animationView?.loopMode = .playOnce
+            animationView.sizeToFit()
+//            Программное добавление анимации
+//            var animationView: AnimationView?
+//            animationView = .init(name: "HelloScreen")
+//            animationView?.frame = view.bounds
+//            view.addSubview(animationView!)
+//            animationView?.play(toFrame: 40)
+//            animationView?.animationSpeed = 0.5
+//            animationView?.loopMode = .playOnce
+//            view.sendSubviewToBack(animationView!)
+        } else {
+            animationView.backgroundColor = .clear
+            animationView?.play(toFrame: HelloScreenAnimationKeyFrames.end.rawValue)
+            animationView?.animationSpeed = 100
+            animationView?.loopMode = .playOnce
+        } // Это решает баг с остановкой анимации, когда запускается приветственная карусель (Для случая с вызванной каруселью, скорость анимации устанавливается на 100
+
         labelAlreadyHaveAccount.isHidden = true
         
         registerButton.layer.cornerRadius = registerButton.frame.size.height / 2
