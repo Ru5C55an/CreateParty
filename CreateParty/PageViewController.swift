@@ -44,14 +44,11 @@ class PageViewController: UIPageViewController {
         welcomeCarouselViewController.currentPage = index
         welcomeCarouselViewController.numberOfPages = presentScreenContent.count
         
+        if index == presentScreenContent.count - 2 {
+            welcomeCarouselViewController.hideButton = false
+        }
+        
         return welcomeCarouselViewController
-    }
-    
-    func closePage() {
-        let userDefaults = UserDefaults.standard
-        userDefaults.set(true, forKey: "presentationWasViewed")
-        dismiss(animated: true, completion: nil)
-        print("workworkworkworkworkworkworkworkworkworkwork")
     }
 }
 

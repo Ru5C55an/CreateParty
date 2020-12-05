@@ -9,7 +9,10 @@ import UIKit
 
 class MyPartiesViewController: UIViewController {
     
-    let parties = [Party(name: "какашка", location: "унитаз", type: "Смывка", image: "shit")]
+    
+    @IBOutlet weak var partiesListTable: UITableView!
+    
+    var parties = [Party(name: "какашка", location: "унитаз", type: "Смывка", stringImage: "shit")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,14 +33,23 @@ extension MyPartiesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! PartyTableViewCell
         
-        cell.nameLabel.text = parties[indexPath.row].name
-        cell.locationLabel.text = parties[indexPath.row].location
-        cell.typeLabel.text = parties[indexPath.row].type
-        cell.imageOfParty.image = UIImage(named: parties[indexPath.row].image)
+        let party = parties[indexPath.row]
+        
+        cell.nameLabel.text = party.name
+        cell.locationLabel.text = party.location
+        cell.typeLabel.text = party.type
         cell.imageOfParty.layer.cornerRadius = cell.imageOfParty.frame.size.height / 2
         cell.imageOfParty.clipsToBounds = true
+        cell.imageOfParty.image = party.image
         
         return cell
+    }
+    
+    @IBAction func unwindSegueToMyParties( _ segue: UIStoryboardSegue) {
+        guard let createPartyVC = segue.source as? CreatePartyTableViewController else { return }
+        createPartyVC.tappedButton(createPartyVC.saveButton)
+        parties.append(createPartyVC.newParty!)
+        partiesListTable.reloadData()
     }
     
     // MARK: - Table view delegate

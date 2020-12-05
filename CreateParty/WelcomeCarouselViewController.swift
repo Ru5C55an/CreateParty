@@ -19,6 +19,8 @@ class WelcomeCarouselViewController: UIViewController {
     var currentPage = 0 // Текущая страница
     var numberOfPages = 0 // Количество страниц
     
+    var hideButton = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,17 +28,16 @@ class WelcomeCarouselViewController: UIViewController {
         emojiLabel.text = emoji
         pageControl.numberOfPages = numberOfPages
         pageControl.currentPage = currentPage
+        
+        closeButton.isHidden = hideButton
     }
     
     @IBAction func tappedButton(_ sender: UIButton) {
         if sender == closeButton {
-            if let pageViewController = storyboard?.instantiateViewController(
-                identifier: "PageViewController") as? PageViewController {
-                pageViewController.closePage()
-            }
+            let userDefaults = UserDefaults.standard
+            userDefaults.set(true, forKey: "presentationWasViewed")
+            dismiss(animated: true)
         }
     }
-    
-    
     
 }

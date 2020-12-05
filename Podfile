@@ -5,6 +5,7 @@ target 'CreateParty' do
 
   use_frameworks!
   pod 'lottie-ios'
+  pod 'RealmSwift'
 
 end
 

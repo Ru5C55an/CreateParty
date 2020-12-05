@@ -55,7 +55,7 @@ class RegisterViewController: UIViewController {
         let nameText = nameTextField.text ?? ""
         let surnameText = surnameTextField.text ?? ""
         let emailText = emailTextField.text ?? ""
-        let passwordText = emailTextField.text ?? ""
+        let passwordText = passwordTextField.text ?? ""
     
         registerButton.isEnabled = !nameText.isEmpty && !surnameText.isEmpty && !emailText.isEmpty && !passwordText.isEmpty
         

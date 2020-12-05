@@ -9,20 +9,70 @@ import UIKit
 
 class CreatePartyTableViewController: UITableViewController {
 
+    var newParty: Party?
+    var imageIsChanged = false
+    
     @IBOutlet weak var clearButton: UIBarButtonItem!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var imageOfParty: UIImageView!
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var locationTextField: UITextField!
+    @IBOutlet weak var typeTextField: UITextField!
+    
+    
+    @IBAction func textChanged(_ sender: UITextField) {
+        updateSaveButtonState()
+    }
+    
+    
     @IBAction func tappedButton(_ sender: UIBarButtonItem) {
         
         if sender == clearButton {
-            
+            clearPartyInfo()
         }
+        
+        if sender == saveButton {
+            
+            var image: UIImage?
+            
+            if imageIsChanged {
+                image = imageOfParty.image
+            } else {
+                image = UIImage(named: "NoImage")
+            }
+            
+            newParty = Party(name: nameTextField.text!,
+                             location: locationTextField.text!,
+                             type: typeTextField.text!,
+                             image: image,
+                             stringImage: nil)
+            
+            clearPartyInfo()
+        }
+    }
+    
+    func clearPartyInfo() {
+        imageOfParty.image = #imageLiteral(resourceName: "Photo")
+        nameTextField.text = ""
+        locationTextField.text = ""
+        typeTextField.text = ""
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.tableFooterView = UIView() // Убираем линии внизу и заменяем их на view
+        
+        saveButton.isEnabled = false
+        updateSaveButtonState()
+    }
+    
+    private func updateSaveButtonState() {
+        let nameText = nameTextField.text ?? ""
+        let locationText = locationTextField.text ?? ""
+        let typeText = typeTextField.text ?? ""
+    
+        saveButton.isEnabled = !nameText.isEmpty && !locationText.isEmpty && !typeText.isEmpty
     }
     
     // Mark: - Table view delegate
@@ -71,6 +121,7 @@ extension CreatePartyTableViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+    
 }
 
 // Mark: - Work with image
@@ -93,6 +144,9 @@ extension CreatePartyTableViewController: UIImagePickerControllerDelegate, UINav
         imageOfParty.image = info[.editedImage] as? UIImage
         imageOfParty.contentMode = .scaleAspectFill
         imageOfParty.clipsToBounds = true
+        
+        imageIsChanged = true
+        
         dismiss(animated: true)
     }
 }

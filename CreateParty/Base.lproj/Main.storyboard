@@ -494,6 +494,7 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                                             <connections>
+                                                                <action selector="textChanged:" destination="Q0t-L5-1tR" eventType="editingDidEnd" id="EJS-3r-zdu"/>
                                                                 <outlet property="delegate" destination="Q0t-L5-1tR" id="pFu-Bj-i42"/>
                                                             </connections>
                                                         </textField>
@@ -529,6 +530,7 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                                             <connections>
+                                                                <action selector="textChanged:" destination="Q0t-L5-1tR" eventType="editingDidEnd" id="TqO-bm-Od0"/>
                                                                 <outlet property="delegate" destination="Q0t-L5-1tR" id="jdk-qE-oOA"/>
                                                             </connections>
                                                         </textField>
@@ -564,6 +566,7 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                                             <connections>
+                                                                <action selector="textChanged:" destination="Q0t-L5-1tR" eventType="editingDidEnd" id="AS0-ol-aey"/>
                                                                 <outlet property="delegate" destination="Q0t-L5-1tR" id="gst-wB-vjf"/>
                                                             </connections>
                                                         </textField>
@@ -595,16 +598,21 @@
                         <barButtonItem key="rightBarButtonItem" title="Сохранить" id="YAR-nU-fOT">
                             <connections>
                                 <action selector="tappedButton:" destination="Q0t-L5-1tR" id="rPa-4M-SM7"/>
+                                <segue destination="Vew-We-aRR" kind="unwind" unwindAction="unwindSegueToMyParties:" id="9r2-5Y-bER"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="clearButton" destination="thr-eh-ggw" id="tec-J8-JSt"/>
                         <outlet property="imageOfParty" destination="uPn-nq-pc8" id="Yib-eo-X2t"/>
+                        <outlet property="locationTextField" destination="dmO-9g-PQ3" id="YkZ-fg-cZ7"/>
+                        <outlet property="nameTextField" destination="5U5-8G-gmB" id="FM8-kl-LST"/>
                         <outlet property="saveButton" destination="YAR-nU-fOT" id="JmA-rK-8F5"/>
+                        <outlet property="typeTextField" destination="g6J-n5-K5Y" id="ppj-hh-2gy"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fiD-6o-P83" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="Vew-We-aRR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4423.188405797102" y="1409.5982142857142"/>
         </scene>
@@ -707,6 +715,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Список актуальных вечеринок" id="6mv-ZP-rew"/>
+                    <connections>
+                        <outlet property="partiesListTable" destination="34E-02-4ja" id="Tm7-QP-apW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B9d-Bf-svt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
