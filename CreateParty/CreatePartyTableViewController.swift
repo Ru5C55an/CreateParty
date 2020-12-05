@@ -28,15 +28,26 @@ class CreatePartyTableViewController: UITableViewController {
     // Mark: - Table view delegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
+            
+            let cameraIcon = #imageLiteral(resourceName: "camera")
+            let photoIcon = #imageLiteral(resourceName: "photo")
+            
             let actionSheet = UIAlertController(title: nil,
                                                 message: nil,
                                                 preferredStyle: .actionSheet)
+            
             let camera = UIAlertAction(title: "Камера", style: .default) { _ in
                 self.chooseImagePicker(source: .camera)
             }
+            camera.setValue(cameraIcon, forKey: "image")
+            camera.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+            
             let photo = UIAlertAction(title: "Фото", style: .default) { _ in
                 self.chooseImagePicker(source: .photoLibrary)
             }
+            photo.setValue(photoIcon, forKey: "image")
+            photo.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+
             let cancel = UIAlertAction(title: "Отмена", style: .cancel)
              
             actionSheet.addAction(camera)
@@ -64,6 +75,7 @@ extension CreatePartyTableViewController: UITextFieldDelegate {
 
 // Mark: - Work with image
 extension CreatePartyTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
     func chooseImagePicker(source: UIImagePickerController.SourceType) {
         
         if UIImagePickerController.isSourceTypeAvailable(source) {
