@@ -21,6 +21,7 @@
 		4465EB8A257A9E6E0096F3B7 /* PartyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EB89257A9E6E0096F3B7 /* PartyTableViewCell.swift */; };
 		4465EB8F257AA3360096F3B7 /* PartyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EB8E257AA3360096F3B7 /* PartyModel.swift */; };
 		4465EB97257AB2750096F3B7 /* CreatePartyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EB96257AB2750096F3B7 /* CreatePartyTableViewController.swift */; };
+		4465EBA6257BC8D90096F3B7 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EBA5257BC8D90096F3B7 /* StorageManager.swift */; };
 		447EE8BD257676A700D8698F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447EE8BC257676A700D8698F /* AppDelegate.swift */; };
 		447EE8BF257676A700D8698F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447EE8BE257676A700D8698F /* SceneDelegate.swift */; };
 		447EE8C1257676A700D8698F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447EE8C0257676A700D8698F /* ViewController.swift */; };
@@ -67,6 +68,7 @@
 		4465EB89257A9E6E0096F3B7 /* PartyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyTableViewCell.swift; sourceTree = "<group>"; };
 		4465EB8E257AA3360096F3B7 /* PartyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyModel.swift; sourceTree = "<group>"; };
 		4465EB96257AB2750096F3B7 /* CreatePartyTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePartyTableViewController.swift; sourceTree = "<group>"; };
+		4465EBA5257BC8D90096F3B7 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		447EE8B9257676A600D8698F /* CreateParty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CreateParty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		447EE8BC257676A700D8698F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		447EE8BE257676A700D8698F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				4465EB36257957E40096F3B7 /* SearchPartyViewController.swift */,
 				4465EB31257957160096F3B7 /* MyPartiesViewController.swift */,
 				4465EB8E257AA3360096F3B7 /* PartyModel.swift */,
+				4465EBA5257BC8D90096F3B7 /* StorageManager.swift */,
 				4465EB89257A9E6E0096F3B7 /* PartyTableViewCell.swift */,
 				4465EB2C257956C30096F3B7 /* TabBarController.swift */,
 				448157BC25777FC9004F06FF /* LoginViewController.swift */,
@@ -389,6 +392,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4465EBA6257BC8D90096F3B7 /* StorageManager.swift in Sources */,
 				4465EB4B25795E3E0096F3B7 /* WelcomeCarouselViewController.swift in Sources */,
 				4465EB5025795E800096F3B7 /* PageViewController.swift in Sources */,
 				4465EB3C257958170096F3B7 /* MessagesViewController.swift in Sources */,

@@ -9,7 +9,7 @@ import UIKit
 
 class CreatePartyTableViewController: UITableViewController {
 
-    var newParty: Party?
+    var newParty: Party()
     var imageIsChanged = false
     
     @IBOutlet weak var clearButton: UIBarButtonItem!

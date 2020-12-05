@@ -33,7 +33,7 @@ class RegisterViewController: UIViewController {
         
         birthdayWheels.maximumDate = NSDate() as Date
         birthdayWheels.locale = Locale(identifier: "ru_RU")
-        
+       
         informationLabel.isHidden = false
         
         nameTextField.text = savedName

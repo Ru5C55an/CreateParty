@@ -5,14 +5,13 @@
 //  Created by Руслан Садыков on 04.12.2020.
 //
 
-import UIKit
+import RealmSwift
 
-struct Party {
+class Party: Object {
     
-    var name: String
-    var location: String
-    var type: String
-    var image: UIImage?
-    var stringImage: String?
+    @objc dynamic var name = ""
+    @objc dynamic var location = ""
+    @objc dynamic var type = ""
+    @objc dynamic var imageData: Data?
     
 }
