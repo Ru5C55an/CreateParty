@@ -13,7 +13,13 @@ class StorageManager {
     
     static func saveObject(_ party: Party) {
         try! realm.write {
-            realm.add(party )
+            realm.add(party)
+        }
+    }
+    
+    static func deleteObject(_ party: Party) {
+        try! realm.write {
+            realm.delete(party)
         }
     }
 }

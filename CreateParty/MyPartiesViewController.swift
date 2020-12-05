@@ -46,12 +46,48 @@ extension MyPartiesViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "showDetailSegue" {
+            guard let indexPath = partiesListTable.indexPathForSelectedRow else { return }
+            let party = parties[indexPath.row]
+            let newPartyVC = segue.destination as! EditPartyTableViewController
+            newPartyVC.currentParty = party
+        }
+        
+    }
+    
     @IBAction func unwindSegueToMyParties( _ segue: UIStoryboardSegue) {
-        guard let createPartyVC = segue.source as? CreatePartyTableViewController else { return }
-        createPartyVC.tappedButton(createPartyVC.saveButton)
+        if let createPartyVC = segue.source as? CreatePartyTableViewController {
+            createPartyVC.tappedButton(createPartyVC.saveButton)
+        } else if let editPartyVC = segue.source as? EditPartyTableViewController {
+            editPartyVC.saveChanges(editPartyVC.saveButton)
+        }
         partiesListTable.reloadData()
     }
     
     // MARK: - Table view delegate
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let party = parties[indexPath.row]
+            StorageManager.deleteObject(party)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+    
+    //Используется для добавления нескольких Action
+//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//
+//        let party = parties[indexPath.row]
+//
+//        let deleteAction = UIContextualAction(style: .destructive, title: "Удалить") { (_, _, _) in
+//            StorageManager.deleteObject(party)
+//            tableView.deleteRows(at: [indexPath], with: .automatic)
+//        }
+//
+//        return UISwipeActionsConfiguration(actions: [deleteAction])
+//    }
     
 }
