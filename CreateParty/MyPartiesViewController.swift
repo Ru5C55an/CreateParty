@@ -6,18 +6,19 @@
 //
 
 import UIKit
+import RealmSwift
 
 class MyPartiesViewController: UIViewController {
     
     
     @IBOutlet weak var partiesListTable: UITableView!
     
-    var parties = [Party(name: "какашка", location: "унитаз", type: "Смывка", stringImage: "shit")]
+    var parties: Results<Party>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        parties = realm.objects(Party.self)
     }
 
 }
@@ -27,7 +28,7 @@ extension MyPartiesViewController: UITableViewDataSource, UITableViewDelegate {
     // MARK: - Table view data source
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return parties.count
+        return parties.isEmpty ? 0 : parties.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -40,7 +41,7 @@ extension MyPartiesViewController: UITableViewDataSource, UITableViewDelegate {
         cell.typeLabel.text = party.type
         cell.imageOfParty.layer.cornerRadius = cell.imageOfParty.frame.size.height / 2
         cell.imageOfParty.clipsToBounds = true
-        cell.imageOfParty.image = party.image
+        cell.imageOfParty.image = UIImage(data: party.imageData!)
         
         return cell
     }
@@ -48,7 +49,6 @@ extension MyPartiesViewController: UITableViewDataSource, UITableViewDelegate {
     @IBAction func unwindSegueToMyParties( _ segue: UIStoryboardSegue) {
         guard let createPartyVC = segue.source as? CreatePartyTableViewController else { return }
         createPartyVC.tappedButton(createPartyVC.saveButton)
-        parties.append(createPartyVC.newParty!)
         partiesListTable.reloadData()
     }
     

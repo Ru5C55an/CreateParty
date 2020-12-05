@@ -9,7 +9,6 @@ import UIKit
 
 class CreatePartyTableViewController: UITableViewController {
 
-    var newParty: Party()
     var imageIsChanged = false
     
     @IBOutlet weak var clearButton: UIBarButtonItem!
@@ -41,18 +40,21 @@ class CreatePartyTableViewController: UITableViewController {
                 image = UIImage(named: "NoImage")
             }
             
-            newParty = Party(name: nameTextField.text!,
-                             location: locationTextField.text!,
-                             type: typeTextField.text!,
-                             image: image,
-                             stringImage: nil)
+            let imageData = image?.pngData()
+            
+            let newParty = Party(name: nameTextField.text!,
+                                 location: locationTextField.text!,
+                                 type: typeTextField.text!,
+                                 imageData: imageData)
+            
+            StorageManager.saveObject(newParty)
             
             clearPartyInfo()
         }
     }
     
     func clearPartyInfo() {
-        imageOfParty.image = #imageLiteral(resourceName: "Photo")
+        imageOfParty.image = #imageLiteral(resourceName: "Photo") 
         nameTextField.text = ""
         locationTextField.text = ""
         typeTextField.text = ""
