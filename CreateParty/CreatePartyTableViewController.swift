@@ -17,12 +17,11 @@ class CreatePartyTableViewController: UITableViewController {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var typeTextField: UITextField!
-    
+    @IBOutlet weak var datePicker: UIDatePicker!
     
     @IBAction func textChanged(_ sender: UITextField) {
         updateSaveButtonState()
     }
-    
     
     @IBAction func tappedButton(_ sender: UIBarButtonItem) {
         
@@ -45,7 +44,8 @@ class CreatePartyTableViewController: UITableViewController {
             let newParty = Party(name: nameTextField.text!,
                                  location: locationTextField.text!,
                                  type: typeTextField.text!,
-                                 imageData: imageData)
+                                 imageData: imageData,
+                                 date: datePicker.date)
             
             StorageManager.saveObject(newParty)
             
@@ -64,6 +64,9 @@ class CreatePartyTableViewController: UITableViewController {
         super.viewDidLoad()
         
         tableView.tableFooterView = UIView() // Убираем линии внизу и заменяем их на view
+        
+        datePicker.minimumDate = NSDate() as Date
+        datePicker.locale = Locale(identifier: "ru_RU")
         
         saveButton.isEnabled = false
         updateSaveButtonState()

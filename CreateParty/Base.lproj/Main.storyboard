@@ -580,6 +580,36 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="230" id="dow-zn-WYe">
+                                        <rect key="frame" x="0.0" y="509" width="414" height="230"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dow-zn-WYe" id="dzQ-R0-U4c">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="230"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="UjY-0B-BfX">
+                                                    <rect key="frame" x="16" y="8" width="382" height="218"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Дата и время" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N1E-5S-6LW">
+                                                            <rect key="frame" x="0.0" y="0.0" width="382" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="thin" pointSize="20"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="zr3-pY-gxj">
+                                                            <rect key="frame" x="0.0" y="29" width="382" height="189"/>
+                                                        </datePicker>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="UjY-0B-BfX" firstAttribute="leading" secondItem="dzQ-R0-U4c" secondAttribute="leading" constant="16" id="62Q-uf-Iqh"/>
+                                                <constraint firstAttribute="trailing" secondItem="UjY-0B-BfX" secondAttribute="trailing" constant="16" id="ZKG-35-95x"/>
+                                                <constraint firstItem="UjY-0B-BfX" firstAttribute="top" secondItem="dzQ-R0-U4c" secondAttribute="top" constant="8" id="gcD-1f-Fki"/>
+                                                <constraint firstAttribute="bottom" secondItem="UjY-0B-BfX" secondAttribute="bottom" constant="4" id="sQ0-ln-D12"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -597,6 +627,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="datePicker" destination="zr3-pY-gxj" id="6GR-N4-Qdp"/>
                         <outlet property="imageOfParty" destination="hKD-1B-2se" id="ggh-dv-4Pj"/>
                         <outlet property="locationTextField" destination="Dw2-KP-JTn" id="wLn-5R-sEh"/>
                         <outlet property="nameTextField" destination="EbQ-J5-Zc5" id="gKf-W7-xCK"/>
@@ -744,6 +775,36 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="230" id="Zye-7f-j7o">
+                                        <rect key="frame" x="0.0" y="509" width="414" height="230"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Zye-7f-j7o" id="Rcz-Oy-VQd">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="230"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="zRw-vh-UWQ">
+                                                    <rect key="frame" x="16" y="8" width="382" height="218"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Дата и время" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3aI-FI-zZi">
+                                                            <rect key="frame" x="0.0" y="0.0" width="382" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="thin" pointSize="20"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="R0t-Wd-CUh">
+                                                            <rect key="frame" x="0.0" y="29" width="382" height="189"/>
+                                                        </datePicker>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="zRw-vh-UWQ" secondAttribute="bottom" constant="4" id="HIj-0c-vly"/>
+                                                <constraint firstItem="zRw-vh-UWQ" firstAttribute="leading" secondItem="Rcz-Oy-VQd" secondAttribute="leading" constant="16" id="QPL-uZ-pKl"/>
+                                                <constraint firstAttribute="trailing" secondItem="zRw-vh-UWQ" secondAttribute="trailing" constant="16" id="VB2-Ze-dA0"/>
+                                                <constraint firstItem="zRw-vh-UWQ" firstAttribute="top" secondItem="Rcz-Oy-VQd" secondAttribute="top" constant="8" id="tJS-6P-ii4"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -767,6 +828,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="clearButton" destination="thr-eh-ggw" id="tec-J8-JSt"/>
+                        <outlet property="datePicker" destination="R0t-Wd-CUh" id="U2r-Yj-SQL"/>
                         <outlet property="imageOfParty" destination="uPn-nq-pc8" id="Yib-eo-X2t"/>
                         <outlet property="locationTextField" destination="dmO-9g-PQ3" id="YkZ-fg-cZ7"/>
                         <outlet property="nameTextField" destination="5U5-8G-gmB" id="FM8-kl-LST"/>
@@ -777,7 +839,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fiD-6o-P83" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="Vew-We-aRR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3751" y="1410"/>
+            <point key="canvasLocation" x="3750.7246376811595" y="1409.5982142857142"/>
         </scene>
         <!--Сообщения-->
         <scene sceneID="zcg-VN-JHo">
@@ -795,7 +857,7 @@
             </objects>
             <point key="canvasLocation" x="2841" y="2099"/>
         </scene>
-        <!--Список актуальных вечеринок-->
+        <!--Вечеринки-->
         <scene sceneID="QVN-TN-atZ">
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="BzM-XK-8xN" customClass="MyPartiesViewController" customModule="CreateParty" customModuleProvider="target" sceneMemberID="viewController">
@@ -878,9 +940,30 @@
                             <constraint firstItem="34E-02-4ja" firstAttribute="leading" secondItem="tbq-jD-NbS" secondAttribute="leading" id="pCQ-o5-Xf9"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Список актуальных вечеринок" largeTitleDisplayMode="never" id="6mv-ZP-rew"/>
+                    <navigationItem key="navigationItem" title="Вечеринки" largeTitleDisplayMode="never" id="6mv-ZP-rew">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="AZ" id="KVT-rA-gan">
+                            <connections>
+                                <action selector="reverseSorting:" destination="BzM-XK-8xN" id="NOw-RR-1MZ"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="fJi-eZ-D03">
+                            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="ScA-9d-CrZ">
+                                <rect key="frame" x="293" y="11.5" width="101" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Дата"/>
+                                    <segment title="Имя"/>
+                                </segments>
+                                <connections>
+                                    <action selector="sortSelection:" destination="BzM-XK-8xN" eventType="valueChanged" id="fPZ-Yh-MN2"/>
+                                </connections>
+                            </segmentedControl>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="partiesListTable" destination="34E-02-4ja" id="Tm7-QP-apW"/>
+                        <outlet property="reversedSortingButton" destination="KVT-rA-gan" id="I94-VS-KGH"/>
+                        <outlet property="sortingTypeSegmentedControl" destination="ScA-9d-CrZ" id="Qjc-Sn-nve"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B9d-Bf-svt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -956,6 +1039,7 @@
         <segue reference="Qu0-dJ-76L"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="AZ" width="25" height="24"/>
         <image name="Photo" width="195" height="196"/>
         <image name="list.bullet.rectangle" catalog="system" width="128" height="93"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>

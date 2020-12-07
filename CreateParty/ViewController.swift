@@ -31,7 +31,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let userDefaults = UserDefaults.standard
-        userDefaults.set(false, forKey: "presentationWasViewed")
+        userDefaults.set(true, forKey: "presentationWasViewed")
         
         if userDefaults.bool(forKey: "presentationWasViewed") == true {
             animationView.backgroundColor = .clear
@@ -97,7 +97,6 @@ class ViewController: UIViewController {
         dvc.savedBirthday = savedBirthday
     }
     
-    
     @IBAction func unwindSegueToMainScreen(segue: UIStoryboardSegue) {
         guard segue.identifier == "unwindSegueToMainScreen" else { return }
         guard let svc = segue.source as? RegisterViewController else { return } // через svc можем обращаться к объектам viewContoller с которого выполнено возвращение
@@ -134,5 +133,3 @@ class ViewController: UIViewController {
     }
     
 }
-
-

@@ -10,17 +10,69 @@ import RealmSwift
 
 class MyPartiesViewController: UIViewController {
     
+    // private - свойства доступные только в этом классе. Мы не должны видеть эти свойства из каких-то других объектов
+    private let searchController  = UISearchController(searchResultsController: nil)
+    private var parties: Results<Party>!
+    private var filteredParties: Results<Party>!
+    private var ascendingSorting = true
+    private var searchBarIsEmpty: Bool {
+        guard let text = searchController.searchBar.text else { return false }
+        return text.isEmpty
+    }
+    private var isFiltering: Bool {
+        return searchController.isActive && !searchBarIsEmpty
+    }
+
+    @IBOutlet weak var sortingTypeSegmentedControl: UISegmentedControl!
     
     @IBOutlet weak var partiesListTable: UITableView!
     
-    var parties: Results<Party>!
+    @IBOutlet weak var reversedSortingButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         parties = realm.objects(Party.self)
+        
+        // Устанавливаем search controller
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false // Отключаем ограничение на взаимодействие с объектами результата поиска
+        searchController.searchBar.placeholder = "Поиск"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true // Позволяет отпустить строку поиска, при переходе на другой экран
     }
-
+    
+    @IBAction func sortSelection(_ sender: UISegmentedControl) {
+        
+        sorting()
+        
+    }
+    
+    @IBAction func reverseSorting(_ sender: Any) {
+        
+        ascendingSorting.toggle()
+        
+        if ascendingSorting {
+            reversedSortingButton.image = #imageLiteral(resourceName: "AZ")
+        } else {
+            reversedSortingButton.image = #imageLiteral(resourceName: "ZA")
+        }
+        
+        sorting()
+        
+    }
+    
+    private func sorting() {
+        
+        if sortingTypeSegmentedControl.selectedSegmentIndex == 0 {
+            parties = parties.sorted(byKeyPath: "date", ascending: ascendingSorting)
+        } else {
+            parties = parties.sorted(byKeyPath: "name", ascending: ascendingSorting)
+        }
+        
+        partiesListTable.reloadData()
+        
+    }
 }
 
 extension MyPartiesViewController: UITableViewDataSource, UITableViewDelegate {
@@ -28,13 +80,24 @@ extension MyPartiesViewController: UITableViewDataSource, UITableViewDelegate {
     // MARK: - Table view data source
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+       
+        if isFiltering {
+            return filteredParties.count
+        }
+        
         return parties.isEmpty ? 0 : parties.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! PartyTableViewCell
         
-        let party = parties[indexPath.row]
+        var party = Party()
+        
+        if isFiltering {
+            party = filteredParties[indexPath.row]
+        } else {
+            party = parties[indexPath.row]
+        }
         
         cell.nameLabel.text = party.name
         cell.locationLabel.text = party.location
@@ -51,7 +114,14 @@ extension MyPartiesViewController: UITableViewDataSource, UITableViewDelegate {
         
         if segue.identifier == "showDetailSegue" {
             guard let indexPath = partiesListTable.indexPathForSelectedRow else { return }
-            let party = parties[indexPath.row]
+            var party = Party()
+            
+            if isFiltering {
+                party = filteredParties[indexPath.row]
+            } else {
+                party = parties[indexPath.row]
+            }
+            
             let newPartyVC = segue.destination as! EditPartyTableViewController
             newPartyVC.currentParty = party
         }
@@ -89,5 +159,21 @@ extension MyPartiesViewController: UITableViewDataSource, UITableViewDelegate {
 //
 //        return UISwipeActionsConfiguration(actions: [deleteAction])
 //    }
+    
+}
+
+extension MyPartiesViewController: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
+    
+    private func filterContentForSearchText(_ searchText: String) {
+        
+        filteredParties = parties.filter("name CONTAINS[c] %@ OR location CONTAINS[c] %@ OR type CONTAINS[c] %@", searchText, searchText, searchText)
+        
+        partiesListTable.reloadData()
+        
+    }
     
 }

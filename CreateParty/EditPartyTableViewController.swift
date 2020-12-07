@@ -16,6 +16,7 @@ class EditPartyTableViewController: UITableViewController {
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var typeTextField: UITextField!
     @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var datePicker: UIDatePicker!
     
     @IBAction func saveChanges(_ sender: UIBarButtonItem) {
         
@@ -23,13 +24,13 @@ class EditPartyTableViewController: UITableViewController {
             currentParty?.name = nameTextField.text!
             currentParty?.location = locationTextField.text!
             currentParty?.type = typeTextField.text!
+            currentParty?.date = datePicker.date
 
             let imageData = imageOfParty.image!.pngData()
             
             currentParty?.imageData = imageData
             
         }
-        
     }
     
     @IBAction func textChanged(_ sender: UITextField) {
@@ -43,22 +44,26 @@ class EditPartyTableViewController: UITableViewController {
         
         saveButton.isEnabled = false
         
+        datePicker.minimumDate = NSDate() as Date
+        datePicker.locale = Locale(identifier: "ru_RU")
+        
         imageOfParty.image = image
         imageOfParty.contentMode = .scaleAspectFill
         imageOfParty.clipsToBounds = true
         nameTextField.text = currentParty?.name
         locationTextField.text = currentParty?.location
         typeTextField.text = currentParty?.type
+        datePicker.date = currentParty!.date
         
         title = currentParty?.name
         
         updateSaveButtonState()
         
+        navigationController?.navigationBar.topItem?.backButtonTitle = ""
         
-        // NOT WORKING!!!!!!!!!!!!!!!!!!! I`ll be back tomorrow!!!!!
         // Убираем текст к кнопку возвращения на предыдущий View Controller
         if let topItem = navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem? = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+            topItem.backButtonTitle = ""
         }
         
     }

@@ -13,7 +13,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var animationView: AnimationView!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    
 
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var registerButton: UIButton!
@@ -37,4 +36,5 @@ class LoginViewController: UIViewController {
         
         loginButton.layer.cornerRadius = loginButton.frame.size.height / 2
     }
+    
 }
