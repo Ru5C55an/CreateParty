@@ -9,7 +9,7 @@ import UIKit
 
 class EditPartyTableViewController: UITableViewController {
 
-    var currentParty: Party?
+    var currentParty: Party!
     
     @IBOutlet weak var imageOfParty: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!
@@ -17,18 +17,20 @@ class EditPartyTableViewController: UITableViewController {
     @IBOutlet weak var typeTextField: UITextField!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak var ratingControl: RatingControl!
     
     @IBAction func saveChanges(_ sender: UIBarButtonItem) {
         
         try! realm.write {
-            currentParty?.name = nameTextField.text!
-            currentParty?.location = locationTextField.text!
-            currentParty?.type = typeTextField.text!
-            currentParty?.date = datePicker.date
+            currentParty.name = nameTextField.text!
+            currentParty.location = locationTextField.text!
+            currentParty.type = typeTextField.text!
+            currentParty.date = datePicker.date
+            currentParty.rating = Double(ratingControl.rating)
 
             let imageData = imageOfParty.image!.pngData()
             
-            currentParty?.imageData = imageData
+            currentParty.imageData = imageData
             
         }
     }
@@ -40,7 +42,12 @@ class EditPartyTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        guard let imageData = currentParty?.imageData, let image = UIImage(data: imageData) else { return }
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0,
+                                                         y: 0,
+                                                         width: tableView.frame.size.width,
+                                                         height: tableView.frame.size.height)) // Убираем линии внизу и заменяем их на view
+        
+        guard let imageData = currentParty.imageData, let image = UIImage(data: imageData) else { return }
         
         saveButton.isEnabled = false
         
@@ -50,12 +57,14 @@ class EditPartyTableViewController: UITableViewController {
         imageOfParty.image = image
         imageOfParty.contentMode = .scaleAspectFill
         imageOfParty.clipsToBounds = true
-        nameTextField.text = currentParty?.name
-        locationTextField.text = currentParty?.location
-        typeTextField.text = currentParty?.type
-        datePicker.date = currentParty!.date
+        nameTextField.text = currentParty.name
+        locationTextField.text = currentParty.location
+        typeTextField.text = currentParty.type
+        datePicker.date = currentParty.date
         
-        title = currentParty?.name
+        ratingControl.rating = Int(currentParty.rating)
+        
+        title = currentParty.name
         
         updateSaveButtonState()
         

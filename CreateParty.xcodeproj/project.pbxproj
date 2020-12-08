@@ -34,6 +34,7 @@
 		447EE8E2257676AA00D8698F /* CreatePartyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447EE8E1257676AA00D8698F /* CreatePartyUITests.swift */; };
 		448157AE2576C559004F06FF /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448157AD2576C559004F06FF /* RegisterViewController.swift */; };
 		448157BD25777FC9004F06FF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448157BC25777FC9004F06FF /* LoginViewController.swift */; };
+		449B4E16257F7CB6001B009E /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449B4E15257F7CB6001B009E /* RatingControl.swift */; };
 		DC3028ED39165E1D32C235A3 /* Pods_CreateParty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7264F6C241E5081179FE2FC5 /* Pods_CreateParty.framework */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +89,7 @@
 		447EE8E3257676AA00D8698F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		448157AD2576C559004F06FF /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		448157BC25777FC9004F06FF /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		449B4E15257F7CB6001B009E /* RatingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
 		7264F6C241E5081179FE2FC5 /* Pods_CreateParty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CreateParty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8553FE85A8F22578EABC790B /* Pods-CreateParty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CreateParty.debug.xcconfig"; path = "Target Support Files/Pods-CreateParty/Pods-CreateParty.debug.xcconfig"; sourceTree = "<group>"; };
 		DA173AF80004CFF4A49FC330 /* Pods-CreateParty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CreateParty.release.xcconfig"; path = "Target Support Files/Pods-CreateParty/Pods-CreateParty.release.xcconfig"; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 			children = (
 				447EE8BC257676A700D8698F /* AppDelegate.swift */,
 				447EE8BE257676A700D8698F /* SceneDelegate.swift */,
+				449B4E15257F7CB6001B009E /* RatingControl.swift */,
 				447EE8C2257676A700D8698F /* Main.storyboard */,
 				4465EB4A25795E3E0096F3B7 /* WelcomeCarouselViewController.swift */,
 				4465EB4F25795E800096F3B7 /* PageViewController.swift */,
@@ -408,6 +411,7 @@
 				447EE8C1257676A700D8698F /* ViewController.swift in Sources */,
 				4465EB2D257956C30096F3B7 /* TabBarController.swift in Sources */,
 				4465EB97257AB2750096F3B7 /* CreatePartyTableViewController.swift in Sources */,
+				449B4E16257F7CB6001B009E /* RatingControl.swift in Sources */,
 				4465EB32257957160096F3B7 /* MyPartiesViewController.swift in Sources */,
 				4465EB8F257AA3360096F3B7 /* PartyModel.swift in Sources */,
 				447EE8BD257676A700D8698F /* AppDelegate.swift in Sources */,

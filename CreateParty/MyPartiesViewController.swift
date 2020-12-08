@@ -139,6 +139,10 @@ extension MyPartiesViewController: UITableViewDataSource, UITableViewDelegate {
     
     // MARK: - Table view delegate
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true) // Убирает выделение ячейки после возвращения с экрана EditParty
+    }
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let party = parties[indexPath.row]
