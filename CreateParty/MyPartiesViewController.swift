@@ -7,27 +7,31 @@
 
 import UIKit
 import RealmSwift
+import Cosmos
 
 class MyPartiesViewController: UIViewController {
     
     // private - свойства доступные только в этом классе. Мы не должны видеть эти свойства из каких-то других объектов
-    private let searchController  = UISearchController(searchResultsController: nil)
     private var parties: Results<Party>!
+    
     private var filteredParties: Results<Party>!
     private var ascendingSorting = true
+    private var isFiltering: Bool {
+        return searchController.isActive && !searchBarIsEmpty
+    }
+    
+    private let searchController  = UISearchController(searchResultsController: nil)
     private var searchBarIsEmpty: Bool {
         guard let text = searchController.searchBar.text else { return false }
         return text.isEmpty
     }
-    private var isFiltering: Bool {
-        return searchController.isActive && !searchBarIsEmpty
-    }
+    
 
     @IBOutlet weak var sortingTypeSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var reversedSortingButton: UIBarButtonItem!
     
     @IBOutlet weak var partiesListTable: UITableView!
     
-    @IBOutlet weak var reversedSortingButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +44,7 @@ class MyPartiesViewController: UIViewController {
         searchController.searchBar.placeholder = "Поиск"
         navigationItem.searchController = searchController
         definesPresentationContext = true // Позволяет отпустить строку поиска, при переходе на другой экран
+        
     }
     
     @IBAction func sortSelection(_ sender: UISegmentedControl) {
@@ -85,26 +90,19 @@ extension MyPartiesViewController: UITableViewDataSource, UITableViewDelegate {
             return filteredParties.count
         }
         
-        return parties.isEmpty ? 0 : parties.count
+        return parties.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! PartyTableViewCell
         
-        var party = Party()
-        
-        if isFiltering {
-            party = filteredParties[indexPath.row]
-        } else {
-            party = parties[indexPath.row]
-        }
+        let party = isFiltering ? filteredParties[indexPath.row] : parties[indexPath.row]
         
         cell.nameLabel.text = party.name
         cell.locationLabel.text = party.location
         cell.typeLabel.text = party.type
-        cell.imageOfParty.layer.cornerRadius = cell.imageOfParty.frame.size.height / 2
-        cell.imageOfParty.clipsToBounds = true
         cell.imageOfParty.image = UIImage(data: party.imageData!)
+        cell.cosmosView.rating = party.rating
         
         return cell
     }
@@ -114,13 +112,8 @@ extension MyPartiesViewController: UITableViewDataSource, UITableViewDelegate {
         
         if segue.identifier == "showDetailSegue" {
             guard let indexPath = partiesListTable.indexPathForSelectedRow else { return }
-            var party = Party()
             
-            if isFiltering {
-                party = filteredParties[indexPath.row]
-            } else {
-                party = parties[indexPath.row]
-            }
+            let party = isFiltering ? filteredParties[indexPath.row] : parties[indexPath.row]
             
             let newPartyVC = segue.destination as! EditPartyTableViewController
             newPartyVC.currentParty = party

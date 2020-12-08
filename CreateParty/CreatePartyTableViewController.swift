@@ -45,7 +45,8 @@ class CreatePartyTableViewController: UITableViewController {
                                  location: locationTextField.text!,
                                  type: typeTextField.text!,
                                  imageData: imageData,
-                                 date: datePicker.date)
+                                 date: datePicker.date,
+                                 rating: 0.0)
             
             StorageManager.saveObject(newParty)
             
