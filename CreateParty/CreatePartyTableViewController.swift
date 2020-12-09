@@ -31,14 +31,7 @@ class CreatePartyTableViewController: UITableViewController {
         
         if sender == saveButton {
             
-            var image: UIImage?
-            
-            if imageIsChanged {
-                image = imageOfParty.image
-            } else {
-                image = UIImage(named: "NoImage")
-            }
-            
+            let image = imageIsChanged ? imageOfParty.image : UIImage(named: "NoImage")
             let imageData = image?.pngData()
             
             let newParty = Party(name: nameTextField.text!,

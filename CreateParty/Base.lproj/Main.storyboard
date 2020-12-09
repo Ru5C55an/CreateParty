@@ -29,7 +29,7 @@
                                 <rect key="frame" x="120.5" y="684" width="173" height="41"/>
                                 <color key="backgroundColor" name="AccentColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="173" id="SbQ-Re-LxC"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="173" id="SbQ-Re-LxC"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Регистрация">
@@ -110,7 +110,7 @@
                                 <rect key="frame" x="167" y="781" width="80" height="41"/>
                                 <color key="backgroundColor" name="AccentColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="ERC-1k-kGj"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="ERC-1k-kGj"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Войти">
@@ -324,7 +324,7 @@
                                 <color key="backgroundColor" name="AccentColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="gtX-L6-ehh" secondAttribute="height" multiplier="63:10" id="PxP-wx-JXn"/>
-                                    <constraint firstAttribute="width" constant="315" id="icS-Vh-F7j"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="315" id="icS-Vh-F7j"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Подтвердить регистрацию">
@@ -473,7 +473,22 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W29-Ws-bbp">
+                                                    <rect key="frame" x="348" y="198" width="50" height="50"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="50" id="CgM-YZ-gfn"/>
+                                                        <constraint firstAttribute="width" constant="50" id="EMX-Rk-uEm"/>
+                                                    </constraints>
+                                                    <state key="normal" image="map"/>
+                                                    <connections>
+                                                        <segue destination="Gza-z8-KOf" kind="presentation" identifier="showParty" id="SZn-jo-0bb"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="W29-Ws-bbp" secondAttribute="trailing" constant="16" id="IUD-lZ-u61"/>
+                                                <constraint firstAttribute="bottom" secondItem="W29-Ws-bbp" secondAttribute="bottom" constant="8" id="LY4-Qc-Q1U"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="75" id="Qeh-Da-9z5">
@@ -520,16 +535,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="qaG-fL-TFj">
-                                                    <rect key="frame" x="16" y="8" width="382" height="63"/>
+                                                    <rect key="frame" x="16" y="8" width="340" height="63"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Местоположение" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hZk-Ne-nUq">
-                                                            <rect key="frame" x="0.0" y="0.0" width="382" height="28.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="340" height="28.5"/>
                                                             <fontDescription key="fontDescription" type="system" weight="thin" pointSize="20"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="Укажите местоположение" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dw2-KP-JTn">
-                                                            <rect key="frame" x="0.0" y="36.5" width="382" height="26.5"/>
+                                                            <rect key="frame" x="0.0" y="36.5" width="340" height="26.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                                             <connections>
@@ -539,12 +554,25 @@
                                                         </textField>
                                                     </subviews>
                                                 </stackView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="97K-mU-xpe">
+                                                    <rect key="frame" x="364" y="43" width="30" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="753-io-78b"/>
+                                                        <constraint firstAttribute="width" constant="30" id="x7J-oU-Cke"/>
+                                                    </constraints>
+                                                    <state key="normal" image="PlaceMarker"/>
+                                                    <connections>
+                                                        <segue destination="Gza-z8-KOf" kind="presentation" identifier="getAddress" id="E8O-eu-TCt"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="qaG-fL-TFj" firstAttribute="top" secondItem="R2t-Dt-cFf" secondAttribute="top" constant="8" id="4gJ-tN-Fy8"/>
-                                                <constraint firstAttribute="trailing" secondItem="qaG-fL-TFj" secondAttribute="trailing" constant="16" id="LL1-TM-7wr"/>
+                                                <constraint firstItem="97K-mU-xpe" firstAttribute="trailing" secondItem="R2t-Dt-cFf" secondAttribute="trailingMargin" id="TvJ-IA-xCp"/>
                                                 <constraint firstItem="qaG-fL-TFj" firstAttribute="leading" secondItem="R2t-Dt-cFf" secondAttribute="leading" constant="16" id="Vmq-X6-YMS"/>
+                                                <constraint firstItem="97K-mU-xpe" firstAttribute="centerY" secondItem="Dw2-KP-JTn" secondAttribute="centerY" id="cFR-eZ-bs0"/>
                                                 <constraint firstAttribute="bottom" secondItem="qaG-fL-TFj" secondAttribute="bottom" constant="4" id="gCS-hl-sPc"/>
+                                                <constraint firstItem="97K-mU-xpe" firstAttribute="leading" secondItem="qaG-fL-TFj" secondAttribute="trailing" constant="8" id="rHR-wE-y5N"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -660,7 +688,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WoD-xS-NN2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="Jfe-Hs-p6F" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4639" y="56"/>
+            <point key="canvasLocation" x="4637.68115942029" y="55.580357142857139"/>
         </scene>
         <!--Создание вечеринки-->
         <scene sceneID="gk0-fB-Z1c">
@@ -862,6 +890,94 @@
                 <exit id="Vew-We-aRR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3750.7246376811595" y="1409.5982142857142"/>
+        </scene>
+        <!--Map View Controller-->
+        <scene sceneID="Lo0-LI-NLT">
+            <objects>
+                <viewController id="Gza-z8-KOf" customClass="MapViewController" customModule="CreateParty" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="tNp-wb-9A9">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="YwB-wy-3I4">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="close" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BXQ-JO-RNT">
+                                <rect key="frame" x="324" y="40" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="2Ir-Dz-5xl"/>
+                                    <constraint firstAttribute="width" constant="50" id="uPD-BA-iO8"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="closeVC" destination="Gza-z8-KOf" eventType="touchUpInside" id="ubH-dL-DZb"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eDS-Bu-WDs">
+                                <rect key="frame" x="344" y="684" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Hch-Ot-X9U"/>
+                                    <constraint firstAttribute="width" constant="30" id="UIP-sx-Aqv"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <connections>
+                                    <action selector="centerViewInUserLocation" destination="Gza-z8-KOf" eventType="touchUpInside" id="1F5-Ky-JJK"/>
+                                    <action selector="centerViewInUserLocation:" destination="Gza-z8-KOf" eventType="touchUpInside" id="9RA-sH-sc4"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Marker" translatesAutoresizingMaskIntoConstraints="NO" id="qfK-Vn-c1F">
+                                <rect key="frame" x="187" y="381" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="GyQ-j3-CBo"/>
+                                    <constraint firstAttribute="height" constant="40" id="dde-Mg-6QD"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Текущий адрес" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Bhu-dz-su5">
+                                <rect key="frame" x="20" y="135" width="374" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G8c-RH-7sJ">
+                                <rect key="frame" x="170.5" y="757" width="73" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="Готово"/>
+                                <connections>
+                                    <action selector="doneButtonPressed" destination="Gza-z8-KOf" eventType="touchUpInside" id="1qj-qM-Krh"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="aAo-Pe-fxz"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Bhu-dz-su5" firstAttribute="centerX" secondItem="tNp-wb-9A9" secondAttribute="centerX" id="1us-KO-fBr"/>
+                            <constraint firstItem="aAo-Pe-fxz" firstAttribute="trailing" secondItem="BXQ-JO-RNT" secondAttribute="trailing" constant="40" id="3Kd-We-SaL"/>
+                            <constraint firstItem="Bhu-dz-su5" firstAttribute="leading" secondItem="aAo-Pe-fxz" secondAttribute="leading" constant="20" id="6Ap-Ab-m14"/>
+                            <constraint firstItem="YwB-wy-3I4" firstAttribute="leading" secondItem="aAo-Pe-fxz" secondAttribute="leading" id="9Yz-Se-hen"/>
+                            <constraint firstAttribute="bottom" secondItem="YwB-wy-3I4" secondAttribute="bottom" id="Ghg-QP-Wyo"/>
+                            <constraint firstItem="qfK-Vn-c1F" firstAttribute="centerX" secondItem="tNp-wb-9A9" secondAttribute="centerX" id="Me2-ck-25C"/>
+                            <constraint firstItem="YwB-wy-3I4" firstAttribute="trailing" secondItem="aAo-Pe-fxz" secondAttribute="trailing" id="Mwi-E7-Btr"/>
+                            <constraint firstItem="aAo-Pe-fxz" firstAttribute="trailing" secondItem="eDS-Bu-WDs" secondAttribute="trailing" constant="40" id="ShZ-8X-Ku8"/>
+                            <constraint firstItem="aAo-Pe-fxz" firstAttribute="trailing" secondItem="Bhu-dz-su5" secondAttribute="trailing" constant="20" id="XkW-W1-gva"/>
+                            <constraint firstItem="G8c-RH-7sJ" firstAttribute="centerX" secondItem="tNp-wb-9A9" secondAttribute="centerX" id="Ycr-rB-Iuf"/>
+                            <constraint firstItem="aAo-Pe-fxz" firstAttribute="bottom" secondItem="G8c-RH-7sJ" secondAttribute="bottom" constant="10" id="lr4-nb-jtk"/>
+                            <constraint firstItem="BXQ-JO-RNT" firstAttribute="top" secondItem="aAo-Pe-fxz" secondAttribute="top" constant="40" id="nIj-nA-dDS"/>
+                            <constraint firstItem="Bhu-dz-su5" firstAttribute="top" secondItem="aAo-Pe-fxz" secondAttribute="top" constant="135" id="ndY-SH-umO"/>
+                            <constraint firstAttribute="bottom" secondItem="eDS-Bu-WDs" secondAttribute="bottom" constant="128" id="t7Q-XT-WK2"/>
+                            <constraint firstItem="qfK-Vn-c1F" firstAttribute="centerY" secondItem="tNp-wb-9A9" secondAttribute="centerY" constant="-20" id="vhn-7T-ehr"/>
+                            <constraint firstItem="YwB-wy-3I4" firstAttribute="top" secondItem="tNp-wb-9A9" secondAttribute="top" id="zOu-lN-VC2"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="addressLabel" destination="Bhu-dz-su5" id="HDi-iY-28I"/>
+                        <outlet property="doneButton" destination="G8c-RH-7sJ" id="pDu-xx-SRJ"/>
+                        <outlet property="mapMarkerImage" destination="qfK-Vn-c1F" id="SU6-8C-yat"/>
+                        <outlet property="mapView" destination="YwB-wy-3I4" id="CMf-0O-pMf"/>
+                        <outlet property="userLocationButton" destination="eDS-Bu-WDs" id="Ala-fE-xHD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YcO-ko-ICm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5428.985507246377" y="55.580357142857139"/>
         </scene>
         <!--Сообщения-->
         <scene sceneID="zcg-VN-JHo">
@@ -1078,13 +1194,17 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
+        <segue reference="E8O-eu-TCt"/>
         <segue reference="Qu0-dJ-76L"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="AZ" width="25" height="24"/>
+        <image name="Marker" width="48" height="48"/>
         <image name="Photo" width="195" height="196"/>
+        <image name="PlaceMarker" width="48" height="48"/>
         <image name="list.bullet.rectangle" catalog="system" width="128" height="93"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
+        <image name="map" width="50" height="50"/>
         <image name="message" catalog="system" width="128" height="113"/>
         <image name="person" catalog="system" width="128" height="117"/>
         <image name="plus" catalog="system" width="128" height="113"/>

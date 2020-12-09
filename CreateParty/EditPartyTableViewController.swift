@@ -119,6 +119,26 @@ class EditPartyTableViewController: UITableViewController {
             view.endEditing(true)
         }
     }
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let identifier = segue.identifier,
+              let mapVC = segue.destination as? MapViewController
+        else { return }
+        
+        mapVC.incomeSegueIdentifier = identifier
+        mapVC.mapViewControllerDelegate = self
+        
+        if identifier == "showParty" {
+            mapVC.party.name = nameTextField.text!
+            mapVC.party.location = locationTextField.text!
+            mapVC.party.type = typeTextField.text!
+            mapVC.party.imageData = imageOfParty.image?.pngData()
+        }
+        
+    }
 
 }
 
@@ -156,4 +176,12 @@ extension EditPartyTableViewController: UIImagePickerControllerDelegate, UINavig
         
         dismiss(animated: true)
     }
+}
+
+extension EditPartyTableViewController: MapViewControllerDelegate {
+    
+    func getAddress(_ address: String?) {
+        locationTextField.text = address
+    }
+    
 }
