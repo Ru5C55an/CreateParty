@@ -21,8 +21,15 @@ class MapViewController: UIViewController {
     
     let annotationIdentifier = "annotationIdentifier"
     let locationManager = CLLocationManager()
-    let regionImMeters = 10_000.0
+    let regionImMeters = 1000.0
     var incomeSegueIdentifier = ""
+    var partyCoordinate: CLLocationCoordinate2D?
+    var directionsArray: [MKDirections] = []
+    var previousLocation: CLLocation? {
+        didSet {
+            startTrackingUserLocation()
+        }
+    }
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -31,6 +38,8 @@ class MapViewController: UIViewController {
     @IBOutlet weak var mapMarkerImage: UIImageView!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var goButton: UIButton!
+    @IBOutlet weak var timeAndDistanceLabel: UILabel!
     
     
     override func viewDidLoad() {
@@ -41,6 +50,7 @@ class MapViewController: UIViewController {
         mapView.delegate = self
         
         userLocationButton.layer.contents = UIImage(named: "NearMe")?.cgImage
+        goButton.layer.contents = UIImage(named: "GPS")?.cgImage
         
         setupMapView()
         checkLocationServices()
@@ -55,6 +65,9 @@ class MapViewController: UIViewController {
         dismiss(animated: true) 
     }
     
+    @IBAction func goButtonPressed() {
+        getDirection()
+    }
     
     @IBAction func closeVC() {
         dismiss(animated: true) // Закрывает VC и выгружает его из памяти
@@ -62,12 +75,28 @@ class MapViewController: UIViewController {
     
     private func setupMapView() {
         
+        goButton.isHidden = true
+        timeAndDistanceLabel.isHidden = true
+        timeAndDistanceLabel.text = ""
+        
         if incomeSegueIdentifier == "showParty" {
             setupPartymark()
             mapMarkerImage.isHidden = true
             addressLabel.isHidden = true
             doneButton.isHidden = true
+            goButton.isHidden = false
+            timeAndDistanceLabel.isHidden = false
         }
+        
+    }
+    
+    // Метод отменяет все действующие маршруты и удаляет их с карты
+    private func resetMapView(withNew directions: MKDirections) {
+        
+        mapView.removeOverlays(mapView.overlays) // Удаление всех наложений с карты
+        directionsArray.append(directions)
+        let _ = directionsArray.map { $0.cancel() } // Отменем маршрут у каждого элемента массива
+        directionsArray.removeAll() // Удаляем все элементы массива
         
     }
     
@@ -97,6 +126,7 @@ class MapViewController: UIViewController {
             guard let partymarkLocation = partymark?.location else { return }
             
             annotation.coordinate = partymarkLocation.coordinate
+            self.partyCoordinate = partymarkLocation.coordinate
             
             self.mapView.showAnnotations([annotation], animated: true)
             self.mapView.selectAnnotation(annotation, animated: true)
@@ -151,6 +181,79 @@ class MapViewController: UIViewController {
         
     }
     
+    private func startTrackingUserLocation() {
+        
+        guard let previousLocation = previousLocation else { return }
+        let center = getCenterLocation(for: mapView)
+        guard center.distance(from: previousLocation) > 50 else { return }
+        self.previousLocation = center
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.showUserLocation()
+        }
+    }
+    
+    private func getDirection() {
+        
+        guard let location = locationManager.location?.coordinate else {
+            showAlert(title: "Ошибка", message: "Не удалость определить ваше местоположение")
+            return
+        }
+        
+        locationManager.startUpdatingLocation() // Постоянное отслеживание местоположения пользователя
+        previousLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
+        
+        
+        guard let request = createDirectionsRequest(from: location) else {
+            showAlert(title: "Ошибка", message: "Место назначения не найдено")
+            return
+        }
+        
+        let directions = MKDirections(request: request)
+        resetMapView(withNew: directions)
+        
+        directions.calculate { (response, error) in
+            
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            guard let response = response else {
+                self.showAlert(title: "Ошибка", message: "Маршрут не доступен")
+                return
+            }
+            
+            for route in response.routes {
+                self.mapView.addOverlay(route.polyline)
+                self.mapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
+                
+                let distance = String(format: "%.1f",route.distance / 1000)
+                let timeInterval = String(format: "%", route.expectedTravelTime / 60)
+                
+                self.timeAndDistanceLabel.text = "Расстояние до места: \(distance) км. /n Время в пути составит: \(timeInterval) мин."
+            }
+        }
+        
+    }
+    
+    private func createDirectionsRequest(from coordinate: CLLocationCoordinate2D) -> MKDirections.Request? {
+        
+        guard let destinationCoordinate = partyCoordinate else { return nil }
+        let startingLocation = MKPlacemark(coordinate: coordinate)
+        let destination = MKPlacemark(coordinate: destinationCoordinate)
+        
+        let request = MKDirections.Request()
+        request.source = MKMapItem(placemark: startingLocation)
+        request.destination = MKMapItem(placemark: destination)
+        request.transportType = .automobile
+        request.requestsAlternateRoutes = true
+        
+        return request
+        
+    }
+    
+    
     private func getCenterLocation(for mapView: MKMapView) -> CLLocation {
         
         let latitude = mapView.centerCoordinate.latitude
@@ -199,6 +302,14 @@ extension MapViewController: MKMapViewDelegate {
         let center = getCenterLocation(for: mapView)
         let geocoder = CLGeocoder()
         
+        if incomeSegueIdentifier == "showParty" && previousLocation != nil {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                self.showUserLocation()
+            }
+        }
+        
+        geocoder.cancelGeocode() // Для оптимизации
+        
         geocoder.reverseGeocodeLocation(center) { (partymarks, error) in
             
             if let error = error {
@@ -226,6 +337,16 @@ extension MapViewController: MKMapViewDelegate {
         }
     }
 
+    // Для отображения наложения маршрута его необходимо отрендерить
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        
+        let renderer = MKPolylineRenderer(overlay: overlay as! MKPolyline)
+        renderer.strokeColor = .orange
+        
+        return renderer
+        
+    }
+    
 }
 
 extension MapViewController: CLLocationManagerDelegate {

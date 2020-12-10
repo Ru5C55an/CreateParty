@@ -938,13 +938,30 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G8c-RH-7sJ">
-                                <rect key="frame" x="170.5" y="757" width="73" height="41"/>
+                                <rect key="frame" x="170.5" y="727" width="73" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Готово"/>
                                 <connections>
                                     <action selector="doneButtonPressed" destination="Gza-z8-KOf" eventType="touchUpInside" id="1qj-qM-Krh"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CVj-Lc-C1O">
+                                <rect key="frame" x="182" y="718" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="WKn-Hq-CgT"/>
+                                    <constraint firstAttribute="width" constant="50" id="vAs-JA-ya1"/>
+                                </constraints>
+                                <state key="normal" image="GPS"/>
+                                <connections>
+                                    <action selector="goButtonPressed" destination="Gza-z8-KOf" eventType="touchUpInside" id="tLM-AC-NpA"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Расстояние до места:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KMB-4B-Jde">
+                                <rect key="frame" x="8" y="134" width="398" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="aAo-Pe-fxz"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -952,17 +969,23 @@
                             <constraint firstItem="Bhu-dz-su5" firstAttribute="centerX" secondItem="tNp-wb-9A9" secondAttribute="centerX" id="1us-KO-fBr"/>
                             <constraint firstItem="aAo-Pe-fxz" firstAttribute="trailing" secondItem="BXQ-JO-RNT" secondAttribute="trailing" constant="40" id="3Kd-We-SaL"/>
                             <constraint firstItem="Bhu-dz-su5" firstAttribute="leading" secondItem="aAo-Pe-fxz" secondAttribute="leading" constant="20" id="6Ap-Ab-m14"/>
+                            <constraint firstItem="aAo-Pe-fxz" firstAttribute="trailing" secondItem="KMB-4B-Jde" secondAttribute="trailing" constant="8" id="8Qe-4Q-tt4"/>
                             <constraint firstItem="YwB-wy-3I4" firstAttribute="leading" secondItem="aAo-Pe-fxz" secondAttribute="leading" id="9Yz-Se-hen"/>
+                            <constraint firstItem="KMB-4B-Jde" firstAttribute="leading" secondItem="aAo-Pe-fxz" secondAttribute="leading" constant="8" id="DJj-t1-j4J"/>
                             <constraint firstAttribute="bottom" secondItem="YwB-wy-3I4" secondAttribute="bottom" id="Ghg-QP-Wyo"/>
                             <constraint firstItem="qfK-Vn-c1F" firstAttribute="centerX" secondItem="tNp-wb-9A9" secondAttribute="centerX" id="Me2-ck-25C"/>
                             <constraint firstItem="YwB-wy-3I4" firstAttribute="trailing" secondItem="aAo-Pe-fxz" secondAttribute="trailing" id="Mwi-E7-Btr"/>
                             <constraint firstItem="aAo-Pe-fxz" firstAttribute="trailing" secondItem="eDS-Bu-WDs" secondAttribute="trailing" constant="40" id="ShZ-8X-Ku8"/>
                             <constraint firstItem="aAo-Pe-fxz" firstAttribute="trailing" secondItem="Bhu-dz-su5" secondAttribute="trailing" constant="20" id="XkW-W1-gva"/>
                             <constraint firstItem="G8c-RH-7sJ" firstAttribute="centerX" secondItem="tNp-wb-9A9" secondAttribute="centerX" id="Ycr-rB-Iuf"/>
-                            <constraint firstItem="aAo-Pe-fxz" firstAttribute="bottom" secondItem="G8c-RH-7sJ" secondAttribute="bottom" constant="10" id="lr4-nb-jtk"/>
+                            <constraint firstItem="KMB-4B-Jde" firstAttribute="centerX" secondItem="aAo-Pe-fxz" secondAttribute="centerX" id="cp9-GW-gfw"/>
+                            <constraint firstItem="KMB-4B-Jde" firstAttribute="top" secondItem="aAo-Pe-fxz" secondAttribute="top" constant="134" id="lSf-QY-lhU"/>
+                            <constraint firstItem="aAo-Pe-fxz" firstAttribute="bottom" secondItem="G8c-RH-7sJ" secondAttribute="bottom" constant="40" id="lr4-nb-jtk"/>
                             <constraint firstItem="BXQ-JO-RNT" firstAttribute="top" secondItem="aAo-Pe-fxz" secondAttribute="top" constant="40" id="nIj-nA-dDS"/>
                             <constraint firstItem="Bhu-dz-su5" firstAttribute="top" secondItem="aAo-Pe-fxz" secondAttribute="top" constant="135" id="ndY-SH-umO"/>
+                            <constraint firstItem="aAo-Pe-fxz" firstAttribute="bottom" secondItem="CVj-Lc-C1O" secondAttribute="bottom" constant="40" id="pag-F5-J0F"/>
                             <constraint firstAttribute="bottom" secondItem="eDS-Bu-WDs" secondAttribute="bottom" constant="128" id="t7Q-XT-WK2"/>
+                            <constraint firstItem="CVj-Lc-C1O" firstAttribute="centerX" secondItem="aAo-Pe-fxz" secondAttribute="centerX" id="t7o-Bq-4Za"/>
                             <constraint firstItem="qfK-Vn-c1F" firstAttribute="centerY" secondItem="tNp-wb-9A9" secondAttribute="centerY" constant="-20" id="vhn-7T-ehr"/>
                             <constraint firstItem="YwB-wy-3I4" firstAttribute="top" secondItem="tNp-wb-9A9" secondAttribute="top" id="zOu-lN-VC2"/>
                         </constraints>
@@ -970,8 +993,10 @@
                     <connections>
                         <outlet property="addressLabel" destination="Bhu-dz-su5" id="HDi-iY-28I"/>
                         <outlet property="doneButton" destination="G8c-RH-7sJ" id="pDu-xx-SRJ"/>
+                        <outlet property="goButton" destination="CVj-Lc-C1O" id="lcY-JC-hWH"/>
                         <outlet property="mapMarkerImage" destination="qfK-Vn-c1F" id="SU6-8C-yat"/>
                         <outlet property="mapView" destination="YwB-wy-3I4" id="CMf-0O-pMf"/>
+                        <outlet property="timeAndDistanceLabel" destination="KMB-4B-Jde" id="wgD-GR-Yc3"/>
                         <outlet property="userLocationButton" destination="eDS-Bu-WDs" id="Ala-fE-xHD"/>
                     </connections>
                 </viewController>
@@ -1199,6 +1224,7 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="AZ" width="25" height="24"/>
+        <image name="GPS" width="32" height="32"/>
         <image name="Marker" width="48" height="48"/>
         <image name="Photo" width="195" height="196"/>
         <image name="PlaceMarker" width="48" height="48"/>
