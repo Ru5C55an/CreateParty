@@ -68,8 +68,6 @@ class EditPartyTableViewController: UITableViewController {
         
         updateSaveButtonState()
         
-        navigationController?.navigationBar.topItem?.backButtonTitle = ""
-        
         // Убираем текст к кнопку возвращения на предыдущий View Controller
         if let topItem = navigationController?.navigationBar.topItem {
             topItem.backButtonTitle = ""

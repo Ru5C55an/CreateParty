@@ -37,6 +37,7 @@
 		449B4E16257F7CB6001B009E /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449B4E15257F7CB6001B009E /* RatingControl.swift */; };
 		44BAA95B257FD6B500F9B362 /* RatingControlForDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BAA95A257FD6B500F9B362 /* RatingControlForDisplay.swift */; };
 		44BAA97D258013D600F9B362 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BAA97C258013D600F9B362 /* MapViewController.swift */; };
+		44BAA98A2582842800F9B362 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BAA9892582842800F9B362 /* MapManager.swift */; };
 		DC3028ED39165E1D32C235A3 /* Pods_CreateParty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7264F6C241E5081179FE2FC5 /* Pods_CreateParty.framework */; };
 /* End PBXBuildFile section */
 
@@ -94,6 +95,7 @@
 		449B4E15257F7CB6001B009E /* RatingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
 		44BAA95A257FD6B500F9B362 /* RatingControlForDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingControlForDisplay.swift; sourceTree = "<group>"; };
 		44BAA97C258013D600F9B362 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		44BAA9892582842800F9B362 /* MapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
 		7264F6C241E5081179FE2FC5 /* Pods_CreateParty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CreateParty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8553FE85A8F22578EABC790B /* Pods-CreateParty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CreateParty.debug.xcconfig"; path = "Target Support Files/Pods-CreateParty/Pods-CreateParty.debug.xcconfig"; sourceTree = "<group>"; };
 		DA173AF80004CFF4A49FC330 /* Pods-CreateParty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CreateParty.release.xcconfig"; path = "Target Support Files/Pods-CreateParty/Pods-CreateParty.release.xcconfig"; sourceTree = "<group>"; };
@@ -150,30 +152,15 @@
 		447EE8BB257676A600D8698F /* CreateParty */ = {
 			isa = PBXGroup;
 			children = (
-				447EE8BC257676A700D8698F /* AppDelegate.swift */,
+				44BAA98E2583CF7200F9B362 /* View Controllers */,
+				44BAA9992583D00E00F9B362 /* Helpers */,
+				44BAA9982583CFF300F9B362 /* Models */,
+				44BAA99A2583D02700F9B362 /* SupportFiles */,
+				44BAA99B2583D05700F9B362 /* IBuilder */,
 				447EE8BE257676A700D8698F /* SceneDelegate.swift */,
-				449B4E15257F7CB6001B009E /* RatingControl.swift */,
-				447EE8C2257676A700D8698F /* Main.storyboard */,
-				44BAA97C258013D600F9B362 /* MapViewController.swift */,
 				44BAA95A257FD6B500F9B362 /* RatingControlForDisplay.swift */,
-				4465EB4A25795E3E0096F3B7 /* WelcomeCarouselViewController.swift */,
-				4465EB4F25795E800096F3B7 /* PageViewController.swift */,
-				4465EB452579585A0096F3B7 /* UserProfileViewController.swift */,
-				4465EB3B257958170096F3B7 /* MessagesViewController.swift */,
-				4465EB96257AB2750096F3B7 /* CreatePartyTableViewController.swift */,
-				4465EB36257957E40096F3B7 /* SearchPartyViewController.swift */,
-				4465EB31257957160096F3B7 /* MyPartiesViewController.swift */,
-				4465EBAA257BF7820096F3B7 /* EditPartyTableViewController.swift */,
-				4465EB8E257AA3360096F3B7 /* PartyModel.swift */,
-				4465EBA5257BC8D90096F3B7 /* StorageManager.swift */,
-				4465EB89257A9E6E0096F3B7 /* PartyTableViewCell.swift */,
 				4465EB2C257956C30096F3B7 /* TabBarController.swift */,
-				448157BC25777FC9004F06FF /* LoginViewController.swift */,
-				448157AD2576C559004F06FF /* RegisterViewController.swift */,
-				447EE8C0257676A700D8698F /* ViewController.swift */,
 				4481579025768201004F06FF /* Assets */,
-				447EE8CA257676AA00D8698F /* LaunchScreen.storyboard */,
-				447EE8CD257676AA00D8698F /* Info.plist */,
 				447EE8C5257676A700D8698F /* CreateParty.xcdatamodeld */,
 			);
 			path = CreateParty;
@@ -204,9 +191,65 @@
 				4465EB7D257A89B00096F3B7 /* GradientBackground.json */,
 				4465EB7B257A89AF0096F3B7 /* HelloScreen.json */,
 				4465EB7E257A89B00096F3B7 /* WaitingDots.json */,
-				447EE8C8257676AA00D8698F /* Assets.xcassets */,
 			);
 			path = Assets;
+			sourceTree = "<group>";
+		};
+		44BAA98E2583CF7200F9B362 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				44BAA97C258013D600F9B362 /* MapViewController.swift */,
+				4465EB4A25795E3E0096F3B7 /* WelcomeCarouselViewController.swift */,
+				4465EB4F25795E800096F3B7 /* PageViewController.swift */,
+				4465EB452579585A0096F3B7 /* UserProfileViewController.swift */,
+				4465EB3B257958170096F3B7 /* MessagesViewController.swift */,
+				4465EB96257AB2750096F3B7 /* CreatePartyTableViewController.swift */,
+				4465EB36257957E40096F3B7 /* SearchPartyViewController.swift */,
+				4465EB31257957160096F3B7 /* MyPartiesViewController.swift */,
+				4465EBAA257BF7820096F3B7 /* EditPartyTableViewController.swift */,
+				448157BC25777FC9004F06FF /* LoginViewController.swift */,
+				448157AD2576C559004F06FF /* RegisterViewController.swift */,
+				447EE8C0257676A700D8698F /* ViewController.swift */,
+				4465EB89257A9E6E0096F3B7 /* PartyTableViewCell.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		44BAA9982583CFF300F9B362 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4465EB8E257AA3360096F3B7 /* PartyModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		44BAA9992583D00E00F9B362 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				44BAA9892582842800F9B362 /* MapManager.swift */,
+				4465EBA5257BC8D90096F3B7 /* StorageManager.swift */,
+				449B4E15257F7CB6001B009E /* RatingControl.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		44BAA99A2583D02700F9B362 /* SupportFiles */ = {
+			isa = PBXGroup;
+			children = (
+				447EE8BC257676A700D8698F /* AppDelegate.swift */,
+				447EE8C8257676AA00D8698F /* Assets.xcassets */,
+				447EE8CD257676AA00D8698F /* Info.plist */,
+			);
+			path = SupportFiles;
+			sourceTree = "<group>";
+		};
+		44BAA99B2583D05700F9B362 /* IBuilder */ = {
+			isa = PBXGroup;
+			children = (
+				447EE8C2257676A700D8698F /* Main.storyboard */,
+				447EE8CA257676AA00D8698F /* LaunchScreen.storyboard */,
+			);
+			path = IBuilder;
 			sourceTree = "<group>";
 		};
 		A99F23D0FA5E760841B181F4 /* Frameworks */ = {
@@ -420,6 +463,7 @@
 				44BAA97D258013D600F9B362 /* MapViewController.swift in Sources */,
 				449B4E16257F7CB6001B009E /* RatingControl.swift in Sources */,
 				4465EB32257957160096F3B7 /* MyPartiesViewController.swift in Sources */,
+				44BAA98A2582842800F9B362 /* MapManager.swift in Sources */,
 				4465EB8F257AA3360096F3B7 /* PartyModel.swift in Sources */,
 				447EE8BD257676A700D8698F /* AppDelegate.swift in Sources */,
 				447EE8BF257676A700D8698F /* SceneDelegate.swift in Sources */,
@@ -603,7 +647,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WJ4KQYMHHR;
-				INFOPLIST_FILE = CreateParty/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/CreateParty/SupportFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -623,7 +667,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WJ4KQYMHHR;
-				INFOPLIST_FILE = CreateParty/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/CreateParty/SupportFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

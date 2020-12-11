@@ -26,7 +26,6 @@ class MyPartiesViewController: UIViewController {
         return text.isEmpty
     }
     
-
     @IBOutlet weak var sortingTypeSegmentedControl: UISegmentedControl!
     @IBOutlet weak var reversedSortingButton: UIBarButtonItem!
     
