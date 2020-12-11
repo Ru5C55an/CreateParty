@@ -108,7 +108,11 @@ class CreatePartyTableViewController: UITableViewController {
             view.endEditing(true)
         }
     }
-
+    
+    deinit {
+        print("deinit", CreatePartyTableViewController.self)
+    }
+    
 }
 
 

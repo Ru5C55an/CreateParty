@@ -137,6 +137,10 @@ class EditPartyTableViewController: UITableViewController {
         }
         
     }
+    
+    deinit {
+        print("deinit", EditPartyTableViewController.self)
+    }
 
 }
 

@@ -132,4 +132,8 @@ class ViewController: UIViewController {
     
     }
     
+    deinit {
+        print("deinit", ViewController.self)
+    }
+    
 }

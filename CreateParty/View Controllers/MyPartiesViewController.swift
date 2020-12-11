@@ -77,6 +77,11 @@ class MyPartiesViewController: UIViewController {
         partiesListTable.reloadData()
         
     }
+    
+    deinit {
+        print("deinit", MyPartiesViewController.self)
+    }
+    
 }
 
 extension MyPartiesViewController: UITableViewDataSource, UITableViewDelegate {

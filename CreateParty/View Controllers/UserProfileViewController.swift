@@ -24,5 +24,9 @@ class UserProfileViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    deinit {
+        print("deinit", UserProfileViewController.self)
+    }
 
 }

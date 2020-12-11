@@ -50,6 +50,10 @@ class PageViewController: UIPageViewController {
         
         return welcomeCarouselViewController
     }
+    
+    deinit {
+        print("deinit", PageViewController.self)
+    }
 }
 
 extension PageViewController: UIPageViewControllerDataSource {

@@ -26,4 +26,7 @@ class PartyTableViewCell: UITableViewCell {
         }
     }
     
+    deinit {
+        print("deinit", PartyTableViewCell.self)
+    }
 }

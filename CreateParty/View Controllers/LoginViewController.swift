@@ -37,4 +37,9 @@ class LoginViewController: UIViewController {
         loginButton.layer.cornerRadius = loginButton.frame.size.height / 2
     }
     
+    
+    deinit {
+        print("deinit", LoginViewController.self)
+    }
+    
 }

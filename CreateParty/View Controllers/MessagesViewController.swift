@@ -24,5 +24,9 @@ class MessagesViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    deinit {
+        print("deinit", MessagesViewController.self)
+    }
+    
 }

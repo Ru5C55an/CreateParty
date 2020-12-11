@@ -40,4 +40,8 @@ class WelcomeCarouselViewController: UIViewController {
         }
     }
     
+    deinit {
+        print("deinit", WelcomeCarouselViewController.self)
+    }
+    
 }
