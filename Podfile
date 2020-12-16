@@ -7,6 +7,13 @@ target 'CreateParty' do
   pod 'lottie-ios'
   pod 'RealmSwift'
   pod 'Cosmos', '~> 23.0'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Database'
+  
+  pod 'FirebaseUI/Auth'
+  pod 'FirebaseUI/Google'
+  pod 'FirebaseUI/OAuth'
 
 end
 

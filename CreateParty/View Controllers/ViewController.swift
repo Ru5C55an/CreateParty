@@ -30,6 +30,11 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let animationHelloWorld = Animation.named("HelloScreen")
+        animationView.animation = animationHelloWorld
+        animationView.contentMode = .scaleAspectFit
+        
         let userDefaults = UserDefaults.standard
         userDefaults.set(true, forKey: "presentationWasViewed")
         
@@ -102,7 +107,6 @@ class ViewController: UIViewController {
         guard let svc = segue.source as? RegisterViewController else { return } // через svc можем обращаться к объектам viewContoller с которого выполнено возвращение
         
         savedName = svc.nameTextField.text ?? ""
-        savedSurname = svc.surnameTextField.text ?? ""
         savedEmail = svc.emailTextField.text ?? ""
         savedPassword = svc.passwordTextField.text ?? ""
         savedBirthday = svc.birthdayWheels.date

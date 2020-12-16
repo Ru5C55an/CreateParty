@@ -8,14 +8,13 @@
 import UIKit
 import CoreData
 import RealmSwift
+import Firebase
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+        FirebaseApp.configure()
         let schemaVersion: UInt64 = 2 // Переменная для установки версии схемы
         
         // Данный код необходим для обновления моделей данных в Realm
