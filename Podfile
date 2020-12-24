@@ -14,6 +14,11 @@ target 'CreateParty' do
   pod 'FirebaseUI/Auth'
   pod 'FirebaseUI/Google'
   pod 'FirebaseUI/OAuth'
+  
+  pod 'GoogleSignIn'
+  
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKLoginKit'
 
 end
 

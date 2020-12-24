@@ -5,6 +5,16 @@ PODS:
   - AppAuth/Core (1.4.0)
   - AppAuth/ExternalUserAgent (1.4.0)
   - Cosmos (23.0.0)
+  - FBSDKCoreKit (8.2.0):
+    - FBSDKCoreKit/Basics (= 8.2.0)
+    - FBSDKCoreKit/Core (= 8.2.0)
+  - FBSDKCoreKit/Basics (8.2.0)
+  - FBSDKCoreKit/Core (8.2.0):
+    - FBSDKCoreKit/Basics
+  - FBSDKLoginKit (8.2.0):
+    - FBSDKLoginKit/Login (= 8.2.0)
+  - FBSDKLoginKit/Login (8.2.0):
+    - FBSDKCoreKit (~> 8.2.0)
   - Firebase/Analytics (7.1.0):
     - Firebase/Core
   - Firebase/Auth (7.1.0):
@@ -112,12 +122,15 @@ PODS:
 
 DEPENDENCIES:
   - Cosmos (~> 23.0)
+  - FBSDKCoreKit
+  - FBSDKLoginKit
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Database
   - FirebaseUI/Auth
   - FirebaseUI/Google
   - FirebaseUI/OAuth
+  - GoogleSignIn
   - lottie-ios
   - RealmSwift
 
@@ -125,6 +138,8 @@ SPEC REPOS:
   trunk:
     - AppAuth
     - Cosmos
+    - FBSDKCoreKit
+    - FBSDKLoginKit
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -149,6 +164,8 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
+  FBSDKCoreKit: 4afd6ff53d8133a433dbcda44451c9498f8c6ce4
+  FBSDKLoginKit: 7181765f2524d7ebf82d9629066c8e6caafc99d0
   Firebase: 78e8dd2e39d653de6270432ad84fe8b59f7bf4e8
   FirebaseAnalytics: 7f165a56dea86ddd5b8ce02af3bee982c683405c
   FirebaseAuth: f82c2cfcc1c107bb0a97735cdbce4eb2a601f710
@@ -170,6 +187,6 @@ SPEC CHECKSUMS:
   Realm: d7914ebf66bb182469726f997c4c38eff286aab0
   RealmSwift: aad08b7dc8c732b7b5794286e9df83739bf834f1
 
-PODFILE CHECKSUM: bf283c2824263250a261ca810ba6bfeab6366efe
+PODFILE CHECKSUM: 289d100b5127f90957877736a3952d16706372c9
 
 COCOAPODS: 1.10.0
