@@ -8,11 +8,13 @@
 import UIKit
 import Lottie
 import Firebase
-//import FirebaseUI
 
 class LoginViewController: UIViewController {
     
-    var ref: DatabaseReference!
+    var pointOfNoAccountLabel: CGPoint?
+    var pointOfToWelcomeVCButton: CGPoint?
+    var pointOfContinueButton: CGPoint?
+        
     let animationConfetti = Animation.named("Confetti")
     
     @IBOutlet weak var animationView: AnimationView!
@@ -44,28 +46,64 @@ class LoginViewController: UIViewController {
         emailTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
         
-        ref = Database.database().reference(withPath: "users")
-        
         setup()
     }
     
+    @objc private func textFieldChanged() {
+        
+        guard
+            let email = emailTextField.text,
+            let password = passwordTextField.text
+        else { return }
+        
+        let formFilled = !(email.isEmpty) && !(password.isEmpty)
+        
+        setContinueButton(enabled: formFilled)
+    }
+    
+    private func setContinueButton(enabled: Bool) {
+        
+        if enabled {
+            continueButton.alpha = 1.0
+            continueButton.isEnabled = true
+        } else {
+            continueButton.alpha = 0.5
+            continueButton.isEnabled = false
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         emailTextField.text = ""
         passwordTextField.text = ""
     }
     
+    @objc func keyboardWillHide(notification: NSNotification) {
+        
+        guard let pointOfContinueButton = pointOfContinueButton,
+              let pointOfNoAccountLabel = pointOfNoAccountLabel,
+              let pointOfToWelcomeVCButton = pointOfToWelcomeVCButton
+        else { return }
+        
+        continueButton.center = pointOfContinueButton
+        noAccountLabel.center = pointOfNoAccountLabel
+        toWelcomeVCButton.center = pointOfToWelcomeVCButton
+    }
+    
     @objc func keyboardWillAppear(notification: NSNotification) {
+        
+        pointOfContinueButton = continueButton.center
+        pointOfNoAccountLabel = noAccountLabel.center
+        pointOfToWelcomeVCButton = toWelcomeVCButton.center
         
         let userInfo = notification.userInfo!
         let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         
         let centerX = view.center.x
-        
         let centerY1 = view.frame.height - keyboardFrame.height - 16.0 - continueButton.frame.height / 2
         let centerY2 = centerY1 - 32.0 - toWelcomeVCButton.frame.height / 2
         let centerY3 = centerY2 - 16.0 - noAccountLabel.frame.height / 2
@@ -88,18 +126,6 @@ class LoginViewController: UIViewController {
         warnLabel.alpha = 0
     }
     
-    private func setContinueButton(enabled: Bool) {
-        
-        if enabled {
-            continueButton.alpha = 1.0
-            continueButton.isEnabled = true
-        } else {
-            continueButton.alpha = 0.5
-            continueButton.isEnabled = false
-        }
-    }
-    
-    
     @IBAction func tappedButton(_ sender: UIButton) {
         
         if sender == toWelcomeVCButton {
@@ -119,9 +145,7 @@ class LoginViewController: UIViewController {
             }
             
             showAlert(title: "Ссылка для восстановления отправлена", message: "Перейдите по ссылке из письма, отправленного вам на указанный адрес эл. почты")
-            
         }
-        
     }
     
     private func displayWarningLabel(withText text: String) {
@@ -141,22 +165,6 @@ class LoginViewController: UIViewController {
         
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
-    
-    @objc private func textFieldChanged() {
-        
-        guard
-            let email = emailTextField.text,
-            let password = passwordTextField.text
-        else { return }
-        
-        let formFilled = !(email.isEmpty) && !(password.isEmpty)
-        
-        setContinueButton(enabled: formFilled)
     }
     
     @objc private func handleSignIn() {
@@ -202,10 +210,13 @@ class LoginViewController: UIViewController {
         }
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     deinit {
         print("deinit", LoginViewController.self)
     }
-    
 }
 
 extension LoginViewController: UITextFieldDelegate {
@@ -214,5 +225,4 @@ extension LoginViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
-    
 }
