@@ -112,8 +112,7 @@ class UserProfileViewController: UIViewController {
     private func fetchingUserData() {
         
         guard let currentUser = Auth.auth().currentUser else { return }
-        user = User(user: currentUser)
-        let uid = user.uid
+        let uid = currentUser.uid
         ref = Database.database().reference(withPath: "users").child(String(uid))
         
         dateFormatter.dateFormat = "dd-MM-yyyy"
@@ -126,13 +125,14 @@ class UserProfileViewController: UIViewController {
             self?.nameLabel.text = currentUser?.name ?? "Имя не задано"
             
             // Вывод возраста пользователя
-            guard let birthdayString = currentUser?.birthday else { return }
-            let birthday = self?.dateFormatter.date(from: birthdayString)
-            let now = Date()
-            let calendar = Calendar.current
-            let ageComponents = calendar.dateComponents([.year], from: birthday!, to: now)
-            self?.ageLabel.text = String(ageComponents.year!)
-            
+            if currentUser?.birthday != nil {
+                let birthdayString = currentUser?.birthday
+                let birthday = self?.dateFormatter.date(from: birthdayString!)
+                let now = Date()
+                let calendar = Calendar.current
+                let ageComponents = calendar.dateComponents([.year], from: birthday!, to: now)
+                self?.ageLabel.text = String(ageComponents.year!)
+            }
         }) { (error) in
             print(error.localizedDescription)
         }

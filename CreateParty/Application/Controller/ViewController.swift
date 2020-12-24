@@ -42,7 +42,7 @@ class ViewController: UIViewController {
         loginButton.setTitleColor(.white, for: .normal)
         loginButton.frame = CGRect(x: 32, y: view.frame.height - 300, width: view.frame.width - 64, height: 50)
         loginButton.layer.cornerRadius = 14
-        loginButton.addTarget(self, action: #selector(handleCustomFBLogin), for: .touchUpInside)
+        loginButton.addTarget(self, action: #selector(handleFBLogin), for: .touchUpInside)
         return loginButton
     }()
     
@@ -226,7 +226,7 @@ extension ViewController: LoginButtonDelegate {
         print("Did log out of facebook")
     }
     
-    @objc private func handleCustomFBLogin() {
+    @objc private func handleFBLogin() {
         LoginManager().logIn(permissions: ["email", "public_profile"], from: self) { [weak self] (result, error) in
             
             if let error = error {
@@ -265,7 +265,7 @@ extension ViewController: LoginButtonDelegate {
     
     private func fetchFacebookFields() {
         
-        GraphRequest(graphPath: "me", parameters: ["Fields": "id, name, email"]).start { [weak self] (_, result, error) in
+        GraphRequest(graphPath: "me", parameters: ["fields": "id, name, email"]).start { [weak self] (_, result, error) in
             
             if let error = error {
                 print(error)

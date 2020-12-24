@@ -169,15 +169,19 @@ class LoginViewController: UIViewController {
     
     @objc private func handleSignIn() {
         
+        var savedAnimationViewFrame = CGFloat(1)
+        
         setContinueButton(enabled: false)
         continueButton.setTitle("Вход...", for: .normal)
-        animationView?.play(toFrame: 40)
+        animationView?.play(fromFrame: savedAnimationViewFrame, toFrame: 40, loopMode: .loop)
+//        animationView?.play(toFrame: 40)
         animationView?.animationSpeed = 1
         animationView?.loopMode = .loop
         
         guard let email = emailTextField.text, let password = passwordTextField.text else {
             
             displayWarningLabel(withText: "Ошибка")
+            savedAnimationViewFrame = animationView.currentFrame
             animationView.stop()
             return
         }
@@ -188,6 +192,7 @@ class LoginViewController: UIViewController {
                 self?.displayWarningLabel(withText: error.localizedDescription)
                 self?.setContinueButton(enabled: true)
                 self?.continueButton.setTitle("Войти", for: .normal)
+                savedAnimationViewFrame = (self?.animationView.currentFrame)!
                 self?.animationView.stop()
                 
                 return
