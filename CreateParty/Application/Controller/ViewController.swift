@@ -20,7 +20,6 @@ enum HelloScreenAnimationKeyFrames: CGFloat {
 class ViewController: UIViewController {
     
     var userProfile: UserProfile?
-    
     var ref: DatabaseReference!
     
     var savedName: String?
@@ -31,7 +30,6 @@ class ViewController: UIViewController {
     var savedGender: Int?
     
     @IBOutlet weak var animationView: AnimationView!
-    @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var labelAlreadyHaveAccount: UILabel!
     
@@ -42,20 +40,21 @@ class ViewController: UIViewController {
         loginButton.setTitle("Login with Facebook", for: .normal)
         loginButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         loginButton.setTitleColor(.white, for: .normal)
-        loginButton.frame = CGRect(x: 32, y: 600, width: view.frame.width - 64, height: 50)
-        loginButton.layer.cornerRadius = 4
+        loginButton.frame = CGRect(x: 32, y: view.frame.height - 300, width: view.frame.width - 64, height: 50)
+        loginButton.layer.cornerRadius = 14
         loginButton.addTarget(self, action: #selector(handleCustomFBLogin), for: .touchUpInside)
         return loginButton
     }()
     
     lazy var googleLoginButton: UIButton = {
+        
         let loginButton = UIButton()
-        loginButton.frame = CGRect(x: 32, y: 480, width: view.frame.width - 64, height: 50)
+        loginButton.frame = CGRect(x: 32 , y: view.frame.height - 300 - 50 - 16, width: view.frame.width - 64, height: 50)
         loginButton.backgroundColor = .white
         loginButton.setTitle("Login with Google", for: .normal)
         loginButton.titleLabel!.font = UIFont.boldSystemFont(ofSize: 16)
         loginButton.setTitleColor(.gray, for: .normal)
-        loginButton.layer.cornerRadius = 4
+        loginButton.layer.cornerRadius = 14
         loginButton.addTarget(self, action: #selector(handleCustomGoogleLogin), for: .touchUpInside)
         return loginButton
     }()
@@ -63,14 +62,13 @@ class ViewController: UIViewController {
     lazy var signInWithEmail: UIButton = {
         
         let loginButton = UIButton()
-        loginButton.frame = CGRect(x: 32, y: 600, width: view.frame.width - 64, height: 50)
+        loginButton.frame = CGRect(x: 32, y: view.frame.height - 300 - 150 - 16, width: view.frame.width - 64, height: 50)
+        loginButton.backgroundColor = .gray
         loginButton.setTitle("Sign In with Email", for: .normal)
         loginButton.titleLabel!.font = UIFont.boldSystemFont(ofSize: 16)
         loginButton.addTarget(self, action: #selector(openSignInVC), for: .touchUpInside)
         return loginButton
     }()
-    
-    let segueIdentifier = "ShowApp"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,25 +104,35 @@ class ViewController: UIViewController {
             animationView?.loopMode = .playOnce
         } // Это решает баг с остановкой анимации, когда запускается приветственная карусель (Для случая с вызванной каруселью, скорость анимации устанавливается на 100
         
-        labelAlreadyHaveAccount.isHidden = true
+        GIDSignIn.sharedInstance().delegate = self
+        GIDSignIn.sharedInstance()?.presentingViewController = self
         
-        registerButton.layer.cornerRadius = registerButton.frame.size.height / 2
+        setup()
+    }
+    
+    private func setup() {
         
         view.isUserInteractionEnabled = false
-        registerButton.alpha = 0
+        
+        facebookLoginButton.alpha = 0
+        googleLoginButton.alpha = 0
+        signInWithEmail.alpha = 0
         loginButton.alpha = 0
         
         UIView.animate(withDuration: 2, delay: 0, options: .curveEaseIn) {
-            self.registerButton.alpha = 1
+            self.facebookLoginButton.alpha = 1
+            self.googleLoginButton.alpha = 1
+            self.signInWithEmail.alpha = 1
             self.loginButton.alpha = 1
         } completion: { (finished) in
             self.view.isUserInteractionEnabled = true
         }
         
-        GIDSignIn.sharedInstance().delegate = self
-        GIDSignIn.sharedInstance()?.presentingViewController = self
+        labelAlreadyHaveAccount.isHidden = true
         
-        setupViews()
+        view.addSubview(facebookLoginButton)
+        view.addSubview(googleLoginButton)
+        view.addSubview(signInWithEmail)
     }
     
     private func openMainViewController() {
@@ -137,16 +145,13 @@ class ViewController: UIViewController {
             
         })
         
-        if sender == registerButton {
-            performSegue(withIdentifier: "registerViewSegue", sender: nil)
-        }
-        
         if sender == loginButton {
             performSegue(withIdentifier: "loginViewSegue", sender: nil)
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         guard let dvc = segue.destination as? RegisterViewController else { return }
         dvc.savedName = savedName
         dvc.savedSurname = savedSurname
@@ -187,13 +192,6 @@ class ViewController: UIViewController {
                 present(pageViewController, animated: true, completion: nil)
             }
         }
-        
-    }
-    
-    private func setupViews() {
-        view.addSubview(facebookLoginButton)
-        view.addSubview(googleLoginButton)
-        view.addSubview(signInWithEmail)
     }
     
     @objc private func openSignInVC() {
@@ -203,7 +201,6 @@ class ViewController: UIViewController {
     deinit {
         print("deinit", ViewController.self)
     }
-    
 }
 
 

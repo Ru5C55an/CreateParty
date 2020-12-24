@@ -21,6 +21,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var warnLabel: UILabel!
     @IBOutlet weak var toWelcomeVCButton: UIButton!
     @IBOutlet weak var resetPasswordButton: UIButton!
+    @IBOutlet weak var noAccountLabel: UILabel!
     
     lazy var continueButton: UIButton = {
         
@@ -63,10 +64,19 @@ class LoginViewController: UIViewController {
         let userInfo = notification.userInfo!
         let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         
-        continueButton.center = CGPoint(x: view.center.x, y: view.frame.height - keyboardFrame.height - 16.0 - continueButton.frame.height / 2)
+        let centerX = view.center.x
+        
+        let centerY1 = view.frame.height - keyboardFrame.height - 16.0 - continueButton.frame.height / 2
+        let centerY2 = centerY1 - 32.0 - toWelcomeVCButton.frame.height / 2
+        let centerY3 = centerY2 - 16.0 - noAccountLabel.frame.height / 2
+        
+        continueButton.center = CGPoint(x: centerX, y: centerY1)
+        toWelcomeVCButton.center = CGPoint(x: centerX, y: centerY2)
+        noAccountLabel.center = CGPoint(x: centerX, y: centerY3)
     }
     
     private func setup() {
+        
         view.addSubview(continueButton)
         setContinueButton(enabled: false)
         
@@ -115,6 +125,7 @@ class LoginViewController: UIViewController {
     }
     
     private func displayWarningLabel(withText text: String) {
+        
         warnLabel.text = text
         
         UIView.animate(withDuration: 3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut) { [weak self] in

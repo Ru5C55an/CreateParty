@@ -140,5 +140,4 @@ class AccountUserViewController: UIViewController {
         
         return providerIDString
     }
-    
 }

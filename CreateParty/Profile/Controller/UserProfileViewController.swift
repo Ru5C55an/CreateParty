@@ -43,7 +43,6 @@ class UserProfileViewController: UIViewController {
                                                           action: #selector(self.imageTapped))
         userAvatar.addGestureRecognizer(tapGestureRecognizer)
         userAvatar.isUserInteractionEnabled = true
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -117,7 +116,7 @@ class UserProfileViewController: UIViewController {
         let uid = user.uid
         ref = Database.database().reference(withPath: "users").child(String(uid))
         
-        dateFormatter.dateFormat = "dd-mm-yyyy"
+        dateFormatter.dateFormat = "dd-MM-yyyy"
         
         ref.observeSingleEvent(of: .value, with: { [weak self] (snapshot) in
             
@@ -137,13 +136,11 @@ class UserProfileViewController: UIViewController {
         }) { (error) in
             print(error.localizedDescription)
         }
-        
     }
     
     deinit {
         print("deinit", UserProfileViewController.self)
     }
-
 }
 
 // Mark: - Work with image
@@ -158,7 +155,6 @@ extension UserProfileViewController: UIImagePickerControllerDelegate, UINavigati
             imagePicker.sourceType = source
             present(imagePicker, animated: true)
         }
-        
     }
     
     func imagePickerController(_ picker: UIImagePickerController,

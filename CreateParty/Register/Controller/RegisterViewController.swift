@@ -104,7 +104,7 @@ class RegisterViewController: UIViewController {
         
         setContinueButton(enabled: false)
         
-        dateFormatter.dateFormat = "dd-mm-yyyy"
+        dateFormatter.dateFormat = "dd-MM-yyyy"
         dateFormatter.locale = Locale(identifier: "ru_RU")
         birthdayWheels.maximumDate = NSDate() as Date
         birthdayWheels.locale = Locale(identifier: "ru_RU")
