@@ -10,137 +10,185 @@ import RealmSwift
 
 class PartiesViewController: UIViewController {
     
-    private var parties: Results<Party>!
-    
+    var parties = Bundle.main.decode([Party].self, from: "parties.json")
     var collectionView: UICollectionView!
+    var dataSource: UICollectionViewDiffableDataSource<Section, Party>!
     
-    private var filteredParties: Results<Party>!
     private var ascendingSorting = true
-    private var isFiltering: Bool {
-        return searchController.isActive && !searchBarIsEmpty
-    }
+
+    var reverseSortingBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "AZ"), style: .plain, target: self, action: #selector(reverseSortingBarButtonItemTapped))
     
-    let searchController = UISearchController()
-    private var searchBarIsEmpty: Bool {
-        guard let text = searchController.searchBar.text else { return false }
-        return text.isEmpty
-    }
-    
-    let reverseSortingBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "AZ"), style: .done, target: self, action: #selector(reverseSortingBarButtonItemTapped))
-    
-    let segmentedControl = UISegmentedControl(items: ["Дата", "Имя"])
-    
+    let sortingSegmentedControl = UISegmentedControl(first: "Дата", second: "Имя")
     var sortingTypeSegmentControlBarButtonItem: UIBarButtonItem!
     
-  
+    let partiesSegmentedControl = UISegmentedControl(first: "Созданные мной", second: "Хочу пойти")
+    
+    // enum по умолчанию hashable
+    enum Section: Int, CaseIterable {
+        case parties
+        
+        func description(partiesCount: Int) -> String {
+            switch self {
+            
+            case .parties:
+                if partiesCount < 1 || partiesCount > 5 {
+                    return "\(partiesCount) вечеринок"
+                } else if partiesCount == 1 {
+                    return "\(partiesCount) вечеринка"
+                } else if partiesCount > 1 && partiesCount < 5 {
+                    return "\(partiesCount) вечеринки"
+                } else {
+                    return "\(partiesCount) вечеринок"
+                }
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        sortingSegmentedControl.addTarget(self, action: #selector(sortSelection), for: .valueChanged)
         
-        parties = realm.objects(Party.self)
-        
-        segmentedControl.addTarget(self, action: #selector(sortSelection), for: .valueChanged)
-        segmentedControl.selectedSegmentIndex = 0
-        sortingTypeSegmentControlBarButtonItem = UIBarButtonItem(customView: segmentedControl)
+        sortingTypeSegmentControlBarButtonItem = UIBarButtonItem(customView: sortingSegmentedControl)
         
         setupNavigationBar()
+        setupSearchBar()
         setupCollectionView()
+        createDataSource()
+        reloadData(with: nil)
     }
     
     private func setupNavigationBar() {
-       // searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false // Отключаем ограничение на взаимодействие с объектами результата поиска
-        searchController.searchBar.placeholder = "Поиск"
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.delegate = self
-        
-        definesPresentationContext = true // Позволяет отпустить строку поиска, при переходе на другой экран
-        
-        reverseSortingBarButtonItem.image = #imageLiteral(resourceName: "AZ")
-        
-        
-        navigationItem.rightBarButtonItem?.tintColor = UIColor.black
-        
-        navigationItem.searchController = searchController
-//        navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.leftBarButtonItem = reverseSortingBarButtonItem
         navigationItem.rightBarButtonItem = sortingTypeSegmentControlBarButtonItem
+    }
+    
+    private func setupSearchBar() {
+        let searchController = UISearchController(searchResultsController: nil)
+        navigationItem.searchController = searchController
+        //        navigationItem.hidesSearchBarWhenScrolling = false
+        //                searchController.hidesNavigationBarDuringPresentation = false
+        //                searchController.obscuresBackgroundDuringPresentation = false
         
-//        navigationController?.navigationBar.prefersLargeTitles = true
-        title = "Вечеринки"
+        searchController.searchBar.placeholder = "Поиск"
+        
+        definesPresentationContext = true // Позволяет отпустить строку поиска, при переходе на другой экран
+        searchController.searchBar.delegate = self
     }
     
     private func setupCollectionView() {
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UICollectionViewFlowLayout())
-        
-        collectionView.backgroundColor = .gray
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView.backgroundColor = .mainWhite()
         view.addSubview(collectionView)
-        collectionView.register(PartyCell.self, forCellWithReuseIdentifier: PartyCell.reuseID)
         
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.reuseId)
+        
+        collectionView.register(PartyCell.self, forCellWithReuseIdentifier: PartyCell.reuseId)
     }
     
-}
-
-extension PartiesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    // Отвечает за заполнение реальными данными. Создает snapshot, добавляет нужные айтемы в нужные секции и регистрируется на dataSource
+    private func reloadData(with searchText: String?) {
         
-        if isFiltering {
-            return filteredParties.count
+        let filteredParties = parties.filter { (party) -> Bool in
+            party.contains(filter: searchText)
         }
         
-        return parties.count
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Party>()
+        snapshot.appendSections([.parties])
+        snapshot.appendItems(filteredParties, toSection: .parties)
+        dataSource?.apply(snapshot, animatingDifferences: true)
     }
+}
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PartyCell.reuseID, for: indexPath) as! PartyCell
-        
-        let party = isFiltering ? filteredParties[indexPath.row] : parties[indexPath.row]
-        
-        cell.configure(with: party)
-        
-        return cell
-    }
+// MARK: - Data Source
+extension PartiesViewController {
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-    }
-    
-    // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    // Отвечает за то, в каких секциях буду те или иные ячейки
+    private func createDataSource() {
         
-        if segue.identifier == "showDetailSegue" {
+        dataSource = UICollectionViewDiffableDataSource<Section, Party>(collectionView: collectionView, cellProvider: { [weak self] (collectionView, indexPath, party) -> UICollectionViewCell? in
             
-            let cell = sender as! PartyCell
-            if let indexPath = self.collectionView.indexPath(for: cell) {
-                let party = isFiltering ? filteredParties[indexPath.row] : parties[indexPath.row]
-                let newPartyVC = segue.destination as! EditPartyTableViewController
-                newPartyVC.currentParty = party
+            guard let section = Section(rawValue: indexPath.section) else {
+                fatalError("Неизвестная секция для ячейки")
             }
+            
+            switch section {
+            
+            case .parties:
+                return self?.configure(collectionView: collectionView, cellType: PartyCell.self, with: party, for: indexPath)
+            }
+        })
         
+        dataSource?.supplementaryViewProvider = {
+            collectionView, kind, indexPath in
+            
+            guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeader.reuseId, for: indexPath) as? SectionHeader else { fatalError("Cannot create new section header") }
+            
+            guard let section = Section(rawValue: indexPath.section) else { fatalError("Unknown section kind") }
+            
+            // Достучались до всех объектов в секции parties
+            let items = self.dataSource.snapshot().itemIdentifiers(inSection: .parties)
+            
+            sectionHeader.configure(text: section.description(partiesCount: items.count), font: .sfProRounded(ofSize: 26, weight: .medium), textColor: .label)
+            
+            return sectionHeader
+        }
+    }
+}
+
+// MARK: - Setup layout
+extension PartiesViewController {
+    
+    private func createCompositionalLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+            
+            guard let section = Section(rawValue: sectionIndex) else {
+                fatalError("Неизвестная секция для ячейки")
+            }
+            
+            switch section {
+            
+            case .parties:
+                return self?.createPartiesSection()
+            }
         }
         
-    }
-
-}
-
-extension PartiesViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let config = UICollectionViewCompositionalLayoutConfiguration()
+        config.interSectionSpacing = 16
+        layout.configuration = config
         
-        return CGSize(width: 343, height: 223)
+        return layout
     }
     
+    private func createPartiesSection() -> NSCollectionLayoutSection {
+        
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(224))
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = 16
+        section.contentInsets = NSDirectionalEdgeInsets.init(top: 16, leading: 16, bottom: 0, trailing: 16)
+        
+        let sectionHeader = createSectionHeader()
+        section.boundarySupplementaryItems = [sectionHeader]
+        
+        return section
+    }
+    
+    private func createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+        
+        let sectionHeaderSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                                       heightDimension: .estimated(1))
+        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: sectionHeaderSize,
+                                                                        elementKind: UICollectionView.elementKindSectionHeader,
+                                                                        alignment: .top)
+        return sectionHeader
+    }
 }
-
-
 
 // MARK: - Actions
 extension PartiesViewController {
@@ -165,34 +213,122 @@ extension PartiesViewController {
     
     private func sorting() {
         
-        if segmentedControl.selectedSegmentIndex == 0 {
-            parties = parties.sorted(byKeyPath: "date", ascending: ascendingSorting)
+        if sortingSegmentedControl.selectedSegmentIndex == 0 {
+            parties = parties.sorted(by: { $0.date > $1.date })
         } else {
-            parties = parties.sorted(byKeyPath: "name", ascending: ascendingSorting)
+            parties = parties.sorted(by: { $0.username > $1.username })
         }
         
-        collectionView.reloadData()
-        
+        reloadData(with: nil)
     }
 }
 
+// MARK: - UISearchBarDelegate
 extension PartiesViewController: UISearchBarDelegate {
     
-    func updateSearchResults(for searchController: UISearchController) {
-        filterContentForSearchText(searchController.searchBar.text!)
-    }
-    
-    private func filterContentForSearchText(_ searchText: String) {
-        
-        filteredParties = parties.filter("name CONTAINS[c] %@ OR location CONTAINS[c] %@ OR type CONTAINS[c] %@", searchText, searchText, searchText)
-        
-        collectionView.reloadData()
-        
-    }
-    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
+        
+        reloadData(with: searchText)
     }
 }
 
+//MARK: - SwiftUI
+import SwiftUI
 
+struct PartiesViewControllerProvider: PreviewProvider {
+    
+    static var previews: some View {
+        
+        ContainerView().edgesIgnoringSafeArea(.all)
+    }
+    
+    struct ContainerView: UIViewControllerRepresentable {
+        
+        let mainTabBarController = MainTabBarController()
+        
+        func makeUIViewController(context: Context) -> MainTabBarController {
+            return mainTabBarController
+        }
+        
+        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+            
+        }
+    }
+}
+
+//    private var parties: Results<Party>!
+//
+//    var collectionView: UICollectionView!
+//
+//    private var filteredParties: Results<Party>!
+//    private var ascendingSorting = true
+//    private var isFiltering: Bool {
+//        return searchController.isActive && !searchBarIsEmpty
+//    }
+//
+//    let searchController = UISearchController()
+//    private var searchBarIsEmpty: Bool {
+//        guard let text = searchController.searchBar.text else { return false }
+//        return text.isEmpty
+//    }
+//
+//    let reverseSortingBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "AZ"), style: .done, target: self, action: #selector(reverseSortingBarButtonItemTapped))
+//
+//    let segmentedControl = UISegmentedControl(items: ["Дата", "Имя"])
+//
+//    var sortingTypeSegmentControlBarButtonItem: UIBarButtonItem!
+//
+//
+//
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//
+//        parties = realm.objects(Party.self)
+//
+//        segmentedControl.addTarget(self, action: #selector(sortSelection), for: .valueChanged)
+//        segmentedControl.selectedSegmentIndex = 0
+//        sortingTypeSegmentControlBarButtonItem = UIBarButtonItem(customView: segmentedControl)
+//
+//        setupNavigationBar()
+//        setupCollectionView()
+//    }
+//
+//    private func setupNavigationBar() {
+//       // searchController.searchResultsUpdater = self
+//        searchController.obscuresBackgroundDuringPresentation = false // Отключаем ограничение на взаимодействие с объектами результата поиска
+//        searchController.searchBar.placeholder = "Поиск"
+//        searchController.hidesNavigationBarDuringPresentation = false
+//        searchController.obscuresBackgroundDuringPresentation = false
+//
+//        reverseSortingBarButtonItem.image = #imageLiteral(resourceName: "AZ")
+//
+//
+//        navigationItem.searchController = searchController
+////        navigationItem.hidesSearchBarWhenScrolling = false
+//        navigationItem.leftBarButtonItem = reverseSortingBarButtonItem
+//        navigationItem.rightBarButtonItem = sortingTypeSegmentControlBarButtonItem
+//
+////        navigationController?.navigationBar.prefersLargeTitles = true
+//        title = "Вечеринки"
+//    }
+//
+
+//
+//}
+//    // MARK: - Navigation
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//
+//        if segue.identifier == "showDetailSegue" {
+//
+//            let cell = sender as! PartyCell
+//            if let indexPath = self.collectionView.indexPath(for: cell) {
+//                let party = isFiltering ? filteredParties[indexPath.row] : parties[indexPath.row]
+//                let newPartyVC = segue.destination as! EditPartyTableViewController
+//                newPartyVC.currentParty = party
+//            }
+//
+//        }
+//
+//    }
+//
+//}

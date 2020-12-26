@@ -8,7 +8,8 @@
 import UIKit
 
 class CreatePartyTableViewController: UITableViewController {
-
+}
+    /*
     var imageIsChanged = false
     
     @IBOutlet weak var clearButton: UIBarButtonItem!
@@ -155,3 +156,4 @@ extension CreatePartyTableViewController: UIImagePickerControllerDelegate, UINav
         dismiss(animated: true)
     }
 }
+ */

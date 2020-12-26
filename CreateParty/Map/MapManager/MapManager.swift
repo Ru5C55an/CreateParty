@@ -16,7 +16,7 @@ class MapManager {
    
     
     // Установка маркера вечеринки
-    func setupPartymark(party: Party, mapView: MKMapView) {
+    func setupPartymark(party: Party2, mapView: MKMapView) {
         
        // guard let location = party.location else { return }
         let location = party.location

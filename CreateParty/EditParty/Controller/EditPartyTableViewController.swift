@@ -8,7 +8,8 @@
 import UIKit
 
 class EditPartyTableViewController: UITableViewController {
-
+}
+    /*
     var currentParty: Party!
     
     @IBOutlet weak var imageOfParty: UIImageView!
@@ -187,3 +188,4 @@ extension EditPartyTableViewController: MapViewControllerDelegate {
     }
     
 }
+ */

@@ -1191,24 +1191,10 @@
                                 <action selector="reverseSorting:" destination="BzM-XK-8xN" id="NOw-RR-1MZ"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" id="fJi-eZ-D03">
-                            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="ScA-9d-CrZ">
-                                <rect key="frame" x="43" y="5.5" width="351" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="Дата"/>
-                                    <segment title="Имя"/>
-                                </segments>
-                                <connections>
-                                    <action selector="sortSelection:" destination="BzM-XK-8xN" eventType="valueChanged" id="fPZ-Yh-MN2"/>
-                                </connections>
-                            </segmentedControl>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="partiesListTable" destination="34E-02-4ja" id="Tm7-QP-apW"/>
                         <outlet property="reversedSortingButton" destination="KVT-rA-gan" id="I94-VS-KGH"/>
-                        <outlet property="sortingTypeSegmentedControl" destination="ScA-9d-CrZ" id="Qjc-Sn-nve"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B9d-Bf-svt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1471,6 +1457,8 @@
         </scene>
     </scenes>
     <designables>
+        <designable name="Ot7-qf-dcQ"/>
+        <designable name="nVa-KK-CMj"/>
         <designable name="w1G-bq-LO6">
             <size key="intrinsicContentSize" width="90" height="14"/>
         </designable>

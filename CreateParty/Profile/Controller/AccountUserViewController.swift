@@ -11,7 +11,8 @@ import FBSDKLoginKit
 import GoogleSignIn
 
 class AccountUserViewController: UIViewController {
-    
+}
+    /*
     private var provider: String?
     private var currentUser: CurrentUser?
     @IBOutlet weak var providerIDLabel: UILabel!
@@ -141,3 +142,4 @@ class AccountUserViewController: UIViewController {
         return providerIDString
     }
 }
+ */

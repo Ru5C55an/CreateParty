@@ -1,0 +1,68 @@
+[
+    {
+        "username": "Bob Rasfkjahsfakshfakjsfhaiver",
+        "userImageString": "human1",
+        "type": "Музыкальная",
+        "maximumPeople": 10,
+        "currentPeople": 3,
+        "date": "12-09",
+        "startTime": "12:00",
+        "endTime": "13:00",
+        "price": "200",
+        "partyname": "Отрывasfkahsfklashflkasfhalkfshasfasfa башки",
+        "id": 1
+    },
+    {
+        "username": "Bob River",
+        "userImageString": "human2",
+        "type": "KAKASHKA",
+        "maximumPeople": 10,
+        "currentPeople": 3,
+        "date": "12-09",
+        "startTime": "12:00",
+        "endTime": "13:00",
+        "price": "200",
+        "partyname": "Отрыв башки",
+        "id": 2
+    },
+    {
+        "username": "Bob River",
+        "userImageString": "human3",
+        "type": "Музыкальная",
+        "maximumPeople": 10,
+        "currentPeople": 3,
+        "date": "12-09",
+        "startTime": "12:00",
+        "endTime": "13:00",
+        "price": "200",
+        "partyname": "Отрыв башки",
+        "id": 3
+    },
+    {
+        "username": "Bob River",
+        "userImageString": "human4",
+        "type": "Музыкальная",
+        "maximumPeople": 10,
+        "currentPeople": 3,
+        "date": "12-09",
+        "startTime": "12:00",
+        "endTime": "13:00",
+        "price": "200",
+        "partyname": "Отрыв башки",
+        "id": 4
+    },
+    {
+        "username": "Bob River",
+        "userImageString": "human5",
+        "type": "Музыкальная",
+        "maximumPeople": 10,
+        "currentPeople": 3,
+        "date": "12-09",
+        "startTime": "12:00",
+        "endTime": "13:00",
+        "price": "200",
+        "partyname": "Отрыв башки",
+        "id": 5
+    }
+]
+

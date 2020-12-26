@@ -18,7 +18,7 @@ class MapViewController: UIViewController {
     
     let mapManager = MapManager()
     var mapViewControllerDelegate: MapViewControllerDelegate?
-    var party = Party()
+    var party = Party2()
     
     let annotationIdentifier = "annotationIdentifier"
     

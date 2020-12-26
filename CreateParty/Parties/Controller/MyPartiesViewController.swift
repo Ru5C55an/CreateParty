@@ -10,7 +10,8 @@ import RealmSwift
 import Cosmos
 
 class MyPartiesViewController: UIViewController {
-    
+}
+/*
     // private - свойства доступные только в этом классе. Мы не должны видеть эти свойства из каких-то других объектов
     private var parties: Results<Party>!
     
@@ -178,3 +179,4 @@ extension MyPartiesViewController: UISearchResultsUpdating {
     }
     
 }
+ */
