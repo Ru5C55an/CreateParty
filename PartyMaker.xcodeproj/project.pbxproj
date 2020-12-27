@@ -81,6 +81,12 @@
 		448157BD25777FC9004F06FF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448157BC25777FC9004F06FF /* LoginViewController.swift */; };
 		449B4E16257F7CB6001B009E /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449B4E15257F7CB6001B009E /* RatingControl.swift */; };
 		449D7C54259912AB00FE575F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 449D7C53259912AB00FE575F /* GoogleService-Info.plist */; };
+		449D7C5D2599184A00FE575F /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D7C5C2599184A00FE575F /* AuthService.swift */; };
+		449D7C6F25992D1500FE575F /* Validators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D7C6E25992D1500FE575F /* Validators.swift */; };
+		449D7C7425992F4200FE575F /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D7C7325992F4200FE575F /* AuthError.swift */; };
+		449D7C7E2599397700FE575F /* AuthNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D7C7D2599397700FE575F /* AuthNavigationDelegate.swift */; };
+		449D7C8625993DC300FE575F /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D7C8525993DC300FE575F /* FirestoreService.swift */; };
+		449D7CC32599414900FE575F /* UserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D7CC22599414900FE575F /* UserError.swift */; };
 		44BAA97D258013D600F9B362 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BAA97C258013D600F9B362 /* MapViewController.swift */; };
 		44BAA98A2582842800F9B362 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BAA9892582842800F9B362 /* MapManager.swift */; };
 		44DF5D58258E2CCA000BF557 /* PartyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DF5D57258E2CCA000BF557 /* PartyCell.swift */; };
@@ -188,6 +194,12 @@
 		449B4E15257F7CB6001B009E /* RatingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
 		449D7C4C25990F8300FE575F /* PartyMaker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PartyMaker.entitlements; sourceTree = "<group>"; };
 		449D7C53259912AB00FE575F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		449D7C5C2599184A00FE575F /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		449D7C6E25992D1500FE575F /* Validators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validators.swift; sourceTree = "<group>"; };
+		449D7C7325992F4200FE575F /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
+		449D7C7D2599397700FE575F /* AuthNavigationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNavigationDelegate.swift; sourceTree = "<group>"; };
+		449D7C8525993DC300FE575F /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
+		449D7CC22599414900FE575F /* UserError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserError.swift; sourceTree = "<group>"; };
 		44BAA97C258013D600F9B362 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		44BAA9892582842800F9B362 /* MapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
 		44DF5D57258E2CCA000BF557 /* PartyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyCell.swift; sourceTree = "<group>"; };
@@ -275,13 +287,8 @@
 		4420BD87259623C5005A4FAE /* SignIn&Auth */ = {
 			isa = PBXGroup;
 			children = (
-				4465EB4F25795E800096F3B7 /* PageViewController.swift */,
-				4465EB4A25795E3E0096F3B7 /* WelcomeCarouselViewController.swift */,
-				448157AD2576C559004F06FF /* SignUpViewController.swift */,
-				447EE8C0257676A700D8698F /* AuthViewController.swift */,
-				4420BD962596444E005A4FAE /* SetupProfileViewController.swift */,
-				4420BDB025965B0D005A4FAE /* SecondSetupProfileViewController.swift */,
-				448157BC25777FC9004F06FF /* LoginViewController.swift */,
+				449D7CE42599504100FE575F /* Controller */,
+				449D7C7C2599396400FE575F /* Protocols */,
 			);
 			path = "SignIn&Auth";
 			sourceTree = "<group>";
@@ -391,10 +398,6 @@
 				44DF5E9425923737000BF557 /* Profile */,
 				44DF5E8D259236C4000BF557 /* CreateParty */,
 				44DF5E8F259236D6000BF557 /* Application */,
-				44BAA99A2583D02700F9B362 /* SupportFiles */,
-				4420BD762596138E005A4FAE /* Extensions */,
-				4420BD59259609F7005A4FAE /* Fonts */,
-				4481579025768201004F06FF /* Assets */,
 			);
 			path = PartyMaker;
 			sourceTree = "<group>";
@@ -427,6 +430,47 @@
 				4465EB7E257A89B00096F3B7 /* WaitingDots.json */,
 			);
 			path = Assets;
+			sourceTree = "<group>";
+		};
+		449D7C5B2599180000FE575F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				449D7C5C2599184A00FE575F /* AuthService.swift */,
+				449D7C8525993DC300FE575F /* FirestoreService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		449D7C782599316700FE575F /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				449D7C6E25992D1500FE575F /* Validators.swift */,
+				449D7C7325992F4200FE575F /* AuthError.swift */,
+				449D7CC22599414900FE575F /* UserError.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		449D7C7C2599396400FE575F /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				449D7C7D2599397700FE575F /* AuthNavigationDelegate.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		449D7CE42599504100FE575F /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4465EB4F25795E800096F3B7 /* PageViewController.swift */,
+				4465EB4A25795E3E0096F3B7 /* WelcomeCarouselViewController.swift */,
+				448157AD2576C559004F06FF /* SignUpViewController.swift */,
+				448157BC25777FC9004F06FF /* LoginViewController.swift */,
+				447EE8C0257676A700D8698F /* AuthViewController.swift */,
+				4420BD962596444E005A4FAE /* SetupProfileViewController.swift */,
+				4420BDB025965B0D005A4FAE /* SecondSetupProfileViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		44BAA9982583CFF300F9B362 /* Models */ = {
@@ -543,6 +587,12 @@
 		44DF5E8F259236D6000BF557 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				449D7C782599316700FE575F /* Helpers */,
+				4481579025768201004F06FF /* Assets */,
+				4420BD59259609F7005A4FAE /* Fonts */,
+				4420BD762596138E005A4FAE /* Extensions */,
+				44BAA99A2583D02700F9B362 /* SupportFiles */,
+				449D7C5B2599180000FE575F /* Services */,
 				44DF5E9A259237C7000BF557 /* StorageManager */,
 				44DF5E90259236F3000BF557 /* Controller */,
 				44BAA99B2583D05700F9B362 /* View */,
@@ -874,15 +924,19 @@
 				4465EB4B25795E3E0096F3B7 /* WelcomeCarouselViewController.swift in Sources */,
 				4424A5822598AA0C00B420F7 /* UIView + Extension.swift in Sources */,
 				440CEDFC258A917500553673 /* InformationUserViewController.swift in Sources */,
+				449D7C8625993DC300FE575F /* FirestoreService.swift in Sources */,
 				4465EB5025795E800096F3B7 /* PageViewController.swift in Sources */,
+				449D7C6F25992D1500FE575F /* Validators.swift in Sources */,
 				4465EB3C257958170096F3B7 /* MessagesViewController.swift in Sources */,
 				4420BD2125960445005A4FAE /* UIButton + Extension.swift in Sources */,
 				4424A56825978E2600B420F7 /* UIViewController + Extension.swift in Sources */,
 				4420BDFC259758DC005A4FAE /* SelfConfiguringCell.swift in Sources */,
 				4420BD6925961150005A4FAE /* UILabel + Extension.swift in Sources */,
+				449D7C5D2599184A00FE575F /* AuthService.swift in Sources */,
 				4465EB462579585A0096F3B7 /* ProfileViewController.swift in Sources */,
 				4424A56025976E5E00B420F7 /* ChatModel.swift in Sources */,
 				4465EB8A257A9E6E0096F3B7 /* PartyTableViewCell.swift in Sources */,
+				449D7CC32599414900FE575F /* UserError.swift in Sources */,
 				4465EBAB257BF7830096F3B7 /* EditPartyTableViewController.swift in Sources */,
 				4420BDB125965B0D005A4FAE /* SecondSetupProfileViewController.swift in Sources */,
 				44DF5D58258E2CCA000BF557 /* PartyCell.swift in Sources */,
@@ -891,6 +945,7 @@
 				4424A55A25976D4600B420F7 /* PartyModel.swift in Sources */,
 				4420BD8F2596284B005A4FAE /* BubbleTextField.swift in Sources */,
 				44733E55258CCA2500CCC778 /* PartiesViewController.swift in Sources */,
+				449D7C7E2599397700FE575F /* AuthNavigationDelegate.swift in Sources */,
 				440CED92258A14AA00553673 /* UserModel.swift in Sources */,
 				447EE8C7257676A700D8698F /* CreateParty.xcdatamodeld in Sources */,
 				4420BDF6259757D6005A4FAE /* WaitingChatCell.swift in Sources */,
@@ -918,6 +973,7 @@
 				4424A58D2598C90900B420F7 /* UITextField + Extension.swift in Sources */,
 				4465EB8F257AA3360096F3B7 /* PartyModel2.swift in Sources */,
 				4471DE1D259403DA004227AE /* CurrentUser.swift in Sources */,
+				449D7C7425992F4200FE575F /* AuthError.swift in Sources */,
 				4420BDA425965480005A4FAE /* UISegmentedControl  + Extension.swift in Sources */,
 				4420BDC525968AE0005A4FAE /* AboutMeInputText.swift in Sources */,
 				4420BD262596072A005A4FAE /* UIFont + Extension.swift in Sources */,
@@ -1104,7 +1160,7 @@
 				CODE_SIGN_ENTITLEMENTS = PartyMaker/PartyMaker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WJ4KQYMHHR;
-				INFOPLIST_FILE = "$(SRCROOT)/PartyMaker/SupportFiles/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/PartyMaker/Application/SupportFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1125,7 +1181,7 @@
 				CODE_SIGN_ENTITLEMENTS = PartyMaker/PartyMaker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WJ4KQYMHHR;
-				INFOPLIST_FILE = "$(SRCROOT)/PartyMaker/SupportFiles/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/PartyMaker/Application/SupportFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

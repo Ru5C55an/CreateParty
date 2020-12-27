@@ -7,9 +7,10 @@ target 'PartyMaker' do
   pod 'lottie-ios'
   pod 'RealmSwift'
   pod 'Cosmos', '~> 23.0'
+  
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
-  pod 'Firebase/Database'
+  pod 'Firebase/Firestore'
   
   pod 'GoogleSignIn'
   
