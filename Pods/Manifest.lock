@@ -59,14 +59,6 @@ PODS:
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/UserDefaults (~> 7.0)
     - PromisesObjC (~> 1.2)
-  - FirebaseUI/Auth (9.0.0):
-    - Firebase/Auth
-    - GoogleUtilities/UserDefaults
-  - FirebaseUI/Google (9.0.0):
-    - FirebaseUI/Auth
-    - GoogleSignIn (~> 5.0)
-  - FirebaseUI/OAuth (9.0.0):
-    - FirebaseUI/Auth
   - GoogleAppMeasurement (7.1.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
     - GoogleUtilities/MethodSwizzler (~> 7.0)
@@ -127,9 +119,6 @@ DEPENDENCIES:
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Database
-  - FirebaseUI/Auth
-  - FirebaseUI/Google
-  - FirebaseUI/OAuth
   - GoogleSignIn
   - lottie-ios
   - RealmSwift
@@ -147,7 +136,6 @@ SPEC REPOS:
     - FirebaseCoreDiagnostics
     - FirebaseDatabase
     - FirebaseInstallations
-    - FirebaseUI
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleSignIn
@@ -173,7 +161,6 @@ SPEC CHECKSUMS:
   FirebaseCoreDiagnostics: 872cdb9b749b23346dddd5c1014d1babd2257de3
   FirebaseDatabase: bf02ea57590aaab4e72b9b12b412a4c881ee81e2
   FirebaseInstallations: 3de38553e86171b5f81d83cdeef63473d37bfdb0
-  FirebaseUI: f0677a1cc235f6da602cbd5c9b5fbbd24544a6b3
   GoogleAppMeasurement: 89e1a64593f968713b0506ba1b53b38a154bf9a5
   GoogleDataTransport: e4085e6762f36a6141738f46b0153473ce57fb18
   GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
@@ -187,6 +174,6 @@ SPEC CHECKSUMS:
   Realm: d7914ebf66bb182469726f997c4c38eff286aab0
   RealmSwift: aad08b7dc8c732b7b5794286e9df83739bf834f1
 
-PODFILE CHECKSUM: 289d100b5127f90957877736a3952d16706372c9
+PODFILE CHECKSUM: 8cafc83edcbcc08a55f0bd41402489335d017edf
 
 COCOAPODS: 1.10.0
