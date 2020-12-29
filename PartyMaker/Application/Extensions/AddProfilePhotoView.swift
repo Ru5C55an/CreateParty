@@ -13,7 +13,8 @@ class AddProfilePhotoView: UIView {
         let imageView = UIImageView()
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(systemName: "plus.viewfinder")
+//        imageView.image = UIImage(systemName: "plus.viewfinder")
+        imageView.image = #imageLiteral(resourceName: "camera")
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         return imageView

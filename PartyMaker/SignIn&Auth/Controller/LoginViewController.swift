@@ -24,7 +24,7 @@ class LoginViewController: UIViewController {
     
     let signUpButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Зарегистрироваться", for: .normal)
+        button.setTitle("Регистрация", for: .normal)
         button.setTitleColor(.blue, for: .normal)
         button.titleLabel?.font = .sfProRounded(ofSize: 20, weight: .regular)
         return button
@@ -48,9 +48,18 @@ class LoginViewController: UIViewController {
             switch result {
             case .success(let user):
                 self?.showAlert(title: "Успешно", message: "Вход выполнен", completion: {
-                    self?.present(MainTabBarController(), animated: true, completion: nil)
+                    FirestoreService.shared.getUserData(user: user) { [weak self] (result) in
+                        switch result {
+                        
+                        case .success(let puser):
+                            let mainTabBar = MainTabBarController(currentUser: puser)
+                            mainTabBar.modalPresentationStyle = .fullScreen
+                            self?.present(mainTabBar, animated: true, completion: nil)
+                        case .failure(let error):
+                            self?.present(SetupProfileViewController(currentUser: user), animated: true, completion: nil)
+                        }
+                    }
                 })
-                print(user.email)
             case .failure(let error):
                 self?.showAlert(title: "Ошибка", message: error.localizedDescription)
             }
@@ -67,13 +76,15 @@ class LoginViewController: UIViewController {
 //MARK: - Setup constraints
 extension LoginViewController {
     private func setupConstraints() {
+        
+        loginButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        passwordTextField.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        emailTextField.heightAnchor.constraint(equalToConstant: 48).isActive = true
+
         let emailStackView = UIStackView(arrangedSubviews: [emailLabel, emailTextField],
                                           axis: .vertical, spacing: 8)
         let passwordStackView = UIStackView(arrangedSubviews: [passwordLabel, passwordTextField],
                                          axis: .vertical, spacing: 8)
-        
-        loginButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        
         let stackView = UIStackView(arrangedSubviews: [emailStackView, passwordStackView, loginButton],
                                     axis: .vertical,
                                     spacing: 32)

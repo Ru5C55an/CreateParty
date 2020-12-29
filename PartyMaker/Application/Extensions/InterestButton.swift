@@ -7,60 +7,85 @@
 
 import UIKit
 
-class InterestButton: UIButton {
+class InterestButton: UIView {
     
-    convenience init(emoji: String, title: String, cornerRadius: CGFloat = 6, backgroundColor: UIColor, isSelected: Bool = false) {
-        self.init(type: .system)
+    private let button = UIButton(type: .custom)
+    private let title = UILabel(text: "")
+    
+    init(emoji: String, emojiSize: CGFloat = 30, cornerRadius: CGFloat = 6, isSelected: Bool = false, title: String, titleFont: UIFont = .sfProDisplay(ofSize: 8, weight: .regular)!, backgroundColor: UIColor) {
+        super.init(frame: .zero)
         
-        self.setTitle(emoji, for: .normal)
-        self.backgroundColor = backgroundColor
-        self.titleLabel?.font.withSize(24)
-        self.layer.cornerRadius = cornerRadius
+        self.title.text = title
+        self.title.font = titleFont
         
+        setupButton(emoji: emoji, emojiSize: emojiSize, cornerRadius: cornerRadius, backgroundColor: backgroundColor, isSelected: isSelected)
+        setupConstraints()
         IsSelected(isSelected: isSelected)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupButton(emoji: String, emojiSize: CGFloat, cornerRadius: CGFloat, backgroundColor: UIColor, isSelected: Bool) {
+        button.setTitle(emoji, for: .normal)
+        button.backgroundColor = backgroundColor
+        button.titleLabel?.font = .systemFont(ofSize: emojiSize)
         
-        // addTitle(title: title)
+        button.layer.cornerRadius = cornerRadius
     }
     
     private func IsSelected(isSelected: Bool) {
         
         if !isSelected {
-            self.layer.shadowColor = UIColor.black.cgColor
-            self.layer.shadowRadius = 4
-            self.layer.shadowOpacity = 0.2
-            self.layer.shadowOffset = CGSize(width: 0, height: 4)
+            button.applySketchShadow(color: .black, alpha: 40, x: 0, y: 0, blur: 20, spread: 0)
         } else {
-
+            let innerShadow = CALayer()
+            innerShadow.frame = bounds
+            // Shadow path (1pt ring around bounds)
+            let path = UIBezierPath(rect: innerShadow.bounds.insetBy(dx: -1, dy: -1))
+            let cutout = UIBezierPath(rect: innerShadow.bounds).reversing()
+            path.append(cutout)
+            innerShadow.shadowPath = path.cgPath
+            innerShadow.masksToBounds = true
+            // Shadow properties
+            innerShadow.shadowColor = UIColor(white: 0, alpha: 1).cgColor // UIColor(red: 0.71, green: 0.77, blue: 0.81, alpha: 1.0).cgColor
+            innerShadow.shadowOffset = CGSize.zero
+            innerShadow.shadowOpacity = 1
+            innerShadow.shadowRadius = 3
+            // Add
+            button.layer.addSublayer(innerShadow)
         }
     }
-//
-//    private func addInnerShadow() {
-//
-//        let innerShadow = CALayer()
-//        innerShadow.frame = bounds
-//        // Shadow path (1pt ring around bounds)
-//        let path = UIBezierPath(rect: innerShadow.bounds.insetBy(dx: -1, dy: -1))
-//        let cutout = UIBezierPath(rect: innerShadow.bounds).reversing()
-//        path.append(cutout)
-//        innerShadow.shadowPath = path.cgPath
-//        innerShadow.masksToBounds = true
-//        // Shadow properties
-//        innerShadow.shadowColor = UIColor(white: 0, alpha: 1).cgColor // UIColor(red: 0.71, green: 0.77, blue: 0.81, alpha: 1.0).cgColor
-//        innerShadow.shadowOffset = CGSize.zero
-//        innerShadow.shadowOpacity = 1
-//        innerShadow.shadowRadius = 3
-//        // Add
-//        self.layer.addSublayer(innerShadow)
-//    }
+}
+
+
+// MARK: - Setup constraints
+extension InterestButton {
     
-    /*
-    private func addTitle(title: String) {
+    private func setupConstraints() {
         
-        let title = UILabel(text: title)
-        let stackView = UIStackView(arrangedSubviews: [title, self], axis: .vertical, spacing: 8)
-        self.addSubview(stackView)
+        addSubview(title)
+        addSubview(button)
+        
+        title.translatesAutoresizingMaskIntoConstraints = false
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            title.topAnchor.constraint(equalTo: self.topAnchor),
+            title.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            button.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 4),
+            button.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            button.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            button.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            button.heightAnchor.constraint(equalTo: button.widthAnchor)
+        ])
+        
+        bottomAnchor.constraint(equalTo: button.bottomAnchor).isActive = true
     }
-    */
 }
 
 

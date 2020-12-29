@@ -8,7 +8,6 @@
 import UIKit
 import Lottie
 import FBSDKLoginKit
-import Firebase
 import GoogleSignIn
 
 enum HelloScreenAnimationKeyFrames: CGFloat {
@@ -50,20 +49,21 @@ class AuthViewController: UIViewController {
         
         signUpVC.delegate = self
         loginVC.delegate = self
+    
+        GIDSignIn.sharedInstance()?.delegate = self
     }
     
     @objc private func emailButtonTapped() {
-        print(#function)
         present(loginVC, animated: true, completion: nil)
     }
     
     @objc private func registerButtonTapped() {
-        print(#function)
         present(signUpVC, animated: true, completion: nil)
     }
     
     @objc private func googleButtonTapped() {
-        print(#function)
+        GIDSignIn.sharedInstance()?.presentingViewController = self
+        GIDSignIn.sharedInstance()?.signIn()
     }
     
     @objc private func facebookButtonTapped() {
@@ -112,6 +112,38 @@ extension AuthViewController: AuthNavigationDelegate {
     
     func toSignUpVC() {
         present(signUpVC, animated: true, completion: nil)
+    }
+}
+
+// MARK: - GIDSignInDelegate
+extension AuthViewController: GIDSignInDelegate {
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        AuthService.shared.googleLogin(user: user, error: error) { [weak self] (result) in
+            switch result {
+            
+            case .success(let user):
+                FirestoreService.shared.getUserData(user: user) { (result) in
+                    switch result {
+                    
+                    case .success(let puser):
+                       
+                        UIApplication.getTopViewController()?.showAlert(title: "Успешно", message: "Вы авторизованы", completion: {
+                            let mainTabBar = MainTabBarController(currentUser: puser)
+                            mainTabBar.modalPresentationStyle = .fullScreen
+                            UIApplication.getTopViewController()?.present(mainTabBar, animated: true, completion: nil)
+                        })
+                    case .failure(_):
+                        UIApplication.getTopViewController()?.showAlert(title: "Успешно", message: "Вы зарегистрированы", completion: {
+                            let setupPrifileVC = SetupProfileViewController(currentUser: user)
+                            setupPrifileVC.modalPresentationStyle = .fullScreen
+                            UIApplication.getTopViewController()?.present(setupPrifileVC, animated: true, completion: nil)
+                        })
+                    }
+                }
+            case .failure(let error):
+                self?.showAlert(title: "Ошибка", message: error.localizedDescription)
+            }
+        }
     }
 }
 /*

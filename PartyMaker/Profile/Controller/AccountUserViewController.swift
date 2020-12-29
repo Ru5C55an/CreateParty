@@ -6,11 +6,50 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseAuth
 import FBSDKLoginKit
 import GoogleSignIn
 
 class AccountUserViewController: UIViewController {
+    
+    let logOutButton = UIButton(title: "Выйти", titleColor: .red, backgroundColor: .white)
+
+    override func viewDidLoad() {
+        logOutButton.addTarget(self, action: #selector(logOutButtonTapped), for: .touchUpInside)
+        
+        setupConstraints()
+    }
+    
+    
+    @objc private func logOutButtonTapped() {
+        let ac = UIAlertController(title: nil, message: "Вы уверены что хотите выйти?", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
+        ac.addAction(UIAlertAction(title: "Да", style: .destructive, handler: { (_) in
+            do {
+                try Auth.auth().signOut()
+                UIApplication.shared.keyWindow?.rootViewController = AuthViewController()
+            } catch {
+                print("Error sogning out: \(error.localizedDescription)")
+            }
+        }))
+        
+        present(ac, animated: true, completion: nil)
+    }
+    
+}
+
+// MARK: - Setup constraints
+extension AccountUserViewController {
+    private func setupConstraints() {
+        
+        view.addSubview(logOutButton)
+        logOutButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            logOutButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            logOutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+    }
 }
     /*
     private var provider: String?

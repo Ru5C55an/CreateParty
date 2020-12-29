@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -19,7 +20,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = AboutUserViewContoller()
+        
+        
+        if let user = Auth.auth().currentUser {
+            FirestoreService.shared.getUserData(user: user) { [weak self] (result) in
+                switch result {
+                case .success(let puser):
+                    let mainTabBar = MainTabBarController(currentUser: puser)
+                    mainTabBar.modalPresentationStyle = .fullScreen
+                    self?.window?.rootViewController = mainTabBar
+                case .failure(let error):
+                    self?.window?.rootViewController = AuthViewController()
+                }
+            }
+        } else {
+            window?.rootViewController = AuthViewController()
+        }
         window?.makeKeyAndVisible()
     }
 

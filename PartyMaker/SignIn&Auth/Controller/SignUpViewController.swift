@@ -28,9 +28,9 @@ class SignUpViewController: UIViewController {
     
     weak var delegate: AuthNavigationDelegate?
     
-    let emailTextField = BubbleTextField(placeholder: "asdasdasdasdasfasfasasfasfasfasf")
-    let passwordTextField = BubbleTextField()
-    let confirmPasswordTextField = BubbleTextField()
+    let emailTextField = BubbleTextField(placeholder: "В формате xxx@xxx.xx")
+    let passwordTextField = BubbleTextField(placeholder: "Минимум 6 символов")
+    let confirmPasswordTextField = BubbleTextField(placeholder: "Введите пароль снова")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +49,9 @@ class SignUpViewController: UIViewController {
             
             case .success(let user):
                 self?.showAlert(title: "Успешно", message: "Вы зарегистрированы", completion: {
-                    self?.present(SetupProfileViewController(currentUser: user), animated: true, completion: nil)
+                    let setupPrifileVC = SetupProfileViewController(currentUser: user)
+                    setupPrifileVC.modalPresentationStyle = .fullScreen
+                    self?.present(setupPrifileVC, animated: true, completion: nil)
                 })
                 
             case .failure(let error):
@@ -65,11 +67,14 @@ class SignUpViewController: UIViewController {
     }
 }
 
-
 // MARK: - Setup constraints
 extension SignUpViewController {
     
     private func setupConstraints() {
+        
+        emailTextField.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        passwordTextField.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        confirmPasswordTextField.heightAnchor.constraint(equalToConstant: 48).isActive = true
         
         let emailStackView = UIStackView(arrangedSubviews: [emailLabel, emailTextField], axis: .vertical, spacing: 8)
         let passwordStackView = UIStackView(arrangedSubviews: [passwordLabel, passwordTextField], axis: .vertical, spacing: 8)
@@ -85,9 +90,6 @@ extension SignUpViewController {
         let bottomStackView = UIStackView(arrangedSubviews: [alreadyOnboardLabel, loginButton], axis: .horizontal, spacing: 8)
         bottomStackView.alignment = .firstBaseline
         
-        emailTextField.translatesAutoresizingMaskIntoConstraints = false
-        passwordTextField.translatesAutoresizingMaskIntoConstraints = false
-        confirmPasswordTextField.translatesAutoresizingMaskIntoConstraints = false
         welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
         bottomStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -111,24 +113,6 @@ extension SignUpViewController {
             bottomStackView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 128),
             bottomStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
             bottomStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44)
-        ])
-        
-        NSLayoutConstraint.activate([
-            emailTextField.leadingAnchor.constraint(equalTo: emailStackView.leadingAnchor),
-            emailTextField.trailingAnchor.constraint(equalTo: emailStackView.trailingAnchor),
-            emailTextField.heightAnchor.constraint(equalToConstant: 48)
-        ])
-        
-        NSLayoutConstraint.activate([
-            passwordTextField.leadingAnchor.constraint(equalTo: passwordStackView.leadingAnchor),
-            passwordTextField.trailingAnchor.constraint(equalTo: passwordStackView.trailingAnchor),
-            passwordTextField.heightAnchor.constraint(equalToConstant: 48)
-        ])
-        
-        NSLayoutConstraint.activate([
-            confirmPasswordTextField.leadingAnchor.constraint(equalTo: confirmPasswordStackView.leadingAnchor),
-            confirmPasswordTextField.trailingAnchor.constraint(equalTo: confirmPasswordStackView.trailingAnchor),
-            confirmPasswordTextField.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
 }

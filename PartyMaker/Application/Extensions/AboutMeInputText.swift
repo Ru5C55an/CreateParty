@@ -9,24 +9,31 @@ import UIKit
 
 class AboutMeInputText: UITextView {
     
-    let backView = UIView()
+    private var placeholder: String!
     
-    override init(frame: CGRect, textContainer: NSTextContainer?) {
-        super.init(frame: frame, textContainer: textContainer)
+    init(placeholder: String = "Расскажите о себе...", isEditable: Bool) {
+        super.init(frame: .zero, textContainer: .none)
+        self.placeholder = placeholder
+        self.isEditable = isEditable
         
-        setupConstraints()
         customizeElements()
     }
+
     
     private func customizeElements() {
         dataDetectorTypes = UIDataDetectorTypes.link
-        isEditable = false
+
         font = .sfProDisplay(ofSize: 16, weight: .regular)
 
+        textColor = .lightGray
+        text = "Расскажите о себе..."
+        
         backgroundColor = .white
         layer.cornerRadius = 18
 //        layer.masksToBounds = false
 //        clipsToBounds = false
+        delegate = self
+        textColor = .lightGray
         
         layer.borderColor = UIColor(red: 151, green: 151, blue: 151, alpha: 100).cgColor
         layer.borderWidth = 0.2
@@ -42,11 +49,26 @@ class AboutMeInputText: UITextView {
     }
 }
 
-// MARK: - Setup constraints
-extension AboutMeInputText {
+extension AboutMeInputText: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textColor == .lightGray {
+                text = nil
+                textColor = .black
+        }
+    }
     
-    private func setupConstraints() {
-        
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if text.isEmpty {
+            text = "Расскажите о себе..."
+            textColor = .lightGray
+            placeholder = ""
+        } else {
+            placeholder = text
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        placeholder = text
     }
 }
 

@@ -10,16 +10,34 @@ import Firebase
 
 class MainTabBarController: UITabBarController {
     
+    private let currentUser: PUser
+    
+    init(currentUser: PUser = PUser(username: "asf",
+                                    email: "asf",
+                                    avatarStringURL: "asf",
+                                    description: "asf",
+                                    sex: "asf",
+                                    birthday: "asf",
+                                    id: "asf")) {
+        
+        self.currentUser = currentUser
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationController?.navigationBar.backgroundColor = .mainWhite()
         
-        let partiesViewController = PartiesViewController()
+        let partiesViewController = PartiesViewController(currentUser: currentUser)
         let searchPartyViewController = SearchPartyViewController()
         let createPartyViewController = CreatePartyTableViewController()
-        let messaggesViewController = MessagesViewController()
-        let profileViewController = ProfileViewController()
+        let messaggesViewController = MessagesViewController(currentUser: currentUser)
+        let profileViewController = AccountUserViewController()
         
         let boldConfig = UIImage.SymbolConfiguration(weight: .medium)
         

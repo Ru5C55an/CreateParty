@@ -15,7 +15,7 @@ class ChatRequestViewController: UIViewController {
     let nameLabel = UILabel(text: "Gandi", font: .sfProDisplay(ofSize: 20, weight: .medium))
     let ageLabel = UILabel(text: "21", font: .sfProDisplay(ofSize: 20, weight: .medium))
     
-    let aboutText = AboutMeInputText()
+    let aboutText = AboutMeInputText(isEditable: false)
     
     let ratingLabel = UILabel(text: "3.5", font: .sfProDisplay(ofSize: 16, weight: .medium))
     let interestsLabel = UILabel(text: "Интересы", font: .sfProDisplay(ofSize: 16, weight: .medium))

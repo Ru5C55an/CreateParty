@@ -9,6 +9,7 @@ import UIKit
 import CoreData
 import RealmSwift
 import Firebase
+import FirebaseStorage
 import FBSDKCoreKit
 import GoogleSignIn
 
