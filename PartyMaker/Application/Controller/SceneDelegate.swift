@@ -21,7 +21,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
         
-        
         if let user = Auth.auth().currentUser {
             FirestoreService.shared.getUserData(user: user) { [weak self] (result) in
                 switch result {

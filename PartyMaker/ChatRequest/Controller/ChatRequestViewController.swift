@@ -50,7 +50,7 @@ class ChatRequestViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
-        self.acceptButton.applyGradients(cornerRadius: 10)
+        self.acceptButton.applyGradients(cornerRadius: 10, from: .leading, to: .trailing, startColor: #colorLiteral(red: 0.05098039216, green: 0.5647058824, blue: 0.9137254902, alpha: 1), endColor: #colorLiteral(red: 0.3137254902, green: 0.8117647059, blue: 0.8588235294, alpha: 1))
         self.acceptButton.applySketchShadow(color: .gray, alpha: 50, x: -2, y: 2, blur: 20, spread: 0)
     }
 }

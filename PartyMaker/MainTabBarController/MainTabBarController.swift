@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Firebase
 
 class MainTabBarController: UITabBarController {
     
@@ -35,7 +34,7 @@ class MainTabBarController: UITabBarController {
         
         let partiesViewController = PartiesViewController(currentUser: currentUser)
         let searchPartyViewController = SearchPartyViewController()
-        let createPartyViewController = CreatePartyTableViewController()
+        let createPartyViewController = CreatePartyViewController()
         let messaggesViewController = MessagesViewController(currentUser: currentUser)
         let profileViewController = AccountUserViewController()
         
@@ -54,20 +53,7 @@ class MainTabBarController: UITabBarController {
             generateNavigationController(rootViewController: createPartyViewController, title: "Создать", image: createImage),
             generateNavigationController(rootViewController: profileViewController, title: "Профиль", image: profileImage)
         ]
-        
-//        checkLoggedIn()
     }
-    
-//    private func checkLoggedIn() {
-//
-//        if Auth.auth().currentUser == nil {
-//            DispatchQueue.main.async {
-//                let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-//                let welcomeViewController = storyBoard.instantiateViewController(withIdentifier: "WelcomeViewController")
-//                self.present(welcomeViewController, animated: true)
-//            }
-//        }
-//    }
     
     private func generateNavigationController(rootViewController: UIViewController, title: String, image: UIImage) -> UIViewController {
         

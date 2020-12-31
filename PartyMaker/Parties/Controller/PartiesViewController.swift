@@ -6,9 +6,11 @@
 //
 
 import UIKit
-import RealmSwift
+import FirebaseFirestore
 
 class PartiesViewController: UIViewController {
+    
+    private var partiesListener: ListenerRegistration?
     
     var parties = Bundle.main.decode([Party].self, from: "parties.json")
     var collectionView: UICollectionView!
@@ -52,6 +54,10 @@ class PartiesViewController: UIViewController {
         title = currentUser.username
     }
     
+    deinit {
+        partiesListener?.remove()
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -68,6 +74,8 @@ class PartiesViewController: UIViewController {
         setupCollectionView()
         createDataSource()
         reloadData(with: nil)
+        
+//        partiesListener = ...
     }
     
     private func setupNavigationBar() {
@@ -207,7 +215,8 @@ extension PartiesViewController {
     
     @objc func sortSelection() {
         
-        sorting()
+        //ToDo sorting
+//        sorting()
     }
     
     @objc func reverseSortingBarButtonItemTapped() {
@@ -220,19 +229,21 @@ extension PartiesViewController {
             reverseSortingBarButtonItem.image = #imageLiteral(resourceName: "ZA")
         }
         
-        sorting()
+        //ToDo sorting
+//        sorting()
     }
     
-    private func sorting() {
-        
-        if sortingSegmentedControl.selectedSegmentIndex == 0 {
-            parties = parties.sorted(by: { $0.date > $1.date })
-        } else {
-            parties = parties.sorted(by: { $0.username > $1.username })
-        }
-        
-        reloadData(with: nil)
-    }
+    // ToDo sorting
+//    private func sorting() {
+//        
+//        if sortingSegmentedControl.selectedSegmentIndex == 0 {
+//            parties = parties.sorted(by: { $0.date > $1.date })
+//        } else {
+//            parties = parties.sorted(by: { $0.username > $1.username })
+//        }
+//        
+//        reloadData(with: nil)
+//    }
 }
 
 // MARK: - UISearchBarDelegate

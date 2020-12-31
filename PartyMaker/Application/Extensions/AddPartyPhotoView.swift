@@ -1,13 +1,13 @@
 //
-//  AddProfilePhotoView.swift
+//  AddPartyPhotoView.swift
 //  PartyMaker
 //
-//  Created by Руслан Садыков on 25.12.2020.
+//  Created by Руслан Садыков on 30.12.2020.
 //
 
 import UIKit
 
-class AddProfilePhotoView: UIView {
+class AddPartyPhotoView: UIView {
     
     var circleImageView: UIImageView = {
         let imageView = UIImageView()
@@ -33,8 +33,8 @@ class AddProfilePhotoView: UIView {
             circleImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             circleImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             circleImageView.topAnchor.constraint(equalTo: self.topAnchor),
-            circleImageView.widthAnchor.constraint(equalToConstant: 128),
-            circleImageView.heightAnchor.constraint(equalToConstant: 128)
+            circleImageView.widthAnchor.constraint(equalToConstant: 256),
+            circleImageView.heightAnchor.constraint(equalToConstant: 256)
         ])
         
         self.bottomAnchor.constraint(equalTo: circleImageView.bottomAnchor).isActive = true
@@ -52,4 +52,3 @@ class AddProfilePhotoView: UIView {
         circleImageView.layer.cornerRadius = 14
     }
 }
-

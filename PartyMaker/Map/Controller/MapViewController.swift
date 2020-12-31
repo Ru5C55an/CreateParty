@@ -13,17 +13,27 @@ protocol MapViewControllerDelegate {
     func getAddress(_ address: String?)
 }
 
-
 class MapViewController: UIViewController {
+    
+    var party: Party
+    var incomeIdentifier = ""
+    
+    init(currentParty: Party, incomeIdentifier: String) {
+        
+        self.party = currentParty
+        self.incomeIdentifier = incomeIdentifier
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        
+        fatalError("init(coder:) has not been implemented")
+    }
     
     let mapManager = MapManager()
     var mapViewControllerDelegate: MapViewControllerDelegate?
-    var party = Party2()
     
     let annotationIdentifier = "annotationIdentifier"
-    
-    var incomeSegueIdentifier = ""
-    
     
     var previousLocation: CLLocation? {
         didSet {
@@ -37,79 +47,172 @@ class MapViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var mapView: MKMapView!
+    let mapView = MKMapView()
     
-    @IBOutlet weak var userLocationButton: UIButton!
+    let mapMarkerImage = UIImageView(image: UIImage(named: "Marker"))
+    let addressLabel = UILabel(text: "")
+    let timeAndDistanceLabel = UILabel(text: "")
     
-    @IBOutlet weak var mapMarkerImage: UIImageView!
-    @IBOutlet weak var addressLabel: UILabel!
-    @IBOutlet weak var doneButton: UIButton!
-    @IBOutlet weak var goButton: UIButton!
-    @IBOutlet weak var timeAndDistanceLabel: UILabel!
-    
+    let userLocationButton = UIButton()
+    let closeButton = UIButton(type: .close)
+    let doneButton = UIButton(title: "Готово", titleColor: .green, backgroundColor: .white)
+    let goButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         addressLabel.text = ""
         mapView.delegate = self
         
         userLocationButton.layer.contents = UIImage(named: "NearMe")?.cgImage
+        userLocationButton.addTarget(self, action: #selector(centerViewInUserLocation), for: .touchUpInside)
+        
+        doneButton.addTarget(self, action: #selector(doneButtonPressed), for: .touchUpInside)
+        
         goButton.layer.contents = UIImage(named: "GPS")?.cgImage
+        goButton.addTarget(self, action: #selector(goButtonPressed), for: .touchUpInside)
+        
+        closeButton.addTarget(self, action: #selector(closeVC), for: .touchUpInside)
         
         setupMapView()
+        setupConstraints()
+        
+        setupSearchBar()
     }
     
-    @IBAction func centerViewInUserLocation() {
+    private func setupSearchBar() {
+        let searchController = UISearchController(searchResultsController: nil)
+        navigationItem.searchController = searchController
+        //        navigationItem.hidesSearchBarWhenScrolling = false
+        //                searchController.hidesNavigationBarDuringPresentation = false
+        //                searchController.obscuresBackgroundDuringPresentation = false
+        
+        searchController.searchBar.placeholder = "Москва, ул. Твордовского, д. 5"
+        
+        definesPresentationContext = true // Позволяет отпустить строку поиска, при переходе на другой экран
+        searchController.searchBar.delegate = self
+    }
+    
+    @objc private func centerViewInUserLocation() {
+        
         mapManager.showUserLocation(mapView: mapView)
     }
     
-    @IBAction func doneButtonPressed() {
+    @objc private func doneButtonPressed() {
+        
         mapViewControllerDelegate?.getAddress(addressLabel.text)
         dismiss(animated: true) 
     }
     
-    @IBAction func goButtonPressed() {
+    @objc private func goButtonPressed() {
+        
         mapManager.getDirection(for: mapView) { (location) in
             previousLocation = location
         } getTimeAndDistance: { (timeAndDistance) in
             self.timeAndDistanceLabel.text = timeAndDistance
         }
-
     }
     
-    @IBAction func closeVC() {
+    @objc private func closeVC() {
         dismiss(animated: true) // Закрывает VC и выгружает его из памяти
     }
     
     private func setupMapView() {
         
+        closeButton.isHidden = true
         goButton.isHidden = true
         timeAndDistanceLabel.isHidden = true
         timeAndDistanceLabel.text = ""
         
-        mapManager.checkLocationServices(mapView: mapView, segueIdentifier: incomeSegueIdentifier) {
+        mapManager.checkLocationServices(mapView: mapView, segueIdentifier: incomeIdentifier) {
             mapManager.locationManager.delegate = self
         }
         
-        if incomeSegueIdentifier == "showParty" {
+        if incomeIdentifier == "showParty" {
             mapManager.setupPartymark(party: party, mapView: mapView)
             mapMarkerImage.isHidden = true
             addressLabel.isHidden = true
+            closeButton.isHidden = true
             doneButton.isHidden = true
             goButton.isHidden = false
             timeAndDistanceLabel.isHidden = false
         }
-        
     }
     
     deinit {
         print("deinit", MapViewController.self)
     }
-
 }
 
+// MARK: - Setup constraints
+extension MapViewController {
+    
+    private func setupConstraints() {
+        
+        view.addSubview(mapView)
+        mapView.addSubview(closeButton)
+        mapView.addSubview(doneButton)
+        mapView.addSubview(goButton)
+        mapView.addSubview(userLocationButton)
+        mapView.addSubview(mapMarkerImage)
+        mapView.addSubview(timeAndDistanceLabel)
+        mapView.addSubview(addressLabel)
+        
+        
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        mapView.translatesAutoresizingMaskIntoConstraints = false
+        doneButton.translatesAutoresizingMaskIntoConstraints = false
+        goButton.translatesAutoresizingMaskIntoConstraints = false
+        userLocationButton.translatesAutoresizingMaskIntoConstraints = false
+        mapMarkerImage.translatesAutoresizingMaskIntoConstraints = false
+        timeAndDistanceLabel.translatesAutoresizingMaskIntoConstraints = false
+        addressLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            mapView.topAnchor.constraint(equalTo: view.topAnchor),
+            mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            closeButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 64),
+            closeButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -32)
+        ])
+        
+        NSLayoutConstraint.activate([
+            timeAndDistanceLabel.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 128),
+            timeAndDistanceLabel.centerXAnchor.constraint(equalTo: mapView.centerXAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            addressLabel.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 128),
+            addressLabel.centerXAnchor.constraint(equalTo: mapView.centerXAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            doneButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -128),
+            doneButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            goButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -88),
+            goButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            userLocationButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -44),
+            userLocationButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -124)
+        ])
+        
+        NSLayoutConstraint.activate([
+            mapMarkerImage.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
+            mapMarkerImage.centerYAnchor.constraint(equalTo: mapView.centerYAnchor, constant: -20)
+        ])
+    }
+}
+
+// MARK: - MKMapViewDelegate
 extension MapViewController: MKMapViewDelegate {
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -125,13 +228,14 @@ extension MapViewController: MKMapViewDelegate {
             annotationView?.canShowCallout = true // Включение отображения
         }
 
-        if let imageData = party.imageData {
-            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-            imageView.layer.cornerRadius = 10
-            imageView.clipsToBounds = true
-            imageView.image = UIImage(data: imageData)
-            annotationView?.rightCalloutAccessoryView = imageView
-        }
+        // ToDO add image to party
+//        if let imageData = party.imageUrlString {
+//            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+//            imageView.layer.cornerRadius = 10
+//            imageView.clipsToBounds = true
+//            imageView.image = UIImage(data: imageData)
+//            annotationView?.rightCalloutAccessoryView = imageView
+//        }
 
         return annotationView
     }
@@ -140,14 +244,13 @@ extension MapViewController: MKMapViewDelegate {
         let center = mapManager.getCenterLocation(for: mapView)
         let geocoder = CLGeocoder()
         
-        if incomeSegueIdentifier == "showParty" && previousLocation != nil {
+        if incomeIdentifier == "showParty" && previousLocation != nil {
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 self.mapManager.showUserLocation(mapView: self.mapView)
             }
         }
         
         geocoder.cancelGeocode() // Для оптимизации
-        
         geocoder.reverseGeocodeLocation(center) { (partymarks, error) in
             
             if let error = error {
@@ -169,9 +272,7 @@ extension MapViewController: MKMapViewDelegate {
                 } else {
                     self.addressLabel.text = ""
                 }
-                
             }
-            
         }
     }
 
@@ -182,17 +283,48 @@ extension MapViewController: MKMapViewDelegate {
         renderer.strokeColor = .orange
         
         return renderer
-        
     }
-    
 }
 
+// MARK: - CLLLocationManagerDelegate
 extension MapViewController: CLLocationManagerDelegate {
     
     // Данный метод вызывается при каждом изменении статуса авторизации приложения для использования служб геолокации
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         mapManager.checkLocationAuthorization(mapView: mapView,
-                                              segueIdentifier: incomeSegueIdentifier)
+                                              segueIdentifier: incomeIdentifier)
+    }
+}
+
+// MARK: - UISearchBarDelegate
+extension MapViewController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        mapManager.checkSearchLocation(location: searchText, mapView: mapView)
+    }
+}
+
+// MARK: - SwiftUI
+import SwiftUI
+
+struct MapViewControllerProvider: PreviewProvider {
+    
+    static var previews: some View {
+        
+        ContainerView().edgesIgnoringSafeArea(.all)
     }
     
+    struct ContainerView: UIViewControllerRepresentable {
+        
+        let mapViewController = MapViewController(currentParty: Party(location: "", userId: "", imageUrlString: "", type: "", maximumPeople: "", currentPeople: "", id: "", date: "", startTime: "", endTime: "", name: "", price: "", description: "", alco: ""), incomeIdentifier: "getAddress")
+        
+        func makeUIViewController(context: Context) -> MapViewController {
+            return mapViewController
+        }
+        
+        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+            
+        }
+    }
 }

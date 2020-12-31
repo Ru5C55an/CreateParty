@@ -44,4 +44,30 @@ class StorageService {
             }
         }
     }
+    
+    private var partiesImagesRef: StorageReference {
+        return storageRef.child("partiesImages")
+    }
+    
+    func uploadPartyImage(photo: UIImage, partyId: String, completion: @escaping (Result<URL, Error>) -> Void) {
+        guard let scaledImage = photo.scaledToSafeUploadSize, let imageData = scaledImage.jpegData(compressionQuality: 0.4) else { return }
+        
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpeg"
+        
+        partiesImagesRef.child(currentUserId).putData(imageData, metadata: metadata) { (metadata, error) in
+            guard let _ = metadata else {
+                completion(.failure(error!))
+                return
+            }
+            
+            self.avatarsRef.child(self.currentUserId).downloadURL { (url, error) in
+                guard let downloadURL = url else {
+                    completion(.failure(error!))
+                    return
+                }
+                completion(.success(downloadURL))
+            }
+        }
+    }
 }

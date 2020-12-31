@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import GoogleSignIn
+import FBSDKLoginKit
 
 class AuthService {
     
@@ -32,6 +33,7 @@ class AuthService {
     }
     
     func googleLogin(user: GIDGoogleUser!, error: Error!, completion: @escaping (Result<User, Error>) -> Void) {
+        
         if let error = error {
             completion(.failure(error))
             return
@@ -76,4 +78,13 @@ class AuthService {
             completion(.success(result.user))
         }
     }
+    
+    func resetPassword(withEmail email: String, completion: @escaping (Error) -> Void) {
+        auth.sendPasswordReset(withEmail: email) { error in
+            guard let error = error else { return }
+            completion(error)
+        }
+    }
+    
+    
 }

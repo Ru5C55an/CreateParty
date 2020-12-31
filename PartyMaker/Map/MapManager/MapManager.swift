@@ -9,14 +9,14 @@ import UIKit
 import MapKit
 
 class MapManager {
+    
     let locationManager = CLLocationManager()
     private var partyCoordinate: CLLocationCoordinate2D?
     private let regionImMeters = 1000.0
     private var directionsArray: [MKDirections] = []
-   
     
     // Установка маркера вечеринки
-    func setupPartymark(party: Party2, mapView: MKMapView) {
+    func setupPartymark(party: Party, mapView: MKMapView) {
         
        // guard let location = party.location else { return }
         let location = party.location
@@ -46,9 +46,28 @@ class MapManager {
             
             mapView.showAnnotations([annotation], animated: true)
             mapView.selectAnnotation(annotation, animated: true)
-            
         }
+    }
+    
+    func checkSearchLocation(location: String, mapView: MKMapView) {
         
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(location) { [weak self] (partymarks, error) in
+            
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            guard let partymarks = partymarks else { return }
+            let partymark = partymarks.first
+            
+            guard let partymarkLocation = partymark?.location else { return }
+            
+            self?.partyCoordinate = partymarkLocation.coordinate
+            
+            mapView.setCenter(partymarkLocation.coordinate, animated: true)
+        }
     }
     
     // Проверка доступности сервисов геолокации
@@ -93,7 +112,6 @@ class MapManager {
                                             longitudinalMeters: regionImMeters)
             mapView.setRegion(region, animated: true)
         }
-        
     }
     
     // Построение маршрута от местоположения пользователя до заведения
@@ -139,10 +157,8 @@ class MapManager {
                 DispatchQueue.main.asyncAfter(deadline: .now()+2) {
                     getTimeAndDistance(timeAndDistance)
                 }
-                
             }
         }
-        
     }
     
     // Метод отменяет все действующие маршруты и удаляет их с карты
@@ -152,7 +168,6 @@ class MapManager {
         directionsArray.append(directions)
         let _ = directionsArray.map { $0.cancel() } // Отменем маршрут у каждого элемента массива
         directionsArray.removeAll() // Удаляем все элементы массива
-        
     }
     
     func createDirectionsRequest(from coordinate: CLLocationCoordinate2D) -> MKDirections.Request? {
@@ -168,7 +183,6 @@ class MapManager {
         request.requestsAlternateRoutes = true
         
         return request
-        
     }
     
     // Изменение отображаемой зоны области карты в соответствии с перемещением пользователя
@@ -181,7 +195,6 @@ class MapManager {
         guard center.distance(from: location) > 50 else { return }
         
         closure(center)
-        
     }
     
     // Определение центра отображаемой области карты
@@ -191,7 +204,6 @@ class MapManager {
         let longitude = mapView.centerCoordinate.longitude
         
         return CLLocation(latitude: latitude, longitude: longitude)
-        
     }
     
     func showAlert(title: String, message: String) {
@@ -206,7 +218,5 @@ class MapManager {
         alertWindow.windowLevel = UIWindow.Level.alert + 1
         alertWindow.makeKeyAndVisible()
         alertWindow.rootViewController?.present(alert, animated: true) // present вызывает наш Alert
-        
     }
-    
 }

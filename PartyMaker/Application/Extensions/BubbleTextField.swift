@@ -18,7 +18,6 @@ class BubbleTextField: UITextField {
         self.font = UIFont.sfProDisplay(ofSize: 14, weight: .regular)
         self.clearButtonMode = .whileEditing
         self.layer.cornerRadius = 10
-        self.clipsToBounds = false
         
         self.layer.borderColor = UIColor(red: 189, green: 189, blue: 189, alpha: 40).cgColor
         self.layer.borderWidth = 0.2

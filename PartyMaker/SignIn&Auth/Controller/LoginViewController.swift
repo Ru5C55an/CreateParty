@@ -11,17 +11,37 @@ import Firebase
 
 class LoginViewController: UIViewController {
     
+    var pointOfStackView: CGPoint?
+    
+    var stackView: UIStackView!
+    
+    let warnLabel = UILabel(text: "")
+    
+    var savedAnimationViewFrame = CGFloat(1)
+    var animationView = AnimationView()
+    let animationConfetti = Animation.named("Confetti")
+    let animationWaitingDots = Animation.named("WaitingDots")
+    
     let welcomeLabel = UILabel(text: "Рады снова вас видеть!", font: .sfProRounded(ofSize: 26, weight: .regular))
-
+    
     let emailLabel = UILabel(text: "Эл. почта")
     let passwordLabel = UILabel(text: "Пароль")
-    let needAnAccountLabel = UILabel(text: "Еще нет аккаунта?")
     
     let loginButton = UIButton(title: "Войти", titleColor: .white, backgroundColor: .black)
     
     let emailTextField = BubbleTextField()
     let passwordTextField = BubbleTextField()
     
+    let forgotPasswordLabel = UILabel(text: "Забыли пароль?")
+    let resetPasswordButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Восстановить", for: .normal)
+        button.setTitleColor(.blue, for: .normal)
+        button.titleLabel?.font = .sfProRounded(ofSize: 20, weight: .regular)
+        return button
+    }()
+    
+    let needAnAccountLabel = UILabel(text: "Еще нет аккаунта?")
     let signUpButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Регистрация", for: .normal)
@@ -35,32 +55,118 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+        
+        view.backgroundColor = .systemBackground
+        
+        animationView.animation = animationWaitingDots
+        animationView.contentMode = .scaleAspectFit
+        animationView.backgroundColor = .clear
+        
         setupConstraints()
         
         loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         signUpButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
+        resetPasswordButton.addTarget(self, action: #selector(resetPasswordButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc private func resetPasswordButtonTapped() {
+        
+        guard let email = emailTextField.text, email != "" else {
+            displayWarningLabel(withText: "Введите почту для сброса пароля")
+            return
+        }
+        
+        AuthService.shared.resetPassword(withEmail: email, completion: { [weak self] error in
+            self?.displayWarningLabel(withText: error.localizedDescription)
+            return
+        })
+        
+        showAlert(title: "Ссылка для восстановления отправлена", message: "Перейдите по ссылке из письма, отправленного вам на указанный адрес эл. почты")
+    }
+    
+    private func displayWarningLabel(withText text: String) {
+        
+        warnLabel.text = text
+        
+            UIView.animate(withDuration: 3, delay: 0, options: .curveEaseInOut) {
+                self.warnLabel.alpha = 1
+            } completion: { [weak self] _ in
+                self?.warnLabel.alpha = 0
+            }
+    
+//        UIView.animate(withDuration: 3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut) { [weak self] in
+//                self?.warnLabel.alpha = 1
+//        } completion: { [weak self] complete in
+//                self?.warnLabel.alpha = 0
+//        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        
+        guard let pointOfStackView = pointOfStackView else { return }
+        
+        stackView.center = pointOfStackView
+    }
+    
+    @objc private func keyboardWillAppear(notification: NSNotification) {
+        
+        pointOfStackView = stackView?.center
+        
+        let userInfo = notification.userInfo!
+        let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        
+        stackView.center = CGPoint(x: view.center.x, y: view.frame.height - keyboardFrame.height - 16.0 - stackView.frame.height / 2)
     }
     
     @objc private func loginButtonTapped() {
+        
+        animationView.play(fromFrame: savedAnimationViewFrame, toFrame: 40, loopMode: .loop)
+        animationView.animationSpeed = 1
+        
         AuthService.shared.login(email: emailTextField.text!, password: passwordTextField.text) { [weak self] (result) in
             
             switch result {
             case .success(let user):
-                self?.showAlert(title: "Успешно", message: "Вход выполнен", completion: {
-                    FirestoreService.shared.getUserData(user: user) { [weak self] (result) in
-                        switch result {
+                
+                UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) {
+                    self?.animationView.layer.transform = CATransform3DMakeScale(0.1,0.1, 1.0)
+                } completion: { (finished) in
+                    self?.animationView.layer.transform = CATransform3DMakeScale(1,1,1)
+                    self?.animationView.animation = self?.animationConfetti
+                    self?.animationView.loopMode = .playOnce
+                    self?.animationView.animationSpeed = 2
+                    self?.animationView.play { _ in
                         
-                        case .success(let puser):
-                            let mainTabBar = MainTabBarController(currentUser: puser)
-                            mainTabBar.modalPresentationStyle = .fullScreen
-                            self?.present(mainTabBar, animated: true, completion: nil)
-                        case .failure(let error):
-                            self?.present(SetupProfileViewController(currentUser: user), animated: true, completion: nil)
-                        }
-                    }
-                })
+                        print("Successfully logged in with Email")
+                        
+                        self?.showAlert(title: "Успешно", message: "Вход выполнен", completion: {
+                            FirestoreService.shared.getUserData(user: user) { [weak self] (result) in
+                                switch result {
+                                
+                                case .success(let puser):
+                                    let mainTabBar = MainTabBarController(currentUser: puser)
+                                    mainTabBar.modalPresentationStyle = .fullScreen
+                                    self?.present(mainTabBar, animated: true, completion: nil)
+                                case .failure(_):
+                                    self?.present(SetupProfileViewController(currentUser: user), animated: true, completion: nil)
+                                }
+                            } // FirestoreService.share.getUserData
+                        }) // ShowAlert
+                    } // completion animationView.play
+                }
+                
             case .failure(let error):
+                self?.animationView.pause()
+                self?.savedAnimationViewFrame = (self?.animationView.currentFrame)!
                 self?.showAlert(title: "Ошибка", message: error.localizedDescription)
             }
         }
@@ -71,6 +177,10 @@ class LoginViewController: UIViewController {
             self.delegate?.toSignUpVC()
         }
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 }
 
 //MARK: - Setup constraints
@@ -80,44 +190,72 @@ extension LoginViewController {
         loginButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
         passwordTextField.heightAnchor.constraint(equalToConstant: 48).isActive = true
         emailTextField.heightAnchor.constraint(equalToConstant: 48).isActive = true
-
+        
         let emailStackView = UIStackView(arrangedSubviews: [emailLabel, emailTextField],
-                                          axis: .vertical, spacing: 8)
-        let passwordStackView = UIStackView(arrangedSubviews: [passwordLabel, passwordTextField],
                                          axis: .vertical, spacing: 8)
-        let stackView = UIStackView(arrangedSubviews: [emailStackView, passwordStackView, loginButton],
-                                    axis: .vertical,
-                                    spacing: 32)
+        let passwordStackView = UIStackView(arrangedSubviews: [passwordLabel, passwordTextField],
+                                            axis: .vertical, spacing: 8)
+        
+        self.stackView = UIStackView(arrangedSubviews: [animationView, warnLabel, emailStackView, passwordStackView, loginButton],
+                                     axis: .vertical,
+                                     spacing: 32)
+        
+        resetPasswordButton.contentHorizontalAlignment = .leading
+        let forgotPasswordStackView = UIStackView(arrangedSubviews: [forgotPasswordLabel, resetPasswordButton], axis: .horizontal, spacing: 8)
+        forgotPasswordStackView.alignment = .firstBaseline
         
         signUpButton.contentHorizontalAlignment = .leading
         let bottomStackView = UIStackView(arrangedSubviews: [needAnAccountLabel, signUpButton], axis: .horizontal, spacing: 8)
         bottomStackView.alignment = .firstBaseline
         
         welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+        animationView.translatesAutoresizingMaskIntoConstraints = false
+        self.stackView.translatesAutoresizingMaskIntoConstraints = false
+        forgotPasswordStackView.translatesAutoresizingMaskIntoConstraints = false
         bottomStackView.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(welcomeLabel)
-        view.addSubview(stackView)
+        view.addSubview(self.stackView)
+        view.addSubview(forgotPasswordStackView)
         view.addSubview(bottomStackView)
         
         NSLayoutConstraint.activate([
-            welcomeLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 128),
+            welcomeLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 32),
             welcomeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 160),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44)
+            animationView.heightAnchor.constraint(equalToConstant: 64)
         ])
         
         NSLayoutConstraint.activate([
-            bottomStackView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 160),
+            self.stackView.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 120),
+            self.stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
+            self.stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44)
+        ])
+        
+        NSLayoutConstraint.activate([
+            forgotPasswordStackView.bottomAnchor.constraint(equalTo: bottomStackView.topAnchor, constant: -8),
+            forgotPasswordStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
+            forgotPasswordStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44)
+        ])
+        
+        NSLayoutConstraint.activate([
+            bottomStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
             bottomStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
-            bottomStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44)
+            //            bottomStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44)
         ])
     }
+}
+
+// MARK: - UITextFieldDelegate
+extension LoginViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
 }
 
 // MARK: - SwiftUI
@@ -172,15 +310,7 @@ struct LoginViewControllerProvider: PreviewProvider {
 //        button.addTarget(self, action: #selector(handleSignIn), for: .touchUpInside)
 //        return button
 //    }()
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        emailTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
-//        passwordTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
-//
-//        setup()
-//    }
+
 //
 //    @objc private func textFieldChanged() {
 //
@@ -205,46 +335,6 @@ struct LoginViewControllerProvider: PreviewProvider {
 //        }
 //    }
 //
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-//
-//        emailTextField.text = ""
-//        passwordTextField.text = ""
-//    }
-//
-//    @objc func keyboardWillHide(notification: NSNotification) {
-//
-//        guard let pointOfContinueButton = pointOfContinueButton,
-//              let pointOfNoAccountLabel = pointOfNoAccountLabel,
-//              let pointOfToWelcomeVCButton = pointOfToWelcomeVCButton
-//        else { return }
-//
-//        continueButton.center = pointOfContinueButton
-//        noAccountLabel.center = pointOfNoAccountLabel
-//        toWelcomeVCButton.center = pointOfToWelcomeVCButton
-//    }
-//
-//    @objc func keyboardWillAppear(notification: NSNotification) {
-//
-//        pointOfContinueButton = continueButton.center
-//        pointOfNoAccountLabel = noAccountLabel.center
-//        pointOfToWelcomeVCButton = toWelcomeVCButton.center
-//
-//        let userInfo = notification.userInfo!
-//        let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-//
-//        let centerX = view.center.x
-//        let centerY1 = view.frame.height - keyboardFrame.height - 16.0 - continueButton.frame.height / 2
-//        let centerY2 = centerY1 - 32.0 - toWelcomeVCButton.frame.height / 2
-//        let centerY3 = centerY2 - 16.0 - noAccountLabel.frame.height / 2
-//
-//        continueButton.center = CGPoint(x: centerX, y: centerY1)
-//        toWelcomeVCButton.center = CGPoint(x: centerX, y: centerY2)
-//        noAccountLabel.center = CGPoint(x: centerX, y: centerY3)
-//    }
 //
 //    private func setup() {
 //
@@ -258,109 +348,4 @@ struct LoginViewControllerProvider: PreviewProvider {
 //
 //        warnLabel.alpha = 0
 //    }
-//
-//    @IBAction func tappedButton(_ sender: UIButton) {
-//
-//        if sender == toWelcomeVCButton {
-//            dismiss(animated: true, completion: nil)
-//        }
-//
-//        if sender == resetPasswordButton {
-//            guard let email = emailTextField.text, email != "" else {
-//                displayWarningLabel(withText: "Введите почту для сброса пароля")
-//                animationView.stop()
-//                return
-//            }
-//
-//            Auth.auth().sendPasswordReset(withEmail: email) { [weak self] error in
-//                guard let error = error else { return }
-//                self?.displayWarningLabel(withText: error.localizedDescription)
-//            }
-//
-//            showAlert(title: "Ссылка для восстановления отправлена", message: "Перейдите по ссылке из письма, отправленного вам на указанный адрес эл. почты")
-//        }
-//    }
-//
-//    private func displayWarningLabel(withText text: String) {
-//
-//        warnLabel.text = text
-//
-//        UIView.animate(withDuration: 3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut) { [weak self] in
-//            self?.warnLabel.alpha = 1
-//        } completion: { [weak self] complete in
-//            self?.warnLabel.alpha = 0
-//        }
-//    }
-//
-//    private func showAlert(title: String, message: String) {
-//        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-//        let okAction = UIAlertAction(title: "ОК", style: .default, handler: nil)
-//
-//        alertController.addAction(okAction)
-//        present(alertController, animated: true, completion: nil)
-//    }
-//
-//    @objc private func handleSignIn() {
-//
-//        var savedAnimationViewFrame = CGFloat(1)
-//
-//        setContinueButton(enabled: false)
-//        continueButton.setTitle("Вход...", for: .normal)
-//        animationView?.play(fromFrame: savedAnimationViewFrame, toFrame: 40, loopMode: .loop)
-////        animationView?.play(toFrame: 40)
-//        animationView?.animationSpeed = 1
-//        animationView?.loopMode = .loop
-//
-//        guard let email = emailTextField.text, let password = passwordTextField.text else {
-//
-//            displayWarningLabel(withText: "Ошибка")
-//            savedAnimationViewFrame = animationView.currentFrame
-//            animationView.stop()
-//            return
-//        }
-//
-//        Auth.auth().signIn(withEmail: email, password: password) { [weak self] (user, error) in
-//
-//            if let error = error {
-//                self?.displayWarningLabel(withText: error.localizedDescription)
-//                self?.setContinueButton(enabled: true)
-//                self?.continueButton.setTitle("Войти", for: .normal)
-//                savedAnimationViewFrame = (self?.animationView.currentFrame)!
-//                self?.animationView.stop()
-//
-//                return
-//            }
-//
-//            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) {
-//                self?.animationView.layer.transform = CATransform3DMakeScale(0.1,0.1, 1.0)
-//            } completion: { (finished) in
-//                self?.animationView.layer.transform = CATransform3DMakeScale(1,1,1)
-//                self?.animationView.animation = self?.animationConfetti
-//                self?.animationView.loopMode = .playOnce
-//                self?.animationView.animationSpeed = 2
-//                self?.animationView.play { _ in
-//                    print("Successfully logged in with Email")
-//                    self?.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
-//                }
-//            }
-//
-//            return
-//        }
-//    }
-//
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        self.view.endEditing(true)
-//    }
-//
-//    deinit {
-//        print("deinit", LoginViewController.self)
-//    }
-//}
-//
-//extension LoginViewController: UITextFieldDelegate {
-//
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        textField.resignFirstResponder()
-//        return true
-//    }
-//}
+

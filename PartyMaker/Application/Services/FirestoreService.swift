@@ -42,7 +42,7 @@ class FirestoreService {
         
         var puser = PUser(username: username!, email: email, avatarStringURL: "not exist", description: description!, sex: sex!, birthday: birthday!, id: id)
         
-        if avatarImage != #imageLiteral(resourceName: "camera") {
+        if avatarImage != UIImage(systemName: "plus.viewfinder") {
             
             StorageService.shared.upload(photo: avatarImage!) { (result) in
                 switch result {
@@ -74,4 +74,48 @@ class FirestoreService {
             }
         }
     } // saveProfileWith
+    
+    
+    private var partiesRef: CollectionReference {
+        return db.collection("parties")
+    }
+    
+    func savePartyWith(party: Party, partyImage: UIImage?, completion: @escaping (Result<Party, Error>) -> Void) {
+        
+        var party = party
+        party.id = UUID().uuidString
+        
+        if partyImage != UIImage(systemName: "plus.viewfinder") {
+            
+            StorageService.shared.uploadPartyImage(photo: partyImage!, partyId: party.id) { (result) in
+                
+                switch result {
+                
+                case .success(let url):
+                    party.imageUrlString = url.absoluteString
+                    
+                    // Сохранение данных в Firestore
+                    self.partiesRef.document(party.id).setData(party.representation) { (error) in
+                        if let error = error {
+                            completion(.failure(error))
+                        } else {
+                            completion(.success(party))
+                        }
+                    }
+                    
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        } else {
+            // Сохранение данных в firestore
+            self.partiesRef.document(party.id).setData(party.representation) { (error) in
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    completion(.success(party))
+                }
+            }
+        }
+    }
 }

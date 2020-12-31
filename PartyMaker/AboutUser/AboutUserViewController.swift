@@ -29,6 +29,8 @@ class AboutUserViewContoller: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        aboutText.text = "asdasfaskghaksjglhalkshalkhgaslkghalkghalkgahaklghaklsghalkghalksghalksghaklghaklgahklshaklsgasjkfhakjsfhalshfajksfhajkshfajksfhlkjhfajkhdgjlkashdgjlkasdhgasjkghalsjkdghajslkdnsjkcnsauciaheoiurhyuidngihpsdghsdiufgphiusdghpiusdgfhpiudsfghpiudfghjdfsjhgfjkk;ljkhgfdhjkl"
+        
         view.backgroundColor = .white
         customizeElements()
         setupConstraints()

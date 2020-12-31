@@ -18,22 +18,22 @@ class AboutMeInputText: UITextView {
         
         customizeElements()
     }
-
     
     private func customizeElements() {
         dataDetectorTypes = UIDataDetectorTypes.link
 
         font = .sfProDisplay(ofSize: 16, weight: .regular)
 
-        textColor = .lightGray
-        text = "Расскажите о себе..."
+        if isEditable {
+            textColor = .lightGray
+            text = "Расскажите о себе..."
+        }
         
         backgroundColor = .white
         layer.cornerRadius = 18
 //        layer.masksToBounds = false
-//        clipsToBounds = false
+
         delegate = self
-        textColor = .lightGray
         
         layer.borderColor = UIColor(red: 151, green: 151, blue: 151, alpha: 100).cgColor
         layer.borderWidth = 0.2

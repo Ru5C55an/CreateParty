@@ -24,10 +24,10 @@ class AuthViewController: UIViewController {
     let signUpLabel = UILabel(text: "Выполните регистрацию")
     let loginLabel = UILabel(text: "Или выполните вход")
     
-    let registerButton = UIButton(title: "Зарегистрироваться", titleColor: .black, backgroundColor: .white)
-    let emailButton = UIButton(title: "Войти с помощью email", titleColor: .black, backgroundColor: .white)
-    let googleButton = UIButton(title: "Google", titleColor: .black, backgroundColor: .white)
-    let facebookButton = UIButton(title: "Facebook", titleColor: .black, backgroundColor: .white)
+    let registerButton = UIButton(title: "Зарегистрироваться", titleColor: .white)
+    let emailButton = UIButton(title: "Войти с помощью email", titleColor: .white)
+    let googleButton = UIButton(isShadow: true)
+    let appleButton = UIButton(isShadow: true)
     
     let signUpVC = SignUpViewController()
     let loginVC = LoginViewController()
@@ -35,17 +35,19 @@ class AuthViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         
         googleButton.addIcon(image: #imageLiteral(resourceName: "google-icon"))
-        facebookButton.addIcon(image: #imageLiteral(resourceName: "facebook-icon"))
+        appleButton.addIcon(image: #imageLiteral(resourceName: "apple-logo"))
         
         setupConstraints()
         
         emailButton.addTarget(self, action: #selector(emailButtonTapped), for: .touchUpInside)
+        emailButton.applyGradients(cornerRadius: emailButton.layer.cornerRadius, from: .bottomLeading, to: .topTrailing, startColor: #colorLiteral(red: 0.7098039216, green: 0.7843137255, blue: 0.1921568627, alpha: 1), endColor: #colorLiteral(red: 0.2784313725, green: 0.6078431373, blue: 0.3529411765, alpha: 1))
         registerButton.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
+        registerButton.applyGradients(cornerRadius: emailButton.layer.cornerRadius, from: .bottomLeading, to: .topTrailing, startColor: #colorLiteral(red: 0.1960784314, green: 0.5647058824, blue: 0.6, alpha: 1), endColor: #colorLiteral(red: 0.1490196078, green: 0.1450980392, blue: 0.7490196078, alpha: 1))
         googleButton.addTarget(self, action: #selector(googleButtonTapped), for: .touchUpInside)
-        facebookButton.addTarget(self, action: #selector(facebookButtonTapped), for: .touchUpInside)
+        appleButton.addTarget(self, action: #selector(appleButtonTapped), for: .touchUpInside)
         
         signUpVC.delegate = self
         loginVC.delegate = self
@@ -66,7 +68,7 @@ class AuthViewController: UIViewController {
         GIDSignIn.sharedInstance()?.signIn()
     }
     
-    @objc private func facebookButtonTapped() {
+    @objc private func appleButtonTapped() {
         print(#function)
     }
 }
@@ -81,7 +83,7 @@ extension AuthViewController {
         let signUpView = ButtonFormView(label: signUpLabel, button: registerButton)
         let loginView = ButtonFormView(label: loginLabel, button: emailButton)
         
-        let stackViewGetStartedButtons = UIStackView(arrangedSubviews: [googleButton, facebookButton], axis: .horizontal, spacing: 8)
+        let stackViewGetStartedButtons = UIStackView(arrangedSubviews: [googleButton, appleButton], axis: .horizontal, spacing: 8)
         stackViewGetStartedButtons.distribution = .fillEqually
         
         let getStartedView = ButtonFormView(label: getStartedLabel, stackView: stackViewGetStartedButtons)

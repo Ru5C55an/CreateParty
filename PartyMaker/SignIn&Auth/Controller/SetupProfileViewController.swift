@@ -11,7 +11,7 @@ import FirebaseAuth
 class SetupProfileViewController: UIViewController {
     
     let welcomeLabel = UILabel(text: "Расскажите о себе!", font: .sfProRounded(ofSize: 26, weight: .regular))
-
+    
     let fullNameLabel = UILabel(text: "Имя")
     let aboutMeLabel = UILabel(text: "Обо мне")
     let birtdayLabel = UILabel(text: "День рождения")
@@ -21,7 +21,7 @@ class SetupProfileViewController: UIViewController {
     let aboutMeTextField = AboutMeInputText(isEditable: true)
     
     let sexSegmentedControl = UISegmentedControl(first: "Мужской", second: "Женский")
-    let birthdayDatepicker = UIDatePicker(datePickerMode: .date, preferredDatePickerStyle: .wheels)
+    
     var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_RU")
@@ -29,7 +29,9 @@ class SetupProfileViewController: UIViewController {
         return dateFormatter
     }()
     
-    let nextButton = UIButton(title: "Далее", titleColor: .black, backgroundColor: .white)
+    lazy var birthdayDatepicker = UIDatePicker(datePickerMode: .date, preferredDatePickerStyle: .wheels, minimumDate: dateFormatter.date(from: "01-01-1900"), maximumDate: Date())
+    
+    let nextButton = UIButton(title: "Далее")
     
     private let currentUser: User
     
@@ -48,11 +50,16 @@ class SetupProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        
+        view.backgroundColor = .systemBackground
+        
+        fullNameTextField.delegate = self
         
         setupConstraints()
         
         nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+        
+        nextButton.applyGradients(cornerRadius: nextButton.layer.cornerRadius, from: .bottomLeading, to: .topTrailing, startColor: #colorLiteral(red: 0.4705882353, green: 0.7254901961, blue: 0.1490196078, alpha: 1), endColor: #colorLiteral(red: 0.1882352941, green: 0.5058823529, blue: 0.231372549, alpha: 1))
     }
     
     @objc private func nextButtonTapped() {
@@ -70,14 +77,18 @@ class SetupProfileViewController: UIViewController {
         secondSetupProfileVC.modalPresentationStyle = .fullScreen
         
         present(secondSetupProfileVC, animated: true, completion: nil)
-    } 
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 }
 
 // MARK: - Setup constraints
 extension SetupProfileViewController {
     
     private func setupConstraints() {
-    
+        
         nextButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
         aboutMeTextField.heightAnchor.constraint(equalToConstant: 128).isActive = true
         fullNameTextField.heightAnchor.constraint(equalToConstant: 48).isActive = true
@@ -89,8 +100,8 @@ extension SetupProfileViewController {
                                            axis: .vertical,
                                            spacing: 8)
         let sexStackView = UIStackView(arrangedSubviews: [sexLabel, sexSegmentedControl],
-                                           axis: .vertical,
-                                           spacing: 12)
+                                       axis: .vertical,
+                                       spacing: 12)
         let birthdayStackView = UIStackView(arrangedSubviews: [birtdayLabel, birthdayDatepicker],
                                             axis: .vertical,
                                             spacing: 0)
@@ -99,7 +110,7 @@ extension SetupProfileViewController {
         
         welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         view.addSubview(welcomeLabel)
         view.addSubview(stackView)
         
@@ -113,6 +124,15 @@ extension SetupProfileViewController {
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44)
         ])
+    }
+}
+
+// MARK: - UITextFieldDelegate
+extension SetupProfileViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
 

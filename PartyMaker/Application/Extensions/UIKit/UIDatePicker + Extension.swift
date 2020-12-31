@@ -9,17 +9,19 @@ import UIKit
 
 extension UIDatePicker {
     
-    convenience init(datePickerMode: UIDatePicker.Mode, preferredDatePickerStyle: UIDatePickerStyle) {
+    convenience init(datePickerMode: UIDatePicker.Mode, preferredDatePickerStyle: UIDatePickerStyle, minimumDate: Date? = nil, maximumDate: Date? = nil) {
         self.init()
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ru_RU")
-        dateFormatter.dateFormat = "dd-MM-yyyy"
+        if minimumDate != nil {
+            self.minimumDate = minimumDate
+        }
+        
+        if maximumDate != nil {
+            self.maximumDate = maximumDate
+        }
         
         self.datePickerMode = datePickerMode
         self.preferredDatePickerStyle = preferredDatePickerStyle
-        self.minimumDate = dateFormatter.date(from: "01-01-1900")
-        self.maximumDate = Date()
         self.locale = Locale(identifier: "ru_RU")
     }
 }

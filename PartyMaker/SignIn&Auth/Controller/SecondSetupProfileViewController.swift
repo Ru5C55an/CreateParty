@@ -62,6 +62,8 @@ class SecondSetupProfileViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
+        
+        
         setupConstraints()
         setupTargets()
         
@@ -70,10 +72,33 @@ class SecondSetupProfileViewController: UIViewController {
     }
     
     @objc func selectPhoto() {
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.delegate = self
-        imagePickerController.sourceType = .photoLibrary
-        present(imagePickerController, animated: true, completion: nil)
+        
+        let cameraIcon = #imageLiteral(resourceName: "camera")
+        let photoIcon = #imageLiteral(resourceName: "photo")
+        
+        let actionSheet = UIAlertController(title: nil,
+                                            message: nil,
+                                            preferredStyle: .actionSheet)
+        
+        let camera = UIAlertAction(title: "Камера", style: .default) { _ in
+            self.chooseImagePicker(source: .camera)
+        }
+        camera.setValue(cameraIcon, forKey: "image")
+        camera.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+        
+        let photo = UIAlertAction(title: "Фото", style: .default) { _ in
+            self.chooseImagePicker(source: .photoLibrary)
+        }
+        photo.setValue(photoIcon, forKey: "image")
+        photo.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+        
+        let cancel = UIAlertAction(title: "Отмена", style: .cancel)
+        
+        actionSheet.addAction(camera)
+        actionSheet.addAction(photo)
+        actionSheet.addAction(cancel)
+        
+        present(actionSheet, animated: true) // present вызывает наш контроллер
     }
     
     private func setupTargets() {
@@ -164,19 +189,42 @@ extension SecondSetupProfileViewController {
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44)
         ])
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 }
 
-// MARK: - UIImagePickerControllerDelegate
-extension SecondSetupProfileViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-    internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+// Mark: - Work with image
+extension SecondSetupProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func chooseImagePicker(source: UIImagePickerController.SourceType) {
         
-        picker.dismiss(animated: true, completion: nil)
-        
-        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
-            return
+        if UIImagePickerController.isSourceTypeAvailable(source) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self // Делегируем наш класс на выполнение данного протокола
+            imagePicker.allowsEditing = true
+            imagePicker.sourceType = source
+            present(imagePicker, animated: true)
         }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        fillImageView.circleImageView.image = info[.editedImage] as? UIImage
+        fillImageView.circleImageView.contentMode = .scaleAspectFill
+        fillImageView.circleImageView.clipsToBounds = true
         
-        fillImageView.circleImageView.image = image
+        dismiss(animated: true)
+    }
+}
+
+// MARK: - UITextFieldDelegate
+extension SecondSetupProfileViewController: UITextFieldDelegate {
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
 

@@ -1,22 +1,24 @@
 //
-//  MessageTextField.swift
+//  LocationTextField.swift
 //  PartyMaker
 //
-//  Created by Руслан Садыков on 27.12.2020.
+//  Created by Руслан Садыков on 29.12.2020.
 //
+
+import Foundation
 
 import UIKit
 
-class MessageTextField: UITextField {
+class LocationTextField: UITextField {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         backgroundColor = .white
-        placeholder = "Введите сообщение..."
+        placeholder = "Введите адрес..."
         font = UIFont.sfProDisplay(ofSize: 14, weight: .regular)
         clearButtonMode = .whileEditing
-        layer.cornerRadius = 18
+        layer.cornerRadius = 10
         
         clipsToBounds = false
         
@@ -24,33 +26,26 @@ class MessageTextField: UITextField {
         layer.borderWidth = 0.2
         applySketchShadow(color: #colorLiteral(red: 0.7411764706, green: 0.7411764706, blue: 0.7411764706, alpha: 1), alpha: 50, x: 0, y: 0, blur: 12, spread: -3)
         
-        let image = UIImage(systemName: "smiley")
-        let imageView = UIImageView(image: image)
-        imageView.setupColor(color: .gray)
-        
-        leftView = imageView
-        leftView?.frame = CGRect(x: 0, y: 0, width: 19, height: 19)
-        leftViewMode = .always
-        
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "send-message-icon"), for: .normal)
-        button.applyGradients(cornerRadius: 10, from: .leading, to: .trailing, startColor: #colorLiteral(red: 0.05098039216, green: 0.5647058824, blue: 0.9137254902, alpha: 1), endColor: #colorLiteral(red: 0.3137254902, green: 0.8117647059, blue: 0.8588235294, alpha: 1))
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "PlaceMarker"), for: .normal)
         
         rightView = button
         rightView?.frame = CGRect(x: 0, y: 0, width: 19, height: 19)
         rightViewMode = .always
+        
+        self.heightAnchor.constraint(equalToConstant: 44).isActive = true
     }
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.insetBy(dx: 42, dy: 0)
+        return bounds.insetBy(dx: 16, dy: 0)
     }
     
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.insetBy(dx: 42, dy: 0)
+        return bounds.insetBy(dx: 16, dy: 0)
     }
     
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.insetBy(dx: 42, dy: 0)
+        return bounds.insetBy(dx: 16, dy: 0)
     }
     
     override func leftViewRect(forBounds bounds: CGRect) -> CGRect {
@@ -73,7 +68,7 @@ class MessageTextField: UITextField {
 // MARK: - SwiftUI
 import SwiftUI
 
-struct MessageTextFieldProvider: PreviewProvider {
+struct LocationTextFieldProvider: PreviewProvider {
     
     static var previews: some View {
         
@@ -82,10 +77,10 @@ struct MessageTextFieldProvider: PreviewProvider {
     
     struct ContainerView: UIViewControllerRepresentable {
         
-        let aboutUserViewController = AboutUserViewContoller()
+        let thirdCreatePartyViewController = ThirdCreatePartyViewController(party: nil)
         
-        func makeUIViewController(context: Context) -> AboutUserViewContoller {
-            return aboutUserViewController
+        func makeUIViewController(context: Context) -> ThirdCreatePartyViewController {
+            return thirdCreatePartyViewController
         }
         
         func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {

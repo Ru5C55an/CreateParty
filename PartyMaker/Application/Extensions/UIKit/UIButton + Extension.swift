@@ -9,9 +9,9 @@ import UIKit
 
 extension UIButton {
     
-    convenience init(title: String,
-                     titleColor: UIColor,
-                     backgroundColor: UIColor,
+    convenience init(title: String? = "",
+                     titleColor: UIColor? = .black,
+                     backgroundColor: UIColor? = .white,
                      font: UIFont? = .sfProRounded(ofSize: 20, weight: .medium),
                      isShadow: Bool = true,
                      cornerRadius: CGFloat = 6) {
@@ -35,7 +35,7 @@ extension UIButton {
         let icon = UIImageView(image: image, contentMode: .scaleAspectFit)
         icon.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(icon)
-        icon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16).isActive = true
+        icon.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         icon.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     }
 }

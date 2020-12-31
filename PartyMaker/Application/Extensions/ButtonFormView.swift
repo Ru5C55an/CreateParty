@@ -28,7 +28,7 @@ class ButtonFormView: UIView {
             button.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 16),
             button.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             button.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            button.heightAnchor.constraint(equalToConstant: 44)
+            button.heightAnchor.constraint(equalToConstant: 60)
         ])
         
         bottomAnchor.constraint(equalTo: button.bottomAnchor).isActive = true
@@ -53,7 +53,7 @@ class ButtonFormView: UIView {
             stackView.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 16),
             stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            stackView.heightAnchor.constraint(equalToConstant: 44)
+            stackView.heightAnchor.constraint(equalToConstant: 60)
         ])
         
         bottomAnchor.constraint(equalTo: stackView.bottomAnchor).isActive = true

@@ -9,11 +9,47 @@ import UIKit
 
 extension UIView {
     
-    func applyGradients(cornerRadius: CGFloat) {
+    enum Point {
+        case topLeading
+        case leading
+        case bottomLeading
+        case top
+        case center
+        case bottom
+        case topTrailing
+        case trailing
+        case bottomTrailing
+        
+        var point: CGPoint {
+            switch self {
+            
+            case .topLeading:
+                return CGPoint(x: 0, y: 0)
+            case .leading:
+                return CGPoint(x: 0, y: 0)
+            case .bottomLeading:
+                return CGPoint(x: 0, y: 1.0)
+            case .top:
+                return CGPoint(x: 0.5, y: 0)
+            case .center:
+                return CGPoint(x: 0.5, y: 0.5)
+            case .bottom:
+                return CGPoint(x: 0.5, y: 1.0)
+            case .topTrailing:
+                return CGPoint(x: 1.0, y: 0.0)
+            case .trailing:
+                return CGPoint(x: 1.0, y: 0.5)
+            case .bottomTrailing:
+                return CGPoint(x: 1.0, y: 1.0)
+            }
+        }
+    }
+    
+    func applyGradients(cornerRadius: CGFloat, from: Point, to: Point, startColor: UIColor?, endColor: UIColor?) {
         
         self.backgroundColor = nil
         self.layoutIfNeeded()
-        let gradientView = GradientView(from: .topTrailing, to: .bottomLeading, startColor: #colorLiteral(red: 0.05098039216, green: 0.5647058824, blue: 0.9137254902, alpha: 1), endColor: #colorLiteral(red: 0.3137254902, green: 0.8117647059, blue: 0.8588235294, alpha: 1))
+        let gradientView = GradientView(from: from as Point, to: to as Point, startColor: startColor, endColor: endColor)
         
         if let gradientLayer = gradientView.layer.sublayers?.first as? CAGradientLayer {
             gradientLayer.frame = self.bounds

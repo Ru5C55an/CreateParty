@@ -238,11 +238,15 @@ class PartyCell: UICollectionViewCell, SelfConfiguringCell {
     
     func configure<U>(with value: U) where U : Hashable {
         guard let party: Party = value as? Party else { return }
-        userImageView.image = UIImage(named: party.userImageString)
-        userName.text = party.username
+        //ToDo userimage
+//        userImageView.image = UIImage(named: party.userImageString)
+        userImageView.image = #imageLiteral(resourceName: "shit")
+        //ToDo username
+//        userName.text = party.username
+        userName.text = "Временное имя"
         dateLabel.text = party.date
         typeLabel.text = party.type
-        partyName.text = party.partyname
+        partyName.text = party.name
         startTime.text = party.startTime
         endTime.text = party.endTime
         priceLabel.text = party.price
