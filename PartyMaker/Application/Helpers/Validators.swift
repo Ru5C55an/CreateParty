@@ -21,17 +21,6 @@ class Validators {
         return true
     }
     
-    static func isFilled(price: String?, location: String?) -> Bool {
-        guard let price = price,
-              let location = location,
-              price != "",
-              location != ""
-        else { return false }
-        
-        return true
-    }
-    
-    
     static func isFilled(username: String?, description: String?, sex: String?, birthday: String?) -> Bool {
         guard let username = username,
               let description = description,

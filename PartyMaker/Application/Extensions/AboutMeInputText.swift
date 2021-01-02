@@ -9,10 +9,12 @@ import UIKit
 
 class AboutMeInputText: UITextView {
     
+    var savedPlaceholder: String!
     private var placeholder: String!
     
-    init(placeholder: String = "Расскажите о себе...", isEditable: Bool) {
+    init(placeholder: String = "Введите текст...", isEditable: Bool) {
         super.init(frame: .zero, textContainer: .none)
+        self.savedPlaceholder = placeholder
         self.placeholder = placeholder
         self.isEditable = isEditable
         
@@ -26,7 +28,7 @@ class AboutMeInputText: UITextView {
 
         if isEditable {
             textColor = .lightGray
-            text = "Расскажите о себе..."
+            text = placeholder
         }
         
         backgroundColor = .white
@@ -59,7 +61,7 @@ extension AboutMeInputText: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if text.isEmpty {
-            text = "Расскажите о себе..."
+            text = savedPlaceholder
             textColor = .lightGray
             placeholder = ""
         } else {
@@ -84,7 +86,7 @@ struct AboutMeInputTextProvider: PreviewProvider {
     
     struct ContainerView: UIViewControllerRepresentable {
         
-        let aboutUserViewController = AboutUserViewContoller()
+        let aboutUserViewController = AboutUserViewContoller(user: PUser(username: "", email: "", avatarStringURL: "", description: "", sex: "", birthday: "", id: ""))
         
         func makeUIViewController(context: Context) -> AboutUserViewContoller {
             return aboutUserViewController

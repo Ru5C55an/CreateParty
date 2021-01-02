@@ -82,7 +82,7 @@ struct MessageTextFieldProvider: PreviewProvider {
     
     struct ContainerView: UIViewControllerRepresentable {
         
-        let aboutUserViewController = AboutUserViewContoller()
+        let aboutUserViewController = AboutUserViewContoller(user: PUser(username: "", email: "", avatarStringURL: "", description: "", sex: "", birthday: "", id: ""))
         
         func makeUIViewController(context: Context) -> AboutUserViewContoller {
             return aboutUserViewController

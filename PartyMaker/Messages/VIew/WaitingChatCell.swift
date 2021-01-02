@@ -14,8 +14,8 @@ class WaitingChatCell: UICollectionViewCell, SelfConfiguringCell {
     let friendImageView = UIImageView()
     
     func configure<U>(with value: U) where U : Hashable {
-        guard let chat: MChat = value as? MChat else { return }
-        friendImageView.image = UIImage(named: chat.userImageString)
+        guard let chat: PChat = value as? PChat else { return }
+        friendImageView.sd_setImage(with: URL(string: chat.friendAvatarStringUrl), completed: nil)
     }
     
     override init(frame: CGRect) {

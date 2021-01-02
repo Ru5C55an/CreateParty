@@ -9,8 +9,11 @@ import UIKit
 
 class SecondCreatePartyViewController: UIViewController {
     
-    let aboutParty = AboutMeInputText(isEditable: true)
+    let aboutParty = AboutMeInputText(placeholder: "Напишите о своей вечеринке...", isEditable: true)
     let typeLabel = UILabel(text: "Тип")
+    
+    var pickedType = ""
+    var pickerData: [String] = [String]()
     let typePicker = UIPickerView()
     
     let countPeopleLabel = UILabel(text: "Кол-во гостей")
@@ -26,18 +29,24 @@ class SecondCreatePartyViewController: UIViewController {
     let alcoLabel = UILabel(text: "Присутсвие алкоголя")
     let alcoSwitcher = UISwitch()
     
-    var pickerData: [String] = [String]()
-    
+    private let currentUser: PUser
     internal var party: Party
     
-    init(party: Party?) {
+    init(party: Party?, currentUser: PUser?) {
         self.party = party!
+        self.currentUser = currentUser!
        
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        nextButton.applyGradients(cornerRadius: nextButton.layer.cornerRadius, from: .bottomLeading, to: .topTrailing, startColor: #colorLiteral(red: 0.7098039216, green: 0.7843137255, blue: 0.1921568627, alpha: 1), endColor: #colorLiteral(red: 0.2784313725, green: 0.6078431373, blue: 0.3529411765, alpha: 1))
     }
     
     override func viewDidLoad() {
@@ -47,10 +56,10 @@ class SecondCreatePartyViewController: UIViewController {
         
         pickerData = ["Музыкальная", "Танцевальная", "Вписка", "Поэтическая", "Творческая", "Праздничная", "Игровая", "Научная", "Домашний хакатон", "Особая тематика"]
         
+        pickedType = pickerData.first!
+        
         typePicker.delegate = self
         typePicker.dataSource = self
-        
-        nextButton.applyGradients(cornerRadius: nextButton.layer.cornerRadius, from: .bottomLeading, to: .topTrailing, startColor: #colorLiteral(red: 0.7098039216, green: 0.7843137255, blue: 0.1921568627, alpha: 1), endColor: #colorLiteral(red: 0.2784313725, green: 0.6078431373, blue: 0.3529411765, alpha: 1))
         
         countStepper.addTarget(self, action: #selector(countStepperTapped), for: .valueChanged)
         nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
@@ -66,12 +75,19 @@ class SecondCreatePartyViewController: UIViewController {
         
         party.alco = String(alcoSwitcher.state.rawValue)
         party.maximumPeople = countPeople.text!
-        party.description = description
-        party.type = typePicker.description
         
-        let thirdCreatePartyViewController = ThirdCreatePartyViewController(party: party)
-        thirdCreatePartyViewController.modalPresentationStyle = .fullScreen
-        present(thirdCreatePartyViewController, animated: true, completion: nil)
+        let description = aboutParty.text!
+        if description != aboutParty.savedPlaceholder {
+            party.description = description
+        }
+        
+        party.type = pickedType
+        
+        
+        
+        let thirdCreatePartyViewController = ThirdCreatePartyViewController(party: party, currentUser: currentUser)
+        
+        navigationController?.pushViewController(thirdCreatePartyViewController, animated: true)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -148,6 +164,12 @@ extension SecondCreatePartyViewController: UIPickerViewDataSource, UIPickerViewD
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return pickerData[row]
     }
+
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+
+        pickedType = String(pickerData[row])
+    }
 }
 
 // MARK: - SwiftUI
@@ -162,7 +184,7 @@ struct SecondCreatePartyViewControllerProvider: PreviewProvider {
     
     struct ContainerView: UIViewControllerRepresentable {
         
-        let secondCreatePartyViewController = SecondCreatePartyViewController(party: nil)
+        let secondCreatePartyViewController = SecondCreatePartyViewController(party: nil, currentUser: nil)
         
         func makeUIViewController(context: Context) -> SecondCreatePartyViewController {
             return secondCreatePartyViewController

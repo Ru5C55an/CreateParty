@@ -77,7 +77,7 @@ struct LocationTextFieldProvider: PreviewProvider {
     
     struct ContainerView: UIViewControllerRepresentable {
         
-        let thirdCreatePartyViewController = ThirdCreatePartyViewController(party: nil)
+        let thirdCreatePartyViewController = ThirdCreatePartyViewController(party: nil, currentUser: nil)
         
         func makeUIViewController(context: Context) -> ThirdCreatePartyViewController {
             return thirdCreatePartyViewController

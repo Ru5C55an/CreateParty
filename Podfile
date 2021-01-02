@@ -17,6 +17,10 @@ target 'PartyMaker' do
   
   pod 'FBSDKCoreKit'
   pod 'FBSDKLoginKit'
+  
+  pod 'SDWebImage', '~> 5.0'
+  
+  pod 'MessageKit'
 
 end
 

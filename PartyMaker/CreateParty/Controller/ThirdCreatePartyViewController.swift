@@ -25,10 +25,12 @@ class ThirdCreatePartyViewController: UIViewController {
     
     let doneButton = UIButton(title: "Готово")
     
+    private let currentUser: PUser
     internal var party: Party
     
-    init(party: Party?) {
+    init(party: Party?, currentUser: PUser?) {
         self.party = party!
+        self.currentUser = currentUser!
        
         super.init(nibName: nil, bundle: nil)
     }
@@ -37,13 +39,20 @@ class ThirdCreatePartyViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        doneButton.applyGradients(cornerRadius: doneButton.layer.cornerRadius, from: .bottomLeading, to: .topTrailing, startColor: #colorLiteral(red: 0.1960784314, green: 0.5647058824, blue: 0.6, alpha: 1), endColor: #colorLiteral(red: 0.1490196078, green: 0.1450980392, blue: 0.7490196078, alpha: 1))
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .systemBackground
         doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
-        doneButton.applyGradients(cornerRadius: doneButton.layer.cornerRadius, from: .bottomLeading, to: .topTrailing, startColor: #colorLiteral(red: 0.1960784314, green: 0.5647058824, blue: 0.6, alpha: 1), endColor: #colorLiteral(red: 0.1490196078, green: 0.1450980392, blue: 0.7490196078, alpha: 1))
         
+        
+        price.isHidden = true
         moneySwitcher.addTarget(self, action: #selector(switchValueChanged), for: .touchUpInside)
         
         let gesture = UITapGestureRecognizer(target: self, action: #selector(selectPhoto))
@@ -61,16 +70,31 @@ class ThirdCreatePartyViewController: UIViewController {
     
     @objc private func doneButtonTapped() {
         
-        guard Validators.isFilled(price: price.text, location: locationTextField.text)
-        else {
-            self.showAlert(title: "Ошибка", message: "Не все поля заполнены")
+        if moneySwitcher.isOn {
+            guard let price = price.text, price != "" else {
+                self.showAlert(title: "Ошибка", message: "Введите стоимость входа, либо сделайте бесплатной")
+                return
+            }
+        
+            party.price = price
+        }
+        
+        guard let location = locationTextField.text, location != "" else {
+            self.showAlert(title: "Ошибка", message: "Введите адрес вечеринки")
             return
         }
         
-        if moneySwitcher.isOn {
-            party.price = price.text!
-        } else {
-            party.location = locationTextField.text!
+        party.location = location
+        party.userId = currentUser.id
+        
+        FirestoreService.shared.savePartyWith(party: party, partyImage: addPhoto.circleImageView.image) { [weak self] (result) in
+            switch result {
+            
+            case .success(let party):
+                self?.navigationController?.popToRootViewController(animated: true)
+            case .failure(let error):
+                self?.showAlert(title: "Ошибка", message: error.localizedDescription)
+            }
         }
     }
     
@@ -209,7 +233,7 @@ struct ThirdCreatePartyViewControllerProvider: PreviewProvider {
     
     struct ContainerView: UIViewControllerRepresentable {
         
-        let thirdCreatePartyViewController = ThirdCreatePartyViewController(party: nil)
+        let thirdCreatePartyViewController = ThirdCreatePartyViewController(party: nil, currentUser: nil)
         
         func makeUIViewController(context: Context) -> ThirdCreatePartyViewController {
             return thirdCreatePartyViewController

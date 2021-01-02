@@ -1,18 +1,18 @@
 [
     {
+        "id": "2",
         "location": "asfasfasfaf",
-        "userId": "human1",
+        "userId": "gtOlRHPXZqUSMnfS7VUriI59HWJ3",
         "imageUrlString": "asdasda",
         "type": "Музыкальная",
         "maximumPeople": "22",
         "currentPeople": "2",
-        "id": "2",
         "date": "12-09",
         "startTime": "12:00",
         "endTime": "13:00",
+        "name": "Отрывasfkahsfklashflkasfhalkfshasfasfa башки",
         "price": "200",
         "description": "asfasfasfasf",
-        "name": "Отрывasfkahsfklashflkasfhalkfshasfasfa башки",
         "alco": "Нет"
     },
 ]

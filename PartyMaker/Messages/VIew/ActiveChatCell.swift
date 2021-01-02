@@ -19,7 +19,7 @@ class ActiveChatCell: UICollectionViewCell, SelfConfiguringCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = .white
+        backgroundColor = .secondarySystemBackground
         setupConstraints()
         
         self.layer.cornerRadius = 10
@@ -30,10 +30,10 @@ class ActiveChatCell: UICollectionViewCell, SelfConfiguringCell {
     }
     
     func configure<U>(with value: U) where U : Hashable {
-        guard let chat: MChat = value as? MChat else { return }
-        friendImageView.image = UIImage(named: chat.userImageString)
-        friendName.text = chat.username
-        lastMessage.text = chat.lastMessage
+        guard let chat: PChat = value as? PChat else { return }
+        friendImageView.sd_setImage(with: URL(string: chat.friendAvatarStringUrl), completed: nil)
+        friendName.text = chat.friendUsername
+        lastMessage.text = chat.lastMessageContent
     }
     
     required init?(coder: NSCoder) {

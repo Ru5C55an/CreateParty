@@ -105,6 +105,8 @@ class PartiesViewController: UIViewController {
         collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.reuseId)
         
         collectionView.register(PartyCell.self, forCellWithReuseIdentifier: PartyCell.reuseId)
+        
+        collectionView.delegate = self
     }
     
     // Отвечает за заполнение реальными данными. Создает snapshot, добавляет нужные айтемы в нужные секции и регистрируется на dataSource
@@ -252,6 +254,16 @@ extension PartiesViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         reloadData(with: searchText)
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+extension PartiesViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let party = self.dataSource.itemIdentifier(for: indexPath) else { return }
+        
+        let showPartyVC = ShowPartyViewController(party: party)
+        present(showPartyVC, animated: true, completion: nil)
     }
 }
 

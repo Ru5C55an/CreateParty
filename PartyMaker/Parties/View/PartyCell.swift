@@ -39,7 +39,21 @@ class PartyCell: UICollectionViewCell, SelfConfiguringCell {
         
         self.layer.cornerRadius = 10
         backgroundColor = .secondarySystemBackground
-        setupConstraints()
+        
+        
+        let imageView = UIImageView(image: UIImage(named: "confetti"))
+        imageView.frame = self.bounds
+        imageView.contentMode = .scaleToFill
+        self.addSubview(imageView)
+        
+        imageView.layer.cornerRadius = self.layer.cornerRadius
+
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterial)
+        let blurredEffectView = UIVisualEffectView(effect: blurEffect)
+        blurredEffectView.frame = imageView.bounds
+        self.addSubview(blurredEffectView)
+        
+        blurredEffectView.layer.cornerRadius = self.layer.cornerRadius
         
         self.layer.shadowColor = UIColor(.black).cgColor
         self.layer.shadowRadius = 20
@@ -49,6 +63,10 @@ class PartyCell: UICollectionViewCell, SelfConfiguringCell {
         userImageView.layer.cornerRadius = 20
         userImageView.clipsToBounds = true
         
+        startTime.textColor = .black
+        endTime.textColor = .white
+        priceLabel.textColor = .black
+        
         startTimeView.layer.cornerRadius = 10
         startTimeView.clipsToBounds = true
         
@@ -56,8 +74,6 @@ class PartyCell: UICollectionViewCell, SelfConfiguringCell {
         startTimeView.layer.shadowRadius = 20
         startTimeView.layer.shadowOpacity = 0.5
         startTimeView.layer.shadowOffset = CGSize(width: -5, height: 10)
-        
-        endTime.textColor = .white
         
         endTimeView.layer.cornerRadius = 10
         endTimeView.clipsToBounds = true
@@ -68,6 +84,8 @@ class PartyCell: UICollectionViewCell, SelfConfiguringCell {
         endTimeView.layer.shadowOffset = CGSize(width: -5, height: 10)
         
         priceIcon.textColor = .green
+        
+        setupConstraints()
     }
     
     override func layoutSubviews() {
@@ -81,6 +99,32 @@ class PartyCell: UICollectionViewCell, SelfConfiguringCell {
         self.moneyView.layer.shadowOpacity = 0.5
         self.moneyView.layer.shadowOffset = CGSize(width: -5, height: 10)
     }
+    
+    func configure<U>(with value: U) where U : Hashable {
+        guard let party: Party = value as? Party else { return }
+        //ToDo userimage
+//        userImageView.image = UIImage(named: party.userImageString)
+        userImageView.image = #imageLiteral(resourceName: "shit")
+        //ToDo username
+//        userName.text = party.username
+        userName.text = "Временное имя"
+        dateLabel.text = party.date
+        typeLabel.text = party.type
+        partyName.text = party.name
+        startTime.text = party.startTime
+        endTime.text = party.endTime
+        priceLabel.text = party.price
+        guestsCount.text = "\(party.currentPeople)/\(party.maximumPeople)"
+    }
+    
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: - Setup constraints
+extension PartyCell {
     
     private func setupConstraints() {
     
@@ -234,28 +278,6 @@ class PartyCell: UICollectionViewCell, SelfConfiguringCell {
             priceStackView.centerXAnchor.constraint(equalTo: thirdView.centerXAnchor),
             priceStackView.centerYAnchor.constraint(equalTo: thirdView.centerYAnchor)
         ])
-    }
-    
-    func configure<U>(with value: U) where U : Hashable {
-        guard let party: Party = value as? Party else { return }
-        //ToDo userimage
-//        userImageView.image = UIImage(named: party.userImageString)
-        userImageView.image = #imageLiteral(resourceName: "shit")
-        //ToDo username
-//        userName.text = party.username
-        userName.text = "Временное имя"
-        dateLabel.text = party.date
-        typeLabel.text = party.type
-        partyName.text = party.name
-        startTime.text = party.startTime
-        endTime.text = party.endTime
-        priceLabel.text = party.price
-        guestsCount.text = "\(party.currentPeople)/\(party.maximumPeople)"
-    }
-    
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
 

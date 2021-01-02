@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class CreatePartyViewController: UIViewController {
     
@@ -33,6 +34,23 @@ class CreatePartyViewController: UIViewController {
    
     let nextButton = UIButton(title: "Далее")
     
+    private let currentUser: PUser
+    
+    init(currentUser: PUser) {
+        self.currentUser = currentUser
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        nextButton.applyGradients(cornerRadius: nextButton.layer.cornerRadius, from: .bottomLeading, to: .topTrailing, startColor: #colorLiteral(red: 0.4705882353, green: 0.7254901961, blue: 0.1490196078, alpha: 1), endColor: #colorLiteral(red: 0.1882352941, green: 0.5058823529, blue: 0.231372549, alpha: 1))
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
@@ -41,8 +59,6 @@ class CreatePartyViewController: UIViewController {
         endTimepicker.isHidden = true
         
         endTimeSwitcher.addTarget(self, action: #selector(switchValueChanged), for: .touchUpInside)
-        
-        nextButton.applyGradients(cornerRadius: nextButton.layer.cornerRadius, from: .bottomLeading, to: .topTrailing, startColor: #colorLiteral(red: 0.4705882353, green: 0.7254901961, blue: 0.1490196078, alpha: 1), endColor: #colorLiteral(red: 0.1882352941, green: 0.5058823529, blue: 0.231372549, alpha: 1))
         
         nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
 
@@ -75,10 +91,8 @@ class CreatePartyViewController: UIViewController {
             party.startTime = startTime
             party.endTime = endTime
             
-            let secondCreatePartyVC = SecondCreatePartyViewController(party: party)
-            secondCreatePartyVC.modalPresentationStyle = .fullScreen
-            present(secondCreatePartyVC, animated: true, completion: nil)
-            
+            let secondCreatePartyVC = SecondCreatePartyViewController(party: party, currentUser: currentUser)
+            navigationController?.pushViewController(secondCreatePartyVC, animated: true)
         } else {
             guard Validators.isFilled(date: date, startTime: startTime)
             else {
@@ -89,9 +103,8 @@ class CreatePartyViewController: UIViewController {
             party.date = date
             party.startTime = startTime
             
-            let secondCreatePartyVC = SecondCreatePartyViewController(party: party)
-            secondCreatePartyVC.modalPresentationStyle = .fullScreen
-            present(secondCreatePartyVC, animated: true, completion: nil)
+            let secondCreatePartyVC = SecondCreatePartyViewController(party: party, currentUser: currentUser)
+            navigationController?.pushViewController(secondCreatePartyVC, animated: true)
         }
     }
     
@@ -159,7 +172,7 @@ extension CreatePartyViewController {
     }
 }
 
-// MARK: - SwiftUI
+//MARK: - SwiftUI
 import SwiftUI
 
 struct CreatePartyViewControllerProvider: PreviewProvider {
@@ -171,10 +184,10 @@ struct CreatePartyViewControllerProvider: PreviewProvider {
     
     struct ContainerView: UIViewControllerRepresentable {
         
-        let createPartyViewController = CreatePartyViewController()
+        let mainTabBarController = MainTabBarController()
         
-        func makeUIViewController(context: Context) -> CreatePartyViewController {
-            return createPartyViewController
+        func makeUIViewController(context: Context) -> MainTabBarController {
+            return mainTabBarController
         }
         
         func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
