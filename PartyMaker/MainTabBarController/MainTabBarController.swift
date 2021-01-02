@@ -36,7 +36,7 @@ class MainTabBarController: UITabBarController {
         let searchPartyViewController = SearchPartyViewController()
         let createPartyViewController = CreatePartyViewController(currentUser: currentUser)
         let chatlistViewController = ChatlistViewController(currentUser: currentUser)
-        let profileViewController = AccountUserViewController()
+        let profileViewController = ProfileViewController(currentUser: currentUser)
         
         let boldConfig = UIImage.SymbolConfiguration(weight: .medium)
         
@@ -47,11 +47,12 @@ class MainTabBarController: UITabBarController {
         let profileImage = UIImage(systemName: "person", withConfiguration: boldConfig)!
         
         viewControllers = [
+            generateNavigationController(rootViewController: profileViewController, title: "Профиль", image: profileImage),
+            generateNavigationController(rootViewController: createPartyViewController, title: "Создать", image: createImage),
             generateNavigationController(rootViewController: partiesViewController, title: "Вечеринки", image: partiesImage),
             generateNavigationController(rootViewController: chatlistViewController, title: "Сообщения", image: messaggesImage),
             generateNavigationController(rootViewController: searchPartyViewController, title: "Поиск", image: searchImage),
-            generateNavigationController(rootViewController: createPartyViewController, title: "Создать", image: createImage),
-            generateNavigationController(rootViewController: profileViewController, title: "Профиль", image: profileImage)
+
         ]
     }
     

@@ -79,7 +79,6 @@ class AboutUserViewContoller: UIViewController {
     }
     
     @objc private func sendMessage() {
-        print(#function)
         guard let message = messageTextField.text, message != "" else { return }
         
         self.dismiss(animated: true) {
@@ -92,7 +91,6 @@ class AboutUserViewContoller: UIViewController {
                     UIApplication.getTopViewController()?.showAlert(title: "Ошибка", message: error.localizedDescription)
                 }
             }
-            
         }
     }
 }

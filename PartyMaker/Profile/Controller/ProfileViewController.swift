@@ -7,8 +7,176 @@
 
 import UIKit
 import Firebase
+import SDWebImage
 
 class ProfileViewController: UIViewController {
+
+    let childsContrainerView = UIView()
+    var secondChildVC: AccountUserViewController
+    var firstChildVC: InformationUserViewController
+    
+    let containerView = UIView()
+    
+    let imageView = UIImageView(image: #imageLiteral(resourceName: "human6"), contentMode: .scaleAspectFill)
+    let nameLabel = UILabel(text: "Gandi", font: .sfProDisplay(ofSize: 20, weight: .medium))
+    let ageLabel = UILabel(text: "21", font: .sfProDisplay(ofSize: 20, weight: .medium))
+    let ratingLabel = UILabel(text: "􀋂 0", font: .sfProDisplay(ofSize: 16, weight: .medium))
+    
+    let segmentedControl = UISegmentedControl(first: "Информация", second: "Аккаунт")
+    
+    var dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        return dateFormatter
+    }()
+    
+    private let currentUser: PUser
+    
+    init(currentUser: PUser) {
+        self.currentUser = currentUser
+        
+        self.imageView.sd_setImage(with: URL(string: currentUser.avatarStringURL), completed: nil)
+        self.nameLabel.text = currentUser.username
+        
+        let birthdayString = currentUser.birthday
+        let birthday = dateFormatter.date(from: birthdayString)
+        let now = Date()
+        let calendar = Calendar.current
+        let ageComponents = calendar.dateComponents([.year], from: birthday!, to: now)
+        self.ageLabel.text = String(ageComponents.year!)
+        
+        firstChildVC = InformationUserViewController(currentUser: currentUser)
+        secondChildVC = AccountUserViewController()
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = .white
+        
+        imageView.layer.cornerRadius = 64
+        imageView.clipsToBounds = true
+        
+        containerView.backgroundColor = .black
+        containerView.layer.cornerRadius = 30
+        
+        segmentedControl.addTarget(self, action: #selector(segmentedControlTapped), for: .valueChanged)
+        
+        addChildsVC()
+        setupConstraints()
+    }
+    
+    private func addChildsVC() {
+        
+        addChild(firstChildVC)
+        addChild(secondChildVC)
+        
+        childsContrainerView.addSubview(firstChildVC.view)
+        childsContrainerView.addSubview(secondChildVC.view)
+        
+        firstChildVC.didMove(toParent: self)
+        secondChildVC.didMove(toParent: self)
+    
+        firstChildVC.view.frame = childsContrainerView.bounds
+        secondChildVC.view.frame = childsContrainerView.bounds
+        
+        secondChildVC.view.isHidden = true
+    }
+    
+    @objc private func segmentedControlTapped() {
+        firstChildVC.view.isHidden = true
+        secondChildVC.view.isHidden = true
+        if segmentedControl.selectedSegmentIndex == 0 {
+            firstChildVC.view.isHidden = false
+        } else {
+            secondChildVC.view.isHidden = false
+        }
+    }
+}
+
+// MARK: - Setup constraints
+extension ProfileViewController {
+    
+    private func setupConstraints() {
+        
+        let nameAgeRaringStackView = UIStackView(arrangedSubviews: [nameLabel, ageLabel, ratingLabel], axis: .horizontal, spacing: 8)
+        nameAgeRaringStackView.distribution = .equalSpacing
+        
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        nameAgeRaringStackView.translatesAutoresizingMaskIntoConstraints = false
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        childsContrainerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(containerView)
+        containerView.addSubview(imageView)
+        containerView.addSubview(nameAgeRaringStackView)
+        containerView.addSubview(segmentedControl)
+        containerView.addSubview(childsContrainerView)
+        
+        NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 58),
+            imageView.heightAnchor.constraint(equalToConstant: 128),
+            imageView.widthAnchor.constraint(equalToConstant: 128),
+            imageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            containerView.topAnchor.constraint(equalTo: view.topAnchor),
+            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            containerView.heightAnchor.constraint(equalToConstant: 286)
+        ])
+        
+        NSLayoutConstraint.activate([
+            nameAgeRaringStackView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 24),
+            nameAgeRaringStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
+            nameAgeRaringStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44),
+        ])
+        
+        NSLayoutConstraint.activate([
+            segmentedControl.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            segmentedControl.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            segmentedControl.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            childsContrainerView.topAnchor.constraint(equalTo: containerView.bottomAnchor),
+            childsContrainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            childsContrainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+    }
+}
+
+// MARK: - SwiftUI
+import SwiftUI
+
+struct ProfileViewControllerProvider: PreviewProvider {
+    
+    static var previews: some View {
+        
+        ContainerView().edgesIgnoringSafeArea(.all)
+    }
+    
+    struct ContainerView: UIViewControllerRepresentable {
+        
+        let mainTabBarController = MainTabBarController()
+        
+        func makeUIViewController(context: Context) -> MainTabBarController {
+            return mainTabBarController
+        }
+        
+        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+            
+        }
+    }
 }
     /*
     var user: User!

@@ -676,8 +676,8 @@
 			isa = PBXGroup;
 			children = (
 				4465EB452579585A0096F3B7 /* ProfileViewController.swift */,
-				440CEE03258A919400553673 /* AccountUserViewController.swift */,
 				440CEDFB258A917500553673 /* InformationUserViewController.swift */,
+				440CEE03258A919400553673 /* AccountUserViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
