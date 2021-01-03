@@ -11,16 +11,28 @@ class InterestButton: UIView {
     
     private let button = UIButton(type: .custom)
     private let title = UILabel(text: "")
+    var isSelected: Bool {
+        didSet {
+            changeShadow()
+        }
+    }
     
     init(emoji: String, emojiSize: CGFloat = 30, cornerRadius: CGFloat = 6, isSelected: Bool = false, title: String, titleFont: UIFont = .sfProDisplay(ofSize: 8, weight: .regular)!, backgroundColor: UIColor) {
-        super.init(frame: .zero)
         
         self.title.text = title
         self.title.font = titleFont
+        self.isSelected = isSelected
+        
+        super.init(frame: .zero)
+        
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         
         setupButton(emoji: emoji, emojiSize: emojiSize, cornerRadius: cornerRadius, backgroundColor: backgroundColor, isSelected: isSelected)
         setupConstraints()
-        IsSelected(isSelected: isSelected)
+    }
+    
+    @objc private func buttonTapped() {
+        isSelected.toggle()
     }
     
     required init?(coder: NSCoder) {
@@ -35,7 +47,7 @@ class InterestButton: UIView {
         button.layer.cornerRadius = cornerRadius
     }
     
-    private func IsSelected(isSelected: Bool) {
+    private func changeShadow() {
         
         if !isSelected {
             button.applySketchShadow(color: .black, alpha: 40, x: 0, y: 0, blur: 20, spread: 0)
@@ -58,7 +70,6 @@ class InterestButton: UIView {
         }
     }
 }
-
 
 // MARK: - Setup constraints
 extension InterestButton {
@@ -87,8 +98,3 @@ extension InterestButton {
         bottomAnchor.constraint(equalTo: button.bottomAnchor).isActive = true
     }
 }
-
-
-
-
-

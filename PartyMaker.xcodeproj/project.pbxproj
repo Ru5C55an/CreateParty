@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		440CED92258A14AA00553673 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440CED91258A14AA00553673 /* UserModel.swift */; };
-		440CEDD9258A30AF00553673 /* GoogleService-Info2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 440CEDD8258A30AF00553673 /* GoogleService-Info2.plist */; };
 		440CEDEF258A46BA00553673 /* HelloScreen.json in Resources */ = {isa = PBXBuildFile; fileRef = 440CEDEE258A46BA00553673 /* HelloScreen.json */; };
 		440CEDFC258A917500553673 /* InformationUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440CEDFB258A917500553673 /* InformationUserViewController.swift */; };
 		440CEE04258A919400553673 /* AccountUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440CEE03258A919400553673 /* AccountUserViewController.swift */; };
@@ -127,7 +126,6 @@
 /* Begin PBXFileReference section */
 		2AE2BCBDA8C3F9650C7B0894 /* Pods_PartyMaker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PartyMaker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		440CED91258A14AA00553673 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
-		440CEDD8258A30AF00553673 /* GoogleService-Info2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info2.plist"; sourceTree = "<group>"; };
 		440CEDEE258A46BA00553673 /* HelloScreen.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = HelloScreen.json; sourceTree = "<group>"; };
 		440CEDFB258A917500553673 /* InformationUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationUserViewController.swift; sourceTree = "<group>"; };
 		440CEE03258A919400553673 /* AccountUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountUserViewController.swift; sourceTree = "<group>"; };
@@ -386,8 +384,8 @@
 		447DD9C0259BE13D007C4DA4 /* ShowParty */ = {
 			isa = PBXGroup;
 			children = (
+				44B6A3F225A147D700204B20 /* View */,
 				447DD9C1259BE145007C4DA4 /* Controller */,
-				444074CB259F52C700C8667E /* UserCell.swift */,
 			);
 			path = ShowParty;
 			sourceTree = "<group>";
@@ -534,6 +532,14 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		44B6A3F225A147D700204B20 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				444074CB259F52C700C8667E /* UserCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		44BAA9982583CFF300F9B362 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -547,7 +553,6 @@
 		44BAA99A2583D02700F9B362 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
-				440CEDD8258A30AF00553673 /* GoogleService-Info2.plist */,
 				447EE8CD257676AA00D8698F /* Info.plist */,
 				447EE8C5257676A700D8698F /* CreateParty.xcdatamodeld */,
 				449D7C53259912AB00FE575F /* GoogleService-Info.plist */,
@@ -873,7 +878,6 @@
 			files = (
 				444074D1259F651D00C8667E /* aprovedUsers.json in Resources */,
 				4420BD48259609CB005A4FAE /* SF-Pro-Display-Semibold.otf in Resources */,
-				440CEDD9258A30AF00553673 /* GoogleService-Info2.plist in Resources */,
 				4420BD3825960998005A4FAE /* SF-Pro-Rounded-Medium.otf in Resources */,
 				4420BD4D259609E0005A4FAE /* SF-Pro-Display-Medium.otf in Resources */,
 				447EE8CC257676AA00D8698F /* LaunchScreen.storyboard in Resources */,

@@ -39,8 +39,10 @@ class SecondCreatePartyViewController: UIViewController {
     init(party: Party, currentUser: PUser) {
         self.party = party
         self.currentUser = currentUser
-       
+        
         super.init(nibName: nil, bundle: nil)
+        
+        title = "Расскажите о своей вечеринке"
     }
     
     required init?(coder: NSCoder) {
@@ -77,14 +79,23 @@ class SecondCreatePartyViewController: UIViewController {
     
     @objc private func nextButtonTapped() {
         
-        party.alco = String(alcoSwitcher.state.rawValue)
-        party.maximumPeople = countPeople.text!
-        
-        let description = aboutPartyTextView.text!
-        if description != aboutPartyTextView.savedPlaceholder {
-            party.description = description
+     
+        // Тут проблема с тем, что в aboutParty.text есть placeholder, который всегда заполнен и поэтому проверка на заполненность aboutParty не работает
+        guard Validators.isFilled(partyName: partyNameTextField.text, aboutParty: aboutPartyTextView.text)
+        else {
+            self.showAlert(title: "Ошибка", message: "Не все поля заполнены")
+            return
         }
         
+        // Но с помощью этого это фиксится
+        if let description = aboutPartyTextView.text, description != aboutPartyTextView.savedPlaceholder {
+            party.description = description
+        } else {
+            self.showAlert(title: "Ошибка", message: "Не все поля заполнены")
+        }
+        
+        party.alco = String(alcoSwitcher.state.rawValue)
+        party.maximumPeople = countPeople.text!
         party.type = pickedType
         
         let thirdCreatePartyViewController = ThirdCreatePartyViewController(party: party, currentUser: currentUser)
@@ -94,6 +105,10 @@ class SecondCreatePartyViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    deinit {
+        print("deinit", SecondCreatePartyViewController.self)
     }
 }
 

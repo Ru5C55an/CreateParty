@@ -99,6 +99,10 @@ class ProfileViewController: UIViewController {
             secondChildVC.view.isHidden = false
         }
     }
+    
+    deinit {
+        print("deinit", ProfileViewController.self)
+    }
 }
 
 // MARK: - Setup constraints

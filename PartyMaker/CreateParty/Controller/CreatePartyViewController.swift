@@ -38,7 +38,10 @@ class CreatePartyViewController: UIViewController {
     
     init(currentUser: PUser) {
         self.currentUser = currentUser
+        
         super.init(nibName: nil, bundle: nil)
+        
+        title = "Когда будет ваша вечеринка?"
     }
     
     required init?(coder: NSCoder) {
@@ -62,9 +65,7 @@ class CreatePartyViewController: UIViewController {
         
         nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
 
-//        let mapViewController = MapViewController(currentParty: Party(location: "", userId: "", imageUrlString: "", type: "", maximumPeople: "", currentPeople: "", id: "", date: "", startTime: "", endTime: "", name: "", price: "", description: ""), incomeIdentifier: "getAddress")
-//        mapViewController.modalPresentationStyle = .fullScreen
-//        present(mapViewController, animated: false, completion: nil)
+//        navigationController?.navigationBar.prefersLargeTitles = true
         
         setupConstraints()
     }
@@ -114,6 +115,10 @@ class CreatePartyViewController: UIViewController {
         } else {
             endTimepicker.isHidden = true
         }
+    }
+    
+    deinit {
+        print("deinit", CreatePartyViewController.self)
     }
 }
 

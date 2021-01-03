@@ -96,7 +96,7 @@ class ChatlistViewController: UIViewController {
     private func setupSearchBar() {
         let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
-//        navigationItem.hidesSearchBarWhenScrolling = false
+//        navigationItem.hidesSearchBarWhenScrolling = true
 //        searchController.hidesNavigationBarDuringPresentation = false
 //        searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
@@ -115,7 +115,6 @@ class ChatlistViewController: UIViewController {
         
         collectionView.delegate = self
     }
-    
     
     // Отвечает за заполнение реальными данными. Создает snapshot, добавляет нужные айтемы в нужные секции и регистрируется на dataSource
     private func reloadData() {

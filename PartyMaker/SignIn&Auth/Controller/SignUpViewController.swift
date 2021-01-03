@@ -44,10 +44,25 @@ class SignUpViewController: UIViewController {
         setupConstraints()
         
         signUpButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
+        
         loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
     }
     
     @objc private func signUpButtonTapped() {
+        
+        signUpButton.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+
+         UIView.animate(withDuration: 2.0,
+                                    delay: 0,
+                                    usingSpringWithDamping: CGFloat(0.20),
+                                    initialSpringVelocity: CGFloat(6.0),
+                                    options: UIView.AnimationOptions.allowUserInteraction,
+                                    animations: {
+                                        self.signUpButton.transform = CGAffineTransform.identity
+             },
+                                    completion: { Void in()  }
+        )
+        
         AuthService.shared.register(email: emailTextField.text, password: passwordTextField.text, confirmPassword: confirmPasswordTextField.text) { [weak self] (result) in
             switch result {
             
@@ -72,6 +87,10 @@ class SignUpViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    deinit {
+        print("deinit", SignUpViewController.self)
     }
 }
 

@@ -12,14 +12,20 @@ import GoogleSignIn
 
 class AccountUserViewController: UIViewController {
     
-    let logOutButton = UIButton(title: "Выйти", titleColor: .red, backgroundColor: .white)
+    let logOutButton = UIButton(title: "Выйти")
 
     override func viewDidLoad() {
-        logOutButton.addTarget(self, action: #selector(logOutButtonTapped), for: .touchUpInside)
+        super.viewDidLoad()
         
         setupConstraints()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        navigationController?.navigationBar.isHidden = true
+        logOutButton.applyGradients(cornerRadius: logOutButton.layer.cornerRadius, from: .bottomLeading, to: .topTrailing, startColor: #colorLiteral(red: 0.6, green: 0.5098039216, blue: 0.1960784314, alpha: 1), endColor: #colorLiteral(red: 0.8196078431, green: 0.2980392157, blue: 0.1725490196, alpha: 1))
+        logOutButton.addTarget(self, action: #selector(logOutButtonTapped), for: .touchUpInside)
+    }
     
     @objc private func logOutButtonTapped() {
         let ac = UIAlertController(title: nil, message: "Вы уверены что хотите выйти?", preferredStyle: .alert)
@@ -36,6 +42,9 @@ class AccountUserViewController: UIViewController {
         present(ac, animated: true, completion: nil)
     }
     
+    deinit {
+        print("deinit", AccountUserViewController.self)
+    }
 }
 
 // MARK: - Setup constraints
@@ -46,7 +55,8 @@ extension AccountUserViewController {
         logOutButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            logOutButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            logOutButton.heightAnchor.constraint(equalToConstant: 60),
+            logOutButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 128),
             logOutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }

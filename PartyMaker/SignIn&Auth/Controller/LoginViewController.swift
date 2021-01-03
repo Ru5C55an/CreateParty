@@ -181,10 +181,15 @@ class LoginViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
+    
+    deinit {
+        print("deinit", LoginViewController.self)
+    }
 }
 
 //MARK: - Setup constraints
 extension LoginViewController {
+    
     private func setupConstraints() {
         
         loginButton.heightAnchor.constraint(equalToConstant: 60).isActive = true

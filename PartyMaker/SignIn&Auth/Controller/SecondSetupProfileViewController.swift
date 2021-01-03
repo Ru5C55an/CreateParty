@@ -130,6 +130,10 @@ class SecondSetupProfileViewController: UIViewController {
             }
         }
     }
+    
+    deinit {
+        print("deinit", SecondSetupProfileViewController.self)
+    }
 }
 
 // MARK: - Setup constraints

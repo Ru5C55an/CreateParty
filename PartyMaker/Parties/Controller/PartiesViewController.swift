@@ -55,6 +55,7 @@ class PartiesViewController: UIViewController {
     }
     
     deinit {
+        print("deinit", PartiesViewController.self)
         partiesListener?.remove()
     }
     
@@ -86,8 +87,7 @@ class PartiesViewController: UIViewController {
     private func setupSearchBar() {
         let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
-        //        navigationItem.hidesSearchBarWhenScrolling = false
-        //                searchController.hidesNavigationBarDuringPresentation = false
+//                        searchController.hidesNavigationBarDuringPresentation = true
         //                searchController.obscuresBackgroundDuringPresentation = false
         
         searchController.searchBar.placeholder = "Поиск"
@@ -99,7 +99,7 @@ class PartiesViewController: UIViewController {
     private func setupCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.backgroundColor = .mainWhite()
+        collectionView.backgroundColor = .systemGroupedBackground
         view.addSubview(collectionView)
         
         collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.reuseId)

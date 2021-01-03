@@ -82,6 +82,10 @@ class SetupProfileViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
+    
+    deinit {
+        print("deinit", SetupProfileViewController.self)
+    }
 }
 
 // MARK: - Setup constraints

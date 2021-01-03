@@ -27,6 +27,7 @@ class ChatViewController: MessagesViewController {
     }
     
     deinit {
+        print("deinit", ChatViewController.self)
         messageListener?.remove()
     }
     

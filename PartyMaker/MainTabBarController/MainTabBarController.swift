@@ -64,6 +64,10 @@ class MainTabBarController: UITabBarController {
         
         return navigationVC
     }
+    
+    deinit {
+        print("deinit", MainTabBarController.self)
+    }
 }
 
 // MARK: - SwiftUI

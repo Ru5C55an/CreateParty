@@ -13,15 +13,20 @@ protocol MapViewControllerDelegate {
     func getAddress(_ address: String?)
 }
 
+enum incomeIdentifier: String {
+    case showParty = "showParty"
+    case getAddress = "getAddress"
+}
+
 class MapViewController: UIViewController {
     
     var party: Party
     var incomeIdentifier = ""
     
-    init(currentParty: Party, incomeIdentifier: String) {
+    init(currentParty: Party, incomeIdentifier: incomeIdentifier) {
         
         self.party = currentParty
-        self.incomeIdentifier = incomeIdentifier
+        self.incomeIdentifier = incomeIdentifier.rawValue
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -119,7 +124,6 @@ class MapViewController: UIViewController {
     
     private func setupMapView() {
         
-        closeButton.isHidden = true
         goButton.isHidden = true
         timeAndDistanceLabel.isHidden = true
         timeAndDistanceLabel.text = ""
@@ -132,7 +136,6 @@ class MapViewController: UIViewController {
             mapManager.setupPartymark(party: party, mapView: mapView)
             mapMarkerImage.isHidden = true
             addressLabel.isHidden = true
-            closeButton.isHidden = true
             doneButton.isHidden = true
             goButton.isHidden = false
             timeAndDistanceLabel.isHidden = false
@@ -317,7 +320,7 @@ struct MapViewControllerProvider: PreviewProvider {
     
     struct ContainerView: UIViewControllerRepresentable {
         
-        let mapViewController = MapViewController(currentParty: Party(location: "", userId: "", imageUrlString: "", type: "", maximumPeople: "", currentPeople: "", id: "", date: "", startTime: "", endTime: "", name: "", price: "", description: "", alco: ""), incomeIdentifier: "getAddress")
+        let mapViewController = MapViewController(currentParty: Party(location: "", userId: "", imageUrlString: "", type: "", maximumPeople: "", currentPeople: "", id: "", date: "", startTime: "", endTime: "", name: "", price: "", description: "", alco: ""), incomeIdentifier: .getAddress)
         
         func makeUIViewController(context: Context) -> MapViewController {
             return mapViewController

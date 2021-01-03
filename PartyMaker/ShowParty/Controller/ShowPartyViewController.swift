@@ -21,28 +21,28 @@ class ShowPartyViewController: UIViewController {
     
     let dateLabel = UILabel(text: "🗓", font: .sfProDisplay(ofSize: 36, weight: .medium))
     let dateText = UILabel(text: "")
-
+    
     let timeLabel = UILabel(text: "⌚️", font: .sfProDisplay(ofSize: 36, weight: .medium))
     let startTimeText = UILabel(text: "")
     let endTimeText = UILabel(text: "")
-
+    
     let typeLabel = UILabel(text: "Тип", font: .sfProDisplay(ofSize: 24, weight: .medium))
     let typeText = UILabel(text: "")
-
+    
     let priceLabel = UILabel(text: "Цена", font: .sfProDisplay(ofSize: 24, weight: .medium))
     let priceText = UILabel(text: "")
-
+    
     let locationLabel = UILabel(text: "Адрес", font: .sfProDisplay(ofSize: 24, weight: .medium))
     let locationText = UILabel(text: "")
     let locationButton = UIButton()
-
+    
     let descriptionLabel = UILabel(text: "Описание", font: .sfProDisplay(ofSize: 24, weight: .medium))
     let descriptionText = AboutMeInputText(isEditable: false)
-
+    
     let countPeopleLabel = UILabel(text: "Кол-во гостей", font: .sfProDisplay(ofSize: 24, weight: .medium))
     let currentPeopleText = UILabel(text: "")
     let maxPeopleText = UILabel(text: "")
-
+    
     let ownerlabel = UILabel(text: "Хозяин вечеринки", font: .sfProDisplay(ofSize: 24, weight: .medium))
     let ownerImage = UIImageView()
     let ownerName = UILabel(text: "")
@@ -109,8 +109,16 @@ class ShowPartyViewController: UIViewController {
         ownerImage.layer.cornerRadius = 43
         ownerImage.clipsToBounds = true
         
+        locationButton.addTarget(self, action: #selector(locationButtonTapped), for: .touchUpInside)
+        
         setupCollectionView()
         setupConstraints()
+    }
+    
+    @objc private func locationButtonTapped() {
+        let mapViewController = MapViewController(currentParty: party, incomeIdentifier: .showParty)
+        mapViewController.modalPresentationStyle = .fullScreen
+        present(mapViewController, animated: false, completion: nil)
     }
     
     private func setupCollectionView() {
@@ -124,6 +132,10 @@ class ShowPartyViewController: UIViewController {
         
         collectionView.delegate = self
         collectionView.dataSource = self
+    }
+    
+    deinit {
+        print("deinit", ShowPartyViewController.self)
     }
 }
 
@@ -145,17 +157,17 @@ extension ShowPartyViewController {
         let priceStackView = UIStackView(arrangedSubviews: [priceLabel, priceText], axis: .horizontal, spacing: 8)
         
         let typeAndPriceStackView = UIStackView(arrangedSubviews: [typeStackView, priceStackView], axis: .horizontal, spacing: 16)
-
+        
         locationButton.contentHorizontalAlignment = .leading
         let locationStackView = UIStackView(arrangedSubviews: [locationLabel, locationButton], axis: .horizontal, spacing: 8)
         locationStackView.alignment = .firstBaseline
         
         let locationVerticalStackView = UIStackView(arrangedSubviews: [locationStackView, locationText], axis: .vertical, spacing: 8)
-
+        
         let descriptionStackView = UIStackView(arrangedSubviews: [descriptionLabel, descriptionText], axis: .vertical, spacing: 8)
-
+        
         let countPeopleStackView = UIStackView(arrangedSubviews: [countPeopleLabel, currentPeopleText, maxPeopleText], axis: .horizontal, spacing: 8)
-
+        
         let ownerNameAndAgeStackView = UIStackView(arrangedSubviews: [ownerName, ownerAge], axis: .horizontal, spacing: 8)
         let ownerRatingAndNameAndAgeStackView = UIStackView(arrangedSubviews: [ownerNameAndAgeStackView, ownerRating], axis: .vertical, spacing: 8)
         
@@ -163,15 +175,15 @@ extension ShowPartyViewController {
         ownerImageAndOther.alignment = .center
         
         let ownerStackView = UIStackView(arrangedSubviews: [ownerlabel, ownerImageAndOther], axis: .vertical, spacing: 8)
-       
+        
         let stackView = UIStackView(arrangedSubviews: [nameText, dateAndTimeStackView, typeAndPriceStackView, locationVerticalStackView, descriptionStackView, countPeopleStackView], axis: .vertical, spacing: 16)
-
+        
         stackView.alignment = .leading
         
         view.addSubview(stackView)
         view.addSubview(collectionView)
         view.addSubview(ownerStackView)
-
+        
         descriptionText.translatesAutoresizingMaskIntoConstraints = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -179,7 +191,7 @@ extension ShowPartyViewController {
         ownerStackView.translatesAutoresizingMaskIntoConstraints = false
         ownerAge.translatesAutoresizingMaskIntoConstraints = false
         ownerName.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
             locationLabel.centerYAnchor.constraint(equalTo: locationButton.centerYAnchor)
         ])
@@ -231,12 +243,12 @@ extension ShowPartyViewController: UICollectionViewDataSource {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         return usersId.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.reuseId, for: indexPath) as! UserCell
@@ -252,7 +264,7 @@ extension ShowPartyViewController: UICollectionViewDataSource {
                 print(error.localizedDescription)
             }
         }
-    
+        
         return cell
     }
 }

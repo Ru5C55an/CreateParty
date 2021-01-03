@@ -33,6 +33,8 @@ class ThirdCreatePartyViewController: UIViewController {
         self.currentUser = currentUser!
        
         super.init(nibName: nil, bundle: nil)
+        
+        title = "Последний штрих 🪄"
     }
     
     required init?(coder: NSCoder) {
@@ -126,6 +128,10 @@ class ThirdCreatePartyViewController: UIViewController {
         actionSheet.addAction(cancel)
         
         present(actionSheet, animated: true) // present вызывает наш контроллер
+    }
+    
+    deinit {
+        print("deinit", ThirdCreatePartyViewController.self)
     }
 }
 

@@ -93,6 +93,10 @@ class AboutUserViewContoller: UIViewController {
             }
         }
     }
+    
+    deinit {
+        print("deinit", AboutUserViewContoller.self)
+    }
 }
 
 // MARK: - Setup constraints

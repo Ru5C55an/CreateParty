@@ -35,5 +35,19 @@ class InformationUserViewController: UIViewController {
         
         setupConstraints()
     }
+    
+    deinit {
+        print("deinit", InformationUserViewController.self)
+    }
+}
+
+// MARK: - Setup constraints
+extension InformationUserViewController {
+    
+    private func setupConstraints() {
+        
+        
+        
+    }
 
 }

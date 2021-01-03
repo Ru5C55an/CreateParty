@@ -37,6 +37,9 @@ class AuthViewController: UIViewController {
         
         view.backgroundColor = .systemBackground
         
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(false, forKey: "presentationWasViewed")
+        
         googleButton.addIcon(image: #imageLiteral(resourceName: "google-icon"))
         appleButton.addIcon(image: #imageLiteral(resourceName: "apple-logo"))
         
@@ -51,8 +54,26 @@ class AuthViewController: UIViewController {
         
         signUpVC.delegate = self
         loginVC.delegate = self
-    
+        
         GIDSignIn.sharedInstance()?.delegate = self
+    }
+    
+    // Данный метод срабатывает при открытии ViewController
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        startPresentationCarousel()
+    }
+    
+    func startPresentationCarousel() {
+        
+        let userDefaults = UserDefaults.standard
+        let presentationWasViewed = userDefaults.bool(forKey: "presentationWasViewed") // Если в настройках есть значение для ключа presentationWasViewed, то константа получить True
+        if presentationWasViewed == false {
+            let pageVC = PageViewController()
+            pageVC.modalPresentationStyle = .fullScreen
+            present(pageVC, animated: true, completion: nil)
+        }
     }
     
     @objc private func emailButtonTapped() {
@@ -70,6 +91,10 @@ class AuthViewController: UIViewController {
     
     @objc private func appleButtonTapped() {
         print(#function)
+    }
+    
+    deinit {
+        print("deinit", AuthViewController.self)
     }
 }
 
@@ -128,7 +153,7 @@ extension AuthViewController: GIDSignInDelegate {
                     switch result {
                     
                     case .success(let puser):
-                       
+                        
                         UIApplication.getTopViewController()?.showAlert(title: "Успешно", message: "Вы авторизованы", completion: {
                             let mainTabBar = MainTabBarController(currentUser: puser)
                             mainTabBar.modalPresentationStyle = .fullScreen
