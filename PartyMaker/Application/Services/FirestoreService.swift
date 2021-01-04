@@ -302,4 +302,27 @@ class FirestoreService {
             }
         }
     }
+    
+    
+    func searchPartiesWith(city: String? = nil, completion: @escaping (Result<[Party], Error>) -> Void) {
+        
+        partiesRef.whereField("maximumPeople", isEqualTo: "1")
+            
+        .getDocuments() { (querySnapshot, err) in
+            var parties = [Party]()
+            if let err = err {
+                completion(.failure(err))
+            } else {
+                for document in querySnapshot!.documents {
+//                    print("\(document.documentID) => \(document.data())")
+                    
+                    guard let party = Party(document: document) else { return }
+                    
+                    parties.append(party)
+                }
+                
+                completion(.success(parties))
+            }
+        }
+    }
 }

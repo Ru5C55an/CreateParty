@@ -70,7 +70,7 @@ class CreatePartyViewController: UIViewController {
         setupConstraints()
     }
     
-    var party = Party(location: "", userId: "", imageUrlString: "", type: "", maximumPeople: "", currentPeople: "", id: "", date: "", startTime: "", endTime: "", name: "", price: "", description: "", alco: "")
+    var party = Party(city: "", location: "", userId: "", imageUrlString: "", type: "", maximumPeople: "", currentPeople: "", id: "", date: "", startTime: "", endTime: "", name: "", price: "", description: "", alco: "")
     
     @objc private func nextButtonTapped() {
         
@@ -144,7 +144,7 @@ extension CreatePartyViewController {
         view.addSubview(nextButton)
 
         NSLayoutConstraint.activate([
-            datepicker.topAnchor.constraint(equalTo: view.topAnchor, constant: 128)
+            datepicker.topAnchor.constraint(equalTo: view.topAnchor, constant: 112)
         ])
 
         NSLayoutConstraint.activate([

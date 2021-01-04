@@ -20,6 +20,8 @@ class ThirdCreatePartyViewController: UIViewController {
     
     let price = BubbleTextField(placeholder: "500")
     
+    let cityButton = UIButton(title: "Город", titleColor: #colorLiteral(red: 0.1921568627, green: 0.568627451, blue: 0.9882352941, alpha: 1), backgroundColor: #colorLiteral(red: 0.937254902, green: 0.937254902, blue: 0.9411764706, alpha: 1), isShadow: false, cornerRadius: 10)
+    
     let locationLabel = UILabel(text: "Адрес вечеринки")
     let locationTextField = LocationTextField()
     
@@ -52,7 +54,7 @@ class ThirdCreatePartyViewController: UIViewController {
         
         view.backgroundColor = .systemBackground
         doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
-        
+        cityButton.addTarget(self, action: #selector(cityButtonTapped), for: .touchUpInside)
         
         price.isHidden = true
         moneySwitcher.addTarget(self, action: #selector(switchValueChanged), for: .touchUpInside)
@@ -70,6 +72,16 @@ class ThirdCreatePartyViewController: UIViewController {
         }
     }
     
+    @objc private func cityButtonTapped() {
+        let citiesVC = CitiesViewController()
+            
+        self.addChild(citiesVC)
+        citiesVC.view.frame = self.view.frame
+        self.view.addSubview(citiesVC.view)
+            
+        citiesVC.didMove(toParent: self)
+    }
+    
     @objc private func doneButtonTapped() {
         
         if moneySwitcher.isOn {
@@ -81,11 +93,18 @@ class ThirdCreatePartyViewController: UIViewController {
             party.price = price
         }
         
+        guard let city = cityButton.titleLabel?.text, city != "Город" else {
+            self.showAlert(title: "Ошибка", message: "Выберите город")
+            return
+        }
+        
+        party.city = city
+        
         guard let location = locationTextField.text, location != "" else {
             self.showAlert(title: "Ошибка", message: "Введите адрес вечеринки")
             return
         }
-        
+    
         party.location = location
         party.userId = currentUser.id
         
@@ -149,6 +168,7 @@ extension ThirdCreatePartyViewController {
         view.addSubview(priceLabel)
         view.addSubview(moneyStackView)
         view.addSubview(price)
+        view.addSubview(cityButton)
         view.addSubview(locationStackView)
         view.addSubview(doneButton)
 
@@ -157,11 +177,12 @@ extension ThirdCreatePartyViewController {
         priceLabel.translatesAutoresizingMaskIntoConstraints = false
         moneyStackView.translatesAutoresizingMaskIntoConstraints = false
         price.translatesAutoresizingMaskIntoConstraints = false
+        cityButton.translatesAutoresizingMaskIntoConstraints = false
         locationStackView.translatesAutoresizingMaskIntoConstraints = false
         doneButton.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            addPhotoLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 128),
+            addPhotoLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 112),
             addPhotoLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
@@ -171,7 +192,19 @@ extension ThirdCreatePartyViewController {
         ])
         
         NSLayoutConstraint.activate([
-            priceLabel.topAnchor.constraint(equalTo: addPhoto.bottomAnchor, constant: 32),
+            cityButton.topAnchor.constraint(equalTo: addPhoto.bottomAnchor, constant: 16),
+            cityButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
+            cityButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44)
+        ])
+        
+        NSLayoutConstraint.activate([
+            locationStackView.topAnchor.constraint(equalTo: cityButton.bottomAnchor, constant: 16),
+            locationStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
+            locationStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44)
+        ])
+        
+        NSLayoutConstraint.activate([
+            priceLabel.topAnchor.constraint(equalTo: locationStackView.bottomAnchor, constant: 16),
             priceLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
             priceLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44)
         ])
@@ -189,13 +222,7 @@ extension ThirdCreatePartyViewController {
         ])
         
         NSLayoutConstraint.activate([
-            locationStackView.topAnchor.constraint(equalTo: price.bottomAnchor, constant: 32),
-            locationStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
-            locationStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44)
-        ])
-        
-        NSLayoutConstraint.activate([
-            doneButton.topAnchor.constraint(equalTo: locationStackView.bottomAnchor, constant: 32),
+            doneButton.topAnchor.constraint(equalTo: price.bottomAnchor, constant: 32),
             doneButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
             doneButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44),
             doneButton.heightAnchor.constraint(equalToConstant: 64)
@@ -239,7 +266,7 @@ struct ThirdCreatePartyViewControllerProvider: PreviewProvider {
     
     struct ContainerView: UIViewControllerRepresentable {
         
-        let thirdCreatePartyViewController = ThirdCreatePartyViewController(party: nil, currentUser: nil)
+        let thirdCreatePartyViewController = ThirdCreatePartyViewController(party: Party(city: "", location: "", userId: "", imageUrlString: "", type: "", maximumPeople: "", currentPeople: "", id: "", date: "", startTime: "", endTime: "", name: "", price: "", description: "", alco: ""), currentUser: PUser(username: "", email: "", avatarStringURL: "", description: "", sex: "", birthday: "", id: ""))
         
         func makeUIViewController(context: Context) -> ThirdCreatePartyViewController {
             return thirdCreatePartyViewController

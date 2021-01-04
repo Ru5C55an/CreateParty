@@ -103,6 +103,8 @@
 		44BAA97D258013D600F9B362 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BAA97C258013D600F9B362 /* MapViewController.swift */; };
 		44BAA98A2582842800F9B362 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BAA9892582842800F9B362 /* MapManager.swift */; };
 		44DF5D58258E2CCA000BF557 /* PartyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DF5D57258E2CCA000BF557 /* PartyCell.swift */; };
+		44EFFA9925A2081C00827A8D /* SearchPartiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EFFA9825A2081C00827A8D /* SearchPartiesView.swift */; };
+		44EFFA9E25A2459600827A8D /* CitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EFFA9D25A2459600827A8D /* CitiesViewController.swift */; };
 		A2909814D001A7C89E55FF33 /* Pods_PartyMaker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE2BCBDA8C3F9650C7B0894 /* Pods_PartyMaker.framework */; };
 /* End PBXBuildFile section */
 
@@ -228,6 +230,8 @@
 		44BAA97C258013D600F9B362 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		44BAA9892582842800F9B362 /* MapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
 		44DF5D57258E2CCA000BF557 /* PartyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyCell.swift; sourceTree = "<group>"; };
+		44EFFA9825A2081C00827A8D /* SearchPartiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPartiesView.swift; sourceTree = "<group>"; };
+		44EFFA9D25A2459600827A8D /* CitiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesViewController.swift; sourceTree = "<group>"; };
 		72F75DAB934302CF0EB6A6EB /* Pods-PartyMaker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PartyMaker.debug.xcconfig"; path = "Target Support Files/Pods-PartyMaker/Pods-PartyMaker.debug.xcconfig"; sourceTree = "<group>"; };
 		B7AA99F768CA0848EB83D150 /* Pods-PartyMaker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PartyMaker.release.xcconfig"; path = "Target Support Files/Pods-PartyMaker/Pods-PartyMaker.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -690,6 +694,7 @@
 		44DF5E9625923753000BF557 /* SearchParty */ = {
 			isa = PBXGroup;
 			children = (
+				44EFFAB125A278B300827A8D /* View */,
 				44DF5E972592375B000BF557 /* Controller */,
 			);
 			path = SearchParty;
@@ -751,6 +756,15 @@
 				44BAA97C258013D600F9B362 /* MapViewController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		44EFFAB125A278B300827A8D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				44EFFA9825A2081C00827A8D /* SearchPartiesView.swift */,
+				44EFFA9D25A2459600827A8D /* CitiesViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		A99F23D0FA5E760841B181F4 /* Frameworks */ = {
@@ -1033,6 +1047,7 @@
 				447DD936259A6D18007C4DA4 /* UIApplication + Extension.swift in Sources */,
 				44A63EE325A0960700F125F7 /* WaitingChatsNavigation.swift in Sources */,
 				44BAA97D258013D600F9B362 /* MapViewController.swift in Sources */,
+				44EFFA9E25A2459600827A8D /* CitiesViewController.swift in Sources */,
 				440CEE04258A919400553673 /* AccountUserViewController.swift in Sources */,
 				449B4E16257F7CB6001B009E /* RatingControl.swift in Sources */,
 				4465EB32257957160096F3B7 /* MyPartiesViewController.swift in Sources */,
@@ -1042,6 +1057,7 @@
 				4420BD6425960F59005A4FAE /* UIColor + Extension.swift in Sources */,
 				4424A58D2598C90900B420F7 /* UITextField + Extension.swift in Sources */,
 				4465EB8F257AA3360096F3B7 /* PartyModel2.swift in Sources */,
+				44EFFA9925A2081C00827A8D /* SearchPartiesView.swift in Sources */,
 				449D7C7425992F4200FE575F /* AuthError.swift in Sources */,
 				4420BDA425965480005A4FAE /* UISegmentedControl  + Extension.swift in Sources */,
 				4420BDC525968AE0005A4FAE /* AboutMeInputText.swift in Sources */,

@@ -320,7 +320,7 @@ struct MapViewControllerProvider: PreviewProvider {
     
     struct ContainerView: UIViewControllerRepresentable {
         
-        let mapViewController = MapViewController(currentParty: Party(location: "", userId: "", imageUrlString: "", type: "", maximumPeople: "", currentPeople: "", id: "", date: "", startTime: "", endTime: "", name: "", price: "", description: "", alco: ""), incomeIdentifier: .getAddress)
+        let mapViewController = MapViewController(currentParty: Party(city: "", location: "", userId: "", imageUrlString: "", type: "", maximumPeople: "", currentPeople: "", id: "", date: "", startTime: "", endTime: "", name: "", price: "", description: "", alco: ""), incomeIdentifier: .getAddress)
         
         func makeUIViewController(context: Context) -> MapViewController {
             return mapViewController

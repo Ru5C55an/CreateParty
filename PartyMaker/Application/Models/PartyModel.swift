@@ -5,11 +5,13 @@
 //  Created by Руслан Садыков on 26.12.2020.
 //
 
-import UIKit
+import Foundation
+import FirebaseFirestore
 
 struct Party: Hashable, Decodable {
         
     var id: String
+    var city: String
     var location: String
     var userId: String
     var imageUrlString: String
@@ -24,7 +26,8 @@ struct Party: Hashable, Decodable {
     var description: String
     var alco: String
     
-    init(location: String, userId: String, imageUrlString: String, type: String, maximumPeople: String, currentPeople: String, id: String, date: String, startTime: String, endTime: String, name: String, price: String, description: String, alco: String) {
+    init(city: String, location: String, userId: String, imageUrlString: String, type: String, maximumPeople: String, currentPeople: String, id: String, date: String, startTime: String, endTime: String, name: String, price: String, description: String, alco: String) {
+        self.city = city
         self.location = location
         self.userId = userId
         self.imageUrlString = imageUrlString
@@ -41,8 +44,46 @@ struct Party: Hashable, Decodable {
         self.alco = alco
     }
     
+    init?(document: DocumentSnapshot) {
+        guard let data = document.data() else { return nil }
+        guard let city = data["city"] as? String,
+        let location = data["location"] as? String,
+        let userId = data["userId"] as? String,
+        let imageUrlString = data["imageUrlString"] as? String,
+        let type = data["type"] as? String,
+        let maximumPeople = data["maximumPeople"] as? String,
+        let currentPeople = data["currentPeople"] as? String,
+        let date = data["date"] as? String,
+        let startTime = data["startTime"] as? String,
+        let endTime = data["endTime"] as? String,
+        let name = data["name"] as? String,
+        let price = data["price"] as? String,
+        let description = data["description"] as? String,
+        let alco = data["alco"] as? String,
+        let id = data["uid"] as? String
+        
+        else { return nil }
+        
+        self.city = city
+        self.location = location
+        self.userId = userId
+        self.imageUrlString = imageUrlString
+        self.type = type
+        self.maximumPeople = maximumPeople
+        self.currentPeople = currentPeople
+        self.date = date
+        self.startTime = startTime
+        self.endTime = endTime
+        self.name = name
+        self.price = price
+        self.description = description
+        self.alco = alco
+        self.id = id
+    }
+    
     var representation: [String: Any] {
         var rep = ["location": location]
+        rep["city"] = city
         rep["userId"] = userId
         rep["imageUrlString"] = imageUrlString
         rep["type"] = type

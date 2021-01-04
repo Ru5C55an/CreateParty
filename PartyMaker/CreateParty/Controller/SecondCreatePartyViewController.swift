@@ -94,6 +94,7 @@ class SecondCreatePartyViewController: UIViewController {
             self.showAlert(title: "Ошибка", message: "Не все поля заполнены")
         }
         
+        party.name = partyNameTextField.text!
         party.alco = String(alcoSwitcher.state.rawValue)
         party.maximumPeople = countPeople.text!
         party.type = pickedType
@@ -142,7 +143,7 @@ extension SecondCreatePartyViewController {
         nextButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 128),
+            stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 112),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44)
         ])
@@ -208,7 +209,7 @@ struct SecondCreatePartyViewControllerProvider: PreviewProvider {
     
     struct ContainerView: UIViewControllerRepresentable {
         
-        let secondCreatePartyViewController = SecondCreatePartyViewController(party: Party(location: "", userId: "", imageUrlString: "", type: "", maximumPeople: "", currentPeople: "", id: "", date: "", startTime: "", endTime: "", name: "", price: "", description: "", alco: ""), currentUser: PUser(username: "", email: "", avatarStringURL: "", description: "", sex: "", birthday: "", id: ""))
+        let secondCreatePartyViewController = SecondCreatePartyViewController(party: Party(city: "", location: "", userId: "", imageUrlString: "", type: "", maximumPeople: "", currentPeople: "", id: "", date: "", startTime: "", endTime: "", name: "", price: "", description: "", alco: ""), currentUser: PUser(username: "", email: "", avatarStringURL: "", description: "", sex: "", birthday: "", id: ""))
         
         func makeUIViewController(context: Context) -> SecondCreatePartyViewController {
             return secondCreatePartyViewController

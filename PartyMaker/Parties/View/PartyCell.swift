@@ -45,15 +45,11 @@ class PartyCell: UICollectionViewCell, SelfConfiguringCell {
         imageView.frame = self.bounds
         imageView.contentMode = .scaleToFill
         self.addSubview(imageView)
-        
-        imageView.layer.cornerRadius = self.layer.cornerRadius
 
         let blurEffect = UIBlurEffect(style: .systemUltraThinMaterial)
         let blurredEffectView = UIVisualEffectView(effect: blurEffect)
         blurredEffectView.frame = imageView.bounds
         self.addSubview(blurredEffectView)
-        
-        blurredEffectView.layer.cornerRadius = self.layer.cornerRadius
         
         self.layer.shadowColor = UIColor(.black).cgColor
         self.layer.shadowRadius = 20
