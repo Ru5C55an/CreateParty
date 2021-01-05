@@ -304,17 +304,29 @@ class FirestoreService {
     }
     
     
-    func searchPartiesWith(city: String? = nil, completion: @escaping (Result<[Party], Error>) -> Void) {
+    func searchPartiesWith(city: String? = nil, type: String? = nil, date: String? = nil, time: String? = nil, maximumPeople: String? = nil, name: String? = nil,  completion: @escaping (Result<[Party], Error>) -> Void) {
         
-        partiesRef.whereField("maximumPeople", isEqualTo: "1")
+        var searchedPartiesRef: CollectionReference {
+            return db.collection("parties")
+        }
+        
+        var query: Query = db.collection("parties")
+        
+        if city != nil { query = query.whereField("city", isEqualTo : city) }
+        if type != nil { query = query.whereField("type", isEqualTo : type) }
+        if date != nil { query = query.whereField("date", isEqualTo : date) }
+        if time != nil { query = query.whereField("time", isEqualTo : time) }
+        if maximumPeople != nil { query = query.whereField("maximumPeople", isEqualTo : maximumPeople) }
+
+
             
-        .getDocuments() { (querySnapshot, err) in
+        query.getDocuments() { (querySnapshot, err) in
             var parties = [Party]()
             if let err = err {
                 completion(.failure(err))
             } else {
                 for document in querySnapshot!.documents {
-//                    print("\(document.documentID) => \(document.data())")
+                    print("\(document.documentID) => \(document.data())")
                     
                     guard let party = Party(document: document) else { return }
                     

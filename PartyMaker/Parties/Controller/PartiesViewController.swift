@@ -10,20 +10,17 @@ import FirebaseFirestore
 
 class PartiesViewController: UIViewController {
     
+    private var ascendingSorting = true
+    var reverseSortingBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "AZ"), style: .plain, target: self, action: #selector(reverseSortingBarButtonItemTapped))
+    let sortingSegmentedControl = UISegmentedControl(first: "Дата", second: "Имя")
+    var sortingTypeSegmentControlBarButtonItem: UIBarButtonItem!
+    let partiesSegmentedControl = UISegmentedControl(first: "Созданные мной", second: "Хочу пойти")
+    
     private var partiesListener: ListenerRegistration?
     
     var parties = Bundle.main.decode([Party].self, from: "parties.json")
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<Section, Party>!
-    
-    private var ascendingSorting = true
-
-    var reverseSortingBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "AZ"), style: .plain, target: self, action: #selector(reverseSortingBarButtonItemTapped))
-    
-    let sortingSegmentedControl = UISegmentedControl(first: "Дата", second: "Имя")
-    var sortingTypeSegmentControlBarButtonItem: UIBarButtonItem!
-    
-    let partiesSegmentedControl = UISegmentedControl(first: "Созданные мной", second: "Хочу пойти")
     
     // enum по умолчанию hashable
     enum Section: Int, CaseIterable {
@@ -54,15 +51,6 @@ class PartiesViewController: UIViewController {
         title = currentUser.username
     }
     
-    deinit {
-        print("deinit", PartiesViewController.self)
-        partiesListener?.remove()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -77,23 +65,6 @@ class PartiesViewController: UIViewController {
         reloadData(with: nil)
         
 //        partiesListener = ...
-    }
-    
-    private func setupNavigationBar() {
-        navigationItem.leftBarButtonItem = reverseSortingBarButtonItem
-        navigationItem.rightBarButtonItem = sortingTypeSegmentControlBarButtonItem
-    }
-    
-    private func setupSearchBar() {
-        let searchController = UISearchController(searchResultsController: nil)
-        navigationItem.searchController = searchController
-//                        searchController.hidesNavigationBarDuringPresentation = true
-        //                searchController.obscuresBackgroundDuringPresentation = false
-        
-        searchController.searchBar.placeholder = "Поиск"
-        
-        definesPresentationContext = true // Позволяет отпустить строку поиска, при переходе на другой экран
-        searchController.searchBar.delegate = self
     }
     
     private func setupCollectionView() {
@@ -120,6 +91,32 @@ class PartiesViewController: UIViewController {
         snapshot.appendSections([.parties])
         snapshot.appendItems(filteredParties, toSection: .parties)
         dataSource?.apply(snapshot, animatingDifferences: true)
+    }
+    
+    private func setupNavigationBar() {
+        navigationItem.leftBarButtonItem = reverseSortingBarButtonItem
+        navigationItem.rightBarButtonItem = sortingTypeSegmentControlBarButtonItem
+    }
+    
+    private func setupSearchBar() {
+        let searchController = UISearchController(searchResultsController: nil)
+        navigationItem.searchController = searchController
+//                        searchController.hidesNavigationBarDuringPresentation = true
+        //                searchController.obscuresBackgroundDuringPresentation = false
+        
+        searchController.searchBar.placeholder = "Поиск"
+        
+        definesPresentationContext = true // Позволяет отпустить строку поиска, при переходе на другой экран
+        searchController.searchBar.delegate = self
+    }
+    
+    deinit {
+        print("deinit", PartiesViewController.self)
+        partiesListener?.remove()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

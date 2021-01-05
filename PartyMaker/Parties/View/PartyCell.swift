@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Cosmos
+import Squircle
 
 class PartyCell: UICollectionViewCell, SelfConfiguringCell {
     
@@ -37,19 +37,18 @@ class PartyCell: UICollectionViewCell, SelfConfiguringCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.layer.cornerRadius = 10
-        backgroundColor = .secondarySystemBackground
-        
-        
-        let imageView = UIImageView(image: UIImage(named: "confetti"))
+        let imageView = UIImageView(image: UIImage(named: "bc1"))
         imageView.frame = self.bounds
+        imageView.layer.cornerRadius = 20
+        imageView.clipsToBounds = true
         imageView.contentMode = .scaleToFill
         self.addSubview(imageView)
 
-        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterial)
-        let blurredEffectView = UIVisualEffectView(effect: blurEffect)
-        blurredEffectView.frame = imageView.bounds
-        self.addSubview(blurredEffectView)
+//        let blurEffect = UIBlurEffect(style: .systemMaterial)
+//        let blurredEffectView = UIVisualEffectView(effect: blurEffect)
+//        blurredEffectView.layer.opacity = 0.1
+//        blurredEffectView.frame = imageView.bounds
+//        self.addSubview(blurredEffectView)
         
         self.layer.shadowColor = UIColor(.black).cgColor
         self.layer.shadowRadius = 20
@@ -112,7 +111,6 @@ class PartyCell: UICollectionViewCell, SelfConfiguringCell {
         priceLabel.text = party.price
         guestsCount.text = "\(party.currentPeople)/\(party.maximumPeople)"
     }
-    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

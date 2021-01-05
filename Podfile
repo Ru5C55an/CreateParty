@@ -19,8 +19,9 @@ target 'PartyMaker' do
   pod 'FBSDKLoginKit'
   
   pod 'SDWebImage', '~> 5.0'
-  
   pod 'MessageKit'
+  pod 'UPCarouselFlowLayout'
+  pod 'Squircle'
 
 end
 

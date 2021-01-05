@@ -40,7 +40,7 @@ class SearchPartyViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        FirestoreService.shared.searchPartiesWith { (result) in
+        FirestoreService.shared.searchPartiesWith{ (result) in
             switch result {
             case .success(let parties):
                 self.parties = parties

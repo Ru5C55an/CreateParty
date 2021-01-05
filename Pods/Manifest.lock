@@ -377,6 +377,8 @@ PODS:
   - SDWebImage (5.10.2):
     - SDWebImage/Core (= 5.10.2)
   - SDWebImage/Core (5.10.2)
+  - Squircle (2.2.0)
+  - UPCarouselFlowLayout (1.1.2)
 
 DEPENDENCIES:
   - Cosmos (~> 23.0)
@@ -391,6 +393,8 @@ DEPENDENCIES:
   - MessageKit
   - RealmSwift
   - SDWebImage (~> 5.0)
+  - Squircle
+  - UPCarouselFlowLayout
 
 SPEC REPOS:
   trunk:
@@ -425,6 +429,8 @@ SPEC REPOS:
     - Realm
     - RealmSwift
     - SDWebImage
+    - Squircle
+    - UPCarouselFlowLayout
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -458,7 +464,9 @@ SPEC CHECKSUMS:
   Realm: d7914ebf66bb182469726f997c4c38eff286aab0
   RealmSwift: aad08b7dc8c732b7b5794286e9df83739bf834f1
   SDWebImage: b969dcfc02c40a5da71eac0b03b8f1a0c794a86f
+  Squircle: 94bae5770fc84e16b8cf66f3630a563b39ee2544
+  UPCarouselFlowLayout: 4c7d2c43a10ebb1597bde502a53699d378341dad
 
-PODFILE CHECKSUM: 5517de1255e1d21d4aa137691307dffd73c24357
+PODFILE CHECKSUM: 31313010ec3a9ff68bcaa30474731726ae83f975
 
 COCOAPODS: 1.10.0

@@ -59,13 +59,14 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = .blue
         
         imageView.layer.cornerRadius = 64
         imageView.clipsToBounds = true
         
-        containerView.backgroundColor = .black
+        containerView.backgroundColor = .white
         containerView.layer.cornerRadius = 30
+        containerView.clipsToBounds = true
         
         segmentedControl.addTarget(self, action: #selector(segmentedControlTapped), for: .valueChanged)
         
@@ -119,11 +120,11 @@ extension ProfileViewController {
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         childsContrainerView.translatesAutoresizingMaskIntoConstraints = false
         
+        view.addSubview(childsContrainerView)
         view.addSubview(containerView)
         containerView.addSubview(imageView)
         containerView.addSubview(nameAgeRaringStackView)
         containerView.addSubview(segmentedControl)
-        containerView.addSubview(childsContrainerView)
         
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 58),

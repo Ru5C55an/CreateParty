@@ -102,6 +102,9 @@
 		44B6A3E825A0BCCE00204B20 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B6A3E725A0BCCE00204B20 /* ChatViewController.swift */; };
 		44BAA97D258013D600F9B362 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BAA97C258013D600F9B362 /* MapViewController.swift */; };
 		44BAA98A2582842800F9B362 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BAA9892582842800F9B362 /* MapManager.swift */; };
+		44D002E125A37E10009F419B /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D002E025A37E10009F419B /* CardView.swift */; };
+		44D002EC25A38719009F419B /* FourthCreatePartyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D002EB25A38719009F419B /* FourthCreatePartyViewController.swift */; };
+		44D002F325A3A55B009F419B /* BackgroundCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D002F225A3A55B009F419B /* BackgroundCardCell.swift */; };
 		44DF5D58258E2CCA000BF557 /* PartyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DF5D57258E2CCA000BF557 /* PartyCell.swift */; };
 		44EFFA9925A2081C00827A8D /* SearchPartiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EFFA9825A2081C00827A8D /* SearchPartiesView.swift */; };
 		44EFFA9E25A2459600827A8D /* CitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EFFA9D25A2459600827A8D /* CitiesViewController.swift */; };
@@ -229,6 +232,9 @@
 		44B6A3E725A0BCCE00204B20 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		44BAA97C258013D600F9B362 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		44BAA9892582842800F9B362 /* MapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
+		44D002E025A37E10009F419B /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		44D002EB25A38719009F419B /* FourthCreatePartyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthCreatePartyViewController.swift; sourceTree = "<group>"; };
+		44D002F225A3A55B009F419B /* BackgroundCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundCardCell.swift; sourceTree = "<group>"; };
 		44DF5D57258E2CCA000BF557 /* PartyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyCell.swift; sourceTree = "<group>"; };
 		44EFFA9825A2081C00827A8D /* SearchPartiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPartiesView.swift; sourceTree = "<group>"; };
 		44EFFA9D25A2459600827A8D /* CitiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesViewController.swift; sourceTree = "<group>"; };
@@ -643,6 +649,9 @@
 				4465EB96257AB2750096F3B7 /* CreatePartyViewController.swift */,
 				447DD9A9259BC14D007C4DA4 /* SecondCreatePartyViewController.swift */,
 				447DD9B1259BCEDA007C4DA4 /* ThirdCreatePartyViewController.swift */,
+				44D002EB25A38719009F419B /* FourthCreatePartyViewController.swift */,
+				44D002E025A37E10009F419B /* CardView.swift */,
+				44D002F225A3A55B009F419B /* BackgroundCardCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -993,7 +1002,9 @@
 			files = (
 				447DD9B7259BCFE5007C4DA4 /* LocationTextField.swift in Sources */,
 				447DD9D2259BE3C7007C4DA4 /* EditPartyViewController.swift in Sources */,
+				44D002E125A37E10009F419B /* CardView.swift in Sources */,
 				447DD9BC259BDE91007C4DA4 /* AddPartyPhotoView.swift in Sources */,
+				44D002F325A3A55B009F419B /* BackgroundCardCell.swift in Sources */,
 				4465EBA6257BC8D90096F3B7 /* StorageManager.swift in Sources */,
 				4420BDE3259740DE005A4FAE /* ActiveChatCell.swift in Sources */,
 				4424A5942598E5F900B420F7 /* ChatRequestViewController.swift in Sources */,
@@ -1017,6 +1028,7 @@
 				4424A56025976E5E00B420F7 /* ChatModel.swift in Sources */,
 				4465EB8A257A9E6E0096F3B7 /* PartyTableViewCell.swift in Sources */,
 				449D7CC32599414900FE575F /* UserError.swift in Sources */,
+				44D002EC25A38719009F419B /* FourthCreatePartyViewController.swift in Sources */,
 				4465EBAB257BF7830096F3B7 /* EditPartyTableViewController.swift in Sources */,
 				4420BDB125965B0D005A4FAE /* SecondSetupProfileViewController.swift in Sources */,
 				44DF5D58258E2CCA000BF557 /* PartyCell.swift in Sources */,

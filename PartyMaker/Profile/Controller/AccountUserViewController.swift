@@ -17,6 +17,8 @@ class AccountUserViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("asdasdasdasdasd")
+     
         setupConstraints()
     }
     
@@ -28,6 +30,7 @@ class AccountUserViewController: UIViewController {
     }
     
     @objc private func logOutButtonTapped() {
+        print("asdasdasdasdasd")
         let ac = UIAlertController(title: nil, message: "Вы уверены что хотите выйти?", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
         ac.addAction(UIAlertAction(title: "Да", style: .destructive, handler: { (_) in
