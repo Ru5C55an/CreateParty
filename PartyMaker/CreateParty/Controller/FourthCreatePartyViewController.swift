@@ -96,7 +96,11 @@ extension FourthCreatePartyViewController {
 extension FourthCreatePartyViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print(backgrounds[indexPath.row % backgrounds.count])
+        print(indexPath.row)
+    
+        cardView.imageView.image = backgrounds[indexPath.row % backgrounds.count]
+        cardView.setNeedsDisplay()
+       
     }
 }
 
@@ -118,8 +122,6 @@ extension FourthCreatePartyViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CardBackgroundCell.reuseId, for: indexPath) as! CardBackgroundCell
         
         cell.configure(image: backgrounds[indexPath.row % backgrounds.count])
-//        cardView.applyBackground(image: backgrounds[indexPath.row % backgrounds.count])
-        cardView.imageView = UIImageView(image: backgrounds[indexPath.row % backgrounds.count])
         
         return cell
     }

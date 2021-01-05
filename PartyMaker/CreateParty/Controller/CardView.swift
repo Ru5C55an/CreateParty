@@ -97,6 +97,7 @@ class CardView: UIView {
     }
     
     var imageView = UIImageView(image: UIImage(named: "bc1"))
+
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -263,6 +264,7 @@ extension CardView {
         imageView.layer.cornerRadius = 20
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleToFill
+        
         self.addSubview(imageView)
         self.sendSubviewToBack(imageView)
         
@@ -273,9 +275,11 @@ extension CardView {
             imageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
         
-//        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterial)
-//        let blurredEffectView = UIVisualEffectView(effect: blurEffect)
-//        blurredEffectView.frame = imageView.bounds
-//        imageView.addSubview(blurredEffectView)
+        let blurEffect = UIBlurEffect(style: .regular)
+        let blurredEffectView = UIVisualEffectView(effect: blurEffect)
+        blurredEffectView.layer.opacity = 0.8
+        blurredEffectView.frame = imageView.bounds
+        blurredEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        imageView.addSubview(blurredEffectView)
     }
 }
