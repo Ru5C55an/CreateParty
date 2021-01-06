@@ -47,7 +47,7 @@ class ProfileViewController: UIViewController {
         self.ageLabel.text = String(ageComponents.year!)
         
         firstChildVC = InformationUserViewController(currentUser: currentUser)
-        secondChildVC = AccountUserViewController()
+        secondChildVC = AccountUserViewController(currentUser: currentUser)
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -155,7 +155,8 @@ extension ProfileViewController {
         NSLayoutConstraint.activate([
             childsContrainerView.topAnchor.constraint(equalTo: containerView.bottomAnchor),
             childsContrainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            childsContrainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            childsContrainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            childsContrainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 }

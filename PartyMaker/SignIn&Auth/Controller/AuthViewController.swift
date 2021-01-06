@@ -38,7 +38,7 @@ class AuthViewController: UIViewController {
         view.backgroundColor = .systemBackground
         
         let userDefaults = UserDefaults.standard
-        userDefaults.set(false, forKey: "presentationWasViewed")
+        userDefaults.set(true, forKey: "presentationWasViewed")
         
         googleButton.addIcon(image: #imageLiteral(resourceName: "google-icon"))
         appleButton.addIcon(image: #imageLiteral(resourceName: "apple-logo"))

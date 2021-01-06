@@ -73,7 +73,7 @@ extension InformationUserViewController {
         view.addSubview(changeButton)
         
         NSLayoutConstraint.activate([
-            aboutStackView.topAnchor.constraint(equalTo: view.bottomAnchor, constant: 44),
+            aboutStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 44),
             aboutStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
             aboutStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44),
             aboutStackView.heightAnchor.constraint(equalToConstant: 128)
