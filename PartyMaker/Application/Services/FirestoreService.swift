@@ -101,6 +101,23 @@ class FirestoreService {
         }
     } // saveProfileWith
     
+    func changeUserEmail(email: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        
+        let userRef = usersRef.document(Auth.auth().currentUser!.uid)
+
+        userRef.updateData([
+            "email": email
+        ]) { err in
+            if let err = err {
+                completion(.failure(err))
+                print("Error updating document: \(err)")
+            } else {
+                completion(.success(Void()))
+                print("Document successfully updated")
+            }
+        }
+    }
+    
     func createWaitingChat(message: String, receiver: PUser, completion: @escaping (Result<Void, Error>) -> Void) {
         let reference = db.collection(["users", receiver.id, "waitingChats"].joined(separator: "/"))
         let messageRef = reference.document(self.currentUser.id).collection("messages")

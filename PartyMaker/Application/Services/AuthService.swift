@@ -12,11 +12,14 @@ import FBSDKLoginKit
 
 class AuthService {
     
+    let userDefaults = UserDefaults.standard
+    
+    
     static let shared = AuthService()
     private let auth = Auth.auth()
     
     func login(email: String?, password: String?, completion: @escaping (Result<User, Error>) -> Void) {
-        auth.signIn(withEmail: email!, password: password!) { (result, error) in
+        auth.signIn(withEmail: email!, password: password!) { [weak self] (result, error) in
             
             guard let email = email, let password = password else {
                 completion(.failure(AuthError.notFilled))
@@ -47,6 +50,7 @@ class AuthService {
                 completion(.failure(error!))
                 return
             }
+            
             completion(.success(result.user))
         }
     }
@@ -85,6 +89,5 @@ class AuthService {
             completion(error)
         }
     }
-    
     
 }

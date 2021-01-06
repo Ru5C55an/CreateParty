@@ -12,8 +12,14 @@ import GoogleSignIn
 
 class AccountUserViewController: UIViewController {
     
-    let logOutButton = UIButton(title: "Выйти")
-    let sendEmailButton = UIButton(type: .system)
+    private let logOutButton = UIButton(title: "Выйти")
+    private let sendEmailVerificationButton = UIButton(type: .system)
+    private let sendResetPasswordButton = UIButton(type: .system)
+    private let deleteAccountButton = UIButton(type: .system)
+    private let changeEmailButton = UIButton(type: .system)
+    
+    
+    var provider = ""
     
     private let currentUser: PUser
     
@@ -29,21 +35,179 @@ class AccountUserViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        provider = getProviderData()
         
-        if FirebaseAuth.Auth.auth().currentUser?.isEmailVerified == true {
-            sendEmailButton.isHidden = false
-        } else {
-            sendEmailButton.isHidden = true
-        }
+        GIDSignIn.sharedInstance()?.delegate = self
         
-        sendEmailButton.addTarget(self, action: #selector(sendEmailButtonTapped), for: .touchUpInside)
+        setupButtons()
         setupConstraints()
     }
     
-    @objc private func sendEmailButtonTapped() {
+    private func setupButtons() {
+        
+        if FirebaseAuth.Auth.auth().currentUser?.isEmailVerified == true {
+            sendEmailVerificationButton.isHidden = false
+        } else {
+            sendEmailVerificationButton.isHidden = true
+        }
+        sendEmailVerificationButton.setTitle("Подтвердить эл. почту", for: .normal)
+        sendEmailVerificationButton.addTarget(self, action: #selector(sendEmailVerificationButtonTapped), for: .touchUpInside)
+        sendResetPasswordButton.setTitle("Сменить пароль", for: .normal)
+        sendResetPasswordButton.addTarget(self, action: #selector(sendPasswordResetButtonTapped), for: .touchUpInside)
+        deleteAccountButton.setTitle("Удалить аккаунт", for: .normal)
+        deleteAccountButton.addTarget(self, action: #selector(deleteAccountButtonTapped), for: .touchUpInside)
+        changeEmailButton.setTitle("Сменить почту", for: .normal)
+        changeEmailButton.addTarget(self, action: #selector(reauthentification), for: .touchUpInside)
+        logOutButton.addTarget(self, action: #selector(logOutButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc private func reauthentification() {
+        
+        self.showAlert(title: "Необходимо подтвердить данные", message: "") {
+            
+            switch self.provider {
+            case "Google":
+                
+                GIDSignIn.sharedInstance()?.presentingViewController = self
+                GIDSignIn.sharedInstance()?.signIn()
+                
+            case "Email":
+            
+                let ac = UIAlertController(title: "Введите данные", message: nil, preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
+                
+                ac.addTextField { (textfield) in
+                    textfield.placeholder = "email"
+                }
+                ac.addTextField { (textfield) in
+                    textfield.placeholder = "пароль"
+                }
+                
+                ac.addAction(UIAlertAction(title: "ОК", style: .destructive, handler: { [weak self] (_) in
+                    
+                    guard let email = ac.textFields?.first?.text, email != "", let password = ac.textFields?.last?.text, password != "" else {
+                        self?.showAlert(title: "Ошибка", message: "Заполнены не все поля")
+                        return
+                    }
+                    
+                    if Validators.isSimpleEmail(email) {
+                        
+                        let credential = EmailAuthProvider.credential(withEmail: email, password: password)
+                        
+                        let currentUser = Auth.auth().currentUser
+                        currentUser?.reauthenticate(with: credential, completion: { (result, error) in
+                            if let error = error {
+                                self?.showAlert(title: "Ошибка", message: error.localizedDescription)
+                            } else {
+                                self?.changeEmailAlert()
+                            }
+                        })
+                        
+                        
+                    } else {
+                        self?.showAlert(title: "Ошибка", message: "Неверный формат эл. почты")
+                        return
+                    }
+                }))
+                
+                self.present(ac, animated: true, completion: nil)
+                
+            default:
+                break
+            }
+        }
+    }
+    
+    
+    private func changeEmailAlert() {
+        
+        let ac = UIAlertController(title: "Смена почты", message: "Если вы хотите сменить адрес эл. почты, то введите в поле ниже новый адрес эл. почты и нажмите ОК", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
+        
+        ac.addTextField { (textfield) in
+            textfield.placeholder = "xxx@xxx.xx"
+        }
+        
+        ac.addAction(UIAlertAction(title: "ОК", style: .destructive, handler: { [weak self] (_) in
+            
+            guard let email = ac.textFields?.first?.text, email != "" else {
+                self?.showAlert(title: "Ошибка", message: "Введите новый адрес эл. почты")
+                return
+            }
+            
+            if Validators.isSimpleEmail(email) {
+                
+                Auth.auth().currentUser?.updateEmail(to: email) { (error) in
+                    if let error = error {
+                        self?.showAlert(title: "Ошибка", message: error.localizedDescription)
+                        return
+                    } else {
+                        FirestoreService.shared.changeUserEmail(email: email) { (result) in
+                            switch result {
+                            
+                            case .success():
+                                self?.showAlert(title: "Успешно", message: "Адрес эл. почты был изменен")
+                                return
+                            case .failure(let error):
+                                self?.showAlert(title: "Ошибка", message: error.localizedDescription)
+                                return
+                            }
+                        }
+                    }
+                }
+            } else {
+                self?.showAlert(title: "Ошибка", message: "Неверный формат эл. почты")
+                return
+            }
+        }))
+        
+        self.present(ac, animated: true, completion: nil)
+    }
+    
+    @objc private func deleteAccountButtonTapped() {
+        
+        let ac = UIAlertController(title: "Удаление аккаунта", message: "Если вы хотите БЕЗВОЗВРАТНО удалить свой аккаунт, то введите в поле ниже слово УДАЛИТЬ и нажмите ОК", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
+        ac.addTextField { (textfield) in
+            textfield.placeholder = "УДАЛИТЬ"
+        }
+        ac.addAction(UIAlertAction(title: "ОК", style: .destructive, handler: { (_) in
+            
+            if ac.textFields?.first?.text == "УДАЛИТЬ" {
+                let user = Auth.auth().currentUser
+                
+                user?.delete { error in
+                    if let error = error {
+                        print(error.localizedDescription)
+                        return
+                    } else {
+                        UIApplication.shared.keyWindow?.rootViewController = AuthViewController()
+                        return
+                    }
+                }
+            } else {
+                self.showAlert(title: "Ошибка", message: "Введено не верное слово в поле ввода")
+            }
+            
+        }))
+        
+    }
+    
+    @objc private func sendPasswordResetButtonTapped() {
+        Auth.auth().sendPasswordReset(withEmail: currentUser.email) { error in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+            self.showAlert(title: "Отправлено", message: "На вашу эл.почту отправлена ссылка для смены пароля")
+            return
+        }
+    }
+    
+    @objc private func sendEmailVerificationButtonTapped() {
         FirebaseAuth.Auth.auth().currentUser?.sendEmailVerification { error in
-            if error != nil {
-                print(error!.localizedDescription)
+            if let error = error {
+                print(error.localizedDescription)
                 return
             }
             self.showAlert(title: "Отправлено", message: "На вашу эл.почту отправлена ссылка для подтверждения")
@@ -53,7 +217,6 @@ class AccountUserViewController: UIViewController {
     
     private func getProviderData() -> String {
         
-        var providerIDString = ""
         var provider = ""
         
         if let providerData = Auth.auth().currentUser?.providerData {
@@ -71,22 +234,20 @@ class AccountUserViewController: UIViewController {
                     break
                 }
             }
-            
-            providerIDString = "Вы авторизированы через \(provider)"
         }
         
-        return providerIDString
+        return provider
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
         navigationController?.navigationBar.isHidden = true
         logOutButton.applyGradients(cornerRadius: logOutButton.layer.cornerRadius, from: .bottomLeading, to: .topTrailing, startColor: #colorLiteral(red: 0.6, green: 0.5098039216, blue: 0.1960784314, alpha: 1), endColor: #colorLiteral(red: 0.8196078431, green: 0.2980392157, blue: 0.1725490196, alpha: 1))
-        logOutButton.addTarget(self, action: #selector(logOutButtonTapped), for: .touchUpInside)
     }
     
     @objc private func logOutButtonTapped() {
-        print("asdasdasdasdasd")
+        
         let ac = UIAlertController(title: nil, message: "Вы уверены что хотите выйти?", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
         ac.addAction(UIAlertAction(title: "Да", style: .destructive, handler: { (_) in
@@ -110,14 +271,46 @@ class AccountUserViewController: UIViewController {
 extension AccountUserViewController {
     private func setupConstraints() {
         
+        let stackView = UIStackView(arrangedSubviews: [sendEmailVerificationButton, sendResetPasswordButton, deleteAccountButton, changeEmailButton], axis: .vertical, spacing: 8)
+        
+        view.addSubview(stackView)
         view.addSubview(logOutButton)
-    
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         logOutButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
             logOutButton.heightAnchor.constraint(equalToConstant: 60),
-            logOutButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 128),
+            logOutButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 32),
             logOutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
+    }
+}
+
+
+// MARK: - GIDSignInDelegate
+extension AccountUserViewController: GIDSignInDelegate {
+    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        
+        guard let user = user else { return }
+        guard let auth = user.authentication else { return }
+        let credential = GoogleAuthProvider.credential(withIDToken: auth.idToken, accessToken: auth.accessToken)
+        
+        let currentUser = Auth.auth().currentUser
+        
+        currentUser?.reauthenticate(with: credential, completion: { (result, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
+                self.changeEmailAlert()
+            }
+        })
     }
 }

@@ -9,7 +9,6 @@ import Foundation
 
 class Validators {
     
-    
     static func isFilled(partyName: String?, aboutParty: String?) -> Bool {
         guard let partyName = partyName,
               let aboutParty = aboutParty,
