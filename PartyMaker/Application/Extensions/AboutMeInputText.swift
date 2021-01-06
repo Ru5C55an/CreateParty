@@ -7,42 +7,53 @@
 
 import UIKit
 
-class AboutMeInputText: UITextView {
+class AboutInputText: UIView {
     
+    let textView = UITextView()
     var savedPlaceholder: String!
     private var placeholder: String!
     
     init(placeholder: String = "Введите текст...", isEditable: Bool) {
-        super.init(frame: .zero, textContainer: .none)
+        super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         self.savedPlaceholder = placeholder
         self.placeholder = placeholder
-        self.isEditable = isEditable
+        textView.isEditable = isEditable
         
         customizeElements()
     }
     
     private func customizeElements() {
-        dataDetectorTypes = UIDataDetectorTypes.link
+        
+        addSubview(textView)
+        
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            textView.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
+            textView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8),
+            textView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8),
+            textView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8)
+        ])
+        
+        textView.dataDetectorTypes = UIDataDetectorTypes.link
 
-        font = .sfProDisplay(ofSize: 16, weight: .regular)
+        textView.font = .sfProDisplay(ofSize: 16, weight: .regular)
 
-        if isEditable {
-            textColor = .lightGray
-            text = placeholder
+        if textView.isEditable {
+            textView.textColor = .lightGray
+            textView.text = placeholder
         }
-        
         backgroundColor = .white
-        layer.cornerRadius = 18
-//        layer.masksToBounds = false
-
-        delegate = self
         
+        textView.delegate = self
+        
+        layer.cornerRadius = 18
         layer.borderColor = UIColor(red: 151, green: 151, blue: 151, alpha: 100).cgColor
         layer.borderWidth = 0.2
         
-        textContainerInset = .init(top: 16, left: 16, bottom: 16, right: 16)
-       
-        applySketchShadow(color: #colorLiteral(red: 0.7411764706, green: 0.7411764706, blue: 0.7411764706, alpha: 1), alpha: 50, x: 0, y: 0, blur: 12, spread: -3)
+        let shadowView = UIView(frame: self.layer.bounds)
+        addSubview(shadowView)
+        applySketchShadow(color: #colorLiteral(red: 0.7411764706, green: 0.7411764706, blue: 0.7411764706, alpha: 1), alpha: 100, x: 0, y: 0, blur: 12, spread: -3)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -51,49 +62,49 @@ class AboutMeInputText: UITextView {
     }
 }
 
-extension AboutMeInputText: UITextViewDelegate {
+extension AboutInputText: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textColor == .lightGray {
-                text = nil
-                textColor = .black
+        if textView.textColor == .lightGray {
+            textView.text = nil
+            textView.textColor = .black
         }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        if text.isEmpty {
-            text = savedPlaceholder
-            textColor = .lightGray
+        if textView.text.isEmpty {
+            textView.text = savedPlaceholder
+            textView.textColor = .lightGray
             placeholder = ""
         } else {
-            placeholder = text
+            placeholder = textView.text
         }
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        placeholder = text
+        placeholder = textView.text
     }
 }
 
-// MARK: - SwiftUI
-import SwiftUI
-
-struct AboutMeInputTextProvider: PreviewProvider {
-    
-    static var previews: some View {
-        
-        ContainerView().edgesIgnoringSafeArea(.all)
-    }
-    
-    struct ContainerView: UIViewControllerRepresentable {
-        
-        let aboutUserViewController = AboutUserViewContoller(user: PUser(username: "", email: "", avatarStringURL: "", description: "", sex: "", birthday: "", id: ""))
-        
-        func makeUIViewController(context: Context) -> AboutUserViewContoller {
-            return aboutUserViewController
-        }
-        
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-            
-        }
-    }
-}
+//// MARK: - SwiftUI
+//import SwiftUI
+//
+//struct AboutInputTextProvider: PreviewProvider {
+//    
+//    static var previews: some View {
+//        
+//        ContainerView().edgesIgnoringSafeArea(.all)
+//    }
+//    
+//    struct ContainerView: UIViewControllerRepresentable {
+//        
+//        let aboutUserViewController = AboutUserViewContoller(user: PUser(username: "", email: "", avatarStringURL: "", description: "", sex: "", birthday: "", id: ""))
+//        
+//        func makeUIViewController(context: Context) -> AboutUserViewContoller {
+//            return aboutUserViewController
+//        }
+//        
+//        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+//            
+//        }
+//    }
+//}

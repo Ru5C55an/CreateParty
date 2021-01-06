@@ -18,7 +18,7 @@ class SetupProfileViewController: UIViewController {
     let sexLabel = UILabel(text: "Пол")
     
     let fullNameTextField = BubbleTextField()
-    let aboutMeTextField = AboutMeInputText(isEditable: true)
+    let aboutMeTextField = AboutInputText(isEditable: true)
     
     let sexSegmentedControl = UISegmentedControl(first: "Мужской", second: "Женский")
     
@@ -63,7 +63,7 @@ class SetupProfileViewController: UIViewController {
     }
     
     @objc private func nextButtonTapped() {
-        guard Validators.isFilled(username: fullNameTextField.text, description: aboutMeTextField.text, sex: sexSegmentedControl.titleForSegment(at: sexSegmentedControl.selectedSegmentIndex), birthday: dateFormatter.string(from: (birthdayDatepicker.date)))
+        guard Validators.isFilled(username: fullNameTextField.text, description: aboutMeTextField.textView.text, sex: sexSegmentedControl.titleForSegment(at: sexSegmentedControl.selectedSegmentIndex), birthday: dateFormatter.string(from: (birthdayDatepicker.date)))
         else {
             self.showAlert(title: "Ошибка", message: "Не все поля заполнены")
             return
@@ -71,7 +71,7 @@ class SetupProfileViewController: UIViewController {
         
         let secondSetupProfileVC = SecondSetupProfileViewController(currentUser: currentUser,
                                                                     username: fullNameTextField.text!,
-                                                                    description: aboutMeTextField.text!,
+                                                                    description: aboutMeTextField.textView.text!,
                                                                     birthday: dateFormatter.string(from: (birthdayDatepicker.date)),
                                                                     sex: sexSegmentedControl.titleForSegment(at: sexSegmentedControl.selectedSegmentIndex)!)
         secondSetupProfileVC.modalPresentationStyle = .fullScreen

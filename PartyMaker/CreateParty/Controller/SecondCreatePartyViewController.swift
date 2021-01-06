@@ -13,7 +13,7 @@ class SecondCreatePartyViewController: UIViewController {
     let partyNameTextField = BubbleTextField(placeholder: "Например, Вечеринка у Децла дома")
     
     let aboutPartyLabel = UILabel(text: "О вечеринке")
-    let aboutPartyTextView = AboutMeInputText(placeholder: "Напишите о своей вечеринке...", isEditable: true)
+    let aboutPartyTextView = AboutInputText(placeholder: "Напишите о своей вечеринке...", isEditable: true)
     let typeLabel = UILabel(text: "Тип")
     
     var pickedType = ""
@@ -80,14 +80,14 @@ class SecondCreatePartyViewController: UIViewController {
     @objc private func nextButtonTapped() {
         
         // Тут проблема с тем, что в aboutParty.text есть placeholder, который всегда заполнен и поэтому проверка на заполненность aboutParty не работает
-        guard Validators.isFilled(partyName: partyNameTextField.text, aboutParty: aboutPartyTextView.text)
+        guard Validators.isFilled(partyName: partyNameTextField.text, aboutParty: aboutPartyTextView.textView.text)
         else {
             self.showAlert(title: "Ошибка", message: "Не все поля заполнены")
             return
         }
         
         // Но с помощью этого это фиксится
-        if let description = aboutPartyTextView.text, description != aboutPartyTextView.savedPlaceholder {
+        if let description = aboutPartyTextView.textView.text, description != aboutPartyTextView.savedPlaceholder {
             party.description = description
         } else {
             self.showAlert(title: "Ошибка", message: "Не все поля заполнены")

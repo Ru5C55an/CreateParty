@@ -16,8 +16,6 @@ class AccountUserViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print("asdasdasdasdasd")
      
         setupConstraints()
     }

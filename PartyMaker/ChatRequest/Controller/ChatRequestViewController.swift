@@ -15,7 +15,7 @@ class ChatRequestViewController: UIViewController {
     let nameLabel = UILabel(text: "Gandi", font: .sfProDisplay(ofSize: 20, weight: .medium))
     let ageLabel = UILabel(text: "21", font: .sfProDisplay(ofSize: 20, weight: .medium))
     
-    let aboutText = AboutMeInputText(isEditable: false)
+    let aboutText = AboutInputText(isEditable: false)
     
     let ratingLabel = UILabel(text: "3.5", font: .sfProDisplay(ofSize: 16, weight: .medium))
     let interestsLabel = UILabel(text: "Интересы", font: .sfProDisplay(ofSize: 16, weight: .medium))
@@ -46,7 +46,7 @@ class ChatRequestViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        aboutText.text = "Я люблю есть бананы и гулять по пальмам со своим другом страусом, которого зовут Джеки нечан, он нчееь забавный. АХаххахаххахаххахахаasfjkhaskjfhaskfjgasfkhjgasfasgfyuawykufawvfavfyawvf awyufvawfyauwvfuyaw,fkauywfawhfuyvawfwajuyffghjkl;kjhgfdagfdahgjsfdjhasfdajshkdfashjdfagshjdkfashjdfasjdhgfasgdhafsdghasfdghajsfdasjghdfasjghdfasghjdfasghjdfasghjdfasjghdfajsghdfasghjdfasghjdfagshjdfajsghdfajhgsdfagjhsdfghjasdfasghdfasfdafsfasdjfghfdagjsfgjhadsfgdasjgffgjadsfgjaddsfasdfsdfsdfasdfasdfasdfsadfadfsdfsdfsdfsdfasdfasdfasdfasfasdssdfsghjkl;lkjhgfdsdafghjkl;'lkjhgfdsadfghjkl;'lkjhgfd"
+        aboutText.textView.text = "Я люблю есть бананы и гулять по пальмам со своим другом страусом, которого зовут Джеки нечан, он нчееь забавный. АХаххахаххахаххахахаasfjkhaskjfhaskfjgasfkhjgasfasgfyuawykufawvfavfyawvf awyufvawfyauwvfuyaw,fkauywfawhfuyvawfwajuyffghjkl;kjhgfdagfdahgjsfdjhasfdajshkdfashjdfagshjdkfashjdfasjdhgfasgdhafsdghasfdghajsfdasjghdfasjghdfasghjdfasghjdfasghjdfasjghdfajsghdfasghjdfasghjdfagshjdfajsghdfajhgsdfagjhsdfghjasdfasghdfasfdafsfasdjfghfdagjsfgjhadsfgdasjgffgjadsfgjaddsfasdfsdfsdfasdfasdfasdfsadfadfsdfsdfsdfsdfasdfasdfasdfasfasdssdfsghjkl;lkjhgfdsdafghjkl;'lkjhgfdsadfghjkl;'lkjhgfd"
         view.backgroundColor = .mainWhite()
         customizeElements()
         setupConstraints()

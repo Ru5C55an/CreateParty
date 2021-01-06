@@ -59,7 +59,7 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .blue
+        view.backgroundColor = .white
         
         imageView.layer.cornerRadius = 64
         imageView.clipsToBounds = true

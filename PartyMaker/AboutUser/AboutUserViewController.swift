@@ -16,7 +16,7 @@ class AboutUserViewContoller: UIViewController {
     let nameLabel = UILabel(text: "Gandi", font: .sfProDisplay(ofSize: 20, weight: .medium))
     let ageLabel = UILabel(text: "21", font: .sfProDisplay(ofSize: 20, weight: .medium))
     
-    let aboutText = AboutMeInputText(isEditable: false)
+    let aboutText = AboutInputText(isEditable: false)
     
     let ratingLabel = UILabel(text: "􀋂 0", font: .sfProDisplay(ofSize: 16, weight: .medium))
     let interestsLabel = UILabel(text: "Интересы", font: .sfProDisplay(ofSize: 16, weight: .medium))
@@ -41,7 +41,7 @@ class AboutUserViewContoller: UIViewController {
         
         self.imageView.sd_setImage(with: URL(string: user.avatarStringURL), completed: nil)
         self.nameLabel.text = user.username
-        self.aboutText.text = user.description
+        self.aboutText.textView.text = user.description
         
         let birthdayString = user.birthday
         let birthday = dateFormatter.date(from: birthdayString)

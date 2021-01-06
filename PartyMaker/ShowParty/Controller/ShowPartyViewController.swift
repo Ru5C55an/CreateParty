@@ -37,7 +37,7 @@ class ShowPartyViewController: UIViewController {
     let locationButton = UIButton()
     
     let descriptionLabel = UILabel(text: "Описание", font: .sfProDisplay(ofSize: 24, weight: .medium))
-    let descriptionText = AboutMeInputText(isEditable: false)
+    let descriptionText = AboutInputText(isEditable: false)
     
     let countPeopleLabel = UILabel(text: "Кол-во гостей", font: .sfProDisplay(ofSize: 24, weight: .medium))
     let currentPeopleText = UILabel(text: "")
@@ -72,7 +72,7 @@ class ShowPartyViewController: UIViewController {
         typeText.text = party.type
         priceText.text = party.price
         locationText.text = party.location
-        descriptionText.text = party.description
+        descriptionText.textView.text = party.description
         currentPeopleText.text = party.currentPeople
         maxPeopleText.text = "/ \(party.maximumPeople)"
         

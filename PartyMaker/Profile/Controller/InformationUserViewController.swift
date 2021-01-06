@@ -11,7 +11,7 @@ import Firebase
 class InformationUserViewController: UIViewController {
 
     let aboutLabel = UILabel(text: "Обо мне")
-    let aboutText = AboutMeInputText(isEditable: false)
+    let aboutText = AboutInputText(isEditable: false)
     let interestsLabel = UILabel(text: "Интересы", font: .sfProDisplay(ofSize: 16, weight: .medium))
     let interestsList = UILabel(text: "💪  🎮  🎨  🧑‍🍳  🔬  🎤  🛹  🗺  🧑‍💻  🎼  📷  🎧", font: .sfProDisplay(ofSize: 16, weight: .medium))
     let alcoLabel = UILabel(text: "Алкоголь", font: .sfProDisplay(ofSize: 16, weight: .medium))
@@ -25,9 +25,8 @@ class InformationUserViewController: UIViewController {
     
     init(currentUser: PUser) {
         self.currentUser = currentUser
-        self.aboutText.text = currentUser.description
+        self.aboutText.textView.text = currentUser.description
         
-
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -43,8 +42,6 @@ class InformationUserViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-     
         
         setupConstraints()
     }
