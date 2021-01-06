@@ -65,7 +65,7 @@ class CreatePartyViewController: UIViewController {
         
         nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
 
-//        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.prefersLargeTitles = false
         
         setupConstraints()
     }

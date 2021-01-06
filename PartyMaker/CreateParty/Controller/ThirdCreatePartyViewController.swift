@@ -28,15 +28,13 @@ class ThirdCreatePartyViewController: UIViewController {
     let doneButton = UIButton(title: "Готово")
     
     private let currentUser: PUser
-    internal var party: Party
+    private var party: Party
     
-    init(party: Party?, currentUser: PUser?) {
-        self.party = party!
-        self.currentUser = currentUser!
+    init(party: Party, currentUser: PUser) {
+        self.party = party
+        self.currentUser = currentUser
        
         super.init(nibName: nil, bundle: nil)
-        
-        title = "Последний штрих 🪄"
     }
     
     required init?(coder: NSCoder) {
@@ -61,6 +59,8 @@ class ThirdCreatePartyViewController: UIViewController {
         
         let gesture = UITapGestureRecognizer(target: self, action: #selector(selectPhoto))
         addPhoto.addGestureRecognizer(gesture)
+        
+        title = "Последний штрих 🪄"
         setupConstraints()
     }
     
@@ -108,15 +108,8 @@ class ThirdCreatePartyViewController: UIViewController {
         party.location = location
         party.userId = currentUser.id
         
-        FirestoreService.shared.savePartyWith(party: party, partyImage: addPhoto.circleImageView.image) { [weak self] (result) in
-            switch result {
-            
-            case .success(let party):
-                self?.navigationController?.popToRootViewController(animated: true)
-            case .failure(let error):
-                self?.showAlert(title: "Ошибка", message: error.localizedDescription)
-            }
-        }
+        let fourthCreatePartyViewController = FourthCreatePartyViewController(party: party, image: addPhoto.circleImageView.image!)
+        navigationController?.pushViewController(fourthCreatePartyViewController, animated: true)
     }
     
     @objc private func selectPhoto() {

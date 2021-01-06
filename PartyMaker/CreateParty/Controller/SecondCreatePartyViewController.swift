@@ -79,7 +79,6 @@ class SecondCreatePartyViewController: UIViewController {
     
     @objc private func nextButtonTapped() {
         
-     
         // Тут проблема с тем, что в aboutParty.text есть placeholder, который всегда заполнен и поэтому проверка на заполненность aboutParty не работает
         guard Validators.isFilled(partyName: partyNameTextField.text, aboutParty: aboutPartyTextView.text)
         else {
@@ -100,7 +99,6 @@ class SecondCreatePartyViewController: UIViewController {
         party.type = pickedType
         
         let thirdCreatePartyViewController = ThirdCreatePartyViewController(party: party, currentUser: currentUser)
-        
         navigationController?.pushViewController(thirdCreatePartyViewController, animated: true)
     }
     

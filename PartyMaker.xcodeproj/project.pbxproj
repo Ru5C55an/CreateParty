@@ -581,6 +581,15 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		44D0034225A532B2009F419B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				44D002E025A37E10009F419B /* CardView.swift */,
+				44D002F225A3A55B009F419B /* BackgroundCardCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		44DF5E5C2592361F000BF557 /* Parties */ = {
 			isa = PBXGroup;
 			children = (
@@ -638,6 +647,7 @@
 		44DF5E8D259236C4000BF557 /* CreateParty */ = {
 			isa = PBXGroup;
 			children = (
+				44D0034225A532B2009F419B /* View */,
 				44DF5E8E259236CD000BF557 /* Controller */,
 			);
 			path = CreateParty;
@@ -650,8 +660,6 @@
 				447DD9A9259BC14D007C4DA4 /* SecondCreatePartyViewController.swift */,
 				447DD9B1259BCEDA007C4DA4 /* ThirdCreatePartyViewController.swift */,
 				44D002EB25A38719009F419B /* FourthCreatePartyViewController.swift */,
-				44D002E025A37E10009F419B /* CardView.swift */,
-				44D002F225A3A55B009F419B /* BackgroundCardCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

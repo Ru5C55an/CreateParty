@@ -281,5 +281,11 @@ extension CardView {
         blurredEffectView.frame = imageView.bounds
         blurredEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         imageView.addSubview(blurredEffectView)
+        
+//        let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
+//        let vibrancyEffectView = UIVisualEffectView(effect: vibrancyEffect)
+//        vibrancyEffectView.frame = imageView.bounds
+//        blurredEffectView.contentView.addSubview(vibrancyEffectView)
+//        vibrancyEffectView.contentView.addSubview(guestsStackView)
     }
 }

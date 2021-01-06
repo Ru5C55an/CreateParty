@@ -37,7 +37,6 @@ class MainTabBarController: UITabBarController {
         let createPartyViewController = CreatePartyViewController(currentUser: currentUser)
         let chatlistViewController = ChatlistViewController(currentUser: currentUser)
         let profileViewController = ProfileViewController(currentUser: currentUser)
-        let test = FourthCreatePartyViewController(party: Party(city: "", location: "", userId: "", imageUrlString: "", type: "", maximumPeople: "", currentPeople: "", id: "", date: "", startTime: "", endTime: "", name: "", price: "", description: "", alco: ""))
         
         let boldConfig = UIImage.SymbolConfiguration(weight: .medium)
         
@@ -48,7 +47,6 @@ class MainTabBarController: UITabBarController {
         let profileImage = UIImage(systemName: "person", withConfiguration: boldConfig)!
         
         viewControllers = [
-            generateNavigationController(rootViewController: test, title: "Тест", image: searchImage),
             generateNavigationController(rootViewController: searchPartyViewController, title: "Поиск", image: searchImage),
             generateNavigationController(rootViewController: profileViewController, title: "Профиль", image: profileImage),
             generateNavigationController(rootViewController: createPartyViewController, title: "Создать", image: createImage),
