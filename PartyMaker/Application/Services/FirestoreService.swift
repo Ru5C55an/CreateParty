@@ -59,14 +59,14 @@ class FirestoreService {
         }
     }
     
-    func saveProfileWith(id: String, email: String, username: String?, avatarImage: UIImage?, description: String?, sex: String?, birthday: String?, completion: @escaping (Result<PUser, Error>) -> Void) {
+    func saveProfileWith(id: String, email: String, username: String?, avatarImage: UIImage?, description: String?, sex: String?, birthday: String?, interestsList: String?, smoke: String?, alco: String?, completion: @escaping (Result<PUser, Error>) -> Void) {
         
         guard Validators.isFilled(username: username, description: description, sex: sex, birthday: birthday) else {
             completion(.failure(UserError.notFilled))
             return
         }
         
-        var puser = PUser(username: username!, email: email, avatarStringURL: "not exist", description: description!, sex: sex!, birthday: birthday!, id: id)
+        var puser = PUser(username: username!, email: email, avatarStringURL: "not exist", description: description!, sex: sex!, birthday: birthday!, interestsList: interestsList!, smoke: smoke!, alco: alco!, id: id)
         
         if avatarImage != UIImage(systemName: "plus.viewfinder") {
             

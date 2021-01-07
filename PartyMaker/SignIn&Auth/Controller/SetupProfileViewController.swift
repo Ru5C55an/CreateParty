@@ -63,9 +63,17 @@ class SetupProfileViewController: UIViewController {
     }
     
     @objc private func nextButtonTapped() {
+        
         guard Validators.isFilled(username: fullNameTextField.text, description: aboutMeTextField.textView.text, sex: sexSegmentedControl.titleForSegment(at: sexSegmentedControl.selectedSegmentIndex), birthday: dateFormatter.string(from: (birthdayDatepicker.date)))
         else {
             self.showAlert(title: "Ошибка", message: "Не все поля заполнены")
+            return
+        }
+        
+        // Но с помощью этого это фиксится
+        guard let description = aboutMeTextField.textView.text, description != aboutMeTextField.savedPlaceholder
+        else {
+            self.showAlert(title: "Ошибка", message: "Заполните поле О себе")
             return
         }
         

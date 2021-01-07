@@ -11,7 +11,7 @@ import SoftUIView
 class InterestButton: UIView {
     
     private let title = UILabel(text: "")
-    private let button = SoftUIView()
+    let button = SoftUIView()
     
     init(emoji: String, emojiSize: CGFloat = 30, cornerRadius: CGFloat = 6, isSelected: Bool = false, title: String, titleFont: UIFont = .sfProDisplay(ofSize: 8, weight: .regular)!, backgroundColor: UIColor) {
         

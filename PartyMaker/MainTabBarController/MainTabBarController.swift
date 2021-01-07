@@ -11,13 +11,7 @@ class MainTabBarController: UITabBarController {
     
     private let currentUser: PUser
     
-    init(currentUser: PUser = PUser(username: "asf",
-                                    email: "asf",
-                                    avatarStringURL: "asf",
-                                    description: "asf",
-                                    sex: "asf",
-                                    birthday: "asf",
-                                    id: "asf")) {
+    init(currentUser: PUser) {
         
         self.currentUser = currentUser
         super.init(nibName: nil, bundle: nil)
@@ -81,7 +75,7 @@ struct MainTabBarControllerProvider: PreviewProvider {
     
     struct ContainerView: UIViewControllerRepresentable {
         
-        let mainTabBarController = MainTabBarController()
+        let mainTabBarController = MainTabBarController(currentUser: PUser(username: "", email: "", avatarStringURL: "", description: "", sex: "", birthday: "", interestsList: "", smoke: "", alco: "", id: ""))
         
         func makeUIViewController(context: Context) -> MainTabBarController {
             return mainTabBarController

@@ -10,33 +10,34 @@ import FirebaseAuth
 
 class SecondSetupProfileViewController: UIViewController {
     
-    let fillImageView = AddProfilePhotoView()
+    private let fillImageView = AddProfilePhotoView()
     
-    let welcomeLabel = UILabel(text: "Последний штрих", font: .sfProRounded(ofSize: 26, weight: .regular))
+    private let welcomeLabel = UILabel(text: "Последний штрих", font: .sfProRounded(ofSize: 26, weight: .regular))
 
-    let addImageLabel = UILabel(text: "Добавьте фото")
-    let alcoholLabel = UILabel(text: "Алкоголь")
-    let smokeLabel = UILabel(text: "Курение")
+    private let addImageLabel = UILabel(text: "Добавьте фото")
+    private let alcoholLabel = UILabel(text: "Алкоголь")
+    private let smokeLabel = UILabel(text: "Курение")
     
-    let interestsLabel = UILabel(text: "Выберите ваши интересы")
-    let sportButton = InterestButton(emoji: "💪", title: "Спорт", backgroundColor: .white)
-    let artButton = InterestButton(emoji: "🎨", title: "Искусство", backgroundColor: .white)
-    let singingButton = InterestButton(emoji: "🎤", title: "Пение", backgroundColor: .white)
-    let musicButton = InterestButton(emoji: "🎧", title: "Музыка", backgroundColor: .white)
-    let musicianButton = InterestButton(emoji: "🎼", title: "Композитор", backgroundColor: .white)
-    let cookingButton = InterestButton(emoji: "🧑‍🍳", title: "Кулинария", backgroundColor: .white)
-    let itButton = InterestButton(emoji: "🧑‍💻", title: "IT", backgroundColor: .white)
-    let cameraButton = InterestButton(emoji: "📷", title: "Камера", backgroundColor: .white)
-    let gamepadButton = InterestButton(emoji: "🎮", title: "Игры", backgroundColor: .white)
-    let travelButton = InterestButton(emoji: "🗺", title: "Путешествия", backgroundColor: .white)
-    let skateButton = InterestButton(emoji: "🛹", title: "Скейтбординг", backgroundColor: .white)
-    let scienceButton = InterestButton(emoji: "🔬", title: "Наука", backgroundColor: .white)
+    private let interestsLabel = UILabel(text: "Выберите ваши интересы")
+    private let sportButton = InterestButton(emoji: "💪", title: "Спорт", backgroundColor: .white)
+    private let artButton = InterestButton(emoji: "🎨", title: "Искусство", backgroundColor: .white)
+    private let singingButton = InterestButton(emoji: "🎤", title: "Пение", backgroundColor: .white)
+    private let musicButton = InterestButton(emoji: "🎧", title: "Музыка", backgroundColor: .white)
+    private let musicianButton = InterestButton(emoji: "🎼", title: "Композитор", backgroundColor: .white)
+    private let cookingButton = InterestButton(emoji: "🧑‍🍳", title: "Кулинария", backgroundColor: .white)
+    private let itButton = InterestButton(emoji: "🧑‍💻", title: "IT", backgroundColor: .white)
+    private let cameraButton = InterestButton(emoji: "📷", title: "Камера", backgroundColor: .white)
+    private let gamepadButton = InterestButton(emoji: "🎮", title: "Игры", backgroundColor: .white)
+    private let travelButton = InterestButton(emoji: "🗺", title: "Путешествия", backgroundColor: .white)
+    private let skateButton = InterestButton(emoji: "🛹", title: "Скейтбординг", backgroundColor: .white)
+    private let scienceButton = InterestButton(emoji: "🔬", title: "Наука", backgroundColor: .white)
+    private var interestsList = ""
     
-    let alcoholSwitch = UISwitch()
-    let smokeSwitch = UISwitch()
+    private let alcoholSwitch = UISwitch()
+    private let smokeSwitch = UISwitch()
     
-    let doneButton = UIButton(title: "Готово", titleColor: .black, backgroundColor: .white)
-    let backButton = UIButton(title: "Назад", titleColor: .green, backgroundColor: .white)
+    private let doneButton = UIButton(title: "Готово", titleColor: .black, backgroundColor: .white)
+    private let backButton = UIButton(title: "Назад", titleColor: .green, backgroundColor: .white)
     
     private let username: String
     private let userDescription: String
@@ -60,18 +61,45 @@ class SecondSetupProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        
-        
+        view.backgroundColor = #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
         
         setupConstraints()
         setupTargets()
-        
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(selectPhoto))
-        fillImageView.addGestureRecognizer(gesture)
+        setupInterests()
     }
     
-    @objc func selectPhoto() {
+    private func setupInterests() {
+        
+        sportButton.button.addTarget(self, action: #selector(changeInterests), for: .touchDown)
+        artButton.button.addTarget(self, action: #selector(changeInterests), for: .touchDown)
+        singingButton.button.addTarget(self, action: #selector(changeInterests), for: .touchDown)
+        musicButton.button.addTarget(self, action: #selector(changeInterests), for: .touchDown)
+        musicianButton.button.addTarget(self, action: #selector(changeInterests), for: .touchDown)
+        itButton.button.addTarget(self, action: #selector(changeInterests), for: .touchDown)
+        cameraButton.button.addTarget(self, action: #selector(changeInterests), for: .touchDown)
+        gamepadButton.button.addTarget(self, action: #selector(changeInterests), for: .touchDown)
+        travelButton.button.addTarget(self, action: #selector(changeInterests), for: .touchDown)
+        skateButton.button.addTarget(self, action: #selector(changeInterests), for: .touchDown)
+        scienceButton.button.addTarget(self, action: #selector(changeInterests), for: .touchDown)
+    }
+    
+    @objc private func changeInterests() {
+        
+        let sportInterest = sportButton.button.isSelected ? "💪" : ""
+        let artInterest = artButton.button.isSelected ? "🎨" : ""
+        let singingInterest = singingButton.button.isSelected ? "🎤" : ""
+        let musicInterest = musicButton.button.isSelected ? "🎧" : ""
+        let musicianInterest = musicianButton.button.isSelected ? "🎼" : ""
+        let itInterest = itButton.button.isSelected ? "🧑‍💻" : ""
+        let cameraInterest = cameraButton.button.isSelected ? "📷" : ""
+        let gamepadInterest = gamepadButton.button.isSelected ? "🎮" : ""
+        let travelInterest = travelButton.button.isSelected ? "🗺" : ""
+        let skateInterest = skateButton.button.isSelected ? "🛹" : ""
+        let scienceInterest = scienceButton.button.isSelected ? "🔬" : ""
+        interestsList = sportInterest + artInterest + singingInterest + musicInterest + musicianInterest + itInterest + cameraInterest + gamepadInterest + travelInterest + skateInterest + scienceInterest
+    }
+    
+    @objc private func selectPhoto() {
         
         let cameraIcon = #imageLiteral(resourceName: "camera")
         let photoIcon = #imageLiteral(resourceName: "photo")
@@ -104,6 +132,9 @@ class SecondSetupProfileViewController: UIViewController {
     private func setupTargets() {
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
+        
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(selectPhoto))
+        fillImageView.addGestureRecognizer(gesture)
     }
     
     @objc private func backButtonTapped() {
@@ -116,7 +147,7 @@ class SecondSetupProfileViewController: UIViewController {
                                                 username: username,
                                                 avatarImage: fillImageView.circleImageView.image,
                                                 description: userDescription,
-                                                sex: sex, birthday: birthday) { [weak self] (result) in
+                                                sex: sex, birthday: birthday, interestsList: interestsList, smoke: String(smokeSwitch.isOn), alco: String(alcoholSwitch.isOn)) { [weak self] (result) in
             switch result {
             
             case .success(let puser):
@@ -159,6 +190,7 @@ extension SecondSetupProfileViewController {
         thirdEmojiButtonsStackView.distribution = .fillEqually
         
         let emojiButtonsStackView = UIStackView(arrangedSubviews: [interestsLabel, firstEmojiButtonsStackView, secondEmojiButtonsStackView, thirdEmojiButtonsStackView], axis: .vertical, spacing: 16)
+        emojiButtonsStackView.distribution = .fillEqually
         
         let stackView = UIStackView(arrangedSubviews: [emojiButtonsStackView, alcoSmokeStackView, buttonsStackView], axis: .vertical, spacing: 32)
         

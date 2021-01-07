@@ -43,7 +43,7 @@ class InformationUserViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
+        view.backgroundColor = .white
         
         setupConstraints()
     }
