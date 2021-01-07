@@ -66,7 +66,7 @@ class FirestoreService {
             return
         }
         
-        var puser = PUser(username: username!, email: email, avatarStringURL: "not exist", description: description!, sex: sex!, birthday: birthday!, interestsList: interestsList!, smoke: smoke!, alco: alco!, id: id)
+        var puser = PUser(username: username!, email: email, avatarStringURL: "", description: description!, sex: sex!, birthday: birthday!, interestsList: interestsList!, smoke: smoke!, alco: alco!, id: id)
         
         if avatarImage != UIImage(systemName: "plus.viewfinder") {
             
@@ -101,12 +101,33 @@ class FirestoreService {
         }
     } // saveProfileWith
     
+    private var userRef: DocumentReference {
+        return usersRef.document(Auth.auth().currentUser!.uid)
+    }
+    
     func changeUserEmail(email: String, completion: @escaping (Result<Void, Error>) -> Void) {
         
-        let userRef = usersRef.document(Auth.auth().currentUser!.uid)
-
         userRef.updateData([
             "email": email
+        ]) { err in
+            if let err = err {
+                completion(.failure(err))
+                print("Error updating document: \(err)")
+            } else {
+                completion(.success(Void()))
+                print("Document successfully updated")
+            }
+        }
+    }
+    
+    func updateUserInformation(username: String, birthday: String, avatarStringURL: String, sex: String, description: String, completion: @escaping (Result<Void, Error>) -> Void) {
+
+        userRef.updateData([
+            "description": description,
+            "sex": sex,
+            "avatarStringURL": avatarStringURL,
+            "birthday": birthday,
+            "username": username
         ]) { err in
             if let err = err {
                 completion(.failure(err))
@@ -320,8 +341,7 @@ class FirestoreService {
         }
     }
     
-    
-    func searchPartiesWith(city: String? = nil, type: String? = nil, date: String? = nil, time: String? = nil, maximumPeople: String? = nil, name: String? = nil,  completion: @escaping (Result<[Party], Error>) -> Void) {
+    func searchPartiesWith(city: String? = nil, type: String? = nil, date: String? = nil, maximumPeople: String? = nil, completion: @escaping (Result<[Party], Error>) -> Void) {
         
         var searchedPartiesRef: CollectionReference {
             return db.collection("parties")
@@ -329,26 +349,28 @@ class FirestoreService {
         
         var query: Query = db.collection("parties")
         
-        if city != nil { query = query.whereField("city", isEqualTo : city) }
-        if type != nil { query = query.whereField("type", isEqualTo : type) }
-        if date != nil { query = query.whereField("date", isEqualTo : date) }
-        if time != nil { query = query.whereField("time", isEqualTo : time) }
-        if maximumPeople != nil { query = query.whereField("maximumPeople", isEqualTo : maximumPeople) }
-
-
-            
+//        if city != nil && city != "" { query = query.whereField("city", isEqualTo : city) }
+//        if type != nil && type != "" { query = query.whereField("type", isEqualTo : type) }
+//        if date != nil && date != "" { query = query.whereField("date", isEqualTo : date) }
+//        if maximumPeople != nil && maximumPeople != "" { query = query.whereField("maximumPeople", isEqualTo : maximumPeople) }
+                
         query.getDocuments() { (querySnapshot, err) in
-            var parties = [Party]()
+            
             if let err = err {
                 completion(.failure(err))
             } else {
+                
+                var parties: [Party] = []
+                
                 for document in querySnapshot!.documents {
-                    print("\(document.documentID) => \(document.data())")
+//                    print("\(document.documentID) => \(document.data())")
                     
                     guard let party = Party(document: document) else { return }
                     
                     parties.append(party)
+                    print(parties)
                 }
+                
                 
                 completion(.success(parties))
             }

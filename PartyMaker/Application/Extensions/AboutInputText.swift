@@ -11,7 +11,7 @@ class AboutInputText: UIView {
     
     let textView = UITextView()
     var savedPlaceholder: String!
-    private var placeholder: String!
+    var placeholder: String!
     
     init(placeholder: String = "Введите текст...", isEditable: Bool) {
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))

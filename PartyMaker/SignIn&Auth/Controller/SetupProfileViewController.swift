@@ -81,7 +81,7 @@ class SetupProfileViewController: UIViewController {
                                                                     username: fullNameTextField.text!,
                                                                     description: aboutMeTextField.textView.text!,
                                                                     birthday: dateFormatter.string(from: (birthdayDatepicker.date)),
-                                                                    sex: sexSegmentedControl.titleForSegment(at: sexSegmentedControl.selectedSegmentIndex)!)
+                                                                    sex: String(sexSegmentedControl.selectedSegmentIndex))
         secondSetupProfileVC.modalPresentationStyle = .fullScreen
         
         present(secondSetupProfileVC, animated: true, completion: nil)

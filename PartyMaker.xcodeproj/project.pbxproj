@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4404C2EE25A7409100A495EC /* ChangeInformationUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4404C2ED25A7409100A495EC /* ChangeInformationUserViewController.swift */; };
 		440CED92258A14AA00553673 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440CED91258A14AA00553673 /* UserModel.swift */; };
 		440CEDEF258A46BA00553673 /* HelloScreen.json in Resources */ = {isa = PBXBuildFile; fileRef = 440CEDEE258A46BA00553673 /* HelloScreen.json */; };
 		440CEDFC258A917500553673 /* InformationUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440CEDFB258A917500553673 /* InformationUserViewController.swift */; };
@@ -31,7 +32,7 @@
 		4420BDA9259655D8005A4FAE /* UIDatePicker + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4420BDA8259655D8005A4FAE /* UIDatePicker + Extension.swift */; };
 		4420BDB125965B0D005A4FAE /* SecondSetupProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4420BDB025965B0D005A4FAE /* SecondSetupProfileViewController.swift */; };
 		4420BDB625965D35005A4FAE /* InterestButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4420BDB525965D35005A4FAE /* InterestButton.swift */; };
-		4420BDC525968AE0005A4FAE /* AboutMeInputText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4420BDC425968ADF005A4FAE /* AboutMeInputText.swift */; };
+		4420BDC525968AE0005A4FAE /* AboutInputText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4420BDC425968ADF005A4FAE /* AboutInputText.swift */; };
 		4420BDD62596ABAF005A4FAE /* Bundle + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4420BDD52596ABAF005A4FAE /* Bundle + Extension.swift */; };
 		4420BDDC2596AD8D005A4FAE /* activeChats.json in Resources */ = {isa = PBXBuildFile; fileRef = 4420BDDA2596AD8C005A4FAE /* activeChats.json */; };
 		4420BDDD2596AD8D005A4FAE /* waitingChats.json in Resources */ = {isa = PBXBuildFile; fileRef = 4420BDDB2596AD8D005A4FAE /* waitingChats.json */; };
@@ -130,6 +131,7 @@
 
 /* Begin PBXFileReference section */
 		2AE2BCBDA8C3F9650C7B0894 /* Pods_PartyMaker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PartyMaker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4404C2ED25A7409100A495EC /* ChangeInformationUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeInformationUserViewController.swift; sourceTree = "<group>"; };
 		440CED91258A14AA00553673 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		440CEDEE258A46BA00553673 /* HelloScreen.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = HelloScreen.json; sourceTree = "<group>"; };
 		440CEDFB258A917500553673 /* InformationUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationUserViewController.swift; sourceTree = "<group>"; };
@@ -154,7 +156,7 @@
 		4420BDA8259655D8005A4FAE /* UIDatePicker + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDatePicker + Extension.swift"; sourceTree = "<group>"; };
 		4420BDB025965B0D005A4FAE /* SecondSetupProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondSetupProfileViewController.swift; sourceTree = "<group>"; };
 		4420BDB525965D35005A4FAE /* InterestButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestButton.swift; sourceTree = "<group>"; };
-		4420BDC425968ADF005A4FAE /* AboutMeInputText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutMeInputText.swift; sourceTree = "<group>"; };
+		4420BDC425968ADF005A4FAE /* AboutInputText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutInputText.swift; sourceTree = "<group>"; };
 		4420BDD52596ABAF005A4FAE /* Bundle + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle + Extension.swift"; sourceTree = "<group>"; };
 		4420BDDA2596AD8C005A4FAE /* activeChats.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = activeChats.json; sourceTree = "<group>"; };
 		4420BDDB2596AD8D005A4FAE /* waitingChats.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = waitingChats.json; sourceTree = "<group>"; };
@@ -317,7 +319,7 @@
 				447DD9BB259BDE90007C4DA4 /* AddPartyPhotoView.swift */,
 				4420BD7A259614D6005A4FAE /* ButtonFormView.swift */,
 				4420BDD52596ABAF005A4FAE /* Bundle + Extension.swift */,
-				4420BDC425968ADF005A4FAE /* AboutMeInputText.swift */,
+				4420BDC425968ADF005A4FAE /* AboutInputText.swift */,
 				4420BD7225961386005A4FAE /* UIKit */,
 			);
 			path = Extensions;
@@ -703,6 +705,7 @@
 			children = (
 				4465EB452579585A0096F3B7 /* ProfileViewController.swift */,
 				440CEDFB258A917500553673 /* InformationUserViewController.swift */,
+				4404C2ED25A7409100A495EC /* ChangeInformationUserViewController.swift */,
 				440CEE03258A919400553673 /* AccountUserViewController.swift */,
 			);
 			path = Controller;
@@ -720,6 +723,7 @@
 		44DF5E972592375B000BF557 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				44EFFA9D25A2459600827A8D /* CitiesViewController.swift */,
 				4465EB36257957E40096F3B7 /* SearchPartyViewController.swift */,
 			);
 			path = Controller;
@@ -779,7 +783,6 @@
 			isa = PBXGroup;
 			children = (
 				44EFFA9825A2081C00827A8D /* SearchPartiesView.swift */,
-				44EFFA9D25A2459600827A8D /* CitiesViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1078,9 +1081,10 @@
 				4424A58D2598C90900B420F7 /* UITextField + Extension.swift in Sources */,
 				4465EB8F257AA3360096F3B7 /* PartyModel2.swift in Sources */,
 				44EFFA9925A2081C00827A8D /* SearchPartiesView.swift in Sources */,
+				4404C2EE25A7409100A495EC /* ChangeInformationUserViewController.swift in Sources */,
 				449D7C7425992F4200FE575F /* AuthError.swift in Sources */,
 				4420BDA425965480005A4FAE /* UISegmentedControl  + Extension.swift in Sources */,
-				4420BDC525968AE0005A4FAE /* AboutMeInputText.swift in Sources */,
+				4420BDC525968AE0005A4FAE /* AboutInputText.swift in Sources */,
 				4420BD262596072A005A4FAE /* UIFont + Extension.swift in Sources */,
 				447DD9AA259BC14D007C4DA4 /* SecondCreatePartyViewController.swift in Sources */,
 				447EE8BD257676A700D8698F /* AppDelegate.swift in Sources */,

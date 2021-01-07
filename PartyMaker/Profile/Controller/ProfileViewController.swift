@@ -14,10 +14,11 @@ class ProfileViewController: UIViewController {
     let childsContrainerView = UIView()
     var secondChildVC: AccountUserViewController
     var firstChildVC: InformationUserViewController
+    var changeInformationUserVC: ChangeInformationUserViewController
     
     let containerView = UIView()
     
-    let imageView = UIImageView(image: #imageLiteral(resourceName: "human6"), contentMode: .scaleAspectFill)
+    let imageView = UIImageView()
     let nameLabel = UILabel(text: "Gandi", font: .sfProDisplay(ofSize: 20, weight: .medium))
     let ageLabel = UILabel(text: "21", font: .sfProDisplay(ofSize: 20, weight: .medium))
     let ratingLabel = UILabel(text: "􀋂 0", font: .sfProDisplay(ofSize: 16, weight: .medium))
@@ -31,12 +32,17 @@ class ProfileViewController: UIViewController {
         return dateFormatter
     }()
     
-    private let currentUser: PUser
+    var currentUser: PUser
     
     init(currentUser: PUser) {
         self.currentUser = currentUser
         
-        self.imageView.sd_setImage(with: URL(string: currentUser.avatarStringURL), completed: nil)
+        if currentUser.avatarStringURL != "" {
+            self.imageView.sd_setImage(with: URL(string: currentUser.avatarStringURL), completed: nil)
+        } else {
+            self.imageView.image = UIImage(systemName: "person.crop.circle")
+        }
+        
         self.nameLabel.text = currentUser.username
         
         let birthdayString = currentUser.birthday
@@ -48,6 +54,7 @@ class ProfileViewController: UIViewController {
         
         firstChildVC = InformationUserViewController(currentUser: currentUser)
         secondChildVC = AccountUserViewController(currentUser: currentUser)
+        changeInformationUserVC = ChangeInformationUserViewController(currentUser: currentUser)
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -61,20 +68,34 @@ class ProfileViewController: UIViewController {
         
         view.backgroundColor = .white
         
-        imageView.layer.cornerRadius = 64
-        imageView.clipsToBounds = true
-        
-        containerView.backgroundColor = .white
-        containerView.layer.cornerRadius = 30
-        containerView.clipsToBounds = true
-        
-        segmentedControl.addTarget(self, action: #selector(segmentedControlTapped), for: .valueChanged)
-        
+        setupTargets()
+        setupCustomizations()
         addChildsVC()
         setupConstraints()
     }
     
+    private func setupTargets() {
+        segmentedControl.addTarget(self, action: #selector(segmentedControlTapped), for: .valueChanged)
+        firstChildVC.changeButton.addTarget(self, action: #selector(changeButtonTapped), for: .touchUpInside)
+    }
+    
+    private func setupCustomizations() {
+        imageView.layer.cornerRadius = 64
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
+        
+        containerView.backgroundColor = .white
+        containerView.layer.cornerRadius = 30
+        containerView.clipsToBounds = true
+    }
+    
     private func addChildsVC() {
+        
+        addChild(changeInformationUserVC)
+        view.addSubview(changeInformationUserVC.view)
+        changeInformationUserVC.didMove(toParent: self)
+        changeInformationUserVC.view.frame = view.bounds
+        changeInformationUserVC.view.isHidden = true
         
         addChild(firstChildVC)
         addChild(secondChildVC)
@@ -89,6 +110,13 @@ class ProfileViewController: UIViewController {
         secondChildVC.view.frame = childsContrainerView.bounds
         
         secondChildVC.view.isHidden = true
+    }
+    
+    @objc private func changeButtonTapped() {
+        
+        childsContrainerView.isHidden = true
+        containerView.isHidden = true
+        changeInformationUserVC.view.isHidden = false
     }
     
     @objc private func segmentedControlTapped() {

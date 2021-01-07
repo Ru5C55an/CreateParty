@@ -49,6 +49,10 @@ class StorageService {
         }
     }
     
+    func delete(stringUrl: String) {
+        
+    }
+    
     private var partiesImagesRef: StorageReference {
         return storageRef.child("partiesImages")
     }

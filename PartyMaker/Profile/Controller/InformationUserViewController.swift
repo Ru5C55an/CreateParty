@@ -21,11 +21,27 @@ class InformationUserViewController: UIViewController {
     
     let changeButton = UIButton(title: "Редактировать")
     
+   
+    
     private let currentUser: PUser
     
     init(currentUser: PUser) {
         self.currentUser = currentUser
         self.aboutText.textView.text = currentUser.description
+        self.interestsList.text = currentUser.interestsList
+        if currentUser.alco == "true" {
+            self.alcoEmoji.text = "🍷"
+        } else {
+            self.alcoEmoji.text = "🚱"
+        }
+        
+        if currentUser.smoke == "true" {
+            self.smokeEmoji.text = "🚬"
+        } else {
+            self.smokeEmoji.text = "🚭"
+        }
+        
+        
         
         super.init(nibName: nil, bundle: nil)
     }

@@ -32,7 +32,6 @@ class SearchPartyViewController: UIViewController {
         }
     }
     
-//    var parties = Bundle.main.decode([Party].self, from: "parties.json")
     var parties: [Party] = []
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<Section, Party>!
@@ -83,6 +82,18 @@ class SearchPartyViewController: UIViewController {
         
         definesPresentationContext = true // Позволяет отпустить строку поиска, при переходе на другой экран
         searchController.searchBar.delegate = self
+    }
+    
+    @objc private func searchParties() {
+        FirestoreService.shared.searchPartiesWith(city: barView.cityButton.titleLabel?.text, type: barView.pickedType, date: barView.dateFormatter.string(from: barView.datePicker.date), maximumPeople: barView.countText.text) { [weak self] (result) in
+            switch result {
+            
+            case .success(let parties):
+                self?.parties = parties
+            case .failure(let error):
+                self?.showAlert(title: "Ошибка", message: error.localizedDescription)
+            }
+        }
     }
     
     private func setupCollectionView() {
