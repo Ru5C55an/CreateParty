@@ -22,6 +22,7 @@ target 'PartyMaker' do
   pod 'MessageKit'
   pod 'UPCarouselFlowLayout'
   pod 'Squircle'
+  pod 'SoftUIView'
 
 end
 

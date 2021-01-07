@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 
 class InformationUserViewController: UIViewController {
-
+    
     let aboutLabel = UILabel(text: "Обо мне")
     let aboutText = AboutInputText(isEditable: false)
     let interestsLabel = UILabel(text: "Интересы", font: .sfProDisplay(ofSize: 16, weight: .medium))
@@ -42,6 +42,8 @@ class InformationUserViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
         
         setupConstraints()
     }

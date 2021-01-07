@@ -79,4 +79,12 @@ extension UIView {
             layer.shadowPath = UIBezierPath(rect: rect).cgPath
         }
     }
+    
+    func removeShadow()
+    {
+        layer.shadowOpacity = 0
+        layer.shadowOffset = CGSize(width: 0, height: 0)
+        layer.shadowRadius = 0
+        layer.shadowPath = nil
+    }
 }

@@ -377,6 +377,7 @@ PODS:
   - SDWebImage (5.10.2):
     - SDWebImage/Core (= 5.10.2)
   - SDWebImage/Core (5.10.2)
+  - SoftUIView (0.0.3)
   - Squircle (2.2.0)
   - UPCarouselFlowLayout (1.1.2)
 
@@ -393,6 +394,7 @@ DEPENDENCIES:
   - MessageKit
   - RealmSwift
   - SDWebImage (~> 5.0)
+  - SoftUIView
   - Squircle
   - UPCarouselFlowLayout
 
@@ -429,6 +431,7 @@ SPEC REPOS:
     - Realm
     - RealmSwift
     - SDWebImage
+    - SoftUIView
     - Squircle
     - UPCarouselFlowLayout
 
@@ -464,9 +467,10 @@ SPEC CHECKSUMS:
   Realm: d7914ebf66bb182469726f997c4c38eff286aab0
   RealmSwift: aad08b7dc8c732b7b5794286e9df83739bf834f1
   SDWebImage: b969dcfc02c40a5da71eac0b03b8f1a0c794a86f
+  SoftUIView: 6c17070dae6e7216d26d3be4745bafd202cdfb75
   Squircle: 94bae5770fc84e16b8cf66f3630a563b39ee2544
   UPCarouselFlowLayout: 4c7d2c43a10ebb1597bde502a53699d378341dad
 
-PODFILE CHECKSUM: 31313010ec3a9ff68bcaa30474731726ae83f975
+PODFILE CHECKSUM: 2098ecd662985869529fbffa2a7d76c05657434b
 
 COCOAPODS: 1.10.0
