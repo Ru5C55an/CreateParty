@@ -320,7 +320,13 @@ class FirestoreService {
                     self.partiesRef.document(party.id).setData(party.representation) { (error) in
                         if let error = error {
                             completion(.failure(error))
-                        } else {
+                        }
+                        
+                        self.userRef.collection("myParties").document(party.id).setData( ["uid" : party.id]) { (error) in
+                            if let error = error {
+                                completion(.failure(error))
+                            }
+                            
                             completion(.success(party))
                         }
                     }
@@ -334,133 +340,140 @@ class FirestoreService {
             self.partiesRef.document(party.id).setData(party.representation) { (error) in
                 if let error = error {
                     completion(.failure(error))
-                } else {
+                }
+                
+                self.userRef.collection("myParties").document(party.id).setData( ["uid" : party.id]) { (error) in
+                    if let error = error {
+                        completion(.failure(error))
+                    }
+                    
                     completion(.success(party))
                 }
             }
         }
     }
-    
-    func searchPartiesWith(city: String? = nil, type: String? = nil, date: String? = nil, maximumPeople: String? = nil, price: String? = nil, completion: @escaping (Result<[Party], Error>) -> Void) {
-                
-        var query: Query = db.collection("parties")
         
-        if city != nil && city != "Любой" { query = query.whereField("city", isEqualTo : city) }
-        if type != nil && type != "Любой" { query = query.whereField("type", isEqualTo : type) }
-        //        if date != nil && date != "" { query = query.whereField("date", isEqualTo : date) }
-        if maximumPeople != nil && maximumPeople != "" { query = query.whereField("maximumPeople", isEqualTo : maximumPeople) }
-        if price != nil && price != "" && price != "0" { query = query.whereField("price", isEqualTo : price) }
-        
-        query.getDocuments() { (querySnapshot, err) in
+        func searchPartiesWith(city: String? = nil, type: String? = nil, date: String? = nil, maximumPeople: String? = nil, price: String? = nil, completion: @escaping (Result<[Party], Error>) -> Void) {
             
-            if let err = err {
-                completion(.failure(err))
-            } else {
+            var query: Query = db.collection("parties")
+            
+            if city != nil && city != "Любой" { query = query.whereField("city", isEqualTo : city) }
+            if type != nil && type != "Любой" { query = query.whereField("type", isEqualTo : type) }
+            //        if date != nil && date != "" { query = query.whereField("date", isEqualTo : date) }
+            if maximumPeople != nil && maximumPeople != "" { query = query.whereField("maximumPeople", isEqualTo : maximumPeople) }
+            if price != nil && price != "" && price != "0" { query = query.whereField("price", isEqualTo : price) }
+            query = query.whereField("userId", isNotEqualTo: Auth.auth().currentUser!.uid)
+            
+            query.getDocuments() { (querySnapshot, err) in
                 
-                var parties: [Party] = []
-                
-                for document in querySnapshot!.documents {
-                    //                    print("\(document.documentID) => \(document.data())")
+                if let err = err {
+                    completion(.failure(err))
+                } else {
                     
-                    guard let party = Party(document: document) else { return }
+                    var parties: [Party] = []
                     
-                    parties.append(party)
+                    for document in querySnapshot!.documents {
+                        //                    print("\(document.documentID) => \(document.data())")
+                        
+                        guard let party = Party(document: document) else { return }
+                        
+                        parties.append(party)
+                    }
+                    
+                    completion(.success(parties))
                 }
-                
-                completion(.success(parties))
             }
         }
-    }
-    
-    func createWaitingGuest(receiver: String, completion: @escaping (Result<Void, Error>) -> Void) {
         
-        let waitingPartiesReference = userRef.collection("waitingParties")
-        
-        let waitingGuestsReference = db.collection(["parties", receiver, "waitingGuests"].joined(separator: "/"))
-        
-        let guestRef = waitingGuestsReference.document(self.currentUser.id)
-        
-        guestRef.setData(["uid": self.currentUser.id]) { (error) in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
+        func createWaitingGuest(receiver: String, completion: @escaping (Result<Void, Error>) -> Void) {
             
-            waitingPartiesReference.document(receiver).setData(["uid": receiver]) { (error) in
+            let waitingPartiesReference = userRef.collection("waitingParties")
+            
+            let waitingGuestsReference = db.collection(["parties", receiver, "waitingGuests"].joined(separator: "/"))
+            
+            let guestRef = waitingGuestsReference.document(self.currentUser.id)
+            
+            guestRef.setData(["uid": self.currentUser.id]) { (error) in
                 if let error = error {
                     completion(.failure(error))
                     return
                 }
-            }
-            
-            completion(.success(Void()))
-        }
-    }
-    
-    // ToDO - Костыльно сделано: провека на то что дата в документе не нил
-    func checkWaitingGuest(receiver: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        
-        let reference = db.collection(["parties", receiver, "waitingGuests"].joined(separator: "/"))
-        let guestRef = reference.document(self.currentUser.id)
-        
-        guestRef.getDocument { (document, error) in
-            if let error = error {
                 
-                completion(.failure(error))
-                return
-            }
-            
-            guard document?.data() != nil else {
+                waitingPartiesReference.document(receiver).setData(["uid": receiver]) { (error) in
+                    if let error = error {
+                        completion(.failure(error))
+                        return
+                    }
+                }
                 
-                return
+                completion(.success(Void()))
             }
-            
-            completion(.success(Void()))
         }
-    }
-    
-    func getPartyBy(uid: String, completion: @escaping (Result<Party, Error>) -> Void) {
         
-        let docRef = partiesRef.document(uid)
-        docRef.getDocument { (document, error) in
-     
-            if let document = document, document.exists {
-                guard let party = Party(document: document) else {
-                    completion(.failure(PartyError.cannotUnwrapToParty))
+        // ToDO - Костыльно сделано: провека на то что дата в документе не нил
+        func checkWaitingGuest(receiver: String, completion: @escaping (Result<Void, Error>) -> Void) {
+            
+            let reference = db.collection(["parties", receiver, "waitingGuests"].joined(separator: "/"))
+            let guestRef = reference.document(self.currentUser.id)
+            
+            guestRef.getDocument { (document, error) in
+                if let error = error {
+                    
+                    completion(.failure(error))
                     return
                 }
                 
-                completion(.success(party))
-            } else {
-                completion(.failure(PartyError.cannotGetPartyInfo))
+                guard document?.data() != nil else {
+                    
+                    return
+                }
+                
+                completion(.success(Void()))
             }
         }
+        
+        func getPartyBy(uid: String, completion: @escaping (Result<Party, Error>) -> Void) {
+            
+            let docRef = partiesRef.document(uid)
+            docRef.getDocument { (document, error) in
+                
+                if let document = document, document.exists {
+                    guard let party = Party(document: document) else {
+                        completion(.failure(PartyError.cannotUnwrapToParty))
+                        return
+                    }
+                    
+                    completion(.success(party))
+                } else {
+                    completion(.failure(PartyError.cannotGetPartyInfo))
+                }
+            }
+        }
+        
+        //    func getWaitingParties(completion: @escaping (Result<[Party], Error>) -> Void) {
+        //
+        //        var query: Query = db.collection("parties").document().collection("waitingGuests")
+        //
+        //        query = query.whereField("uid", isEqualTo : self.currentUser.id)
+        //
+        //        query.getDocuments() { (querySnapshot, err) in
+        //
+        //            if let err = err {
+        //                completion(.failure(err))
+        //            } else {
+        //
+        //                var parties: [Party] = []
+        //
+        //                for document in querySnapshot!.documents {
+        //
+        //                    guard let party = Party(document: document) else { return }
+        //
+        //                    print(party)
+        //                    parties.append(party)
+        //                }
+        //
+        //                completion(.success(parties))
+        //            }
+        //        }
+        //    }
     }
-    
-//    func getWaitingParties(completion: @escaping (Result<[Party], Error>) -> Void) {
-//        
-//        var query: Query = db.collection("parties").document().collection("waitingGuests")
-//        
-//        query = query.whereField("uid", isEqualTo : self.currentUser.id)
-//        
-//        query.getDocuments() { (querySnapshot, err) in
-//            
-//            if let err = err {
-//                completion(.failure(err))
-//            } else {
-//                
-//                var parties: [Party] = []
-//                
-//                for document in querySnapshot!.documents {
-//                    
-//                    guard let party = Party(document: document) else { return }
-//                    
-//                    print(party)
-//                    parties.append(party)
-//                }
-//                
-//                completion(.success(parties))
-//            }
-//        }
-//    }
-}

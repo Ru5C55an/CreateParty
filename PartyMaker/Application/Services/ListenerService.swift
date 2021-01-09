@@ -98,10 +98,84 @@ class ListenerService {
         return chatsListener
     }
     
+    func messagesObserve(chat: PChat, completion: @escaping (Result<PMessage, Error>) -> Void) -> ListenerRegistration? {
+        let ref = usersRef.document(currentUserId).collection("activeChats").document(chat.friendId).collection("messages")
+        let messagesListener = ref.addSnapshotListener { (querySnapshot, error) in
+            guard let snapshot = querySnapshot else {
+                completion(.failure(error!))
+                return
+            }
+            
+            snapshot.documentChanges.forEach { (diff) in
+                guard let message = PMessage(document: diff.document) else { return }
+                
+                switch diff.type {
+                
+                case .added:
+                    completion(.success(message))
+                case .modified:
+                    break
+                case .removed:
+                    break
+                }
+            }
+        }
+        return messagesListener
+    }
+    
     func waitingPartiesObserve(parties: [Party], completion: @escaping (Result<[Party], Error>) -> Void) -> ListenerRegistration? {
         
         var parties = parties
-        let partiesRef = db.collection(["users", currentUserId, "waitingParties"].joined(separator: "/"))
+        let partiesRef = db.collection(["users", Auth.auth().currentUser!.uid, "waitingParties"].joined(separator: "/"))
+        
+        let partiesListener = partiesRef.addSnapshotListener { (querySnapshot, error) in
+            guard let snapshot = querySnapshot else {
+                completion(.failure(error!))
+                return
+            }
+            
+            let dg = DispatchGroup()
+            dg.enter()
+            snapshot.documentChanges.forEach { (diff) in
+                
+                FirestoreService.shared.getPartyBy(uid: diff.document.documentID) { (result) in
+                    switch result {
+                    case .success(let party):
+                        switch diff.type {
+                        case .added:
+                            guard !parties.contains(party) else { return }
+                            parties.append(party)
+                            print(party)
+                            dg.leave()
+                        case .modified:
+                            guard let index = parties.firstIndex(of: party) else { return }
+                            parties[index] = party
+                            dg.leave()
+                        case .removed:
+                            guard let index = parties.firstIndex(of: party) else { return }
+                            parties.remove(at: index)
+                            dg.leave()
+                        }
+                        
+                    case .failure(let error):
+                        completion(.failure(error))
+                    } // switch result
+                } // FirestoreService.shared.getPartyBy
+            } //snapshot.documentChanges.forEach
+            
+            dg.notify(queue: .main) {
+                completion(.success(parties))
+            }
+        } //let partiesListener = partiesRef.addSnapshotListener
+        
+        return partiesListener
+    }
+    
+    
+    func myPartiesObserve(parties: [Party], completion: @escaping (Result<[Party], Error>) -> Void) -> ListenerRegistration? {
+        
+        var parties = parties
+        let partiesRef = db.collection(["users", currentUserId, "myParties"].joined(separator: "/"))
         
         let dg = DispatchGroup()
         
@@ -146,28 +220,6 @@ class ListenerService {
         return partiesListener
     }
     
-    func messagesObserve(chat: PChat, completion: @escaping (Result<PMessage, Error>) -> Void) -> ListenerRegistration? {
-        let ref = usersRef.document(currentUserId).collection("activeChats").document(chat.friendId).collection("messages")
-        let messagesListener = ref.addSnapshotListener { (querySnapshot, error) in
-            guard let snapshot = querySnapshot else {
-                completion(.failure(error!))
-                return
-            }
-            
-            snapshot.documentChanges.forEach { (diff) in
-                guard let message = PMessage(document: diff.document) else { return }
-                
-                switch diff.type {
-                
-                case .added:
-                    completion(.success(message))
-                case .modified:
-                    break
-                case .removed:
-                    break
-                }
-            }
-        }
-        return messagesListener
-    }
+    
+    
 }

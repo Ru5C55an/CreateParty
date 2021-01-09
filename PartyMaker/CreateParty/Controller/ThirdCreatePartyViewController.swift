@@ -145,6 +145,10 @@ class ThirdCreatePartyViewController: UIViewController {
     deinit {
         print("deinit", ThirdCreatePartyViewController.self)
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 }
 
 // MARK: - Setup constraints

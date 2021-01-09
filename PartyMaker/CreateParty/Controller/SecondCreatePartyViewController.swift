@@ -152,8 +152,6 @@ extension SecondCreatePartyViewController {
         
         NSLayoutConstraint.activate([
             aboutPartyTextView.heightAnchor.constraint(equalToConstant: 92),
-//            aboutPartyTextView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-//            aboutPartyTextView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor)
         ])
         
         NSLayoutConstraint.activate([

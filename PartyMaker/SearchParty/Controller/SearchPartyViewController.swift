@@ -79,6 +79,7 @@ class SearchPartyViewController: UIViewController {
                 self?.parties = parties
                 self?.reloadData()
             case .failure(let error):
+                print(error.localizedDescription)
                 self?.showAlert(title: "Ошибка", message: error.localizedDescription)
             }
         }

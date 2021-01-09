@@ -16,8 +16,12 @@ class PartiesViewController: UIViewController {
     var sortingTypeSegmentControlBarButtonItem: UIBarButtonItem!
     private let partiesSegmentedControl = UISegmentedControl(items: ["Подтвержденные", "В ожидании", "Созданные мной"])
     
+    private var parties = [Party]()
+    
     private var waitingPartiesListener: ListenerRegistration?
-    var waitingParties = [Party]()
+    private var waitingParties = [Party]()
+    private var myPartiesListener: ListenerRegistration?
+    private var myParties = [Party]()
     
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<Section, Party>!
@@ -55,6 +59,7 @@ class PartiesViewController: UIViewController {
         super.viewDidLoad()
                 
         sortingSegmentedControl.addTarget(self, action: #selector(sortSelection), for: .valueChanged)
+        partiesSegmentedControl.addTarget(self, action: #selector(reloadPartiesType), for: .valueChanged)
         
         sortingTypeSegmentControlBarButtonItem = UIBarButtonItem(customView: sortingSegmentedControl)
         
@@ -69,12 +74,43 @@ class PartiesViewController: UIViewController {
         
             case .success(let parties):
                 self.waitingParties = parties
-                self.reloadData(with: nil)
+                self.reloadPartiesType()
                 
             case .failure(let error):
                 self.showAlert(title: "Ошибка!", message: error.localizedDescription)
             }
         })
+        
+        myPartiesListener = ListenerService.shared.myPartiesObserve(parties: myParties, completion: { (result) in
+            switch result {
+        
+            case .success(let parties):
+                self.myParties = parties
+                self.reloadPartiesType()
+                
+                
+            case .failure(let error):
+                self.showAlert(title: "Ошибка!", message: error.localizedDescription)
+            }
+        })
+    }
+    
+    @objc private func reloadPartiesType() {
+        
+        switch partiesSegmentedControl.selectedSegmentIndex {
+        
+        case 0:
+            print(0)
+        case 1:
+            parties = waitingParties
+            reloadData(with: nil)
+        case 2:
+            parties = myParties
+            reloadData(with: nil)
+        
+        default:
+            break
+        }
     }
     
     private func setupCollectionView() {
@@ -94,7 +130,7 @@ class PartiesViewController: UIViewController {
     // Отвечает за заполнение реальными данными. Создает snapshot, добавляет нужные айтемы в нужные секции и регистрируется на dataSource
     private func reloadData(with searchText: String?) {
         
-        let filteredParties = waitingParties.filter { (party) -> Bool in
+        let filteredParties = parties.filter { (party) -> Bool in
             party.contains(filter: searchText)
         }
         
@@ -125,6 +161,7 @@ class PartiesViewController: UIViewController {
     deinit {
         print("deinit", PartiesViewController.self)
         waitingPartiesListener?.remove()
+        myPartiesListener?.remove()
     }
     
     required init?(coder: NSCoder) {
