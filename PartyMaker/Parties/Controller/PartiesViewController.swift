@@ -14,11 +14,11 @@ class PartiesViewController: UIViewController {
     var reverseSortingBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "AZ"), style: .plain, target: self, action: #selector(reverseSortingBarButtonItemTapped))
     let sortingSegmentedControl = UISegmentedControl(first: "Дата", second: "Имя")
     var sortingTypeSegmentControlBarButtonItem: UIBarButtonItem!
-    let partiesSegmentedControl = UISegmentedControl(first: "Созданные мной", second: "Хочу пойти")
+    private let partiesSegmentedControl = UISegmentedControl(items: ["Подтвержденные", "В ожидании", "Созданные мной"])
     
-    private var partiesListener: ListenerRegistration?
+    private var waitingPartiesListener: ListenerRegistration?
+    var waitingParties = [Party]()
     
-    var parties = Bundle.main.decode([Party].self, from: "parties.json")
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<Section, Party>!
     
@@ -53,7 +53,7 @@ class PartiesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+                
         sortingSegmentedControl.addTarget(self, action: #selector(sortSelection), for: .valueChanged)
         
         sortingTypeSegmentControlBarButtonItem = UIBarButtonItem(customView: sortingSegmentedControl)
@@ -64,10 +64,21 @@ class PartiesViewController: UIViewController {
         createDataSource()
         reloadData(with: nil)
         
-//        partiesListener = ...
+        waitingPartiesListener = ListenerService.shared.waitingPartiesObserve(parties: waitingParties, completion: { (result) in
+            switch result {
+        
+            case .success(let parties):
+                self.waitingParties = parties
+                self.reloadData(with: nil)
+                
+            case .failure(let error):
+                self.showAlert(title: "Ошибка!", message: error.localizedDescription)
+            }
+        })
     }
     
     private func setupCollectionView() {
+        
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.backgroundColor = .systemGroupedBackground
@@ -83,7 +94,7 @@ class PartiesViewController: UIViewController {
     // Отвечает за заполнение реальными данными. Создает snapshot, добавляет нужные айтемы в нужные секции и регистрируется на dataSource
     private func reloadData(with searchText: String?) {
         
-        let filteredParties = parties.filter { (party) -> Bool in
+        let filteredParties = waitingParties.filter { (party) -> Bool in
             party.contains(filter: searchText)
         }
         
@@ -96,6 +107,7 @@ class PartiesViewController: UIViewController {
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = reverseSortingBarButtonItem
         navigationItem.rightBarButtonItem = sortingTypeSegmentControlBarButtonItem
+        navigationItem.titleView = partiesSegmentedControl
     }
     
     private func setupSearchBar() {
@@ -112,7 +124,7 @@ class PartiesViewController: UIViewController {
     
     deinit {
         print("deinit", PartiesViewController.self)
-        partiesListener?.remove()
+        waitingPartiesListener?.remove()
     }
     
     required init?(coder: NSCoder) {

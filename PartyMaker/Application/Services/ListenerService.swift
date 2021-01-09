@@ -23,20 +23,20 @@ class ListenerService {
         return Auth.auth().currentUser!.uid
     }
     
-//    func usersObserve(users: [PUser], completion: @escaping (Result<[PUser], Error>) -> Void) -> ListenerRegistration? {
-//        let usersLestener = usersRef.addSnapshotListener { (querySnapshot, error) in
-//            guard let snapshot = querySnapshot else {
-//                completion(.failure(error!))
-//                return
-//            }
-//            
-//            snapshot.documentChanges.forEach { (diff) in
-//                guard let user = PUser(document: diff.document) else { return }
-//            }
-//        }
-//        
-//        return usersLestener
-//    }
+    //    func usersObserve(users: [PUser], completion: @escaping (Result<[PUser], Error>) -> Void) -> ListenerRegistration? {
+    //        let usersLestener = usersRef.addSnapshotListener { (querySnapshot, error) in
+    //            guard let snapshot = querySnapshot else {
+    //                completion(.failure(error!))
+    //                return
+    //            }
+    //
+    //            snapshot.documentChanges.forEach { (diff) in
+    //                guard let user = PUser(document: diff.document) else { return }
+    //            }
+    //        }
+    //
+    //        return usersLestener
+    //    }
     
     func waitingChatsObserve(chats: [PChat], completion: @escaping (Result<[PChat], Error>) -> Void) -> ListenerRegistration? {
         var chats = chats
@@ -96,6 +96,54 @@ class ListenerService {
         }
         
         return chatsListener
+    }
+    
+    func waitingPartiesObserve(parties: [Party], completion: @escaping (Result<[Party], Error>) -> Void) -> ListenerRegistration? {
+        
+        var parties = parties
+        let partiesRef = db.collection(["users", currentUserId, "waitingParties"].joined(separator: "/"))
+        
+        let dg = DispatchGroup()
+        
+        let partiesListener = partiesRef.addSnapshotListener { (querySnapshot, error) in
+            guard let snapshot = querySnapshot else {
+                completion(.failure(error!))
+                return
+            }
+            
+            dg.enter()
+            snapshot.documentChanges.forEach { (diff) in
+                
+                FirestoreService.shared.getPartyBy(uid: diff.document.documentID) { (result) in
+                    switch result {
+                    case .success(let party):
+                        switch diff.type {
+                        case .added:
+                            guard !parties.contains(party) else { return }
+                            parties.append(party)
+                            dg.leave()
+                        case .modified:
+                            guard let index = parties.firstIndex(of: party) else { return }
+                            parties[index] = party
+                            dg.leave()
+                        case .removed:
+                            guard let index = parties.firstIndex(of: party) else { return }
+                            parties.remove(at: index)
+                            dg.leave()
+                        }
+                        
+                    case .failure(let error):
+                        completion(.failure(error))
+                    } // switch result
+                } // FirestoreService.shared.getPartyBy
+            } //snapshot.documentChanges.forEach
+            
+            dg.notify(queue: .main) {
+                completion(.success(parties))
+            }
+        } //let partiesListener = partiesRef.addSnapshotListener
+        
+        return partiesListener
     }
     
     func messagesObserve(chat: PChat, completion: @escaping (Result<PMessage, Error>) -> Void) -> ListenerRegistration? {

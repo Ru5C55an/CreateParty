@@ -9,9 +9,11 @@ import UIKit
 
 class SearchPartiesView: UIView {
     
-    let cityButton = UIButton(title: "Город", titleColor: #colorLiteral(red: 0.1921568627, green: 0.568627451, blue: 0.9882352941, alpha: 1), backgroundColor: #colorLiteral(red: 0.937254902, green: 0.937254902, blue: 0.9411764706, alpha: 1), isShadow: false, cornerRadius: 4)
+    let cityLabel = UILabel(text: "Город")
+    let cityButton = UIButton(title: "Любой", titleColor: #colorLiteral(red: 0.1921568627, green: 0.568627451, blue: 0.9882352941, alpha: 1), backgroundColor: #colorLiteral(red: 0.937254902, green: 0.937254902, blue: 0.9411764706, alpha: 1), isShadow: false, cornerRadius: 4)
     let datePicker = UIDatePicker()
     
+    let dateLabel = UILabel(text: "Дата")
     var pickedType = ""
     var pickerData: [String] = [String]()
     var dateFormatter: DateFormatter = {
@@ -22,15 +24,16 @@ class SearchPartiesView: UIView {
     }()
     
     let typePicker = UIPickerView()
+    let typeLabel = UILabel(text: "Тип")
     let typeTextField = UITextField()
-    let typeButton = UIButton(title: "Тип", titleColor: #colorLiteral(red: 0.1921568627, green: 0.568627451, blue: 0.9882352941, alpha: 1), backgroundColor: #colorLiteral(red: 0.937254902, green: 0.937254902, blue: 0.9411764706, alpha: 1), isShadow: false, cornerRadius: 10)
     
     let countLabel = UILabel(text: "Кол-во человек")
     let segmentedCharCount = UISegmentedControl(items: [">", "<", "="])
     let countText = UILabel(text: "1")
     
+    let priceLabel = UILabel(text: "Цена")
     let segmentedCharPrice = UISegmentedControl(items: [">", "<", "="])
-    let priceTextField = BubbleTextField(placeholder: "Цена")
+    let priceTextField = BubbleTextField(placeholder: "100")
     
     let countStepper: UIStepper = {
         let stepper = UIStepper()
@@ -42,6 +45,8 @@ class SearchPartiesView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        backgroundColor = .clear
+        
         segmentedCharCount.selectedSegmentIndex = 1
         segmentedCharPrice.selectedSegmentIndex = 1
         
@@ -52,11 +57,11 @@ class SearchPartiesView: UIView {
         typePicker.dataSource = self
         typeTextField.inputView = typePicker
         
-        typeTextField.text = "Тип вечеринки"
+        typeTextField.text = "Любой"
         
         datePicker.datePickerMode = .date
         
-        dismissPickerView()
+        setupToolbar()
         setupConstraints()
         addTargets()
     }
@@ -69,16 +74,26 @@ class SearchPartiesView: UIView {
         countText.text = String(Int(countStepper.value))
     }
     
-    private func dismissPickerView() {
+    private func setupToolbar() {
+        
         let toolBar = UIToolbar()
         toolBar.sizeToFit()
-        let button = UIBarButtonItem(title: "Готово", style: .plain, target: self, action: #selector(doneTapped))
-        toolBar.setItems([button], animated: true)
+        let doneButton = UIBarButtonItem(title: "Готово", style: .plain, target: self, action: #selector(doneTapped))
+        let anyButton = UIBarButtonItem(title: "Любой", style: .plain, target: self, action: #selector(anyTapped))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        toolBar.setItems([doneButton, flexibleSpace, anyButton], animated: true)
         toolBar.isUserInteractionEnabled = true
         typeTextField.inputAccessoryView = toolBar
     }
     
     @objc private func doneTapped() {
+        self.endEditing(true)
+    }
+    
+    @objc private func anyTapped() {
+        pickedType = "Любой"
+        typeTextField.text = "Любой"
         self.endEditing(true)
     }
     
@@ -91,12 +106,12 @@ extension SearchPartiesView {
     
     private func setupConstraints() {
         
-        let cityAndPriceStackView = UIStackView(arrangedSubviews: [cityButton, segmentedCharPrice, priceTextField], axis: .horizontal, spacing: 8)
-        cityAndPriceStackView.distribution = .fillEqually
-        let dateAndTypeStackView = UIStackView(arrangedSubviews: [datePicker, typeTextField], axis: .horizontal, spacing: 8)
+        let cityAndTypeStackView = UIStackView(arrangedSubviews: [cityLabel, cityButton, typeLabel, typeTextField], axis: .horizontal, spacing: 8)
+        cityAndTypeStackView.distribution = .fillProportionally
+        let dateAndPriceStackView = UIStackView(arrangedSubviews: [dateLabel, datePicker, priceLabel, segmentedCharPrice, priceTextField ], axis: .horizontal, spacing: 8)
         let countStackView = UIStackView(arrangedSubviews: [countLabel, segmentedCharCount, countText, countStepper], axis: .horizontal, spacing: 8)
         countStackView.distribution = .equalSpacing
-        let stackView = UIStackView(arrangedSubviews: [cityAndPriceStackView, dateAndTypeStackView, countStackView], axis: .vertical, spacing: 8)
+        let stackView = UIStackView(arrangedSubviews: [cityAndTypeStackView, dateAndPriceStackView, countStackView], axis: .vertical, spacing: 8)
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         

@@ -50,6 +50,7 @@
 		4424A5822598AA0C00B420F7 /* UIView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4424A5812598AA0C00B420F7 /* UIView + Extension.swift */; };
 		4424A58D2598C90900B420F7 /* UITextField + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4424A58C2598C90900B420F7 /* UITextField + Extension.swift */; };
 		4424A5942598E5F900B420F7 /* ChatRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4424A5932598E5F900B420F7 /* ChatRequestViewController.swift */; };
+		442FE7A125A8C65E00719641 /* PartyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442FE7A025A8C65E00719641 /* PartyError.swift */; };
 		444074CC259F52C700C8667E /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444074CB259F52C700C8667E /* UserCell.swift */; };
 		444074D1259F651D00C8667E /* aprovedUsers.json in Resources */ = {isa = PBXBuildFile; fileRef = 444074D0259F651D00C8667E /* aprovedUsers.json */; };
 		444074D6259F77CE00C8667E /* AprovedUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444074D5259F77CE00C8667E /* AprovedUserModel.swift */; };
@@ -174,6 +175,7 @@
 		4424A5812598AA0C00B420F7 /* UIView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extension.swift"; sourceTree = "<group>"; };
 		4424A58C2598C90900B420F7 /* UITextField + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField + Extension.swift"; sourceTree = "<group>"; };
 		4424A5932598E5F900B420F7 /* ChatRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRequestViewController.swift; sourceTree = "<group>"; };
+		442FE7A025A8C65E00719641 /* PartyError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyError.swift; sourceTree = "<group>"; };
 		444074CB259F52C700C8667E /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		444074D0259F651D00C8667E /* aprovedUsers.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = aprovedUsers.json; sourceTree = "<group>"; };
 		444074D5259F77CE00C8667E /* AprovedUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AprovedUserModel.swift; sourceTree = "<group>"; };
@@ -502,6 +504,7 @@
 				449D7C6E25992D1500FE575F /* Validators.swift */,
 				449D7C7325992F4200FE575F /* AuthError.swift */,
 				449D7CC22599414900FE575F /* UserError.swift */,
+				442FE7A025A8C65E00719641 /* PartyError.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1035,6 +1038,7 @@
 				447DD97F259A75BE007C4DA4 /* UIImage + Extension.swift in Sources */,
 				4420BD6925961150005A4FAE /* UILabel + Extension.swift in Sources */,
 				449D7C5D2599184A00FE575F /* AuthService.swift in Sources */,
+				442FE7A125A8C65E00719641 /* PartyError.swift in Sources */,
 				4465EB462579585A0096F3B7 /* ProfileViewController.swift in Sources */,
 				4424A56025976E5E00B420F7 /* ChatModel.swift in Sources */,
 				4465EB8A257A9E6E0096F3B7 /* PartyTableViewCell.swift in Sources */,

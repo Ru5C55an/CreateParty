@@ -58,6 +58,8 @@ class ShowPartyViewController: UIViewController {
     
     var collectionView: UICollectionView!
     
+    let goButton = UIButton(title: "Пойти")
+    
     let party: Party
     
     init(party: Party){
@@ -105,14 +107,41 @@ class ShowPartyViewController: UIViewController {
         
         view.backgroundColor = .systemBackground
         
+       
+        goButton.addTarget(self, action: #selector(goButtonTapped), for: .touchUpInside)
+        locationButton.addTarget(self, action: #selector(locationButtonTapped), for: .touchUpInside)
+        
+        setupCustomization()
+        setupCollectionView()
+        setupConstraints()
+        checkWaitingGuest()
+    }
+    
+    private func  setupCustomization() {
+        
         locationButton.setImage(UIImage(named: "map"), for: .normal)
         ownerImage.layer.cornerRadius = 43
         ownerImage.clipsToBounds = true
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
-        locationButton.addTarget(self, action: #selector(locationButtonTapped), for: .touchUpInside)
+        goButton.applyGradients(cornerRadius: goButton.layer.cornerRadius, from: .bottomLeading, to: .topTrailing, startColor: .blue, endColor: .white)
+    }
+    
+    @objc private func goButtonTapped() {
         
-        setupCollectionView()
-        setupConstraints()
+        FirestoreService.shared.createWaitingGuest(receiver: party.id) { [weak self] (result) in
+            switch result {
+            
+            case .success():
+                self?.showAlert(title: "Успешно!", message: "Заявка отправлена владельцу вечеринки")
+                self?.checkWaitingGuest()
+            case .failure(let error):
+                self?.showAlert(title: "Ошибка!", message: error.localizedDescription)
+            }
+        }
     }
     
     @objc private func locationButtonTapped() {
@@ -132,6 +161,21 @@ class ShowPartyViewController: UIViewController {
         
         collectionView.delegate = self
         collectionView.dataSource = self
+    }
+    
+    private func checkWaitingGuest() {
+        
+        FirestoreService.shared.checkWaitingGuest(receiver: party.id) { [weak self] (result) in
+            
+            switch result {
+            
+            case .success():
+                self?.goButton.isEnabled = false
+                self?.goButton.setTitle("Заявка отправлена", for: .normal)
+            case .failure(_):
+               break
+            }
+        }
     }
     
     deinit {
@@ -233,6 +277,17 @@ extension ShowPartyViewController {
             ownerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 22),
             ownerStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -22)
         ])
+        
+        view.addSubview(goButton)
+        
+        goButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            goButton.topAnchor.constraint(equalTo: ownerStackView.bottomAnchor, constant: 4),
+            goButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 22),
+            goButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -22)
+        ])
+        
     }
 }
 

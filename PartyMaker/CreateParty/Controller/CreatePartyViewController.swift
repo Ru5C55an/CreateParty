@@ -144,7 +144,7 @@ extension CreatePartyViewController {
         view.addSubview(nextButton)
 
         NSLayoutConstraint.activate([
-            datepicker.topAnchor.constraint(equalTo: view.topAnchor, constant: 112)
+            datepicker.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8)
         ])
 
         NSLayoutConstraint.activate([
@@ -168,12 +168,11 @@ extension CreatePartyViewController {
         ])
 
         NSLayoutConstraint.activate([
-            nextButton.topAnchor.constraint(equalTo: endTimepicker.bottomAnchor, constant: 16),
+            nextButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
             nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44),
             nextButton.heightAnchor.constraint(equalToConstant: 64)
         ])
-
     }
 }
 

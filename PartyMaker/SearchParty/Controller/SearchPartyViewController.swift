@@ -38,27 +38,21 @@ class SearchPartyViewController: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        FirestoreService.shared.searchPartiesWith{ (result) in
-            switch result {
-            case .success(let parties):
-                self.parties = parties
-                self.reloadData(with: nil)
-            case .failure(let error):
-                self.showAlert(title: "Ошибка!", message: error.localizedDescription)
-            }
-        }
-
+    
         view.backgroundColor = .systemBackground
         
-        barView.cityButton.addTarget(self, action: #selector(selectCity), for: .touchUpInside)
-        
+        searchParties()
+        addTargets()
         setupNavigationBar()
-        setupSearchBar()
         setupCollectionView()
         createDataSource()
-        reloadData(with: nil)
         setupConstraints()
+    }
+    
+    private func addTargets() {
+        barView.cityButton.addTarget(self, action: #selector(selectCity), for: .touchUpInside)
+        barView.countStepper.addTarget(self, action: #selector(searchParties), for: .valueChanged)
+        barView.datePicker.addTarget(self, action: #selector(searchParties), for: .valueChanged)
     }
     
     @objc private func selectCity() {
@@ -72,24 +66,18 @@ class SearchPartyViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        navigationItem.titleView = barView
-    }
-    
-    private func setupSearchBar() {
-        let searchController = UISearchController(searchResultsController: nil)
-        navigationItem.searchController = searchController
-        searchController.searchBar.placeholder = "Поиск"
-        
-        definesPresentationContext = true // Позволяет отпустить строку поиска, при переходе на другой экран
-        searchController.searchBar.delegate = self
+        navigationController?.navigationBar.isHidden = true
     }
     
     @objc private func searchParties() {
-        FirestoreService.shared.searchPartiesWith(city: barView.cityButton.titleLabel?.text, type: barView.pickedType, date: barView.dateFormatter.string(from: barView.datePicker.date), maximumPeople: barView.countText.text) { [weak self] (result) in
+        
+        FirestoreService.shared.searchPartiesWith(city: barView.cityButton.titleLabel?.text, type: barView.pickedType, date: barView.dateFormatter.string(from: barView.datePicker.date), maximumPeople: barView.countText.text, price: barView.priceTextField.text) { [weak self] (result) in
+            
             switch result {
             
             case .success(let parties):
                 self?.parties = parties
+                self?.reloadData()
             case .failure(let error):
                 self?.showAlert(title: "Ошибка", message: error.localizedDescription)
             }
@@ -97,6 +85,7 @@ class SearchPartyViewController: UIViewController {
     }
     
     private func setupCollectionView() {
+        
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.backgroundColor = .systemGroupedBackground
@@ -110,15 +99,11 @@ class SearchPartyViewController: UIViewController {
     }
     
     // Отвечает за заполнение реальными данными. Создает snapshot, добавляет нужные айтемы в нужные секции и регистрируется на dataSource
-    private func reloadData(with searchText: String?) {
-        
-        let filteredParties = parties.filter { (party) -> Bool in
-            party.contains(filter: searchText)
-        }
+    private func reloadData() {
         
         var snapshot = NSDiffableDataSourceSnapshot<Section, Party>()
         snapshot.appendSections([.parties])
-        snapshot.appendItems(filteredParties, toSection: .parties)
+        snapshot.appendItems(parties, toSection: .parties)
         dataSource?.apply(snapshot, animatingDifferences: true)
     }
     
@@ -139,11 +124,11 @@ extension SearchPartyViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            barView.topAnchor.constraint(equalTo: view.topAnchor, constant: 144),
+            barView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             barView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 22),
             barView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -22)
         ])
-        
+
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: barView.bottomAnchor, constant: 8),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -240,15 +225,6 @@ extension SearchPartyViewController {
                                                                         elementKind: UICollectionView.elementKindSectionHeader,
                                                                         alignment: .top)
         return sectionHeader
-    }
-}
-
-// MARK: - UISearchBarDelegate
-extension SearchPartyViewController: UISearchBarDelegate {
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        reloadData(with: searchText)
     }
 }
 
