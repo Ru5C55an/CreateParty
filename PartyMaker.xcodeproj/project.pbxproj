@@ -107,6 +107,10 @@
 		44D002E125A37E10009F419B /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D002E025A37E10009F419B /* CardView.swift */; };
 		44D002EC25A38719009F419B /* FourthCreatePartyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D002EB25A38719009F419B /* FourthCreatePartyViewController.swift */; };
 		44D002F325A3A55B009F419B /* BackgroundCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D002F225A3A55B009F419B /* BackgroundCardCell.swift */; };
+		44D6561A25AA29C50045ABD9 /* WaitingGuestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D6561925AA29C50045ABD9 /* WaitingGuestsViewController.swift */; };
+		44D6561F25AA2B9F0045ABD9 /* WaitingGuestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D6561E25AA2B9F0045ABD9 /* WaitingGuestCell.swift */; };
+		44D6562525AA45020045ABD9 /* PartyRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D6562425AA45020045ABD9 /* PartyRequestViewController.swift */; };
+		44D6562D25AA490D0045ABD9 /* WaitingGuestsNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D6562C25AA490D0045ABD9 /* WaitingGuestsNavigation.swift */; };
 		44DF5D58258E2CCA000BF557 /* PartyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DF5D57258E2CCA000BF557 /* PartyCell.swift */; };
 		44EFFA9925A2081C00827A8D /* SearchPartiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EFFA9825A2081C00827A8D /* SearchPartiesView.swift */; };
 		44EFFA9E25A2459600827A8D /* CitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EFFA9D25A2459600827A8D /* CitiesViewController.swift */; };
@@ -239,6 +243,10 @@
 		44D002E025A37E10009F419B /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		44D002EB25A38719009F419B /* FourthCreatePartyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthCreatePartyViewController.swift; sourceTree = "<group>"; };
 		44D002F225A3A55B009F419B /* BackgroundCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundCardCell.swift; sourceTree = "<group>"; };
+		44D6561925AA29C50045ABD9 /* WaitingGuestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingGuestsViewController.swift; sourceTree = "<group>"; };
+		44D6561E25AA2B9F0045ABD9 /* WaitingGuestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingGuestCell.swift; sourceTree = "<group>"; };
+		44D6562425AA45020045ABD9 /* PartyRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyRequestViewController.swift; sourceTree = "<group>"; };
+		44D6562C25AA490D0045ABD9 /* WaitingGuestsNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingGuestsNavigation.swift; sourceTree = "<group>"; };
 		44DF5D57258E2CCA000BF557 /* PartyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyCell.swift; sourceTree = "<group>"; };
 		44EFFA9825A2081C00827A8D /* SearchPartiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPartiesView.swift; sourceTree = "<group>"; };
 		44EFFA9D25A2459600827A8D /* CitiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesViewController.swift; sourceTree = "<group>"; };
@@ -358,6 +366,7 @@
 			children = (
 				4420BDFB259758DC005A4FAE /* SelfConfiguringCell.swift */,
 				44A63EE225A0960700F125F7 /* WaitingChatsNavigation.swift */,
+				44D6562C25AA490D0045ABD9 /* WaitingGuestsNavigation.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -447,6 +456,7 @@
 				44DF5E782592366D000BF557 /* Messages */,
 				4424A5912598E5D600B420F7 /* ChatRequest */,
 				44B6A3CF25A0BC9C00204B20 /* Chat */,
+				44D6562325AA44D10045ABD9 /* PartyRequest */,
 				44DF5EA125923827000BF557 /* EditParty */,
 				44DF5E9825923776000BF557 /* Map */,
 				44DF5E9625923753000BF557 /* SearchParty */,
@@ -595,6 +605,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		44D6562325AA44D10045ABD9 /* PartyRequest */ = {
+			isa = PBXGroup;
+			children = (
+				44D6562425AA45020045ABD9 /* PartyRequestViewController.swift */,
+			);
+			path = PartyRequest;
+			sourceTree = "<group>";
+		};
 		44DF5E5C2592361F000BF557 /* Parties */ = {
 			isa = PBXGroup;
 			children = (
@@ -610,6 +628,7 @@
 			children = (
 				4465EB89257A9E6E0096F3B7 /* PartyTableViewCell.swift */,
 				44DF5D57258E2CCA000BF557 /* PartyCell.swift */,
+				44D6561E25AA2B9F0045ABD9 /* WaitingGuestCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -619,6 +638,7 @@
 			children = (
 				4465EB31257957160096F3B7 /* MyPartiesViewController.swift */,
 				44733E54258CCA2500CCC778 /* PartiesViewController.swift */,
+				44D6561925AA29C50045ABD9 /* WaitingGuestsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1018,6 +1038,7 @@
 				447DD9D2259BE3C7007C4DA4 /* EditPartyViewController.swift in Sources */,
 				44D002E125A37E10009F419B /* CardView.swift in Sources */,
 				447DD9BC259BDE91007C4DA4 /* AddPartyPhotoView.swift in Sources */,
+				44D6561F25AA2B9F0045ABD9 /* WaitingGuestCell.swift in Sources */,
 				44D002F325A3A55B009F419B /* BackgroundCardCell.swift in Sources */,
 				4465EBA6257BC8D90096F3B7 /* StorageManager.swift in Sources */,
 				4420BDE3259740DE005A4FAE /* ActiveChatCell.swift in Sources */,
@@ -1031,8 +1052,10 @@
 				444074D6259F77CE00C8667E /* AprovedUserModel.swift in Sources */,
 				4465EB5025795E800096F3B7 /* PageViewController.swift in Sources */,
 				449D7C6F25992D1500FE575F /* Validators.swift in Sources */,
+				44D6562D25AA490D0045ABD9 /* WaitingGuestsNavigation.swift in Sources */,
 				4465EB3C257958170096F3B7 /* ChatlistViewController.swift in Sources */,
 				4420BD2125960445005A4FAE /* UIButton + Extension.swift in Sources */,
+				44D6561A25AA29C50045ABD9 /* WaitingGuestsViewController.swift in Sources */,
 				4424A56825978E2600B420F7 /* UIViewController + Extension.swift in Sources */,
 				4420BDFC259758DC005A4FAE /* SelfConfiguringCell.swift in Sources */,
 				447DD97F259A75BE007C4DA4 /* UIImage + Extension.swift in Sources */,
@@ -1090,6 +1113,7 @@
 				4420BDA425965480005A4FAE /* UISegmentedControl  + Extension.swift in Sources */,
 				4420BDC525968AE0005A4FAE /* AboutInputText.swift in Sources */,
 				4420BD262596072A005A4FAE /* UIFont + Extension.swift in Sources */,
+				44D6562525AA45020045ABD9 /* PartyRequestViewController.swift in Sources */,
 				447DD9AA259BC14D007C4DA4 /* SecondCreatePartyViewController.swift in Sources */,
 				447EE8BD257676A700D8698F /* AppDelegate.swift in Sources */,
 				444074DB259FBC4900C8667E /* MessageModel.swift in Sources */,

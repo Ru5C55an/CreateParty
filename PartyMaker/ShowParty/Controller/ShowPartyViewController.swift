@@ -59,6 +59,8 @@ class ShowPartyViewController: UIViewController {
     var collectionView: UICollectionView!
     
     let goButton = UIButton(title: "Пойти")
+    let requestsButton = UIButton(title: "Новые заявки")
+    let cancelButton = UIButton(title: "Отменить вечеринку")
     
     let party: Party
     
@@ -107,17 +109,29 @@ class ShowPartyViewController: UIViewController {
         
         view.backgroundColor = .systemBackground
         
-       
-        goButton.addTarget(self, action: #selector(goButtonTapped), for: .touchUpInside)
-        locationButton.addTarget(self, action: #selector(locationButtonTapped), for: .touchUpInside)
-        
+        addTargets()
         setupCustomization()
         setupCollectionView()
         setupConstraints()
         checkWaitingGuest()
     }
     
-    private func  setupCustomization() {
+    private func addTargets() {
+        goButton.addTarget(self, action: #selector(goButtonTapped), for: .touchUpInside)
+        locationButton.addTarget(self, action: #selector(locationButtonTapped), for: .touchUpInside)
+        cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        requestsButton.addTarget(self, action: #selector(requestsButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc private func cancelButtonTapped() {
+        
+    }
+    
+    @objc private func requestsButtonTapped() {
+        
+    }
+    
+    private func setupCustomization() {
         
         locationButton.setImage(UIImage(named: "map"), for: .normal)
         ownerImage.layer.cornerRadius = 43

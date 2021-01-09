@@ -431,6 +431,14 @@ class FirestoreService {
                 completion(.success(Void()))
             }
         }
+    
+    func deleteWaitingGuest(user: PUser, completion: @escaping (Result<Void, Error>) -> Void) {
+        
+    }
+    
+    func changeToApproved(user: PUser, completion: @escaping (Result<Void, Error>) -> Void) {
+        
+    }
         
         func getPartyBy(uid: String, completion: @escaping (Result<Party, Error>) -> Void) {
             

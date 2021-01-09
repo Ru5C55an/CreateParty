@@ -41,8 +41,6 @@ class InformationUserViewController: UIViewController {
             self.smokeEmoji.text = "🚭"
         }
         
-        
-        
         super.init(nibName: nil, bundle: nil)
     }
     

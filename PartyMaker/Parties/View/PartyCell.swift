@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Squircle
+import SDWebImage
 
 class PartyCell: UICollectionViewCell, SelfConfiguringCell {
     
@@ -97,12 +97,18 @@ class PartyCell: UICollectionViewCell, SelfConfiguringCell {
     
     func configure<U>(with value: U) where U : Hashable {
         guard let party: Party = value as? Party else { return }
-        //ToDo userimage
-//        userImageView.image = UIImage(named: party.userImageString)
-        userImageView.image = #imageLiteral(resourceName: "shit")
-        //ToDo username
-//        userName.text = party.username
-        userName.text = "Временное имя"
+        
+        FirestoreService.shared.getUser(by: party.userId) { (result) in
+            switch result {
+            
+            case .success(let puser):
+                self.userImageView.sd_setImage(with: URL(string: puser.avatarStringURL), completed: nil)
+                self.userName.text = puser.username
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
         dateLabel.text = party.date
         typeLabel.text = party.type
         partyName.text = party.name

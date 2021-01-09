@@ -1,14 +1,13 @@
 //
-//  AboutUserViewController.swift
+//  PartyRequestViewController.swift
 //  PartyMaker
 //
-//  Created by Руслан Садыков on 27.12.2020.
+//  Created by Руслан Садыков on 09.01.2021.
 //
 
 import UIKit
-import SDWebImage
 
-class AboutUserViewContoller: UIViewController {
+class PartyRequestViewController: UIViewController {
     
     let containerView = UIView()
     
@@ -18,14 +17,16 @@ class AboutUserViewContoller: UIViewController {
     
     let aboutText = AboutInputText(isEditable: false)
     
-    let ratingLabel = UILabel(text: "􀋂 0", font: .sfProDisplay(ofSize: 16, weight: .medium))
+    let ratingLabel = UILabel(text: "3.5", font: .sfProDisplay(ofSize: 16, weight: .medium))
     let interestsLabel = UILabel(text: "Интересы", font: .sfProDisplay(ofSize: 16, weight: .medium))
     let interestsList = UILabel(text: "💪  🎮  🎨  🧑‍🍳  🔬  🎤  🛹  🗺  🧑‍💻  🎼  📷  🎧", font: .sfProDisplay(ofSize: 16, weight: .medium))
     let alcoLabel = UILabel(text: "Алкоголь", font: .sfProDisplay(ofSize: 16, weight: .medium))
     let alcoEmoji = UILabel(text: "🍷", font: .sfProDisplay(ofSize: 16, weight: .medium))
     let smokeLabel = UILabel(text: "Курение", font: .sfProDisplay(ofSize: 16, weight: .medium))
     let smokeEmoji = UILabel(text: "🚭", font: .sfProDisplay(ofSize: 16, weight: .medium))
-    let messageTextField = MessageTextField()
+    let infoLabel = UILabel(text: "Пользователь хочет пойти к вам на вечеринку")
+    let acceptButton = UIButton(title: "Принять", titleColor: .white, backgroundColor: .black, font: .sfProRounded(ofSize: 24, weight: .medium), cornerRadius: 10)
+    let denyButton = UIButton(title: "Отклонить", titleColor: #colorLiteral(red: 0.8352941176, green: 0.2, blue: 0.2, alpha: 1), backgroundColor: .mainWhite(), font: .sfProRounded(ofSize: 24, weight: .medium), cornerRadius: 10)
     
     var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -34,14 +35,15 @@ class AboutUserViewContoller: UIViewController {
         return dateFormatter
     }()
     
-    private let user: PUser
+    weak var delegate: WaitingGuestsNavigation?
+    
+    private var user: PUser
     
     init(user: PUser) {
         self.user = user
-        
-        self.imageView.sd_setImage(with: URL(string: user.avatarStringURL), completed: nil)
-        self.nameLabel.text = user.username
-        self.aboutText.textView.text = user.description
+        nameLabel.text = user.username
+        imageView.sd_setImage(with: URL(string: user.avatarStringURL), completed: nil)
+        aboutText.textView.text = user.description
         interestsList.text = user.interestsList
         
         let birthdayString = user.birthday
@@ -72,47 +74,51 @@ class AboutUserViewContoller: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        messageTextField.delegate = self
-        
-        view.backgroundColor = .white
-        
-        if let button = messageTextField.rightView as? UIButton {
-            button.addTarget(self, action: #selector(sendMessage), for: .touchUpInside)
-        }
-        
+
+        view.backgroundColor = .mainWhite()
         customizeElements()
         setupConstraints()
+        
+        denyButton.addTarget(self, action: #selector(denyButtonTapped), for: .touchUpInside)
+        acceptButton.addTarget(self, action: #selector(acceptButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc private func denyButtonTapped() {
+        self.dismiss(animated: true) {
+            self.delegate?.removeWaitingGuest(user: self.user)
+        }
+    }
+    
+    @objc private func acceptButtonTapped() {
+        self.dismiss(animated: true) {
+            self.delegate?.changeToApproved(user: self.user)
+        }
     }
     
     private func customizeElements() {
+        
+        denyButton.layer.borderWidth = 1.2
+        denyButton.layer.borderColor = #colorLiteral(red: 0.8352941176, green: 0.2, blue: 0.2, alpha: 1)
+        denyButton.applySketchShadow(color: .gray, alpha: 50, x: -2, y: 2, blur: 20, spread: 0)
+        
         containerView.backgroundColor = .mainWhite()
         containerView.layer.cornerRadius = 30
     }
     
-    @objc private func sendMessage() {
-        guard let message = messageTextField.text, message != "" else { return }
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
         
-        self.dismiss(animated: true) {
-            FirestoreService.shared.createWaitingChat(message: message, receiver: self.user) { (result) in
-                switch result {
-                
-                case .success():
-                    UIApplication.getTopViewController()?.showAlert(title: "Успешно!", message: "Ваше сообщение для \(self.user.username) было отправлено")
-                case .failure(let error):
-                    UIApplication.getTopViewController()?.showAlert(title: "Ошибка", message: error.localizedDescription)
-                }
-            }
-        }
+        self.acceptButton.applyGradients(cornerRadius: 10, from: .leading, to: .trailing, startColor: #colorLiteral(red: 0.05098039216, green: 0.5647058824, blue: 0.9137254902, alpha: 1), endColor: #colorLiteral(red: 0.3137254902, green: 0.8117647059, blue: 0.8588235294, alpha: 1))
+        self.acceptButton.applySketchShadow(color: .gray, alpha: 50, x: -2, y: 2, blur: 20, spread: 0)
     }
     
     deinit {
-        print("deinit", AboutUserViewContoller.self)
+        print("deinit", ChatRequestViewController.self)
     }
 }
 
 // MARK: - Setup constraints
-extension AboutUserViewContoller {
+extension PartyRequestViewController {
     
     private func setupConstraints() {
         
@@ -124,16 +130,17 @@ extension AboutUserViewContoller {
         let smokeStackView = UIStackView(arrangedSubviews: [smokeLabel, smokeEmoji], axis: .horizontal, spacing: 8)
         let smokeAlcoStackView = UIStackView(arrangedSubviews: [smokeStackView, alcoStackView], axis: .horizontal, spacing: 32)
         
+        let buttonsStackView = UIStackView(arrangedSubviews: [acceptButton, denyButton], axis: .horizontal, spacing: 16)
+        buttonsStackView.distribution = .fillEqually
+        
         nameAgeStackView.translatesAutoresizingMaskIntoConstraints = false
         interestsStackView.translatesAutoresizingMaskIntoConstraints = false
         smokeAlcoStackView.translatesAutoresizingMaskIntoConstraints = false
+        buttonsStackView.translatesAutoresizingMaskIntoConstraints = false
         containerView.translatesAutoresizingMaskIntoConstraints = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
         aboutText.translatesAutoresizingMaskIntoConstraints = false
         ratingLabel.translatesAutoresizingMaskIntoConstraints = false
-        messageTextField.translatesAutoresizingMaskIntoConstraints = false
-        ageLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(imageView)
         view.addSubview(containerView)
@@ -143,7 +150,7 @@ extension AboutUserViewContoller {
         containerView.addSubview(aboutText)
         containerView.addSubview(interestsStackView)
         containerView.addSubview(smokeAlcoStackView)
-        containerView.addSubview(messageTextField)
+        containerView.addSubview(buttonsStackView)
         
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -167,16 +174,9 @@ extension AboutUserViewContoller {
         NSLayoutConstraint.activate([
             nameAgeStackView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 32),
             nameAgeStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 32),
+            nameAgeStackView.trailingAnchor.constraint(equalTo: ratingLabel.leadingAnchor, constant: -16)
         ])
-    
-        NSLayoutConstraint.activate([
-            ageLabel.trailingAnchor.constraint(equalTo: ratingLabel.leadingAnchor, constant: -16)
-        ])
-        
-        NSLayoutConstraint.activate([
-            nameLabel.trailingAnchor.constraint(equalTo: ageLabel.leadingAnchor, constant: -4)
-        ])
-        
+
         NSLayoutConstraint.activate([
             aboutText.topAnchor.constraint(equalTo: nameAgeStackView.bottomAnchor, constant: 8),
             aboutText.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
@@ -194,50 +194,12 @@ extension AboutUserViewContoller {
             smokeAlcoStackView.topAnchor.constraint(equalTo: interestsStackView.bottomAnchor, constant: 16),
             smokeAlcoStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 32)
         ])
-
+        
         NSLayoutConstraint.activate([
-            messageTextField.topAnchor.constraint(equalTo: smokeAlcoStackView.bottomAnchor, constant: 32),
-            messageTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            messageTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            messageTextField.heightAnchor.constraint(equalToConstant: 48)
+            buttonsStackView.topAnchor.constraint(equalTo: smokeAlcoStackView.bottomAnchor, constant: 16),
+            buttonsStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 32),
+            buttonsStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -32),
+            buttonsStackView.heightAnchor.constraint(equalToConstant: 54)
         ])
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
-}
-
-// MARK: - UITextFieldDelegate
-extension AboutUserViewContoller: UITextFieldDelegate {
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
-}
-
-// MARK: - SwiftUI
-import SwiftUI
-
-struct AboutUserViewContollerProvider: PreviewProvider {
-    
-    static var previews: some View {
-        
-        ContainerView().edgesIgnoringSafeArea(.all)
-    }
-    
-    struct ContainerView: UIViewControllerRepresentable {
-        
-        let aboutUserViewController = AboutUserViewContoller(user: PUser(username: "", email: "", avatarStringURL: "", description: "", sex: "", birthday: "", interestsList: "", smoke: "", alco: "", id: ""))
-        
-        func makeUIViewController(context: Context) -> AboutUserViewContoller {
-            return aboutUserViewController
-        }
-        
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-            
-        }
     }
 }
