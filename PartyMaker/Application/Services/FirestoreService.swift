@@ -353,6 +353,24 @@ class FirestoreService {
         }
     }
     
+    func getPartyBy(uid: String, completion: @escaping (Result<Party, Error>) -> Void) {
+        
+        let docRef = partiesRef.document(uid)
+        docRef.getDocument { (document, error) in
+            
+            if let document = document, document.exists {
+                guard let party = Party(document: document) else {
+                    completion(.failure(PartyError.cannotUnwrapToParty))
+                    return
+                }
+                
+                completion(.success(party))
+            } else {
+                completion(.failure(PartyError.cannotGetPartyInfo))
+            }
+        }
+    }
+    
     func searchPartiesWith(city: String? = nil, type: String? = nil, date: String? = nil, maximumPeople: String? = nil, price: String? = nil, completion: @escaping (Result<[Party], Error>) -> Void) {
         
         var query: Query = db.collection("parties")
@@ -431,6 +449,54 @@ class FirestoreService {
         }
     }
     
+    func getApprovedGuestsId(party: Party, completion: @escaping (Result<[String], Error>) -> Void) {
+        
+        let reference = db.collection(["parties", party.id, "approvedGuests"].joined(separator: "/"))
+        
+        reference.getDocuments() { (querySnapshot, err) in
+            
+            if let err = err {
+                completion(.failure(err))
+            } else {
+                
+                var usersId: [String] = []
+                
+                for document in querySnapshot!.documents {
+                   
+                    guard let userId = document.data()["uid"] as? String else { return }
+                    
+                    usersId.append(userId)
+                }
+                
+                completion(.success(usersId))
+            }
+        }
+    }
+    
+    func getWaitingGuestsId(party: Party, completion: @escaping (Result<[String], Error>) -> Void) {
+        
+        let reference = db.collection(["parties", party.id, "waitingGuests"].joined(separator: "/"))
+        
+        reference.getDocuments() { (querySnapshot, err) in
+            
+            if let err = err {
+                completion(.failure(err))
+            } else {
+                
+                var usersId: [String] = []
+                
+                for document in querySnapshot!.documents {
+                   
+                    guard let userId = document.data()["uid"] as? String else { return }
+                    
+                    usersId.append(userId)
+                }
+                
+                completion(.success(usersId))
+            }
+        }
+    }
+    
     func deleteWaitingGuest(user: PUser, party: Party, completion: @escaping (Result<Void, Error>) -> Void) {
         
         let userId = user.id
@@ -464,23 +530,7 @@ class FirestoreService {
         
     }
     
-    func getPartyBy(uid: String, completion: @escaping (Result<Party, Error>) -> Void) {
-        
-        let docRef = partiesRef.document(uid)
-        docRef.getDocument { (document, error) in
-            
-            if let document = document, document.exists {
-                guard let party = Party(document: document) else {
-                    completion(.failure(PartyError.cannotUnwrapToParty))
-                    return
-                }
-                
-                completion(.success(party))
-            } else {
-                completion(.failure(PartyError.cannotGetPartyInfo))
-            }
-        }
-    }
+    
     
     //    func getWaitingParties(completion: @escaping (Result<[Party], Error>) -> Void) {
     //

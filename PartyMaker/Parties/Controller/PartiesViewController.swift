@@ -20,6 +20,8 @@ class PartiesViewController: UIViewController {
     
     private var waitingPartiesListener: ListenerRegistration?
     private var waitingParties = [Party]()
+    private var approvedPartiesListener: ListenerRegistration?
+    private var approvedParties = [Party]()
     private var myPartiesListener: ListenerRegistration?
     private var myParties = [Party]()
     
@@ -81,6 +83,18 @@ class PartiesViewController: UIViewController {
             }
         })
         
+        approvedPartiesListener = ListenerService.shared.approvedPartiesObserve(parties: approvedParties, completion: { (result) in
+            switch result {
+        
+            case .success(let parties):
+                self.approvedParties = parties
+                self.reloadPartiesType()
+                
+            case .failure(let error):
+                self.showAlert(title: "Ошибка!", message: error.localizedDescription)
+            }
+        })
+        
         myPartiesListener = ListenerService.shared.myPartiesObserve(parties: myParties, completion: { (result) in
             switch result {
         
@@ -95,17 +109,23 @@ class PartiesViewController: UIViewController {
         })
     }
     
+    private var target = ""
+    
     @objc private func reloadPartiesType() {
         
         switch partiesSegmentedControl.selectedSegmentIndex {
         
         case 0:
-            print(0)
+            parties = approvedParties
+            target = "approved"
+            reloadData(with: nil)
         case 1:
             parties = waitingParties
+            target = "waiting"
             reloadData(with: nil)
         case 2:
             parties = myParties
+            target = "my"
             reloadData(with: nil)
         
         default:
@@ -161,6 +181,7 @@ class PartiesViewController: UIViewController {
     deinit {
         print("deinit", PartiesViewController.self)
         waitingPartiesListener?.remove()
+        approvedPartiesListener?.remove()
         myPartiesListener?.remove()
     }
     
@@ -308,7 +329,7 @@ extension PartiesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let party = self.dataSource.itemIdentifier(for: indexPath) else { return }
         
-        let showPartyVC = ShowPartyViewController(party: party)
+        let showPartyVC = ShowPartyViewController(party: party, target: target)
         present(showPartyVC, animated: true, completion: nil)
     }
 }

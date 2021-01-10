@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 extension UIButton {
     
@@ -31,11 +32,33 @@ extension UIButton {
         }
     }
     
-    func addIcon(image: UIImage) {
+    enum alignment {
+        case center
+        case left
+        case right
+    }
+    
+    func addIcon(image: UIImage, alignment: alignment) {
         let icon = UIImageView(image: image, contentMode: .scaleAspectFit)
         icon.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(icon)
-        icon.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        icon.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        
+        switch alignment {
+        
+        case .center:
+            icon.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+            }
+        case .left:
+            icon.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.trailing.equalTo(titleLabel?.snp.leading as! ConstraintRelatableTarget).inset(-32)
+            }
+        
+        case .right:
+            icon.snp.makeConstraints { make in
+                make.leading.equalTo(titleLabel?.snp.trailing as! ConstraintRelatableTarget).inset(16)
+            }
+        }
     }
 }

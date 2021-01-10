@@ -14,9 +14,7 @@ class ShowPartyViewController: UIViewController {
     private let itemsPerRow: CGFloat = 1
     private let sectionInserts = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
     
-    private var waitingUsersId: [String] = []
-    private var waitingUsers:  [PUser] = []
-    private var approvedUsersId: [String] = []
+    private var waitingUsers: [PUser] = []
     private var approvedUsers: [PUser] = []
     
     private let nameText = UILabel(text: "")
@@ -62,17 +60,20 @@ class ShowPartyViewController: UIViewController {
     
     private let goButton = UIButton(title: "Пойти")
     private let requestsButton = UIButton(title: "Новые заявки")
-    private let cancelButton = UIButton(title: "Отменить вечеринку")
+    private let cancelPartyButton = UIButton(title: "Отменить вечеринку")
     
     private let party: Party
     private var ownerParty: PUser!
+    private let target: String
     
-    init(party: Party){
+    init(party: Party, target: String){
         self.party = party
+        self.target = target
         
         super.init(nibName: nil, bundle: nil)
         
-        FirestoreService.shared.getUser(by: party.userId) { [weak self] (result) in
+        FirestoreService.shared.getUser(by: party.userId) { [weak self] result in
+            
             switch result {
             
             case .success(let puser):
@@ -119,17 +120,76 @@ class ShowPartyViewController: UIViewController {
         
         view.backgroundColor = .systemBackground
         
+        let dg = DispatchGroup()
+        dg.enter()
+        FirestoreService.shared.getApprovedGuestsId(party: party) { [weak self] result in
+            
+            switch result {
+            
+            case .success(let usersId):
+                
+                for userId in usersId {
+                    
+                    FirestoreService.shared.getUser(by: userId) { result in
+                        
+                        switch result {
+                        
+                        case .success(let puser):
+                            self?.approvedUsers.append(puser)
+                        case .failure(let error):
+                            self?.showAlert(title: "Ошибка!", message: error.localizedDescription)
+                        }
+                        dg.leave()
+                    }
+                }
+                    
+            case .failure(let error):
+                self?.showAlert(title: "Ошибка!", message: error.localizedDescription)
+            }
+        }
+        
+        FirestoreService.shared.getWaitingGuestsId(party: party) { [weak self] result in
+            
+            switch result {
+            
+            case .success(let usersId):
+                
+                for userId in usersId {
+                    
+                    FirestoreService.shared.getUser(by: userId) { result in
+                        
+                        switch result {
+                        
+                        case .success(let puser):
+                            self?.waitingUsers.append(puser)
+                        case .failure(let error):
+                            self?.showAlert(title: "Ошибка!", message: error.localizedDescription)
+                        }
+                        dg.leave()
+                    }
+                }
+                    
+            case .failure(let error):
+                self?.showAlert(title: "Ошибка!", message: error.localizedDescription)
+            }
+        }
+        
+        dg.notify(queue: .main) {
+            print("done")
+            print(self.waitingUsers)
+            self.setupCollectionView()
+            self.setupConstraints()
+        }
+        
         addTargets()
         setupCustomization()
-        setupCollectionView()
-        setupConstraints()
         checkWaitingGuest()
     }
     
     private func addTargets() {
         goButton.addTarget(self, action: #selector(goButtonTapped), for: .touchUpInside)
         locationButton.addTarget(self, action: #selector(locationButtonTapped), for: .touchUpInside)
-        cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        cancelPartyButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         requestsButton.addTarget(self, action: #selector(requestsButtonTapped), for: .touchUpInside)
         
         let gesture = UITapGestureRecognizer(target: self, action: #selector(showOwner))
@@ -156,11 +216,15 @@ class ShowPartyViewController: UIViewController {
         locationButton.setImage(UIImage(named: "map"), for: .normal)
         ownerImage.layer.cornerRadius = 43
         ownerImage.clipsToBounds = true
+        
+        requestsButton.addIcon(image: UIImage(systemName: "bell")!, alignment: .left)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
+        cancelPartyButton.applyGradients(cornerRadius: cancelPartyButton.layer.cornerRadius, from: .bottomLeading, to: .topTrailing, startColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), endColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0))
+        requestsButton.applyGradients(cornerRadius: cancelPartyButton.layer.cornerRadius, from: .bottomLeading, to: .topTrailing, startColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), endColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0))
         goButton.applyGradients(cornerRadius: goButton.layer.cornerRadius, from: .bottomLeading, to: .topTrailing, startColor: .blue, endColor: .white)
     }
     
@@ -287,7 +351,8 @@ extension ShowPartyViewController {
         
         descriptionText.snp.makeConstraints { make in
             make.height.equalTo(128)
-            make.leading.trailing.equalTo(stackView)
+            make.leading.trailing.equalToSuperview()
+//            make.leading.trailing.equalTo(stackView)
         }
         
         collectionView.snp.makeConstraints { make in
@@ -313,13 +378,55 @@ extension ShowPartyViewController {
             make.trailing.equalTo(ownerAge.snp.leading).inset(-4)
         }
         
-        view.addSubview(goButton)
-        
-        goButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        goButton.snp.makeConstraints { make in
-            make.top.equalTo(ownerStackView.snp.bottom).inset(-16)
-            make.leading.trailing.equalToSuperview().inset(22)
+        if target == "search" {
+            
+            view.addSubview(goButton)
+            
+            goButton.translatesAutoresizingMaskIntoConstraints = false
+            
+            goButton.snp.makeConstraints { make in
+                make.top.equalTo(ownerStackView.snp.bottom).inset(-16)
+                make.leading.trailing.equalToSuperview().inset(22)
+            }
+            
+        } else if target == "waiting" {
+            
+            view.addSubview(goButton)
+            
+            goButton.translatesAutoresizingMaskIntoConstraints = false
+            
+            goButton.snp.makeConstraints { make in
+                make.top.equalTo(ownerStackView.snp.bottom).inset(-16)
+                make.leading.trailing.equalToSuperview().inset(22)
+            }
+            
+        } else if target == "approved" {
+            
+            
+            
+            
+        } else if target == "my" {
+            
+            ownerStackView.removeFromSuperview()
+            
+            view.addSubview(requestsButton)
+            view.addSubview(cancelPartyButton)
+            
+            requestsButton.translatesAutoresizingMaskIntoConstraints = false
+            
+            requestsButton.snp.makeConstraints { make in
+                make.height.equalTo(60)
+                make.top.equalTo(collectionView.snp.bottom).inset(-16)
+                make.leading.trailing.equalToSuperview().inset(22)
+            }
+            
+            cancelPartyButton.translatesAutoresizingMaskIntoConstraints = false
+            
+            cancelPartyButton.snp.makeConstraints { make in
+                make.height.equalTo(60)
+                make.top.equalTo(requestsButton.snp.bottom).inset(-16)
+                make.leading.trailing.equalToSuperview().inset(22)
+            }
         }
     }
 }
@@ -341,17 +448,7 @@ extension ShowPartyViewController: UICollectionViewDataSource {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.reuseId, for: indexPath) as! UserCell
         
-        FirestoreService.shared.getUser(by: approvedUsersId[indexPath.row]) { [weak self] (result) in
-            switch result {
-            
-            case .success(let puser):
-                cell.configure(with: puser)
-                self?.approvedUsers.append(puser)
-                
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
+        cell.configure(with: approvedUsers[indexPath.row])
         
         return cell
     }
@@ -399,8 +496,8 @@ struct ShowPartyViewControllerProvider: PreviewProvider {
     
     struct ContainerView: UIViewControllerRepresentable {
         
-        let showPartyViewController = ShowPartyViewController(party: Party(city: "Смоленск", location: "Смоленск, ул. Ново-Мопровская 9, 2", userId: "123123", imageUrlString: "", type: "Домашний хакатон", maximumPeople: "5", currentPeople: "0", id: "idПользователя", date: "12.09", startTime: "12:00", endTime: "13:00", name: "Вечеринка у Руслана, как твои дела, васяяяяолфтыолфтыадлфыоадлфыоалдфоыадлфоадлфыоаа", price: "200", description: "Самая топовая вечеринка", alco: "Да"))
-        
+        let showPartyViewController = ShowPartyViewController(party: Party(city: "Смоленск", location: "Смоленск, ул. Ново-Мопровская 9, 2", userId: "123123", imageUrlString: "", type: "Домашний хакатон", maximumPeople: "5", currentPeople: "0", id: "idПользователя", date: "12.09", startTime: "12:00", endTime: "13:00", name: "Вечеринка у Руслана, как твои дела, васяяяяолфтыолфтыадлфыоадлфыоалдфоыадлфоадлфыоаа", price: "200", description: "Самая топовая вечеринка", alco: "Да")
+            , target: "")
         func makeUIViewController(context: Context) -> ShowPartyViewController {
             return showPartyViewController
         }

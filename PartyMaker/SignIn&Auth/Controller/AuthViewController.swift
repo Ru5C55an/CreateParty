@@ -41,8 +41,8 @@ class AuthViewController: UIViewController {
         let userDefaults = UserDefaults.standard
         userDefaults.set(true, forKey: "presentationWasViewed")
         
-        googleButton.addIcon(image: #imageLiteral(resourceName: "google-icon"))
-        appleButton.addIcon(image: #imageLiteral(resourceName: "apple-logo"))
+        googleButton.addIcon(image: #imageLiteral(resourceName: "google-icon"), alignment: .center)
+        appleButton.addIcon(image: #imageLiteral(resourceName: "apple-logo"), alignment: .center)
         
         setupConstraints()
         

@@ -234,7 +234,7 @@ extension SearchPartyViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let party = self.dataSource.itemIdentifier(for: indexPath) else { return }
         
-        let showPartyVC = ShowPartyViewController(party: party)
+        let showPartyVC = ShowPartyViewController(party: party, target: "search")
         present(showPartyVC, animated: true, completion: nil)
     }
 }
