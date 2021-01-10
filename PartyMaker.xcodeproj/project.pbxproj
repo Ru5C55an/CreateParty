@@ -53,7 +53,6 @@
 		442FE7A125A8C65E00719641 /* PartyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442FE7A025A8C65E00719641 /* PartyError.swift */; };
 		444074CC259F52C700C8667E /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444074CB259F52C700C8667E /* UserCell.swift */; };
 		444074D1259F651D00C8667E /* aprovedUsers.json in Resources */ = {isa = PBXBuildFile; fileRef = 444074D0259F651D00C8667E /* aprovedUsers.json */; };
-		444074D6259F77CE00C8667E /* AprovedUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444074D5259F77CE00C8667E /* AprovedUserModel.swift */; };
 		444074DB259FBC4900C8667E /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444074DA259FBC4900C8667E /* MessageModel.swift */; };
 		4465EB2D257956C30096F3B7 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EB2C257956C30096F3B7 /* MainTabBarController.swift */; };
 		4465EB32257957160096F3B7 /* MyPartiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EB31257957160096F3B7 /* MyPartiesViewController.swift */; };
@@ -182,7 +181,6 @@
 		442FE7A025A8C65E00719641 /* PartyError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyError.swift; sourceTree = "<group>"; };
 		444074CB259F52C700C8667E /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		444074D0259F651D00C8667E /* aprovedUsers.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = aprovedUsers.json; sourceTree = "<group>"; };
-		444074D5259F77CE00C8667E /* AprovedUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AprovedUserModel.swift; sourceTree = "<group>"; };
 		444074DA259FBC4900C8667E /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
 		4465EB2C257956C30096F3B7 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		4465EB31257957160096F3B7 /* MyPartiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPartiesViewController.swift; sourceTree = "<group>"; };
@@ -570,7 +568,6 @@
 			children = (
 				4424A55925976D4600B420F7 /* PartyModel.swift */,
 				440CED91258A14AA00553673 /* UserModel.swift */,
-				444074D5259F77CE00C8667E /* AprovedUserModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1049,7 +1046,6 @@
 				447DD9C3259BE159007C4DA4 /* ShowPartyViewController.swift in Sources */,
 				440CEDFC258A917500553673 /* InformationUserViewController.swift in Sources */,
 				449D7C8625993DC300FE575F /* FirestoreService.swift in Sources */,
-				444074D6259F77CE00C8667E /* AprovedUserModel.swift in Sources */,
 				4465EB5025795E800096F3B7 /* PageViewController.swift in Sources */,
 				449D7C6F25992D1500FE575F /* Validators.swift in Sources */,
 				44D6562D25AA490D0045ABD9 /* WaitingGuestsNavigation.swift in Sources */,

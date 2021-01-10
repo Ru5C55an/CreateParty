@@ -31,12 +31,15 @@ class WaitingGuestsViewController: UIViewController {
     }
     
     private var users = [PUser]()
+    private var party: Party
     
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<Section, PUser>!
     
-    init(users: [PUser]) {
+    init(users: [PUser], party: Party) {
         self.users = users
+        self.party = party
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -168,8 +171,9 @@ extension WaitingGuestsViewController {
 }
 
 extension WaitingGuestsViewController: WaitingGuestsNavigation {
+    
     func removeWaitingGuest(user: PUser) {
-        FirestoreService.shared.deleteWaitingGuest(user: user) { (result) in
+        FirestoreService.shared.deleteWaitingGuest(user: user, party: party) { (result) in
             switch result {
             
             case .success():
@@ -181,7 +185,7 @@ extension WaitingGuestsViewController: WaitingGuestsNavigation {
     }
     
     func changeToApproved(user: PUser) {
-        FirestoreService.shared.changeToApproved(user: user) { (result) in
+        FirestoreService.shared.changeToApproved(user: user, party: party) { (result) in
             switch result {
             
             case .success():

@@ -9,6 +9,7 @@ import UIKit
 import Lottie
 import FBSDKLoginKit
 import GoogleSignIn
+import SnapKit
 
 enum HelloScreenAnimationKeyFrames: CGFloat {
     case start = 0
@@ -102,6 +103,9 @@ class AuthViewController: UIViewController {
 extension AuthViewController {
     
     private func setupConstraints() {
+        
+        
+        
         
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
         

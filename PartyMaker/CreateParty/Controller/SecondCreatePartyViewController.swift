@@ -9,29 +9,29 @@ import UIKit
 
 class SecondCreatePartyViewController: UIViewController {
     
-    let partyNameLabel = UILabel(text: "Название вечеринки")
-    let partyNameTextField = BubbleTextField(placeholder: "Например, Вечеринка у Децла дома")
+    private let partyNameLabel = UILabel(text: "Название вечеринки")
+    private let partyNameTextField = BubbleTextField(placeholder: "Например, Вечеринка у Децла дома")
     
-    let aboutPartyLabel = UILabel(text: "О вечеринке")
-    let aboutPartyTextView = AboutInputText(placeholder: "Напишите о своей вечеринке...", isEditable: true)
-    let typeLabel = UILabel(text: "Тип")
+    private let aboutPartyLabel = UILabel(text: "О вечеринке")
+    private let aboutPartyTextView = AboutInputText(placeholder: "Напишите о своей вечеринке...", isEditable: true)
+    private let typeLabel = UILabel(text: "Тип")
     
-    var pickedType = ""
-    var pickerData: [String] = [String]()
-    let typePicker = UIPickerView()
+    private var pickedType = ""
+    private var pickerData: [String] = [String]()
+    private let typePicker = UIPickerView()
     
-    let countPeopleLabel = UILabel(text: "Кол-во гостей")
-    let countPeople = UILabel(text: "1", font: .sfProDisplay(ofSize: 22, weight: .medium))
-    let countStepper: UIStepper = {
+    private let countPeopleLabel = UILabel(text: "Кол-во гостей")
+    private let countPeople = UILabel(text: "1", font: .sfProDisplay(ofSize: 22, weight: .medium))
+    private let countStepper: UIStepper = {
         let stepper = UIStepper()
         stepper.minimumValue = 1
         stepper.maximumValue = 1000
         return stepper
     }()
     
-    let nextButton = UIButton(title: "Далее")
-    let alcoLabel = UILabel(text: "Присутсвие алкоголя")
-    let alcoSwitcher = UISwitch()
+    private let nextButton = UIButton(title: "Далее")
+    private let alcoLabel = UILabel(text: "Присутсвие алкоголя")
+    private let alcoSwitcher = UISwitch()
     
     private let currentUser: PUser
     internal var party: Party
@@ -95,6 +95,7 @@ class SecondCreatePartyViewController: UIViewController {
         
         party.name = partyNameTextField.text!
         party.alco = String(alcoSwitcher.state.rawValue)
+        party.currentPeople = "0"
         party.maximumPeople = countPeople.text!
         party.type = pickedType
         

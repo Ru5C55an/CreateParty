@@ -23,6 +23,8 @@ target 'PartyMaker' do
   pod 'UPCarouselFlowLayout'
   pod 'Squircle'
   pod 'SoftUIView'
+  
+  pod 'SnapKit', '~> 5.0.0'
 
 end
 

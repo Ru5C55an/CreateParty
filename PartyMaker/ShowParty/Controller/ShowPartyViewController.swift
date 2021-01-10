@@ -10,59 +10,60 @@ import SDWebImage
 
 class ShowPartyViewController: UIViewController {
     
-    let itemsPerRow: CGFloat = 1
-    let sectionInserts = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
+    private let itemsPerRow: CGFloat = 1
+    private let sectionInserts = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
     
-    var usersId = Bundle.main.decode([AprovedUser].self, from: "aprovedUsers.json")
+    private var waitingUsersId: [String] = []
+    private var waitingUsers:  [PUser] = []
+    private var approvedUsersId: [String] = []
+    private var approvedUsers: [PUser] = []
     
-    var users: [PUser] = []
+    private let nameText = UILabel(text: "")
     
-    let nameText = UILabel(text: "")
+    private let dateLabel = UILabel(text: "🗓", font: .sfProDisplay(ofSize: 36, weight: .medium))
+    private let dateText = UILabel(text: "")
     
-    let dateLabel = UILabel(text: "🗓", font: .sfProDisplay(ofSize: 36, weight: .medium))
-    let dateText = UILabel(text: "")
+    private let timeLabel = UILabel(text: "⌚️", font: .sfProDisplay(ofSize: 36, weight: .medium))
+    private let startTimeText = UILabel(text: "")
+    private let endTimeText = UILabel(text: "")
     
-    let timeLabel = UILabel(text: "⌚️", font: .sfProDisplay(ofSize: 36, weight: .medium))
-    let startTimeText = UILabel(text: "")
-    let endTimeText = UILabel(text: "")
+    private let typeLabel = UILabel(text: "Тип", font: .sfProDisplay(ofSize: 24, weight: .medium))
+    private let typeText = UILabel(text: "")
     
-    let typeLabel = UILabel(text: "Тип", font: .sfProDisplay(ofSize: 24, weight: .medium))
-    let typeText = UILabel(text: "")
+    private let priceLabel = UILabel(text: "Цена", font: .sfProDisplay(ofSize: 24, weight: .medium))
+    private let priceText = UILabel(text: "")
     
-    let priceLabel = UILabel(text: "Цена", font: .sfProDisplay(ofSize: 24, weight: .medium))
-    let priceText = UILabel(text: "")
+    private let locationLabel = UILabel(text: "Адрес", font: .sfProDisplay(ofSize: 24, weight: .medium))
+    private let locationText = UILabel(text: "")
+    private let locationButton = UIButton()
     
-    let locationLabel = UILabel(text: "Адрес", font: .sfProDisplay(ofSize: 24, weight: .medium))
-    let locationText = UILabel(text: "")
-    let locationButton = UIButton()
+    private let descriptionLabel = UILabel(text: "Описание", font: .sfProDisplay(ofSize: 24, weight: .medium))
+    private let descriptionText = AboutInputText(isEditable: false)
     
-    let descriptionLabel = UILabel(text: "Описание", font: .sfProDisplay(ofSize: 24, weight: .medium))
-    let descriptionText = AboutInputText(isEditable: false)
+    private let countPeopleLabel = UILabel(text: "Кол-во гостей", font: .sfProDisplay(ofSize: 24, weight: .medium))
+    private let currentPeopleText = UILabel(text: "")
+    private let maxPeopleText = UILabel(text: "")
     
-    let countPeopleLabel = UILabel(text: "Кол-во гостей", font: .sfProDisplay(ofSize: 24, weight: .medium))
-    let currentPeopleText = UILabel(text: "")
-    let maxPeopleText = UILabel(text: "")
+    private let ownerlabel = UILabel(text: "Хозяин вечеринки", font: .sfProDisplay(ofSize: 24, weight: .medium))
+    private let ownerImage = UIImageView()
+    private let ownerName = UILabel(text: "")
+    private let ownerAge = UILabel(text: "")
+    private let ownerRating = UILabel(text: "􀋂 0")
     
-    let ownerlabel = UILabel(text: "Хозяин вечеринки", font: .sfProDisplay(ofSize: 24, weight: .medium))
-    let ownerImage = UIImageView()
-    let ownerName = UILabel(text: "")
-    let ownerAge = UILabel(text: "")
-    let ownerRating = UILabel(text: "􀋂 0")
-    
-    var dateFormatter: DateFormatter = {
+    private var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_RU")
         dateFormatter.dateFormat = "dd-MM-yyyy"
         return dateFormatter
     }()
     
-    var collectionView: UICollectionView!
+    private var collectionView: UICollectionView!
     
-    let goButton = UIButton(title: "Пойти")
-    let requestsButton = UIButton(title: "Новые заявки")
-    let cancelButton = UIButton(title: "Отменить вечеринку")
+    private let goButton = UIButton(title: "Пойти")
+    private let requestsButton = UIButton(title: "Новые заявки")
+    private let cancelButton = UIButton(title: "Отменить вечеринку")
     
-    let party: Party
+    private let party: Party
     
     init(party: Party){
         self.party = party
@@ -129,6 +130,8 @@ class ShowPartyViewController: UIViewController {
     
     @objc private func requestsButtonTapped() {
         
+        let waitingGuestVC = WaitingGuestsViewController(users: waitingUsers, party: party)
+        navigationController?.pushViewController(waitingGuestVC, animated: true)
     }
     
     private func setupCustomization() {
@@ -315,19 +318,19 @@ extension ShowPartyViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return usersId.count
+        return approvedUsers.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.reuseId, for: indexPath) as! UserCell
         
-        FirestoreService.shared.getUser(by: usersId[indexPath.row].uid) { [weak self] (result) in
+        FirestoreService.shared.getUser(by: approvedUsersId[indexPath.row]) { [weak self] (result) in
             switch result {
             
             case .success(let puser):
                 cell.configure(with: puser)
-                self?.users.append(puser)
+                self?.approvedUsers.append(puser)
                 
             case .failure(let error):
                 print(error.localizedDescription)
@@ -361,7 +364,7 @@ extension ShowPartyViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - UICollectionViewDelegate
 extension ShowPartyViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let user = users[indexPath.item]
+        let user = approvedUsers[indexPath.item]
         
         let aboutUserVC = AboutUserViewContoller(user: user)
         present(aboutUserVC, animated: true, completion: nil)
