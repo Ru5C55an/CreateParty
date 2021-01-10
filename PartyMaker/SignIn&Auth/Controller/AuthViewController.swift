@@ -104,9 +104,6 @@ extension AuthViewController {
     
     private func setupConstraints() {
         
-        
-        
-        
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
         
         let signUpView = ButtonFormView(label: signUpLabel, button: registerButton)
@@ -123,16 +120,24 @@ extension AuthViewController {
         view.addSubview(logoImageView)
         view.addSubview(stackView)
         
-        NSLayoutConstraint.activate([
-            logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 96),
-            logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
+        let clearView = UIView()
+        view.addSubview(clearView)
+        clearView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 116),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44)
-        ])
+        clearView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.bottom.equalTo(stackView.snp.top)
+        }
+        
+        logoImageView.snp.makeConstraints { make in
+            make.centerY.equalTo(clearView)
+            make.centerX.equalToSuperview()
+        }
+        
+        stackView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(44)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(44)
+        }
     }
 }
 
