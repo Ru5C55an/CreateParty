@@ -19,9 +19,9 @@ class AuthService {
     private let auth = Auth.auth()
     
     func login(email: String?, password: String?, completion: @escaping (Result<User, Error>) -> Void) {
-        auth.signIn(withEmail: email!, password: password!) { [weak self] (result, error) in
+        auth.signIn(withEmail: email!, password: password!) { (result, error) in
             
-            guard let email = email, let password = password else {
+            guard let _ = email, let _ = password else {
                 completion(.failure(AuthError.notFilled))
                 return
             }

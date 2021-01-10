@@ -7,6 +7,7 @@
 
 import UIKit
 import SDWebImage
+import SnapKit
 
 class ShowPartyViewController: UIViewController {
     
@@ -64,28 +65,25 @@ class ShowPartyViewController: UIViewController {
     private let cancelButton = UIButton(title: "Отменить вечеринку")
     
     private let party: Party
+    private var ownerParty: PUser!
     
     init(party: Party){
         self.party = party
         
         super.init(nibName: nil, bundle: nil)
         
-        nameText.text = party.name
-        dateText.text = party.date
-        startTimeText.text = party.startTime
-        endTimeText.text = party.endTime
-        typeText.text = party.type
-        priceText.text = party.price
-        locationText.text = party.location
-        descriptionText.textView.text = party.description
-        currentPeopleText.text = party.currentPeople
-        maxPeopleText.text = "/ \(party.maximumPeople)"
-        
         FirestoreService.shared.getUser(by: party.userId) { [weak self] (result) in
             switch result {
             
             case .success(let puser):
-                self?.ownerImage.sd_setImage(with: URL(string: puser.avatarStringURL), completed: nil)
+                self?.ownerParty = puser
+                
+                if puser.avatarStringURL == "" {
+                    self?.ownerImage.image = UIImage(systemName: "person.crop.circle")
+                } else {
+                    self?.ownerImage.sd_setImage(with: URL(string: puser.avatarStringURL), completed: nil)
+                }
+                
                 self?.ownerName.text = puser.username
                 
                 let birthdayString = puser.birthday
@@ -99,6 +97,17 @@ class ShowPartyViewController: UIViewController {
                 print(error.localizedDescription)
             }
         }
+        
+        nameText.text = party.name
+        dateText.text = party.date
+        startTimeText.text = party.startTime
+        endTimeText.text = party.endTime
+        typeText.text = party.type
+        priceText.text = party.price
+        locationText.text = party.location
+        descriptionText.textView.text = party.description
+        currentPeopleText.text = party.currentPeople
+        maxPeopleText.text = " / \(party.maximumPeople)"
     }
     
     required init?(coder: NSCoder) {
@@ -122,6 +131,15 @@ class ShowPartyViewController: UIViewController {
         locationButton.addTarget(self, action: #selector(locationButtonTapped), for: .touchUpInside)
         cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         requestsButton.addTarget(self, action: #selector(requestsButtonTapped), for: .touchUpInside)
+        
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(showOwner))
+        ownerImage.addGestureRecognizer(gesture)
+    }
+    
+    @objc private func showOwner() {
+        print(123123)
+        let aboutUserVC = AboutUserViewContoller(user: ownerParty)
+        present(aboutUserVC, animated: true, completion: nil)
     }
     
     @objc private func cancelButtonTapped() {
@@ -129,7 +147,6 @@ class ShowPartyViewController: UIViewController {
     }
     
     @objc private func requestsButtonTapped() {
-        
         let waitingGuestVC = WaitingGuestsViewController(users: waitingUsers, party: party)
         navigationController?.pushViewController(waitingGuestVC, animated: true)
     }
@@ -190,7 +207,7 @@ class ShowPartyViewController: UIViewController {
                 self?.goButton.isEnabled = false
                 self?.goButton.setTitle("Заявка отправлена", for: .normal)
             case .failure(_):
-               break
+                break
             }
         }
     }
@@ -245,6 +262,7 @@ extension ShowPartyViewController {
         view.addSubview(collectionView)
         view.addSubview(ownerStackView)
         
+        nameText.translatesAutoresizingMaskIntoConstraints = false
         descriptionText.translatesAutoresizingMaskIntoConstraints = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -253,58 +271,56 @@ extension ShowPartyViewController {
         ownerAge.translatesAutoresizingMaskIntoConstraints = false
         ownerName.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            locationLabel.centerYAnchor.constraint(equalTo: locationButton.centerYAnchor)
-        ])
         
-        NSLayoutConstraint.activate([
-            descriptionText.heightAnchor.constraint(equalToConstant: 128),
-            descriptionText.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            descriptionText.trailingAnchor.constraint(equalTo: stackView.trailingAnchor)
-        ])
+        stackView.snp.makeConstraints { make in
+            make.top.equalTo(32)
+            make.leading.trailing.equalToSuperview().inset(22)
+        }
         
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 32),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 22),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -22)
-        ])
+        nameText.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+        }
         
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.heightAnchor.constraint(equalToConstant: 86)
-        ])
+        locationLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(locationButton)
+        }
         
-        NSLayoutConstraint.activate([
-            ownerImage.heightAnchor.constraint(equalToConstant: 86),
-            ownerImage.widthAnchor.constraint(equalToConstant: 86)
-        ])
+        descriptionText.snp.makeConstraints { make in
+            make.height.equalTo(128)
+            make.leading.trailing.equalTo(stackView)
+        }
         
-        NSLayoutConstraint.activate([
-            ownerAge.trailingAnchor.constraint(equalTo: stackView.trailingAnchor)
-        ])
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(stackView.snp.bottom).inset(-16)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(86)
+        }
         
-        NSLayoutConstraint.activate([
-            ownerName.trailingAnchor.constraint(equalTo: ownerAge.leadingAnchor, constant: -4)
-        ])
+        ownerStackView.snp.makeConstraints { make in
+            make.top.equalTo(collectionView.snp.bottom).inset(-16)
+            make.leading.trailing.equalToSuperview().inset(22)
+        }
         
-        NSLayoutConstraint.activate([
-            ownerStackView.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 16),
-            ownerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 22),
-            ownerStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -22)
-        ])
+        ownerImage.snp.makeConstraints { make in
+            make.size.equalTo(86)
+        }
+        
+        ownerAge.snp.makeConstraints { make in
+            make.trailing.equalTo(stackView)
+        }
+        
+        ownerName.snp.makeConstraints { make in
+            make.trailing.equalTo(ownerAge.snp.leading).inset(-4)
+        }
         
         view.addSubview(goButton)
         
         goButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            goButton.topAnchor.constraint(equalTo: ownerStackView.bottomAnchor, constant: 4),
-            goButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 22),
-            goButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -22)
-        ])
-        
+        goButton.snp.makeConstraints { make in
+            make.top.equalTo(ownerStackView.snp.bottom).inset(-16)
+            make.leading.trailing.equalToSuperview().inset(22)
+        }
     }
 }
 

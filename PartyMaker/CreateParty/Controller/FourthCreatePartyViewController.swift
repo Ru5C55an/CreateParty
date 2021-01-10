@@ -59,7 +59,7 @@ class FourthCreatePartyViewController: UIViewController {
         FirestoreService.shared.savePartyWith(party: party, partyImage: partyImage) { [weak self] (result) in
             switch result {
             
-            case .success(let party):
+            case .success(_):
                 self?.navigationController?.popToRootViewController(animated: true)
             case .failure(let error):
                 self?.showAlert(title: "Ошибка", message: error.localizedDescription)
