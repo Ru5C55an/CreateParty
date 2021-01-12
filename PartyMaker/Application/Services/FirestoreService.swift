@@ -375,11 +375,11 @@ class FirestoreService {
         
         var query: Query = db.collection("parties")
         
-        if city != nil && city != "Любой" { query = query.whereField("city", isEqualTo : city) }
-        if type != nil && type != "Любой" { query = query.whereField("type", isEqualTo : type) }
+        if city != nil && city != "Любой" { query = query.whereField("city", isEqualTo : city!) }
+        if type != nil && type != "Любой" { query = query.whereField("type", isEqualTo : type!) }
         //        if date != nil && date != "" { query = query.whereField("date", isEqualTo : date) }
-        if maximumPeople != nil && maximumPeople != "" { query = query.whereField("maximumPeople", isEqualTo : maximumPeople) }
-        if price != nil && price != "" && price != "0" { query = query.whereField("price", isEqualTo : price) }
+        if maximumPeople != nil && maximumPeople != "" { query = query.whereField("maximumPeople", isEqualTo : maximumPeople!) }
+        if price != nil && price != "" && price != "0" { query = query.whereField("price", isEqualTo : price!) }
         query = query.whereField("userId", isNotEqualTo: Auth.auth().currentUser!.uid)
         
         query.getDocuments() { (querySnapshot, err) in

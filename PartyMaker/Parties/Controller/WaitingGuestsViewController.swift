@@ -77,6 +77,7 @@ class WaitingGuestsViewController: UIViewController {
     }
     
     deinit {
+        print(users)
         print("deinit", WaitingGuestsViewController.self)
     }
 }

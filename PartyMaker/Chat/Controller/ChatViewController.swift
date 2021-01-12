@@ -208,7 +208,7 @@ extension ChatViewController: MessagesDataSource {
         if indexPath.item % 4 == 0 {
             return NSAttributedString(string: MessageKitDateFormatter.shared.string(from: message.sentDate),
                                       attributes: [
-                                        NSAttributedString.Key.font: UIFont.sfProDisplay(ofSize: 10, weight: .regular),
+                                        NSAttributedString.Key.font: UIFont.sfProDisplay(ofSize: 10, weight: .regular)!,
                                         NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         } else {
             return nil
