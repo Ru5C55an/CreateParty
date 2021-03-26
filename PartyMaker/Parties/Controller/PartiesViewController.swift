@@ -62,6 +62,7 @@ class PartiesViewController: UIViewController {
                 
         sortingSegmentedControl.addTarget(self, action: #selector(sortSelection), for: .valueChanged)
         partiesSegmentedControl.addTarget(self, action: #selector(reloadPartiesType), for: .valueChanged)
+        partiesSegmentedControl.selectedSegmentIndex = 0
         
         sortingTypeSegmentControlBarButtonItem = UIBarButtonItem(customView: sortingSegmentedControl)
         
