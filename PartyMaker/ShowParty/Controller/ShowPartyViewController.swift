@@ -10,7 +10,7 @@ import SDWebImage
 import SnapKit
 
 class ShowPartyViewController: UIViewController {
-    
+     
     private let itemsPerRow: CGFloat = 1
     private let sectionInserts = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
     
@@ -42,6 +42,7 @@ class ShowPartyViewController: UIViewController {
     private let countPeopleLabel = UILabel(text: "Кол-во гостей", font: .sfProDisplay(ofSize: 24, weight: .medium))
     private let currentPeopleText = UILabel(text: "")
     private let maxPeopleText = UILabel(text: "")
+    private let separatorCountPeople = UILabel(text: "из")
     
     private let ownerlabel = UILabel(text: "Хозяин вечеринки", font: .sfProDisplay(ofSize: 24, weight: .medium))
     private let ownerImage = UIImageView()
@@ -49,17 +50,30 @@ class ShowPartyViewController: UIViewController {
     private let ownerAge = UILabel(text: "")
     private let ownerRating = UILabel(text: "􀋂 0")
     
-    private var dateFormatter: DateFormatter = {
+    private let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_RU")
         dateFormatter.dateFormat = "dd-MM-yyyy"
         return dateFormatter
     }()
     
+    private let secondDateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        dateFormatter.dateFormat = "dd MMMM"
+        return dateFormatter
+    }()
+    
     private var collectionView: UICollectionView!
     
     private let goButton = UIButton(title: "Пойти")
-    private let requestsButton = UIButton(title: "Новые заявки")
+    private let requestsButton: UIButton = {
+        let button = UIButton(title: "Заявки отсуствуют")
+        button.isEnabled = false
+        button.addIcon(image: UIImage(systemName: "bell.slash")!, alignment: .left)
+        return button
+      
+    }()
     private let cancelPartyButton = UIButton(title: "Отменить вечеринку")
     
     private let party: Party
@@ -100,15 +114,24 @@ class ShowPartyViewController: UIViewController {
         }
         
         nameText.text = party.name
-        dateText.text = party.date
+        
         startTimeText.text = party.startTime
         endTimeText.text = party.endTime
         typeText.text = party.type
-        priceText.text = party.price
+        
+        let date = dateFormatter.date(from: party.date)
+        dateText.text = secondDateFormatter.string(from: date!)
+        
+        if party.price == "0" {
+            priceText.text = "Бесплатно"
+        } else {
+            priceText.text = party.price
+        }
+      
         locationText.text = party.location
         descriptionText.textView.text = party.description
         currentPeopleText.text = party.currentPeople
-        maxPeopleText.text = " / \(party.maximumPeople)"
+        maxPeopleText.text = party.maximumPeople
     }
     
     required init?(coder: NSCoder) {
@@ -144,10 +167,17 @@ class ShowPartyViewController: UIViewController {
                 }
                     
             case .failure(let error):
-                self?.showAlert(title: "Ошибка!", message: error.localizedDescription)
+                if error as? PartyError == PartyError.noApprovedGuests {
+                    print(error.localizedDescription)
+                } else {
+                    self?.showAlert(title: "Ошибка!", message: error.localizedDescription)
+                    print(error.localizedDescription)
+                }
+                dg.leave()
             }
         }
         
+        dg.enter()
         FirestoreService.shared.getWaitingGuestsId(party: party) { [weak self] result in
             
             switch result {
@@ -170,7 +200,13 @@ class ShowPartyViewController: UIViewController {
                 }
                     
             case .failure(let error):
-                self?.showAlert(title: "Ошибка!", message: error.localizedDescription)
+                if error as? PartyError == PartyError.noWaitingGuests {
+                    print(error.localizedDescription)
+                } else {
+                    self?.showAlert(title: "Ошибка!", message: error.localizedDescription)
+                    print(error.localizedDescription)
+                }
+                dg.leave()
             }
         }
         
@@ -179,6 +215,16 @@ class ShowPartyViewController: UIViewController {
             print(self.waitingUsers)
             self.setupCollectionView()
             self.setupConstraints()
+            
+            if !self.waitingUsers.isEmpty {
+                self.requestsButton.isEnabled = true
+                self.requestsButton.setTitle("Новые заявки", for: .normal)
+                self.requestsButton.addIcon(image: UIImage(systemName: "bell")!, alignment: .left)
+            }
+            
+            if self.approvedUsers.isEmpty {
+
+            }
         }
         
         addTargets()
@@ -197,27 +243,36 @@ class ShowPartyViewController: UIViewController {
     }
     
     @objc private func showOwner() {
-        print(123123)
         let aboutUserVC = AboutUserViewContoller(user: ownerParty)
         present(aboutUserVC, animated: true, completion: nil)
     }
     
     @objc private func cancelButtonTapped() {
+        let alertController = UIAlertController(title: "Вы уверены?", message: "Ваша вечеринка с записанными гостями будет безвозвратно удалена", preferredStyle: .actionSheet)
+        let okAction = UIAlertAction(title: "Да, отменить", style: .destructive) { (_) in
+            
+        }
+        let dismissAction = UIAlertAction(title: "Нет, оставить", style: .cancel) { _ in
+            
+        }
         
+        alertController.addAction(dismissAction)
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
     }
     
     @objc private func requestsButtonTapped() {
         let waitingGuestVC = WaitingGuestsViewController(users: waitingUsers, party: party)
-        navigationController?.pushViewController(waitingGuestVC, animated: true)
+        present(waitingGuestVC, animated: true, completion: nil)
+//        navigationController?.pushViewController(waitingGuestVC, animated: true)
     }
     
     private func setupCustomization() {
-        
         locationButton.setImage(UIImage(named: "map"), for: .normal)
         ownerImage.layer.cornerRadius = 43
         ownerImage.clipsToBounds = true
         
-        requestsButton.addIcon(image: UIImage(systemName: "bell")!, alignment: .left)
+      
     }
     
     override func viewDidLayoutSubviews() {
@@ -308,7 +363,7 @@ extension ShowPartyViewController {
         
         let descriptionStackView = UIStackView(arrangedSubviews: [descriptionLabel, descriptionText], axis: .vertical, spacing: 8)
         
-        let countPeopleStackView = UIStackView(arrangedSubviews: [countPeopleLabel, currentPeopleText, maxPeopleText], axis: .horizontal, spacing: 8)
+        let countPeopleStackView = UIStackView(arrangedSubviews: [countPeopleLabel, currentPeopleText, separatorCountPeople, maxPeopleText], axis: .horizontal, spacing: 8)
         
         let ownerNameAndAgeStackView = UIStackView(arrangedSubviews: [ownerName, ownerAge], axis: .horizontal, spacing: 8)
         let ownerRatingAndNameAndAgeStackView = UIStackView(arrangedSubviews: [ownerNameAndAgeStackView, ownerRating], axis: .vertical, spacing: 8)
@@ -325,17 +380,7 @@ extension ShowPartyViewController {
         view.addSubview(stackView)
         view.addSubview(collectionView)
         view.addSubview(ownerStackView)
-        
-        nameText.translatesAutoresizingMaskIntoConstraints = false
-        descriptionText.translatesAutoresizingMaskIntoConstraints = false
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        ownerRatingAndNameAndAgeStackView.translatesAutoresizingMaskIntoConstraints = false
-        ownerStackView.translatesAutoresizingMaskIntoConstraints = false
-        ownerAge.translatesAutoresizingMaskIntoConstraints = false
-        ownerName.translatesAutoresizingMaskIntoConstraints = false
-        
-        
+
         stackView.snp.makeConstraints { make in
             make.top.equalTo(32)
             make.leading.trailing.equalToSuperview().inset(22)
@@ -351,8 +396,7 @@ extension ShowPartyViewController {
         
         descriptionText.snp.makeConstraints { make in
             make.height.equalTo(128)
-            make.leading.trailing.equalToSuperview()
-//            make.leading.trailing.equalTo(stackView)
+            make.leading.trailing.equalTo(stackView)
         }
         
         collectionView.snp.makeConstraints { make in
@@ -412,19 +456,19 @@ extension ShowPartyViewController {
             view.addSubview(requestsButton)
             view.addSubview(cancelPartyButton)
             
-            requestsButton.translatesAutoresizingMaskIntoConstraints = false
+   
             
             requestsButton.snp.makeConstraints { make in
                 make.height.equalTo(60)
-                make.top.equalTo(collectionView.snp.bottom).inset(-16)
+                make.bottom.equalTo(cancelPartyButton.snp.top).offset(-16)
                 make.leading.trailing.equalToSuperview().inset(22)
             }
             
-            cancelPartyButton.translatesAutoresizingMaskIntoConstraints = false
+        
             
             cancelPartyButton.snp.makeConstraints { make in
                 make.height.equalTo(60)
-                make.top.equalTo(requestsButton.snp.bottom).inset(-16)
+                make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
                 make.leading.trailing.equalToSuperview().inset(22)
             }
         }
