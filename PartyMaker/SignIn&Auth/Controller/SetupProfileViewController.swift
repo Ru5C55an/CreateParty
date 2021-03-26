@@ -73,7 +73,7 @@ class SetupProfileViewController: UIViewController {
         // Но с помощью этого это фиксится
         guard let description = aboutMeTextField.textView.text, description != aboutMeTextField.savedPlaceholder
         else {
-            self.showAlert(title: "Ошибка", message: "Заполните поле О себе")
+            self.showAlert(title: "Ошибка", message: "Напишите что-нибудь о себе")
             return
         }
         
@@ -127,7 +127,7 @@ extension SetupProfileViewController {
         view.addSubview(stackView)
         
         NSLayoutConstraint.activate([
-            welcomeLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 32),
+            welcomeLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
             welcomeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
