@@ -10,8 +10,22 @@ import SDWebImage
 
 class PartyCell: UICollectionViewCell, SelfConfiguringCell {
     
-    let dateLabel = UILabel(text: "Дата", font: .sfProDisplay(ofSize: 16, weight: .regular))
-    let typeLabel = UILabel(text: "Тип", font: .sfProDisplay(ofSize: 16, weight: .regular))
+    private let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        return dateFormatter
+    }()
+    
+    private let secondDateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        dateFormatter.dateFormat = "dd MMMM"
+        return dateFormatter
+    }()
+    
+    let dateLabel = UILabel(text: "Дата", font: .sfProDisplay(ofSize: 16, weight: .semibold))
+    let typeLabel = UILabel(text: "Тип", font: .sfProDisplay(ofSize: 16, weight: .semibold))
     
     let partyName = UILabel(text: "Название вечеринки", font: .sfProDisplay(ofSize: 20, weight: .medium))
     
@@ -25,7 +39,7 @@ class PartyCell: UICollectionViewCell, SelfConfiguringCell {
     let guestsCount = UILabel(text: "Текущее кол-во/Максимально", font: .sfProDisplay(ofSize: 18, weight: .medium))
     
     let userImageView = UIImageView()
-    let userName = UILabel(text: "Имя владельца", font: .sfProDisplay(ofSize: 18, weight: .medium))
+    let userName = UILabel(text: "Имя владельца", font: .sfProDisplay(ofSize: 18, weight: .semibold))
     let rating = UILabel(text: "􀋃 Рейтинг", font: .sfProDisplay(ofSize: 18, weight: .medium))
    
     let moneyView = UIView()
@@ -44,11 +58,11 @@ class PartyCell: UICollectionViewCell, SelfConfiguringCell {
         imageView.contentMode = .scaleToFill
         self.addSubview(imageView)
 
-//        let blurEffect = UIBlurEffect(style: .systemMaterial)
-//        let blurredEffectView = UIVisualEffectView(effect: blurEffect)
-//        blurredEffectView.layer.opacity = 0.1
-//        blurredEffectView.frame = imageView.bounds
-//        self.addSubview(blurredEffectView)
+        let blurEffect = UIBlurEffect(style: .systemMaterial)
+        let blurredEffectView = UIVisualEffectView(effect: blurEffect)
+        blurredEffectView.layer.opacity = 0.2
+        blurredEffectView.frame = imageView.bounds
+        self.addSubview(blurredEffectView)
         
         self.layer.shadowColor = UIColor(.black).cgColor
         self.layer.shadowRadius = 20
@@ -57,6 +71,7 @@ class PartyCell: UICollectionViewCell, SelfConfiguringCell {
         
         userImageView.layer.cornerRadius = 20
         userImageView.clipsToBounds = true
+        userImageView.tintColor = .black
         
         startTime.textColor = .black
         endTime.textColor = .white
@@ -102,19 +117,30 @@ class PartyCell: UICollectionViewCell, SelfConfiguringCell {
             switch result {
             
             case .success(let puser):
-                self.userImageView.sd_setImage(with: URL(string: puser.avatarStringURL), completed: nil)
+                if puser.avatarStringURL != "" {
+                    self.userImageView.sd_setImage(with: URL(string: puser.avatarStringURL), completed: nil)
+                } else {
+                    self.userImageView.image = UIImage(systemName: "person.circle")
+                }
+               
                 self.userName.text = puser.username
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
-        
-        dateLabel.text = party.date
+        let date = dateFormatter.date(from: party.date)
+        dateLabel.text = secondDateFormatter.string(from: date!)
         typeLabel.text = party.type
         partyName.text = party.name
         startTime.text = party.startTime
-        endTime.text = party.endTime
+        if party.endTime != "" {
+            endTime.text = party.endTime
+        } else {
+            endTime.text = "􀯠"
+        }
+      
         priceLabel.text = party.price
+//        print("party price, ", party.price)
         guestsCount.text = "\(party.currentPeople)/\(party.maximumPeople)"
     }
     
