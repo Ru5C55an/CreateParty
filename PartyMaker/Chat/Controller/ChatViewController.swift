@@ -142,8 +142,8 @@ extension ChatViewController {
         messageInputBar.backgroundView.backgroundColor = .mainWhite()
         messageInputBar.inputTextView.backgroundColor = .white
         messageInputBar.inputTextView.placeholderTextColor = #colorLiteral(red: 0.7411764706, green: 0.7411764706, blue: 0.7411764706, alpha: 1)
-        messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 14, left: 30, bottom: 14, right: 36)
-        messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 14, left: 36, bottom: 14, right: 36)
+        messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 14, left: 14, bottom: 14, right: 36)
+        messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 14, left: 20, bottom: 14, right: 36)
         messageInputBar.inputTextView.layer.borderColor = #colorLiteral(red: 0.7411764706, green: 0.7411764706, blue: 0.7411764706, alpha: 0.4033635232)
         messageInputBar.inputTextView.layer.borderWidth = 0.2
         messageInputBar.inputTextView.layer.cornerRadius = 18.0
@@ -166,6 +166,7 @@ extension ChatViewController {
         messageInputBar.sendButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 6, right: 30)
         messageInputBar.sendButton.setSize(CGSize(width: 48, height: 48), animated: false)
         messageInputBar.middleContentViewPadding.right = -38
+        messageInputBar.sendButton.title = nil
     }
     
     func configureCameraIcon() {
