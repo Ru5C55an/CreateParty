@@ -462,10 +462,15 @@ class FirestoreService {
                 var usersId: [String] = []
                 
                 for document in querySnapshot!.documents {
-                   
+                    
                     guard let userId = document.data()["uid"] as? String else { return }
                     
                     usersId.append(userId)
+                }
+                
+                guard usersId != [] else {
+                    completion(.failure(PartyError.noApprovedGuests))
+                    return
                 }
                 
                 completion(.success(usersId))
@@ -486,10 +491,15 @@ class FirestoreService {
                 var usersId: [String] = []
                 
                 for document in querySnapshot!.documents {
-                   
+                    
                     guard let userId = document.data()["uid"] as? String else { return }
                     
                     usersId.append(userId)
+                }
+                
+                guard usersId != [] else {
+                    completion(.failure(PartyError.noWaitingGuests))
+                    return
                 }
                 
                 completion(.success(usersId))
@@ -527,10 +537,47 @@ class FirestoreService {
     }
     
     func changeToApproved(user: PUser, party: Party, completion: @escaping (Result<Void, Error>) -> Void) {
+        let userId = user.id
+        let partyId = party.id
         
+        let approvedPartiesReference = usersRef.document(userId).collection("approvedParties")
+        let approvedGuestsReference = db.collection(["parties", partyId, "approvedGuests"].joined(separator: "/"))
+        
+        let waitingPartiesReference = usersRef.document(userId).collection("waitingParties")
+        let waitingGuestsReference = db.collection(["parties", partyId, "waitingGuests"].joined(separator: "/"))
+        
+        let waitingGuestRef = waitingGuestsReference.document(userId)
+        
+        waitingGuestRef.delete() { err in
+            if let err = err {
+                completion(.failure(err))
+                print("Error removing document: \(err)")
+            }
+            
+            waitingPartiesReference.document(partyId).delete() { (error) in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+            }
+            
+            approvedGuestsReference.addDocument(data: ["uid": userId], completion: { (error) in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                
+                approvedPartiesReference.addDocument(data: ["uid": partyId]) { (error) in
+                    if let error = error {
+                        completion(.failure(error))
+                        return
+                    }
+                    completion(.success(Void()))
+                    print("Guest will be change to approved!")
+                }
+            })
+        }
     }
-    
-    
     
     //    func getWaitingParties(completion: @escaping (Result<[Party], Error>) -> Void) {
     //
