@@ -100,9 +100,9 @@ class ChangeInformationUserViewController: UIViewController {
         
         view.backgroundColor = #colorLiteral(red: 0.9333333333, green: 0.9333333333, blue: 0.9333333333, alpha: 1)
         
-        imageView.layer.cornerRadius = 64
+        imageView.layer.cornerRadius = 6
         imageView.clipsToBounds = true
-        
+
         containerView.backgroundColor = .white
         containerView.layer.cornerRadius = 30
         containerView.clipsToBounds = true
