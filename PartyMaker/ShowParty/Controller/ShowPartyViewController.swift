@@ -8,9 +8,13 @@
 import UIKit
 import SDWebImage
 import SnapKit
+import Lottie
 
 class ShowPartyViewController: UIViewController {
      
+    var animationView = AnimationView()
+    let animationSpider = Animation.named("SpiderWeb")
+    
     private let itemsPerRow: CGFloat = 1
     private let sectionInserts = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
     
@@ -144,7 +148,7 @@ class ShowPartyViewController: UIViewController {
         view.backgroundColor = .systemBackground
         
         let dg = DispatchGroup()
-        dg.enter()
+
         FirestoreService.shared.getApprovedGuestsId(party: party) { [weak self] result in
             
             switch result {
@@ -162,7 +166,6 @@ class ShowPartyViewController: UIViewController {
                         case .failure(let error):
                             self?.showAlert(title: "Ошибка!", message: error.localizedDescription)
                         }
-                        dg.leave()
                     }
                 }
                     
@@ -173,7 +176,6 @@ class ShowPartyViewController: UIViewController {
                     self?.showAlert(title: "Ошибка!", message: error.localizedDescription)
                     print(error.localizedDescription)
                 }
-                dg.leave()
             }
         }
         
@@ -192,6 +194,7 @@ class ShowPartyViewController: UIViewController {
                         
                         case .success(let puser):
                             self?.waitingUsers.append(puser)
+                            self?.currentPeopleText.text = String(self?.waitingUsers.count ?? 0)
                         case .failure(let error):
                             self?.showAlert(title: "Ошибка!", message: error.localizedDescription)
                         }
@@ -272,7 +275,9 @@ class ShowPartyViewController: UIViewController {
         ownerImage.layer.cornerRadius = 43
         ownerImage.clipsToBounds = true
         
-      
+        animationView.animation = animationSpider
+        animationView.contentMode = .scaleAspectFit
+        animationView.backgroundColor = .clear
     }
     
     override func viewDidLayoutSubviews() {
@@ -380,6 +385,7 @@ extension ShowPartyViewController {
         view.addSubview(stackView)
         view.addSubview(collectionView)
         view.addSubview(ownerStackView)
+        view.addSubview(animationView)
 
         stackView.snp.makeConstraints { make in
             make.top.equalTo(32)
@@ -399,10 +405,28 @@ extension ShowPartyViewController {
             make.leading.trailing.equalTo(stackView)
         }
         
-        collectionView.snp.makeConstraints { make in
-            make.top.equalTo(stackView.snp.bottom).inset(-16)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(86)
+        print("asdoiasjdoiasjdoi: ", approvedUsers)
+        
+        if approvedUsers.isEmpty {
+            collectionView.isHidden = true
+            
+            animationView.play(fromFrame: 0, toFrame: 40, loopMode: .loop)
+            animationView.animationSpeed = 0.25
+            
+            animationView.snp.makeConstraints { (make) in
+                make.top.equalTo(stackView.snp.bottom).inset(-16)
+                make.leading.trailing.equalToSuperview()
+                make.height.equalTo(86)
+            }
+            
+        } else {
+            animationView.isHidden = true
+            
+            collectionView.snp.makeConstraints { make in
+                make.top.equalTo(stackView.snp.bottom).inset(-16)
+                make.leading.trailing.equalToSuperview()
+                make.height.equalTo(86)
+            }
         }
         
         ownerStackView.snp.makeConstraints { make in

@@ -14,11 +14,11 @@ class InformationUserViewController: UIViewController {
     let aboutLabel = UILabel(text: "Обо мне")
     let aboutText = AboutInputText(isEditable: false)
     let interestsLabel = UILabel(text: "Интересы", font: .sfProDisplay(ofSize: 16, weight: .medium))
-    let interestsList = UILabel(text: "💪  🎮  🎨  🧑‍🍳  🔬  🎤  🛹  🗺  🧑‍💻  🎼  📷  🎧", font: .sfProDisplay(ofSize: 16, weight: .medium))
+    let interestsList = UILabel(text: "💪  🎮  🎨  🧑‍🍳  🔬  🎤  🛹  🗺  🧑‍💻  🎼  📷  🎧", font: .sfProDisplay(ofSize: 26, weight: .medium))
     let alcoLabel = UILabel(text: "Алкоголь", font: .sfProDisplay(ofSize: 16, weight: .medium))
-    let alcoEmoji = UILabel(text: "🍷", font: .sfProDisplay(ofSize: 16, weight: .medium))
+    let alcoEmoji = UILabel(text: "🍷", font: .sfProDisplay(ofSize: 26, weight: .medium))
     let smokeLabel = UILabel(text: "Курение", font: .sfProDisplay(ofSize: 16, weight: .medium))
-    let smokeEmoji = UILabel(text: "🚭", font: .sfProDisplay(ofSize: 16, weight: .medium))
+    let smokeEmoji = UILabel(text: "🚭", font: .sfProDisplay(ofSize: 26, weight: .medium))
     
     let changeButton = UIButton(title: "Редактировать")
     
@@ -27,6 +27,8 @@ class InformationUserViewController: UIViewController {
     init(currentUser: PUser) {
         self.currentUser = currentUser
         self.aboutText.textView.text = currentUser.description
+        
+        self.interestsList.numberOfLines = 0
         self.interestsList.text = currentUser.interestsList
         if currentUser.alco == "true" {
             self.alcoEmoji.text = "🍷"
@@ -82,29 +84,52 @@ extension InformationUserViewController {
         view.addSubview(smokeAlcoStackView)
         view.addSubview(changeButton)
         
-        aboutStackView.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(44)
-            make.leading.equalToSuperview().offset(44)
-            make.trailing.equalToSuperview().offset(-44)
-            make.height.equalTo(128)
-        }
-        
-        interestsStackView.snp.makeConstraints { (make) in
-            make.top.equalTo(aboutStackView.snp.bottom).offset(32)
-            make.leading.equalToSuperview().offset(44)
-            make.trailing.equalToSuperview().offset(-44)
+        if UIScreen.main.bounds.height < 700 {
+            aboutStackView.snp.makeConstraints { (make) in
+                make.top.equalToSuperview().offset(16)
+                make.leading.equalToSuperview().offset(44)
+                make.trailing.equalToSuperview().offset(-44)
+                make.height.equalTo(128)
+            }
+            
+            interestsStackView.snp.makeConstraints { (make) in
+                make.top.equalTo(aboutStackView.snp.bottom).offset(16)
+                make.leading.equalToSuperview().offset(44)
+                make.trailing.equalToSuperview().offset(-44)
+            }
+            
+            smokeAlcoStackView.snp.makeConstraints { (make) in
+                make.top.equalTo(interestsStackView.snp.bottom).offset(16)
+                make.leading.equalToSuperview().offset(44)
+            }
+            
+        } else {
+            aboutStackView.snp.makeConstraints { (make) in
+                make.top.equalToSuperview().offset(44)
+                make.leading.equalToSuperview().offset(44)
+                make.trailing.equalToSuperview().offset(-44)
+                make.height.equalTo(128)
+            }
+            
+            interestsStackView.snp.makeConstraints { (make) in
+                make.top.equalTo(aboutStackView.snp.bottom).offset(32)
+                make.leading.equalToSuperview().offset(44)
+                make.trailing.equalToSuperview().offset(-44)
+            }
+            
+            smokeAlcoStackView.snp.makeConstraints { (make) in
+                make.top.equalTo(interestsStackView.snp.bottom).offset(32)
+                make.leading.equalToSuperview().offset(44)
+            }
         }
 
-        smokeAlcoStackView.snp.makeConstraints { (make) in
-            make.top.equalTo(interestsStackView.snp.bottom).offset(32)
-            make.leading.equalToSuperview().offset(44)
-        }
-        
         changeButton.snp.makeConstraints { (make) in
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
             make.height.equalTo(60)
             make.leading.equalToSuperview().offset(32)
             make.trailing.equalToSuperview().offset(-32)
         }
+        
+        interestsList.text = "💪  🎮  🎨  🧑‍🍳  🔬  🎤  🛹  🗺  🧑‍💻  🎼  📷  🎧"
     }
 }

@@ -4,7 +4,6 @@
 target 'PartyMaker' do
 
   use_frameworks!
-  pod 'lottie-ios'
   pod 'RealmSwift'
   pod 'Cosmos', '~> 23.0'
   
@@ -21,8 +20,11 @@ target 'PartyMaker' do
   pod 'SDWebImage', '~> 5.0'
   pod 'MessageKit'
   pod 'UPCarouselFlowLayout'
+  
   pod 'Squircle'
   pod 'SoftUIView'
+  pod 'Hero'
+  pod 'lottie-ios'
   
   pod 'SnapKit', '~> 5.0.0'
 

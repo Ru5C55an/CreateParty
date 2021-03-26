@@ -194,9 +194,10 @@ extension WaitingGuestsViewController: WaitingGuestsNavigation {
     func removeWaitingGuest(user: PUser) {
         FirestoreService.shared.deleteWaitingGuest(user: user, party: party) { (result) in
             switch result {
-            
             case .success():
                 self.showAlert(title: "Успешно!", message: "Заявка пользователя \(user.username) была отклонена")
+                self.users.removeAll { $0.id == user.id }
+                self.collectionView.reloadData()
             case .failure(let error):
                 self.showAlert(title: "Ошибка!", message: error.localizedDescription)
             }
@@ -206,9 +207,10 @@ extension WaitingGuestsViewController: WaitingGuestsNavigation {
     func changeToApproved(user: PUser) {
         FirestoreService.shared.changeToApproved(user: user, party: party) { (result) in
             switch result {
-            
             case .success():
                 self.showAlert(title: "Успешно!", message: "Приятно проведите время с \(user.username)")
+                self.users.removeAll { $0.id == user.id }
+                self.collectionView.reloadData()
             case .failure(let error):
                 self.showAlert(title: "Ошибка", message: error.localizedDescription)
             }

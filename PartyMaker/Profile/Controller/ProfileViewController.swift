@@ -142,50 +142,57 @@ extension ProfileViewController {
         let nameAgeRaringStackView = UIStackView(arrangedSubviews: [nameLabel, ageLabel, ratingLabel], axis: .horizontal, spacing: 8)
         nameAgeRaringStackView.distribution = .equalSpacing
         
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        nameAgeRaringStackView.translatesAutoresizingMaskIntoConstraints = false
-        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        childsContrainerView.translatesAutoresizingMaskIntoConstraints = false
-        
         view.addSubview(childsContrainerView)
         view.addSubview(containerView)
         containerView.addSubview(imageView)
         containerView.addSubview(nameAgeRaringStackView)
         containerView.addSubview(segmentedControl)
         
-        NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 58),
-            imageView.heightAnchor.constraint(equalToConstant: 128),
-            imageView.widthAnchor.constraint(equalToConstant: 128),
-            imageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
-        ])
+        if UIScreen.main.bounds.height < 700 {
+            
+            imageView.snp.makeConstraints { (make) in
+                make.top.equalTo(containerView.snp.top).offset(29)
+                make.size.equalTo(128)
+                make.centerX.equalToSuperview()
+            }
+            
+            containerView.snp.makeConstraints { (make) in
+                make.top.leading.trailing.equalToSuperview()
+                make.height.equalTo(230)
+            }
+            
+            nameAgeRaringStackView.snp.makeConstraints { (make) in
+                make.top.equalTo(imageView.snp.bottom).offset(12)
+                make.leading.trailing.equalToSuperview().inset(44)
+            }
+            
+        } else {
+            
+            imageView.snp.makeConstraints { (make) in
+                make.top.equalTo(containerView.snp.top).offset(58)
+                make.size.equalTo(128)
+                make.centerX.equalToSuperview()
+            }
+            
+            containerView.snp.makeConstraints { (make) in
+                make.top.leading.trailing.equalToSuperview()
+                make.height.equalTo(286)
+            }
+            
+            nameAgeRaringStackView.snp.makeConstraints { (make) in
+                make.top.equalTo(imageView.snp.bottom).offset(24)
+                make.leading.trailing.equalToSuperview().inset(44)
+            }
+        }
+      
+        segmentedControl.snp.makeConstraints { (make) in
+            make.bottom.leading.trailing.equalToSuperview()
+        }
         
-        NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: view.topAnchor),
-            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            containerView.heightAnchor.constraint(equalToConstant: 286)
-        ])
-        
-        NSLayoutConstraint.activate([
-            nameAgeRaringStackView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 24),
-            nameAgeRaringStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
-            nameAgeRaringStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44),
-        ])
-        
-        NSLayoutConstraint.activate([
-            segmentedControl.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-            segmentedControl.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            segmentedControl.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
-            childsContrainerView.topAnchor.constraint(equalTo: containerView.bottomAnchor),
-            childsContrainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            childsContrainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            childsContrainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
+        childsContrainerView.snp.makeConstraints { (make) in
+            make.top.equalTo(containerView.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
     }
 }
 

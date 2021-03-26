@@ -54,6 +54,7 @@
 		444074CC259F52C700C8667E /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444074CB259F52C700C8667E /* UserCell.swift */; };
 		444074D1259F651D00C8667E /* aprovedUsers.json in Resources */ = {isa = PBXBuildFile; fileRef = 444074D0259F651D00C8667E /* aprovedUsers.json */; };
 		444074DB259FBC4900C8667E /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444074DA259FBC4900C8667E /* MessageModel.swift */; };
+		4463BD33260E785F00848E29 /* SpiderWeb.json in Resources */ = {isa = PBXBuildFile; fileRef = 4463BD32260E785F00848E29 /* SpiderWeb.json */; };
 		4465EB2D257956C30096F3B7 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EB2C257956C30096F3B7 /* MainTabBarController.swift */; };
 		4465EB32257957160096F3B7 /* MyPartiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EB31257957160096F3B7 /* MyPartiesViewController.swift */; };
 		4465EB37257957E40096F3B7 /* SearchPartyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EB36257957E40096F3B7 /* SearchPartyViewController.swift */; };
@@ -184,6 +185,7 @@
 		444074CB259F52C700C8667E /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		444074D0259F651D00C8667E /* aprovedUsers.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = aprovedUsers.json; sourceTree = "<group>"; };
 		444074DA259FBC4900C8667E /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
+		4463BD32260E785F00848E29 /* SpiderWeb.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SpiderWeb.json; sourceTree = "<group>"; };
 		4465EB2C257956C30096F3B7 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		4465EB31257957160096F3B7 /* MyPartiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPartiesViewController.swift; sourceTree = "<group>"; };
 		4465EB36257957E40096F3B7 /* SearchPartyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPartyViewController.swift; sourceTree = "<group>"; };
@@ -494,6 +496,7 @@
 			children = (
 				447EE8C8257676AA00D8698F /* Assets.xcassets */,
 				440CEDEE258A46BA00553673 /* HelloScreen.json */,
+				4463BD32260E785F00848E29 /* SpiderWeb.json */,
 				4465EB7C257A89B00096F3B7 /* Confetti.json */,
 				4465EB7D257A89B00096F3B7 /* GradientBackground.json */,
 				4465EB7E257A89B00096F3B7 /* WaitingDots.json */,
@@ -942,6 +945,7 @@
 				4420BD4D259609E0005A4FAE /* SF-Pro-Display-Medium.otf in Resources */,
 				447EE8CC257676AA00D8698F /* LaunchScreen.storyboard in Resources */,
 				449D7C54259912AB00FE575F /* GoogleService-Info.plist in Resources */,
+				4463BD33260E785F00848E29 /* SpiderWeb.json in Resources */,
 				447EE8C9257676AA00D8698F /* Assets.xcassets in Resources */,
 				447EE8C4257676A700D8698F /* Main.storyboard in Resources */,
 				440CEDEF258A46BA00553673 /* HelloScreen.json in Resources */,
