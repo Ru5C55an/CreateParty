@@ -18,7 +18,6 @@ class AccountUserViewController: UIViewController {
     private let deleteAccountButton = UIButton(type: .system)
     private let changeEmailButton = UIButton(type: .system)
     
-    
     var provider = ""
     
     private let currentUser: PUser
@@ -50,13 +49,13 @@ class AccountUserViewController: UIViewController {
         } else {
             sendEmailVerificationButton.isHidden = true
         }
-        sendEmailVerificationButton.setTitle("Подтвердить эл. почту", for: .normal)
+        sendEmailVerificationButton.setTitle("📪 Подтвердить эл. почту", for: .normal)
         sendEmailVerificationButton.addTarget(self, action: #selector(sendEmailVerificationButtonTapped), for: .touchUpInside)
-        sendResetPasswordButton.setTitle("Сменить пароль", for: .normal)
+        sendResetPasswordButton.setTitle("🔏 Сменить пароль", for: .normal)
         sendResetPasswordButton.addTarget(self, action: #selector(sendPasswordResetButtonTapped), for: .touchUpInside)
-        deleteAccountButton.setTitle("Удалить аккаунт", for: .normal)
+        deleteAccountButton.setTitle("💔 Удалить аккаунт", for: .normal)
         deleteAccountButton.addTarget(self, action: #selector(deleteAccountButtonTapped), for: .touchUpInside)
-        changeEmailButton.setTitle("Сменить почту", for: .normal)
+        changeEmailButton.setTitle("📨 Сменить почту", for: .normal)
         changeEmailButton.addTarget(self, action: #selector(reauthentification), for: .touchUpInside)
         logOutButton.addTarget(self, action: #selector(logOutButtonTapped), for: .touchUpInside)
     }
@@ -285,11 +284,12 @@ extension AccountUserViewController {
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
         
-        NSLayoutConstraint.activate([
-            logOutButton.heightAnchor.constraint(equalToConstant: 60),
-            logOutButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 32),
-            logOutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
+        logOutButton.snp.makeConstraints { (make) in
+            make.height.equalTo(60)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
+            make.leading.equalToSuperview().offset(32)
+            make.trailing.equalToSuperview().offset(-32)
+        }
     }
 }
 

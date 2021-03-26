@@ -1,0 +1,17 @@
+//
+//  Color + Extension.swift
+//  PartyMaker
+//
+//  Created by Руслан Садыков on 08.02.2021.
+//
+
+import UIKit
+
+extension UIColor {
+    static var random: UIColor {
+        return UIColor(red: .random(in: 0...1),
+                     green: .random(in: 0...1),
+                     blue: .random(in: 0...1),
+                     alpha: .random(in: 0...1))
+    }
+}
