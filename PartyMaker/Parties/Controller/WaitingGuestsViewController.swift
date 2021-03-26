@@ -18,13 +18,13 @@ class WaitingGuestsViewController: UIViewController {
             
             case .users:
                 if usersCount < 1 || usersCount > 5 {
-                    return "\(usersCount) вечеринок"
+                    return "\(usersCount) заявок"
                 } else if usersCount == 1 {
-                    return "\(usersCount) вечеринка"
+                    return "\(usersCount) заявка"
                 } else if usersCount > 1 && usersCount < 5 {
-                    return "\(usersCount) вечеринки"
+                    return "\(usersCount) заявки"
                 } else {
-                    return "\(usersCount) вечеринок"
+                    return "\(usersCount) заявок"
                 }
             }
         }
@@ -50,7 +50,10 @@ class WaitingGuestsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .systemGroupedBackground
         setupCollectionView()
+        createDataSource()
+        reloadData()
     }
     
     private func setupCollectionView() {
@@ -58,7 +61,13 @@ class WaitingGuestsViewController: UIViewController {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.backgroundColor = .systemGroupedBackground
+        
         view.addSubview(collectionView)
+        
+        collectionView.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().inset(16)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
         
         collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.reuseId)
         
@@ -97,7 +106,16 @@ extension WaitingGuestsViewController {
             switch section {
             
             case .users:
-                return self?.configure(collectionView: collectionView, cellType: WaitingGuestCell.self, with: user, for: indexPath)
+                
+                #warning("Заменил испольщование функции расширения, т.к. нужно присвоить делегата")
+//                return self?.configure(collectionView: collectionView, cellType: WaitingGuestCell.self, with: user, for: indexPath)
+                
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WaitingGuestCell.reuseId, for: indexPath) as? WaitingGuestCell else { fatalError("Unable to dequeue \(WaitingGuestCell.self)")}
+                
+                cell.configure(with: user)
+                cell.delegate = self
+                
+                return cell
             }
         })
         
@@ -147,7 +165,7 @@ extension WaitingGuestsViewController {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(224))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(188))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
@@ -190,7 +208,7 @@ extension WaitingGuestsViewController: WaitingGuestsNavigation {
             switch result {
             
             case .success():
-                self.showAlert(title: "Успешно!", message: "Приятного проведите время с \(user.username)")
+                self.showAlert(title: "Успешно!", message: "Приятно проведите время с \(user.username)")
             case .failure(let error):
                 self.showAlert(title: "Ошибка", message: error.localizedDescription)
             }
@@ -204,6 +222,7 @@ extension WaitingGuestsViewController: UICollectionViewDelegate {
         guard let user = self.dataSource.itemIdentifier(for: indexPath) else { return }
         
         let partyRequestVC = PartyRequestViewController(user: user)
+        partyRequestVC.delegate = self
         present(partyRequestVC, animated: true, completion: nil)
     }
 }
