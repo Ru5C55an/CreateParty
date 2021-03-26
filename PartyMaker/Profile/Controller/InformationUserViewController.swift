@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import SnapKit
 
 class InformationUserViewController: UIViewController {
     
@@ -20,8 +21,6 @@ class InformationUserViewController: UIViewController {
     let smokeEmoji = UILabel(text: "🚭", font: .sfProDisplay(ofSize: 16, weight: .medium))
     
     let changeButton = UIButton(title: "Редактировать")
-    
-   
     
     private let currentUser: PUser
     
@@ -77,40 +76,35 @@ extension InformationUserViewController {
         let alcoStackView = UIStackView(arrangedSubviews: [alcoLabel, alcoEmoji], axis: .horizontal, spacing: 8)
         let smokeStackView = UIStackView(arrangedSubviews: [smokeLabel, smokeEmoji], axis: .horizontal, spacing: 8)
         let smokeAlcoStackView = UIStackView(arrangedSubviews: [smokeStackView, alcoStackView], axis: .horizontal, spacing: 32)
-        
-        aboutStackView.translatesAutoresizingMaskIntoConstraints = false
-        interestsStackView.translatesAutoresizingMaskIntoConstraints = false
-        smokeAlcoStackView.translatesAutoresizingMaskIntoConstraints = false
-        changeButton.translatesAutoresizingMaskIntoConstraints = false
 
         view.addSubview(aboutStackView)
         view.addSubview(interestsStackView)
         view.addSubview(smokeAlcoStackView)
         view.addSubview(changeButton)
         
-        NSLayoutConstraint.activate([
-            aboutStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 44),
-            aboutStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
-            aboutStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44),
-            aboutStackView.heightAnchor.constraint(equalToConstant: 128)
-        ])
-
-        NSLayoutConstraint.activate([
-            interestsStackView.topAnchor.constraint(equalTo: aboutStackView.bottomAnchor, constant: 32),
-            interestsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
-            interestsStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44)
-        ])
-
-        NSLayoutConstraint.activate([
-            smokeAlcoStackView.topAnchor.constraint(equalTo: interestsStackView.bottomAnchor, constant: 32),
-            smokeAlcoStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44)
-        ])
+        aboutStackView.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(44)
+            make.leading.equalToSuperview().offset(44)
+            make.trailing.equalToSuperview().offset(-44)
+            make.height.equalTo(128)
+        }
         
-        NSLayoutConstraint.activate([
-            changeButton.topAnchor.constraint(equalTo: smokeAlcoStackView.bottomAnchor, constant: 64),
-            changeButton.heightAnchor.constraint(equalToConstant: 60),
-            changeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            changeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32)
-        ])
+        interestsStackView.snp.makeConstraints { (make) in
+            make.top.equalTo(aboutStackView.snp.bottom).offset(32)
+            make.leading.equalToSuperview().offset(44)
+            make.trailing.equalToSuperview().offset(-44)
+        }
+
+        smokeAlcoStackView.snp.makeConstraints { (make) in
+            make.top.equalTo(interestsStackView.snp.bottom).offset(32)
+            make.leading.equalToSuperview().offset(44)
+        }
+        
+        changeButton.snp.makeConstraints { (make) in
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
+            make.height.equalTo(60)
+            make.leading.equalToSuperview().offset(32)
+            make.trailing.equalToSuperview().offset(-32)
+        }
     }
 }
