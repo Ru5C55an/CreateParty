@@ -91,6 +91,8 @@ class ThirdCreatePartyViewController: UIViewController {
             }
         
             party.price = price
+        } else {
+            party.price = "0"
         }
         
         guard let city = cityButton.titleLabel?.text, city != "Город" else {
