@@ -40,7 +40,7 @@ class ChatlistViewController: UIViewController {
     init(currentUser: PUser) {
         self.currentUser = currentUser
         super.init(nibName: nil, bundle: nil)
-        title = currentUser.username
+//        title = currentUser.username
     }
     
     required init?(coder: NSCoder) {
@@ -96,8 +96,8 @@ class ChatlistViewController: UIViewController {
     private func setupSearchBar() {
         let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
-//        navigationItem.hidesSearchBarWhenScrolling = true
-//        searchController.hidesNavigationBarDuringPresentation = false
+        navigationItem.hidesSearchBarWhenScrolling = true
+        searchController.hidesNavigationBarDuringPresentation = true
 //        searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
     }

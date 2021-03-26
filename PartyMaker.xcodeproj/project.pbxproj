@@ -103,6 +103,8 @@
 		44B6A3E825A0BCCE00204B20 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B6A3E725A0BCCE00204B20 /* ChatViewController.swift */; };
 		44BAA97D258013D600F9B362 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BAA97C258013D600F9B362 /* MapViewController.swift */; };
 		44BAA98A2582842800F9B362 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BAA9892582842800F9B362 /* MapManager.swift */; };
+		44CF4B8B25D08C2600206F35 /* EmojiImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CF4B8A25D08C2600206F35 /* EmojiImage.swift */; };
+		44CF4B9025D08EE100206F35 /* Color + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CF4B8F25D08EE100206F35 /* Color + Extension.swift */; };
 		44D002E125A37E10009F419B /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D002E025A37E10009F419B /* CardView.swift */; };
 		44D002EC25A38719009F419B /* FourthCreatePartyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D002EB25A38719009F419B /* FourthCreatePartyViewController.swift */; };
 		44D002F325A3A55B009F419B /* BackgroundCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D002F225A3A55B009F419B /* BackgroundCardCell.swift */; };
@@ -238,6 +240,8 @@
 		44B6A3E725A0BCCE00204B20 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		44BAA97C258013D600F9B362 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		44BAA9892582842800F9B362 /* MapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
+		44CF4B8A25D08C2600206F35 /* EmojiImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiImage.swift; sourceTree = "<group>"; };
+		44CF4B8F25D08EE100206F35 /* Color + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color + Extension.swift"; sourceTree = "<group>"; };
 		44D002E025A37E10009F419B /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		44D002EB25A38719009F419B /* FourthCreatePartyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthCreatePartyViewController.swift; sourceTree = "<group>"; };
 		44D002F225A3A55B009F419B /* BackgroundCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundCardCell.swift; sourceTree = "<group>"; };
@@ -329,6 +333,8 @@
 				4420BDD52596ABAF005A4FAE /* Bundle + Extension.swift */,
 				4420BDC425968ADF005A4FAE /* AboutInputText.swift */,
 				4420BD7225961386005A4FAE /* UIKit */,
+				44CF4B8A25D08C2600206F35 /* EmojiImage.swift */,
+				44CF4B8F25D08EE100206F35 /* Color + Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1032,6 +1038,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				447DD9B7259BCFE5007C4DA4 /* LocationTextField.swift in Sources */,
+				44CF4B9025D08EE100206F35 /* Color + Extension.swift in Sources */,
 				447DD9D2259BE3C7007C4DA4 /* EditPartyViewController.swift in Sources */,
 				44D002E125A37E10009F419B /* CardView.swift in Sources */,
 				447DD9BC259BDE91007C4DA4 /* AddPartyPhotoView.swift in Sources */,
@@ -1102,6 +1109,7 @@
 				4420BDF12597516F005A4FAE /* GradientView.swift in Sources */,
 				4420BD6425960F59005A4FAE /* UIColor + Extension.swift in Sources */,
 				4424A58D2598C90900B420F7 /* UITextField + Extension.swift in Sources */,
+				44CF4B8B25D08C2600206F35 /* EmojiImage.swift in Sources */,
 				4465EB8F257AA3360096F3B7 /* PartyModel2.swift in Sources */,
 				44EFFA9925A2081C00827A8D /* SearchPartiesView.swift in Sources */,
 				4404C2EE25A7409100A495EC /* ChangeInformationUserViewController.swift in Sources */,
