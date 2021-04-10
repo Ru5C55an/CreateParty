@@ -19,9 +19,10 @@ struct PUser: Hashable, Decodable {
     var interestsList: String
     var smoke: String
     var alco: String
+    var personalColor: String
     let id: String
     
-    init(username: String, email: String, avatarStringURL: String, description: String, sex: String, birthday: String, interestsList: String, smoke: String, alco: String, id: String) {
+    init(username: String, email: String, avatarStringURL: String, description: String, sex: String, birthday: String, interestsList: String, smoke: String, alco: String, personalColor: String, id: String) {
         self.username = username
         self.email = email
         self.avatarStringURL = avatarStringURL
@@ -31,6 +32,7 @@ struct PUser: Hashable, Decodable {
         self.interestsList = interestsList
         self.smoke = smoke
         self.alco = alco
+        self.personalColor = personalColor
         self.id = id
     }
     
@@ -45,6 +47,7 @@ struct PUser: Hashable, Decodable {
         let interestsList = data["interestsList"] as? String,
         let smoke = data["smoke"] as? String,
         let alco = data["alco"] as? String,
+        let personalColor = data["personalColor"] as? String,
         let id = data["uid"] as? String
         else { return nil }
         
@@ -57,6 +60,7 @@ struct PUser: Hashable, Decodable {
         self.interestsList = interestsList
         self.smoke = smoke
         self.alco = alco
+        self.personalColor = personalColor
         self.id = id
     }
     
@@ -70,6 +74,7 @@ struct PUser: Hashable, Decodable {
         rep["interestsList"] = interestsList
         rep["smoke"] = smoke
         rep["alco"] = alco
+        rep["personalColor"] = personalColor
         rep["uid"] = id
         return rep
     }

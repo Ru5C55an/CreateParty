@@ -23,7 +23,7 @@ target 'PartyMaker' do
   
   pod 'Squircle'
   pod 'SoftUIView'
-  pod 'Hero'
+  pod 'Hero', '~> 1.5.0'
   pod 'lottie-ios'
   
   pod 'SnapKit', '~> 5.0.0'

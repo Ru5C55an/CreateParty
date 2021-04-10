@@ -9,94 +9,68 @@ import UIKit
 
 class CitiesViewController: UIViewController {
     
-    let tableView = UITableView()
+    // MARK: - UI Elements
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.separatorStyle = .none
+        tableView.tintColor = UIColor.white
+        tableView.backgroundColor = .clear
+        tableView.layer.cornerRadius = 20
+        return tableView
+    }()
     
-    let searchBar = UISearchBar()
+    lazy var searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.placeholder = "Поиск города"
+        searchBar.layer.cornerRadius = 20
+        searchBar.clipsToBounds = true
+        return searchBar
+    }()
     
+    // MARK: - Properties
     private var searchBarIsEmpty: Bool {
         guard let text = searchBar.text else { return false }
         return text.isEmpty
     }
     
-    private var cities: [String] = ["Абакан", "Азов", "Александров", "Алексин", "Альметьевск", "Анапа", "Ангарск", "Анжеро-Судженск", "Апатиты", "Арзамас", "Армавир", "Арсеньев", "Артем", "Архангельск", "Асбест", "Астрахань", "Ачинск", "Балаково", "Балахна", "Балашиха", "Балашов", "Барнаул", "Батайск", "Белгород", "Белебей", "Белово", "Белогорск (Амурская область)", "Белорецк", "Белореченск", "Бердск", "Березники", "Березовский (Свердловская область)", "Бийск", "Биробиджан", "Благовещенск (Амурская область)", "Бор", "Борисоглебск", "Боровичи", "Братск", "Брянск", "Бугульма", "Буденновск", "Бузулук", "Буйнакск", "Великие Луки", "Великий Новгород", "Верхняя Пышма", "Видное", "Владивосток", "Владикавказ", "Владимир", "Волгоград", "Волгодонск",
-                                    "Волжск",
-                                    "Волжский",
-                                    "Вологда",
-                                    "Вольск",
-                                    "Воркута",
-                                    "Воронеж",
-                                    "Воскресенск",
-                                    "Воткинск",
-                                    "Всеволожск",
-                                    "Выборг",
-                                    "Выкса",
-                                    "Вязьма",
-                                    "Гатчина",
-                                    "Геленджик",
-                                    "Георгиевск",
-                                    "Глазов",
-                                    "Горно-Алтайск",
-                                    "Грозный",
-                                    "Губкин",
-                                    "Гудермес",
-                                    "Гуково",
-                                    "Гусь-Хрустальный",
-                                    "Дербент",
-                                    "Дзержинск",
-                                    "Димитровград",
-                                    "Дмитров",
-                                    "Долгопрудный",
-                                    "Домодедово",
-                                    "Донской",
-                                    "Дубна",
-                                    "Евпатория",
-                                    "Егорьевск",
-                                    "Ейск",
-                                    "Екатеринбург",
-                                    "Елабуга",
-                                    "Елец",
-                                    "Ессентуки",
-                                    "Железногорск (Красноярский край)",
-                                    "Железногорск (Курская область)",
-                                    "Жигулевск",
-                                    "Жуковский",
-                                    "Заречный",
-                                    "Зеленогорск",
-                                    "Зеленодольск",
-                                    "Златоуст",
-                                    "Иваново",
-                                    "Ивантеевка",
-                                    "Ижевск",
-                                    "Избербаш",
-                                    "Иркутск",
-                                    "Искитим",
-                                    "Ишим",
-                                    "Ишимбай",
-                                    "Йошкар-Ола",
-                                    "Казань",
-                                    "Калининград",
-                                    "Калуга",
-                                    "Каменск-Уральский",
-                                    "Каменск-Шахтинский",
-                                    "Камышин",
-                                    "Канск",
-                                    "Каспийск",
-                                    "Кемерово",
-                                    "Керчь",
-                                    "Кинешма",
-                                    "Кириши",
-                                    "Киров (Кировская область)",
-                                    "Кирово-Чепецк",
-                                    "Киселевск",
-                                    "Кисловодск",
-                                    "Клин",
-                                    "Клинцы",
-                                    "Ковров",
-                                    "Когалым",
-                                    "Коломна",
-                                    "Комсомольск-на-Амуре",
-                                    "Копейск",
-                                    "Королев",
+    private var cities: [String] = ["Абакан", "Азов", "Александров", "Алексин", "Альметьевск", "Анапа", "Ангарск", "Анжеро-Судженск", "Апатиты", "Арзамас", "Армавир", "Арсеньев", "Артем", "Архангельск", "Асбест", "Астрахань", "Ачинск", "Балаково", "Балахна", "Балашиха", "Балашов", "Барнаул", "Батайск", "Белгород", "Белебей", "Белово", "Белогорск (Амурская область)", "Белорецк", "Белореченск", "Бердск", "Березники", "Березовский (Свердловская область)", "Бийск", "Биробиджан", "Благовещенск (Амурская область)", "Бор", "Борисоглебск", "Боровичи", "Братск", "Брянск", "Бугульма", "Буденновск", "Бузулук", "Буйнакск", "Великие Луки", "Великий Новгород", "Верхняя Пышма", "Видное", "Владивосток", "Владикавказ", "Владимир", "Волгоград", "Волгодонск", "Волжск", "Волжский", "Вологда", "Вольск", "Воркута", "Воронеж", "Воскресенск", "Воткинск", "Всеволожск", "Выборг", "Выкса", "Вязьма", "Гатчина", "Геленджик", "Георгиевск", "Глазов", "Горно-Алтайск", "Грозный", "Губкин", "Гудермес", "Гуково", "Гусь-Хрустальный", "Дербент", "Дзержинск", "Димитровград", "Дмитров", "Долгопрудный", "Домодедово", "Донской", "Дубна", "Евпатория", "Егорьевск", "Ейск", "Екатеринбург", "Елабуга", "Елец", "Ессентуки", "Железногорск (Красноярский край)", "Железногорск (Курская область)", "Жигулевск", "Жуковский",
+"Заречный",
+"Зеленогорск",
+"Зеленодольск",
+"Златоуст",
+"Иваново",
+"Ивантеевка",
+"Ижевск",
+"Избербаш",
+"Иркутск",
+"Искитим",
+"Ишим",
+"Ишимбай",
+"Йошкар-Ола",
+"Казань",
+"Калининград",
+"Калуга",
+"Каменск-Уральский",
+"Каменск-Шахтинский",
+"Камышин",
+"Канск",
+"Каспийск",
+"Кемерово",
+"Керчь",
+"Кинешма",
+"Кириши",
+"Киров (Кировская область)",
+"Кирово-Чепецк",
+"Киселевск",
+"Кисловодск",
+"Клин",
+"Клинцы",
+"Ковров",
+"Когалым",
+"Коломна",
+"Комсомольск-на-Амуре",
+"Копейск",
+"Королев",
                                     "Кострома",
                                     "Котлас",
                                     "Красногорск",
@@ -220,73 +194,32 @@ class CitiesViewController: UIViewController {
                                     "Сертолово",
                                     "Сибай",
                                     "Симферополь",
-                                    "Славянск-на-Кубани",
-                                    "Смоленск",
-                                    "Соликамск",
-                                    "Солнечногорск",
-                                    "Сосновый Бор",
-                                    "Сочи",
-                                    "Ставрополь",
-                                    "Старый Оскол",
-                                    "Стерлитамак",
-                                    "Ступино",
-                                    "Сургут",
-                                    "Сызрань",
-                                    "Сыктывкар",
-                                    "Таганрог",
-                                    "Тамбов",
-                                    "Тверь",
-                                    "Тимашевск",
-                                    "Тихвин",
-                                    "Тихорецк",
-                                    "Тобольск",
-                                    "Тольятти",
-                                    "Томск",
-                                    "Троицк",
-                                    "Туапсе",
-                                    "Туймазы",
-                                    "Тула",
-                                    "Тюмень",
-                                    "Узловая",
-                                    "Улан-Удэ",
-                                    "Ульяновск",
-                                    "Урус-Мартан",
-                                    "Усолье-Сибирское",
-                                    "Уссурийск",
-                                    "Усть-Илимск",
-                                    "Уфа",
-                                    "Ухта",
-                                    "Феодосия",
-                                    "Фрязино",
-                                    "Хабаровск",
-                                    "Ханты-Мансийск",
-                                    "Хасавюрт",
-                                    "Химки",
-                                    "Чайковский",
-                                    "Чапаевск",
-                                    "Чебоксары",
-                                    "Челябинск",
-                                    "Черемхово",
-                                    "Череповец",
-                                    "Черкесск",
-                                    "Черногорск",
-                                    "Чехов",
-                                    "Чистополь",
-                                    "Чита",
-                                    "Шадринск",
-                                    "Шали",
-                                    "Шахты",
-                                    "Шуя",
-                                    "Щекино",
-                                    "Щелково",
-                                    "Электросталь",
-                                    "Элиста",
-                                    "Энгельс",
-                                    "Южно-Сахалинск",
-                                    "Юрга",
-                                    "Якутск",
-                                    "Ялта",
-                                    "Ярославль"]
+                                    "Славянск-на-Кубани", "Смоленск", "Соликамск",
+"Солнечногорск", "Сосновый Бор",
+"Сочи",
+"Ставрополь", "Старый Оскол",
+"Стерлитамак",
+"Ступино",
+"Сургут",
+"Сызрань",
+"Сыктывкар",
+"Таганрог",
+"Тамбов",
+"Тверь",
+"Тимашевск",
+"Тихвин",
+"Тихорецк",
+"Тобольск",
+"Тольятти",
+"Томск",
+"Троицк",
+"Туапсе",
+"Туймазы",
+"Тула",
+"Тюмень",
+"Узловая",
+"Улан-Удэ",
+"Ульяновск", "Урус-Мартан", "Усолье-Сибирское", "Уссурийск", "Усть-Илимск", "Уфа", "Ухта", "Феодосия", "Фрязино", "Хабаровск", "Ханты-Мансийск", "Хасавюрт", "Химки", "Чайковский", "Чапаевск", "Чебоксары", "Челябинск", "Черемхово", "Череповец", "Черкесск", "Черногорск", "Чехов", "Чистополь", "Чита", "Шадринск", "Шали", "Шахты", "Шуя", "Щекино", "Щелково", "Электросталь", "Элиста", "Энгельс", "Южно-Сахалинск", "Юрга", "Якутск", "Ялта", "Ярославль"]
     
     private var filteredCities: [String] = []
     
@@ -294,24 +227,22 @@ class CitiesViewController: UIViewController {
         return !searchBarIsEmpty
     }
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.separatorStyle = .none
-        tableView.tintColor = UIColor.white
-        tableView.backgroundColor = .clear
-        tableView.layer.cornerRadius = 20
         tableView.dataSource = self
         tableView.delegate = self
         
-        searchBar.placeholder = "Поиск города"
-        searchBar.layer.cornerRadius = 20
-        searchBar.clipsToBounds = true
         searchBar.delegate = self
 //        searchBar.keyboardAppearance = .dark
-        
         definesPresentationContext = true // Позволяет отпустить строку поиска, при переходе на другой экран
     
+        setupViews()
+        moveIn()
+    }
+    
+    private func setupViews() {
         let blurEffect = UIBlurEffect(style: .systemMaterial)
         let blurredEffectView = UIVisualEffectView(effect: blurEffect)
         blurredEffectView.frame = view.bounds
@@ -323,14 +254,10 @@ class CitiesViewController: UIViewController {
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 128),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 64),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -64),
-            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -128)
-        ])
-        
-        moveIn()
+        stackView.snp.makeConstraints { (make) in
+            make.top.bottom.equalToSuperview().inset(128)
+            make.leading.trailing.equalToSuperview().inset(64)
+        }
     }
     
     private func moveIn() {
@@ -369,6 +296,7 @@ class CitiesViewController: UIViewController {
     }
 }
 
+// MARK: - UITableViewDelegate, UITableViewDataSource
 extension CitiesViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -431,7 +359,7 @@ extension CitiesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if let searchPartyVC = self.parent as? SearchPartyViewController {
-            searchPartyVC.barView.cityButton.setTitle(cities[indexPath.row], for: .normal)
+            searchPartyVC.filterView.cityButton.setTitle(cities[indexPath.row], for: .normal)
         }
         
         if let thirdCreatePartyVC = self.parent as? ThirdCreatePartyViewController {

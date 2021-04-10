@@ -66,7 +66,7 @@ class FirestoreService {
             return
         }
         
-        var puser = PUser(username: username!, email: email, avatarStringURL: "", description: description!, sex: sex!, birthday: birthday!, interestsList: interestsList!, smoke: smoke!, alco: alco!, id: id)
+        var puser = PUser(username: username!, email: email, avatarStringURL: "", description: description!, sex: sex!, birthday: birthday!, interestsList: interestsList!, smoke: smoke!, alco: alco!, personalColor: "", id: id)
         
         if avatarImage != UIImage(systemName: "plus.viewfinder") {
             
@@ -357,7 +357,7 @@ class FirestoreService {
         
         let docRef = partiesRef.document(uid)
         docRef.getDocument { (document, error) in
-            
+            print("asfiasifojafiojasfi: ", document?.exists)
             if let document = document, document.exists {
                 guard let party = Party(document: document) else {
                     completion(.failure(PartyError.cannotUnwrapToParty))

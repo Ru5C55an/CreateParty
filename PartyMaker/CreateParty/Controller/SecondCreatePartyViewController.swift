@@ -9,6 +9,7 @@ import UIKit
 
 class SecondCreatePartyViewController: UIViewController {
     
+    // MARK: - UI Elements
     private let partyNameLabel = UILabel(text: "Название вечеринки")
     private let partyNameTextField = BubbleTextField(placeholder: "Например, Вечеринка у Децла дома")
     
@@ -16,13 +17,11 @@ class SecondCreatePartyViewController: UIViewController {
     private let aboutPartyTextView = AboutInputText(placeholder: "Напишите о своей вечеринке...", isEditable: true)
     private let typeLabel = UILabel(text: "Тип")
     
-    private var pickedType = ""
-    private var pickerData: [String] = [String]()
     private let typePicker = UIPickerView()
     
     private let countPeopleLabel = UILabel(text: "Кол-во гостей")
     private let countPeople = UILabel(text: "1", font: .sfProDisplay(ofSize: 22, weight: .medium))
-    private let countStepper: UIStepper = {
+    private lazy var countStepper: UIStepper = {
         let stepper = UIStepper()
         stepper.minimumValue = 1
         stepper.maximumValue = 1000
@@ -33,9 +32,14 @@ class SecondCreatePartyViewController: UIViewController {
     private let alcoLabel = UILabel(text: "Присутсвие алкоголя")
     private let alcoSwitcher = UISwitch()
     
+    // MARK: - Properties
+    private var pickedType = ""
+    private var pickerData: [String] = [String]()
+    
     private let currentUser: PUser
     internal var party: Party
     
+    // MARK: - Lifecycle
     init(party: Party, currentUser: PUser) {
         self.party = party
         self.currentUser = currentUser
@@ -73,6 +77,7 @@ class SecondCreatePartyViewController: UIViewController {
         setupConstraints()
     }
     
+    // MARK: - Handlers
     @objc private func countStepperTapped() {
         countPeople.text = String(Int(countStepper.value))
     }
@@ -135,44 +140,38 @@ extension SecondCreatePartyViewController {
         view.addSubview(alcoStackView)
         view.addSubview(nextButton)
         
-        aboutPartyTextView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        countPeopleStackView.translatesAutoresizingMaskIntoConstraints = false
-        alcoStackView.translatesAutoresizingMaskIntoConstraints = false
-        nextButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 112),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44)
-        ])
+        stackView.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(112)
+            make.leading.trailing.equalToSuperview().inset(44)
+        }
         
-        NSLayoutConstraint.activate([
-            partyNameTextField.heightAnchor.constraint(equalToConstant: 48)
-        ])
+        partyNameTextField.snp.makeConstraints { (make) in
+            make.height.equalTo(48)
+        }
         
-        NSLayoutConstraint.activate([
-            aboutPartyTextView.heightAnchor.constraint(equalToConstant: 92),
-        ])
+        aboutPartyTextView.snp.makeConstraints { (make) in
+            make.height.equalTo(92)
+        }
         
-        NSLayoutConstraint.activate([
-            alcoStackView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 32),
-            alcoStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44)
-        ])
+        alcoStackView.snp.makeConstraints { (make) in
+            make.top.equalTo(stackView.snp.bottom).offset(32)
+            make.leading.equalToSuperview().offset(44)
+        }
         
-        NSLayoutConstraint.activate([
-            alcoSwitcher.centerYAnchor.constraint(equalTo: alcoLabel.centerYAnchor)
-        ])
-
-        NSLayoutConstraint.activate([
-            nextButton.topAnchor.constraint(equalTo: alcoStackView.bottomAnchor, constant: 32),
-            nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
-            nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44),
-            nextButton.heightAnchor.constraint(equalToConstant: 64)
-        ])
+        alcoSwitcher.snp.makeConstraints { (make) in
+            make.centerY.equalTo(alcoLabel.snp.centerY)
+        }
+        
+        nextButton.snp.makeConstraints { (make) in
+            make.top.equalTo(alcoStackView.snp.bottom).offset(32)
+            make.leading.trailing.equalToSuperview().inset(44)
+            make.height.equalTo(64)
+        }
     }
 }
 
+// MARK: - UIPickerViewDataSource, UIPickerViewDelegate
 extension SecondCreatePartyViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         1
@@ -189,7 +188,6 @@ extension SecondCreatePartyViewController: UIPickerViewDataSource, UIPickerViewD
 
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-
         pickedType = String(pickerData[row])
     }
 }
@@ -206,7 +204,7 @@ struct SecondCreatePartyViewControllerProvider: PreviewProvider {
     
     struct ContainerView: UIViewControllerRepresentable {
         
-        let secondCreatePartyViewController = SecondCreatePartyViewController(party: Party(city: "", location: "", userId: "", imageUrlString: "", type: "", maximumPeople: "", currentPeople: "", id: "", date: "", startTime: "", endTime: "", name: "", price: "", description: "", alco: ""), currentUser: PUser(username: "", email: "", avatarStringURL: "", description: "", sex: "", birthday: "", interestsList: "", smoke: "", alco: "", id: ""))
+        let secondCreatePartyViewController = SecondCreatePartyViewController(party: Party(city: "", location: "", userId: "", imageUrlString: "", type: "", maximumPeople: "", currentPeople: "", id: "", date: "", startTime: "", endTime: "", name: "", price: "", description: "", alco: ""), currentUser: PUser(username: "", email: "", avatarStringURL: "", description: "", sex: "", birthday: "", interestsList: "", smoke: "", alco: "", personalColor: "", id: ""))
         
         func makeUIViewController(context: Context) -> SecondCreatePartyViewController {
             return secondCreatePartyViewController

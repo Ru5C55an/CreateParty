@@ -9,27 +9,30 @@ import UIKit
 
 class ThirdCreatePartyViewController: UIViewController {
     
-    let addPhotoLabel = UILabel(text: "Прикрепить фото")
-    let addPhoto = AddPartyPhotoView()
+    // MARK: - UI Elements
+    private let addPhotoLabel = UILabel(text: "Прикрепить фото")
+    private let addPhoto = AddPartyPhotoView()
     
-    let priceLabel = UILabel(text: "Цена за вход")
+    private let priceLabel = UILabel(text: "Цена за вход")
     
-    let freeLabel = UILabel(text: "Бесплатно")
-    let moneyLabel = UILabel(text: "Платно")
-    let moneySwitcher = UISwitch()
+    private let freeLabel = UILabel(text: "Бесплатно")
+    private let moneyLabel = UILabel(text: "Платно")
+    private let moneySwitcher = UISwitch()
     
-    let price = BubbleTextField(placeholder: "500")
+    private let price = BubbleTextField(placeholder: "500")
     
     let cityButton = UIButton(title: "Город", titleColor: #colorLiteral(red: 0.1921568627, green: 0.568627451, blue: 0.9882352941, alpha: 1), backgroundColor: #colorLiteral(red: 0.937254902, green: 0.937254902, blue: 0.9411764706, alpha: 1), isShadow: false, cornerRadius: 10)
     
-    let locationLabel = UILabel(text: "Адрес вечеринки")
-    let locationTextField = LocationTextField()
+    private let locationLabel = UILabel(text: "Адрес вечеринки")
+    private let locationTextField = LocationTextField()
     
-    let doneButton = UIButton(title: "Готово")
+    private  let doneButton = UIButton(title: "Готово")
     
+    // MARK: - Properties
     private let currentUser: PUser
     private var party: Party
     
+    // MARK: - Lifecycle
     init(party: Party, currentUser: PUser) {
         self.party = party
         self.currentUser = currentUser
@@ -64,6 +67,8 @@ class ThirdCreatePartyViewController: UIViewController {
         setupConstraints()
     }
     
+    
+    // MARK: - Handlers
     @objc private func switchValueChanged() {
         if moneySwitcher.isOn {
             price.isHidden = false
@@ -144,12 +149,12 @@ class ThirdCreatePartyViewController: UIViewController {
         present(actionSheet, animated: true) // present вызывает наш контроллер
     }
     
-    deinit {
-        print("deinit", ThirdCreatePartyViewController.self)
-    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    deinit {
+        print("deinit", ThirdCreatePartyViewController.self)
     }
 }
 
@@ -171,19 +176,11 @@ extension ThirdCreatePartyViewController {
         view.addSubview(locationStackView)
         view.addSubview(doneButton)
 
-        addPhotoLabel.translatesAutoresizingMaskIntoConstraints = false
-        addPhoto.translatesAutoresizingMaskIntoConstraints = false
-        priceLabel.translatesAutoresizingMaskIntoConstraints = false
-        moneyStackView.translatesAutoresizingMaskIntoConstraints = false
-        price.translatesAutoresizingMaskIntoConstraints = false
-        cityButton.translatesAutoresizingMaskIntoConstraints = false
-        locationStackView.translatesAutoresizingMaskIntoConstraints = false
-        doneButton.translatesAutoresizingMaskIntoConstraints = false
+        addPhotoLabel.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(112)
+            make.centerX.equalToSuperview()
+        }
 
-        NSLayoutConstraint.activate([
-            addPhotoLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 112),
-            addPhotoLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
         
         NSLayoutConstraint.activate([
             addPhoto.topAnchor.constraint(equalTo: addPhotoLabel.bottomAnchor, constant: 8),
@@ -265,7 +262,7 @@ struct ThirdCreatePartyViewControllerProvider: PreviewProvider {
     
     struct ContainerView: UIViewControllerRepresentable {
         
-        let thirdCreatePartyViewController = ThirdCreatePartyViewController(party: Party(city: "", location: "", userId: "", imageUrlString: "", type: "", maximumPeople: "", currentPeople: "", id: "", date: "", startTime: "", endTime: "", name: "", price: "", description: "", alco: ""), currentUser: PUser(username: "", email: "", avatarStringURL: "", description: "", sex: "", birthday: "", interestsList: "", smoke: "", alco: "", id: ""))
+        let thirdCreatePartyViewController = ThirdCreatePartyViewController(party: Party(city: "", location: "", userId: "", imageUrlString: "", type: "", maximumPeople: "", currentPeople: "", id: "", date: "", startTime: "", endTime: "", name: "", price: "", description: "", alco: ""), currentUser: PUser(username: "", email: "", avatarStringURL: "", description: "", sex: "", birthday: "", interestsList: "", smoke: "", alco: "", personalColor: "", id: ""))
         
         func makeUIViewController(context: Context) -> ThirdCreatePartyViewController {
             return thirdCreatePartyViewController

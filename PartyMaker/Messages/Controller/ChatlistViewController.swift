@@ -7,8 +7,17 @@
 
 import UIKit
 import FirebaseFirestore
+import Lottie
 
 class ChatlistViewController: UIViewController {
+    
+    // MARK: - UI Elements
+    var collectionView: UICollectionView!
+    var emptyWaitChatsAnim = AnimationView()
+    var emptyActiveChatsAnim = AnimationView()
+
+    // MARK: - Properties
+    let animationSpider = Animation.named("SpiderWeb")
     
     var activeChats = [PChat]()
     var waitingChats = [PChat]()
@@ -32,11 +41,11 @@ class ChatlistViewController: UIViewController {
         }
     }
     
-    var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<Section, PChat>?
     
     private let currentUser: PUser
     
+    // MARK: - Lifecycle
     init(currentUser: PUser) {
         self.currentUser = currentUser
         super.init(nibName: nil, bundle: nil)
@@ -58,6 +67,7 @@ class ChatlistViewController: UIViewController {
         
         setupSearchBar()
         setupCollectionView()
+        setupViews()
         createDataSource()
         reloadData()
         
@@ -73,6 +83,13 @@ class ChatlistViewController: UIViewController {
                 }
                 
                 self.waitingChats = chats
+                
+                if self.waitingChats.isEmpty {
+                    self.emptyWaitChatsAnim.isHidden = false
+                } else {
+                    self.emptyWaitChatsAnim.isHidden = true
+                }
+                
                 self.reloadData()
                 
             case .failure(let error):
@@ -85,6 +102,13 @@ class ChatlistViewController: UIViewController {
             
             case .success(let chats):
                 self.activeChats = chats
+                
+                if self.activeChats.isEmpty {
+                    self.emptyActiveChatsAnim.isHidden = false
+                } else {
+                    self.emptyActiveChatsAnim.isHidden = true
+                }
+                
                 self.reloadData()
                 
             case .failure(let error):
@@ -93,20 +117,54 @@ class ChatlistViewController: UIViewController {
         })
     }
     
+    // MARK: - Setup views
     private func setupSearchBar() {
         let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = true
-        searchController.hidesNavigationBarDuringPresentation = true
+//        searchController.hidesNavigationBarDuringPresentation = true
 //        searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
+    }
+    
+    private func setupViews() {
+        
+        emptyWaitChatsAnim.animation = animationSpider
+        emptyWaitChatsAnim.contentMode = .scaleAspectFit
+        emptyWaitChatsAnim.backgroundColor = .clear
+        
+        emptyActiveChatsAnim.animation = animationSpider
+        emptyActiveChatsAnim.contentMode = .scaleAspectFit
+        emptyActiveChatsAnim.backgroundColor = .clear
+        
+        view.addSubview(emptyWaitChatsAnim)
+        view.addSubview(emptyActiveChatsAnim)
+        
+        emptyWaitChatsAnim.play(fromFrame: 0, toFrame: 40, loopMode: .loop)
+        emptyWaitChatsAnim.animationSpeed = 0.25
+        
+        emptyActiveChatsAnim.play(fromFrame: 0, toFrame: 40, loopMode: .loop)
+        emptyActiveChatsAnim.animationSpeed = 0.25
+        
+        emptyWaitChatsAnim.snp.makeConstraints { (make) in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
+            make.height.equalTo(86)
+        }
+        
+        emptyActiveChatsAnim.snp.makeConstraints { (make) in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(170)
+            make.height.equalTo(86)
+        }
     }
     
     private func setupCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.backgroundColor = .mainWhite()
-        view.addSubview(collectionView)
+        
+        view = collectionView
         
         collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.reuseId)
         
@@ -284,6 +342,7 @@ extension ChatlistViewController: UICollectionViewDelegate {
     }
 }
 
+// MARK: - WaitingChatsNavigation
 extension ChatlistViewController: WaitingChatsNavigation {
     func removeWaitingChat(chat: PChat) {
         FirestoreService.shared.deleteWaitingChat(chat: chat) { (result) in
@@ -322,7 +381,7 @@ struct ChatlistControllerProvider: PreviewProvider {
     
     struct ContainerView: UIViewControllerRepresentable {
         
-        let mainTabBarController = MainTabBarController(currentUser: PUser(username: "", email: "", avatarStringURL: "", description: "", sex: "", birthday: "", interestsList: "", smoke: "", alco: "", id: ""))
+        let mainTabBarController = MainTabBarController(currentUser: PUser(username: "", email: "", avatarStringURL: "", description: "", sex: "", birthday: "", interestsList: "", smoke: "", alco: "", personalColor: "", id: ""))
         
         func makeUIViewController(context: Context) -> MainTabBarController {
             return mainTabBarController

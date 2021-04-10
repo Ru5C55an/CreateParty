@@ -31,7 +31,6 @@ class MapViewController: UIViewController {
     }
     
     required init?(coder: NSCoder) {
-        
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -70,6 +69,7 @@ class MapViewController: UIViewController {
         mapView.delegate = self
         
         userLocationButton.layer.contents = UIImage(named: "NearMe")?.cgImage
+//        userLocationButton.layer.contents = UIImage(systemName: "location.circle.fill")?.cgImage
         userLocationButton.addTarget(self, action: #selector(centerViewInUserLocation), for: .touchUpInside)
         
         doneButton.addTarget(self, action: #selector(doneButtonPressed), for: .touchUpInside)
@@ -161,57 +161,44 @@ extension MapViewController {
         mapView.addSubview(timeAndDistanceLabel)
         mapView.addSubview(addressLabel)
         
+        mapView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
         
-        closeButton.translatesAutoresizingMaskIntoConstraints = false
-        mapView.translatesAutoresizingMaskIntoConstraints = false
-        doneButton.translatesAutoresizingMaskIntoConstraints = false
-        goButton.translatesAutoresizingMaskIntoConstraints = false
-        userLocationButton.translatesAutoresizingMaskIntoConstraints = false
-        mapMarkerImage.translatesAutoresizingMaskIntoConstraints = false
-        timeAndDistanceLabel.translatesAutoresizingMaskIntoConstraints = false
-        addressLabel.translatesAutoresizingMaskIntoConstraints = false
+        closeButton.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(64)
+            make.trailing.equalToSuperview().offset(-32)
+        }
         
-        NSLayoutConstraint.activate([
-            mapView.topAnchor.constraint(equalTo: view.topAnchor),
-            mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
+        timeAndDistanceLabel.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(128)
+            make.centerX.equalToSuperview()
+        }
         
-        NSLayoutConstraint.activate([
-            closeButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 64),
-            closeButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -32)
-        ])
+        addressLabel.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(128)
+            make.centerX.equalToSuperview()
+        }
         
-        NSLayoutConstraint.activate([
-            timeAndDistanceLabel.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 128),
-            timeAndDistanceLabel.centerXAnchor.constraint(equalTo: mapView.centerXAnchor)
-        ])
+        doneButton.snp.makeConstraints { (make) in
+            make.bottom.equalToSuperview().offset(-128)
+            make.centerX.equalToSuperview()
+        }
         
-        NSLayoutConstraint.activate([
-            addressLabel.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 128),
-            addressLabel.centerXAnchor.constraint(equalTo: mapView.centerXAnchor)
-        ])
+        goButton.snp.makeConstraints { (make) in
+            make.bottom.equalToSuperview().offset(-88)
+            make.centerX.equalToSuperview()
+        }
         
-        NSLayoutConstraint.activate([
-            doneButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -128),
-            doneButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor)
-        ])
+        userLocationButton.snp.makeConstraints { (make) in
+            make.trailing.equalToSuperview().offset(-44)
+            make.bottom.equalToSuperview().offset(-124)
+        }
         
-        NSLayoutConstraint.activate([
-            goButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -88),
-            goButton.centerXAnchor.constraint(equalTo: mapView.centerXAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
-            userLocationButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -44),
-            userLocationButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -124)
-        ])
-        
-        NSLayoutConstraint.activate([
-            mapMarkerImage.centerXAnchor.constraint(equalTo: mapView.centerXAnchor),
-            mapMarkerImage.centerYAnchor.constraint(equalTo: mapView.centerYAnchor, constant: -20)
-        ])
+        mapMarkerImage.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(-20)
+        }
     }
 }
 

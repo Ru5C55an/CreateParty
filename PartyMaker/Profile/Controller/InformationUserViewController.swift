@@ -20,7 +20,7 @@ class InformationUserViewController: UIViewController {
     let smokeLabel = UILabel(text: "Курение", font: .sfProDisplay(ofSize: 16, weight: .medium))
     let smokeEmoji = UILabel(text: "🚭", font: .sfProDisplay(ofSize: 26, weight: .medium))
     
-    let changeButton = UIButton(title: "Редактировать")
+    let changeButton = UIButton(title: "Редактировать", titleColor: .white)
     
     private let currentUser: PUser
     

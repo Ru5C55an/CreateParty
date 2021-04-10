@@ -9,6 +9,7 @@ import UIKit
 
 extension UIView {
     
+    // MARK: - Gradients
     enum Point {
         case topLeading
         case leading
@@ -59,14 +60,14 @@ extension UIView {
         }
     }
     
-    func applySketchShadow(
-        color: UIColor = .black,
-        alpha: Float = 0.2,
-        x: CGFloat = 0,
-        y: CGFloat = 2,
-        blur: CGFloat = 4,
-        spread: CGFloat = 0)
-    {
+    // MARK: - Shadows
+    func applySketchShadow(color: UIColor = .black,
+                           alpha: Float = 0.2,
+                           x: CGFloat = 0,
+                           y: CGFloat = 2,
+                           blur: CGFloat = 4,
+                           spread: CGFloat = 0) {
+        
         layer.shadowColor = color.cgColor
         layer.shadowOpacity = alpha
         layer.shadowOffset = CGSize(width: x, height: y)
@@ -80,11 +81,36 @@ extension UIView {
         }
     }
     
-    func removeShadow()
-    {
+    func removeShadow() {
         layer.shadowOpacity = 0
         layer.shadowOffset = CGSize(width: 0, height: 0)
         layer.shadowRadius = 0
         layer.shadowPath = nil
+    }
+    
+    // MARK: - Tap
+    private static var tapKey = "tapKey"
+    
+    func addTap(numberOfTapsRequired: Int = 1, numberOfTouchesRequired: Int = 1, cancelTouchesInView: Bool = true, action: @escaping () -> Void) {
+        isUserInteractionEnabled = true
+        objc_setAssociatedObject(self, &UIView.tapKey, TapAction(action: action), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapView))
+        tapRecognizer.numberOfTapsRequired = numberOfTapsRequired
+        tapRecognizer.numberOfTouchesRequired = numberOfTouchesRequired
+        tapRecognizer.cancelsTouchesInView = cancelTouchesInView
+        addGestureRecognizer(tapRecognizer)
+    }
+    
+    @objc private func tapView() {
+        if let tap = objc_getAssociatedObject(self, &UIView.tapKey) as? TapAction {
+            tap.action()
+        }
+    }
+    
+    private class TapAction {
+        var action: () -> Void
+        init(action: @escaping () -> Void) {
+            self.action = action
+        }
     }
 }

@@ -9,15 +9,19 @@ import UIKit
 
 class BubbleTextField: UITextField {
     
-    init(placeholder: String = "Введите текст...") {
+    var insets: CGFloat!
+    
+    init(placeholder: String = "Введите текст...", insets: CGFloat = 16, clearButtonMode: UITextField.ViewMode = .whileEditing, keyboardType: UIKeyboardType = .default) {
         super.init(frame: .zero)
         
+        self.insets = insets
         self.placeholder = placeholder
         
         self.backgroundColor = .white
         self.font = UIFont.sfProDisplay(ofSize: 14, weight: .regular)
-        self.clearButtonMode = .whileEditing
+        self.clearButtonMode = clearButtonMode
         self.layer.cornerRadius = 10
+        self.keyboardType = keyboardType
         
         self.layer.borderColor = UIColor(red: 189, green: 189, blue: 189, alpha: 40).cgColor
         self.layer.borderWidth = 0.2
@@ -26,15 +30,15 @@ class BubbleTextField: UITextField {
     }
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.insetBy(dx: 16, dy: 0)
+        return bounds.insetBy(dx: insets, dy: 0)
     }
     
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.insetBy(dx: 16, dy: 0)
+        return bounds.insetBy(dx: insets, dy: 0)
     }
     
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.insetBy(dx: 16, dy: 0)
+        return bounds.insetBy(dx: insets, dy: 0)
     }
     
     required init?(coder: NSCoder) {

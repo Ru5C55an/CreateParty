@@ -10,32 +10,36 @@ import FirebaseAuth
 
 class CreatePartyViewController: UIViewController {
     
-    var dateFormatter: DateFormatter = {
+    // MARK: - UI Elements
+    private let datepicker = UIDatePicker(datePickerMode: .date, preferredDatePickerStyle: .inline, minimumDate: Date())
+    
+    private let startTimeLabel = UILabel(text: "Начало")
+    private let endTimeLabel = UILabel(text: "Конец")
+    private let endTimeSwitcher = UISwitch()
+    private let startTimepicker = UIDatePicker(datePickerMode: .time, preferredDatePickerStyle: .inline)
+    private let endTimepicker = UIDatePicker(datePickerMode: .time, preferredDatePickerStyle: .inline)
+   
+    private let nextButton = UIButton(title: "Далее", titleColor: .white)
+    
+    // MARK: - Properties
+    private lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_RU")
         dateFormatter.dateFormat = "dd-MM-yyyy"
         return dateFormatter
     }()
     
-    var timeFormatter: DateFormatter = {
+    private lazy var timeFormatter: DateFormatter = {
         let timeFormatter = DateFormatter()
         timeFormatter.locale = Locale(identifier: "ru_RU")
         timeFormatter.dateFormat = "HH:mm"
         return timeFormatter
     }()
     
-    let datepicker = UIDatePicker(datePickerMode: .date, preferredDatePickerStyle: .inline, minimumDate: Date())
-    
-    let startTimeLabel = UILabel(text: "Начало")
-    let endTimeLabel = UILabel(text: "Конец")
-    let endTimeSwitcher = UISwitch()
-    let startTimepicker = UIDatePicker(datePickerMode: .time, preferredDatePickerStyle: .inline)
-    let endTimepicker = UIDatePicker(datePickerMode: .time, preferredDatePickerStyle: .inline)
-   
-    let nextButton = UIButton(title: "Далее")
-    
     private let currentUser: PUser
+    var party = Party(city: "", location: "", userId: "", imageUrlString: "", type: "", maximumPeople: "", currentPeople: "", id: "", date: "", startTime: "", endTime: "", name: "", price: "", description: "", alco: "")
     
+    // MARK: - Lifecycle
     init(currentUser: PUser) {
         self.currentUser = currentUser
         
@@ -70,8 +74,7 @@ class CreatePartyViewController: UIViewController {
         setupConstraints()
     }
     
-    var party = Party(city: "", location: "", userId: "", imageUrlString: "", type: "", maximumPeople: "", currentPeople: "", id: "", date: "", startTime: "", endTime: "", name: "", price: "", description: "", alco: "")
-    
+    // MARK: - Handlers
     @objc private func nextButtonTapped() {
         
         
@@ -126,12 +129,6 @@ class CreatePartyViewController: UIViewController {
 extension CreatePartyViewController {
     
     private func setupConstraints() {
-        
-        datepicker.translatesAutoresizingMaskIntoConstraints = false
-        startTimeLabel.translatesAutoresizingMaskIntoConstraints = false
-        startTimepicker.translatesAutoresizingMaskIntoConstraints = false
-        endTimepicker.translatesAutoresizingMaskIntoConstraints = false
-        nextButton.translatesAutoresizingMaskIntoConstraints = false
 
         let endLabelStackView = UIStackView(arrangedSubviews: [endTimeLabel, endTimeSwitcher], axis: .horizontal, spacing: 8)
         endLabelStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -143,36 +140,36 @@ extension CreatePartyViewController {
         view.addSubview(endTimepicker)
         view.addSubview(nextButton)
 
-        NSLayoutConstraint.activate([
-            datepicker.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8)
-        ])
-
-        NSLayoutConstraint.activate([
-            startTimeLabel.topAnchor.constraint(equalTo: datepicker.bottomAnchor, constant: 16),
-            startTimeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44)
-        ])
+        datepicker.snp.makeConstraints { (make) in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
+            make.leading.trailing.equalToSuperview().inset(34)
+        }
         
-        NSLayoutConstraint.activate([
-            startTimepicker.topAnchor.constraint(equalTo: startTimeLabel.bottomAnchor, constant: 8),
-            startTimepicker.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 34)
-        ])
+        startTimeLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(datepicker.snp.bottom).offset(16)
+            make.leading.equalToSuperview().offset(44)
+        }
         
-        NSLayoutConstraint.activate([
-            endLabelStackView.topAnchor.constraint(equalTo: startTimepicker.bottomAnchor, constant: 16),
-            endLabelStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44)
-        ])
+        startTimepicker.snp.makeConstraints { (make) in
+            make.top.equalTo(startTimeLabel.snp.bottom).offset(8)
+            make.leading.equalToSuperview().offset(34)
+        }
+        
+        endLabelStackView.snp.makeConstraints { (make) in
+            make.top.equalTo(startTimepicker.snp.bottom).offset(16)
+            make.leading.equalToSuperview().offset(44)
+        }
 
-        NSLayoutConstraint.activate([
-            endTimepicker.topAnchor.constraint(equalTo: endTimeLabel.bottomAnchor, constant: 8),
-            endTimepicker.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 34)
-        ])
-
-        NSLayoutConstraint.activate([
-            nextButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-            nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
-            nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44),
-            nextButton.heightAnchor.constraint(equalToConstant: 64)
-        ])
+        endTimepicker.snp.makeConstraints { (make) in
+            make.top.equalTo(endTimeLabel.snp.bottom).offset(8)
+            make.leading.equalToSuperview().offset(34)
+        }
+        
+        nextButton.snp.makeConstraints { (make) in
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
+            make.leading.trailing.equalToSuperview().inset(44)
+            make.height.equalTo(64)
+        }
     }
 }
 
@@ -188,7 +185,7 @@ struct CreatePartyViewControllerProvider: PreviewProvider {
     
     struct ContainerView: UIViewControllerRepresentable {
         
-        let mainTabBarController = MainTabBarController(currentUser: PUser(username: "", email: "", avatarStringURL: "", description: "", sex: "", birthday: "", interestsList: "", smoke: "", alco: "", id: ""))
+        let mainTabBarController = MainTabBarController(currentUser: PUser(username: "", email: "", avatarStringURL: "", description: "", sex: "", birthday: "", interestsList: "", smoke: "", alco: "", personalColor: "", id: ""))
         
         func makeUIViewController(context: Context) -> MainTabBarController {
             return mainTabBarController
@@ -348,7 +345,3 @@ extension CreatePartyTableViewController: UIImagePickerControllerDelegate, UINav
     }
 }
  */
-
-
-    
-    

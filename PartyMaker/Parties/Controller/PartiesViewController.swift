@@ -14,7 +14,7 @@ class PartiesViewController: UIViewController {
     var reverseSortingBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "AZ"), style: .plain, target: self, action: #selector(reverseSortingBarButtonItemTapped))
     let sortingSegmentedControl = UISegmentedControl(first: "Дата", second: "Имя")
     var sortingTypeSegmentControlBarButtonItem: UIBarButtonItem!
-    private let partiesSegmentedControl = UISegmentedControl(items: ["Подтвержденные", "В ожидании", "Созданные мной"])
+    private let partiesSegmentedControl = UISegmentedControl(items: ["✅", "⏳", "Мои"])
     
     private var parties = [Party]()
     
@@ -347,7 +347,7 @@ struct PartiesViewControllerProvider: PreviewProvider {
     
     struct ContainerView: UIViewControllerRepresentable {
         
-        let mainTabBarController = MainTabBarController(currentUser: PUser(username: "", email: "", avatarStringURL: "", description: "", sex: "", birthday: "", interestsList: "", smoke: "", alco: "", id: ""))
+        let mainTabBarController = MainTabBarController(currentUser: PUser(username: "", email: "", avatarStringURL: "", description: "", sex: "", birthday: "", interestsList: "", smoke: "", alco: "", personalColor: "", id: ""))
         
         func makeUIViewController(context: Context) -> MainTabBarController {
             return mainTabBarController

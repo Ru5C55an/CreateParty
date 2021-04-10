@@ -356,6 +356,7 @@ PODS:
   - GTMSessionFetcher/Core (1.5.0)
   - GTMSessionFetcher/Full (1.5.0):
     - GTMSessionFetcher/Core (= 1.5.0)
+  - Hero (1.5.0)
   - InputBarAccessoryView (5.2.2):
     - InputBarAccessoryView/Core (= 5.2.2)
   - InputBarAccessoryView/Core (5.2.2)
@@ -391,6 +392,7 @@ DEPENDENCIES:
   - Firebase/Firestore
   - Firebase/Storage
   - GoogleSignIn
+  - Hero (~> 1.5.0)
   - lottie-ios
   - MessageKit
   - RealmSwift
@@ -424,6 +426,7 @@ SPEC REPOS:
     - gRPC-Core
     - GTMAppAuth
     - GTMSessionFetcher
+    - Hero
     - InputBarAccessoryView
     - leveldb-library
     - lottie-ios
@@ -461,6 +464,7 @@ SPEC CHECKSUMS:
   gRPC-Core: 4afa11bfbedf7cdecd04de535a9e046893404ed5
   GTMAppAuth: 197a8dabfea5d665224aa00d17f164fc2248dab9
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
+  Hero: b7385b75e7259da62f4f85462f59a5082d66b058
   InputBarAccessoryView: 8ec44fced9840957831f7ab842e9c4fe6ff9a252
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   lottie-ios: 3a3758ef5a008e762faec9c9d50a39842f26d124
@@ -475,6 +479,6 @@ SPEC CHECKSUMS:
   Squircle: 94bae5770fc84e16b8cf66f3630a563b39ee2544
   UPCarouselFlowLayout: 4c7d2c43a10ebb1597bde502a53699d378341dad
 
-PODFILE CHECKSUM: 907c15c88b1e08eacbe9e38aadfe83e7d0e16987
+PODFILE CHECKSUM: 3f76669496adff985dd78434d5cb95be858d8cf7
 
 COCOAPODS: 1.10.0

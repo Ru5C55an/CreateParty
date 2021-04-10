@@ -12,16 +12,28 @@ import GoogleSignIn
 
 class AccountUserViewController: UIViewController {
     
-    private let logOutButton = UIButton(title: "Выйти")
-    private let sendEmailVerificationButton = UIButton(type: .system)
-    private let sendResetPasswordButton = UIButton(type: .system)
-    private let deleteAccountButton = UIButton(type: .system)
-    private let changeEmailButton = UIButton(type: .system)
+    // MARK: - UI Elements
+    private lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 6
+        layout.sectionInset = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
+        layout.scrollDirection = .vertical
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(AccountSettingsCollectionViewCell.self, forCellWithReuseIdentifier: AccountSettingsCollectionViewCell.reuseIdentifier)
+        collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
+        return collectionView
+    }()
     
+    // MARK: - Properties
     var provider = ""
+    var isEmailVerified = false
     
     private let currentUser: PUser
     
+    // MARK: - Lifecycle
     init(currentUser: PUser) {
         self.currentUser = currentUser
         
@@ -34,6 +46,7 @@ class AccountUserViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+                
         provider = getProviderData()
         
         GIDSignIn.sharedInstance()?.delegate = self
@@ -42,24 +55,33 @@ class AccountUserViewController: UIViewController {
         setupConstraints()
     }
     
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        navigationController?.navigationBar.isHidden = true
+    }
+    
     private func setupButtons() {
         
         if FirebaseAuth.Auth.auth().currentUser?.isEmailVerified == true {
-            sendEmailVerificationButton.isHidden = false
+            isEmailVerified = true
+            
+            collectionView.delegate = self
+            collectionView.dataSource = self
         } else {
-            sendEmailVerificationButton.isHidden = true
+            isEmailVerified = false
+            
+            collectionView.delegate = self
+            collectionView.dataSource = self
         }
-        sendEmailVerificationButton.setTitle("📪 Подтвердить эл. почту", for: .normal)
-        sendEmailVerificationButton.addTarget(self, action: #selector(sendEmailVerificationButtonTapped), for: .touchUpInside)
-        sendResetPasswordButton.setTitle("🔏 Сменить пароль", for: .normal)
-        sendResetPasswordButton.addTarget(self, action: #selector(sendPasswordResetButtonTapped), for: .touchUpInside)
-        deleteAccountButton.setTitle("💔 Удалить аккаунт", for: .normal)
-        deleteAccountButton.addTarget(self, action: #selector(deleteAccountButtonTapped), for: .touchUpInside)
-        changeEmailButton.setTitle("📨 Сменить почту", for: .normal)
-        changeEmailButton.addTarget(self, action: #selector(reauthentification), for: .touchUpInside)
-        logOutButton.addTarget(self, action: #selector(logOutButtonTapped), for: .touchUpInside)
     }
     
+    private func setupCollectionView() {
+        
+    }
+    
+    // MARK: - Handlers
     @objc private func reauthentification() {
         
         self.showAlert(title: "Необходимо подтвердить данные", message: "") {
@@ -116,7 +138,6 @@ class AccountUserViewController: UIViewController {
             }
         }
     }
-    
     
     private func changeEmailAlert() {
         
@@ -187,9 +208,7 @@ class AccountUserViewController: UIViewController {
             } else {
                 self.showAlert(title: "Ошибка", message: "Введено не верное слово в поле ввода")
             }
-            
         }))
-        
     }
     
     @objc private func sendPasswordResetButtonTapped() {
@@ -238,13 +257,6 @@ class AccountUserViewController: UIViewController {
         return provider
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        navigationController?.navigationBar.isHidden = true
-        logOutButton.applyGradients(cornerRadius: logOutButton.layer.cornerRadius, from: .bottomLeading, to: .topTrailing, startColor: #colorLiteral(red: 0.6, green: 0.5098039216, blue: 0.1960784314, alpha: 1), endColor: #colorLiteral(red: 0.8196078431, green: 0.2980392157, blue: 0.1725490196, alpha: 1))
-    }
-    
     @objc private func logOutButtonTapped() {
         
         let ac = UIAlertController(title: nil, message: "Вы уверены что хотите выйти?", preferredStyle: .alert)
@@ -270,29 +282,104 @@ class AccountUserViewController: UIViewController {
 extension AccountUserViewController {
     private func setupConstraints() {
         
-        let stackView = UIStackView(arrangedSubviews: [sendEmailVerificationButton, sendResetPasswordButton, deleteAccountButton, changeEmailButton], axis: .vertical, spacing: 8)
+        view.addSubview(collectionView)
         
-        view.addSubview(stackView)
-        view.addSubview(logOutButton)
-        
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        logOutButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
-        
-        logOutButton.snp.makeConstraints { (make) in
-            make.height.equalTo(60)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
-            make.leading.equalToSuperview().offset(32)
-            make.trailing.equalToSuperview().offset(-32)
+        collectionView.snp.makeConstraints { (make) in
+            make.top.bottom.equalToSuperview().inset(20)
+            make.leading.trailing.equalToSuperview()
         }
     }
 }
 
+// MARK: - UICollectionViewDelegate
+extension AccountUserViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+        if isEmailVerified == true {
+            
+            guard let cellType = AccountSettingsItemWithoutApproveEmail(rawValue: indexPath.item) else { return }
+            
+            switch cellType {
+            case .donut:
+                break
+            case .changePassword:
+                sendPasswordResetButtonTapped()
+            case .deleteAccount:
+                deleteAccountButtonTapped()
+            case .changeEmail:
+                changeEmailAlert()
+            case .logOut:
+                logOutButtonTapped()
+            }
+            
+        } else {
+            guard let cellType = AccountSettingsItem(rawValue: indexPath.item) else { return }
+            
+            switch cellType {
+            case .donut:
+                break
+            case .approveEmail:
+                sendEmailVerificationButtonTapped()
+            case .changePassword:
+                sendPasswordResetButtonTapped()
+            case .deleteAccount:
+                deleteAccountButtonTapped()
+            case .changeEmail:
+                changeEmailAlert()
+            case .logOut:
+                logOutButtonTapped()
+            }
+        }
+        
+        collectionView.reloadItems(at: [indexPath])
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+extension AccountUserViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width - 60, height: 50)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 20
+    }
+}
+
+// MARK: - UICollectionViewDataSource
+extension AccountUserViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if isEmailVerified == true {
+            return AccountSettingsItemWithoutApproveEmail.allCases.count
+        } else {
+            return AccountSettingsItem.allCases.count
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+      
+        if isEmailVerified == false {
+            guard let cellType = AccountSettingsItem(rawValue: indexPath.item) else { return UICollectionViewCell() }
+        
+            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AccountSettingsCollectionViewCell.reuseIdentifier,
+                                                             for: indexPath) as? AccountSettingsCollectionViewCell {
+                cell.setCell(cellType: cellType)
+                return cell
+            }
+        
+        } else {
+            guard let cellType = AccountSettingsItemWithoutApproveEmail(rawValue: indexPath.item) else { return UICollectionViewCell() }
+        
+            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AccountSettingsCollectionViewCell.reuseIdentifier,
+                                                             for: indexPath) as? AccountSettingsCollectionViewCell {
+                cell.setCellWithout(cellTypeWithout: cellType)
+                return cell
+            }
+        }
+     
+        return UICollectionViewCell()
+    }
+}
 
 // MARK: - GIDSignInDelegate
 extension AccountUserViewController: GIDSignInDelegate {

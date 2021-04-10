@@ -6,11 +6,17 @@
 //
 
 import UIKit
+import Hero
 
 class SearchPartyViewController: UIViewController {
         
-    let barView = SearchPartiesView()
+    // MARK: - UI Elements
+    let filterView = FilterPartiesView()
+    let barView = SearchPartiesBar()
     
+    var collectionView: UICollectionView!
+    
+    //MARK: - Properties
     // enum по умолчанию hashable
     enum Section: Int, CaseIterable {
         case parties
@@ -33,13 +39,13 @@ class SearchPartyViewController: UIViewController {
     }
     
     var parties: [Party] = []
-    var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<Section, Party>!
         
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .systemGroupedBackground
         
         searchParties()
         addTargets()
@@ -49,10 +55,29 @@ class SearchPartyViewController: UIViewController {
         setupConstraints()
     }
     
+    // MARK: - Setup views
+    private func setupNavigationBar() {
+        navigationController?.navigationBar.isHidden = true
+    }
+    
+    // MARK: - Handlers
     private func addTargets() {
-        barView.cityButton.addTarget(self, action: #selector(selectCity), for: .touchUpInside)
-        barView.countStepper.addTarget(self, action: #selector(searchParties), for: .valueChanged)
-        barView.datePicker.addTarget(self, action: #selector(searchParties), for: .valueChanged)
+        filterView.cityButton.addTarget(self, action: #selector(selectCity), for: .touchUpInside)
+        filterView.countStepper.addTarget(self, action: #selector(searchParties), for: .valueChanged)
+        filterView.datePicker.addTarget(self, action: #selector(searchParties), for: .valueChanged)
+        
+        barView.filterButton.addTarget(self, action: #selector(showFilter), for: .touchUpInside)
+    }
+    
+    @objc private func showFilter() {
+        
+//        barView.hero.id = "ironMan"
+//        filterView.hero.id = "batMan"
+        
+        let searchPartiesFilteredVC = SearchPartiesFilteredVC()
+//        searchPartiesFilteredVC.hero.isEnabled = true
+        
+        present(searchPartiesFilteredVC, animated: true, completion: nil)
     }
     
     @objc private func selectCity() {
@@ -65,13 +90,9 @@ class SearchPartyViewController: UIViewController {
         citiesVC.didMove(toParent: self)
     }
     
-    private func setupNavigationBar() {
-        navigationController?.navigationBar.isHidden = true
-    }
-    
     @objc private func searchParties() {
         
-        FirestoreService.shared.searchPartiesWith(city: barView.cityButton.titleLabel?.text, type: barView.pickedType, date: barView.dateFormatter.string(from: barView.datePicker.date), maximumPeople: barView.countText.text, price: barView.priceTextField.text) { [weak self] (result) in
+        FirestoreService.shared.searchPartiesWith(city: filterView.cityButton.titleLabel?.text, type: filterView.pickedType, date: filterView.dateFormatter.string(from: filterView.datePicker.date), maximumPeople: filterView.countText.text, price: filterView.priceTextField.text) { [weak self] (result) in
             
             switch result {
             
@@ -121,21 +142,15 @@ extension SearchPartyViewController {
         view.addSubview(barView)
         view.addSubview(collectionView)
         
-        barView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        barView.snp.makeConstraints { (make) in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.leading.trailing.equalToSuperview().inset(22)
+        }
         
-        NSLayoutConstraint.activate([
-            barView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            barView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 22),
-            barView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -22)
-        ])
-
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: barView.bottomAnchor, constant: 8),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
+        collectionView.snp.makeConstraints { (make) in
+            make.top.equalTo(barView.snp.bottom).offset(8)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
     }
 }
 
@@ -251,7 +266,7 @@ struct SearchPartyViewControllerProvider: PreviewProvider {
     
     struct ContainerView: UIViewControllerRepresentable {
         
-        let mainTabBarController = MainTabBarController(currentUser: PUser(username: "", email: "", avatarStringURL: "", description: "", sex: "", birthday: "", interestsList: "", smoke: "", alco: "", id: ""))
+        let mainTabBarController = MainTabBarController(currentUser: PUser(username: "", email: "", avatarStringURL: "", description: "", sex: "", birthday: "", interestsList: "", smoke: "", alco: "", personalColor: "", id: ""))
         
         func makeUIViewController(context: Context) -> MainTabBarController {
             return mainTabBarController

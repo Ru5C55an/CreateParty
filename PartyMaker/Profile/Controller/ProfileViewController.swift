@@ -11,21 +11,23 @@ import SDWebImage
 
 class ProfileViewController: UIViewController {
 
+    // MARK: - UI Elements
     let childsContrainerView = UIView()
-    var secondChildVC: AccountUserViewController
-    var firstChildVC: InformationUserViewController
-    var changeInformationUserVC: ChangeInformationUserViewController
+    private let secondChildVC: AccountUserViewController
+    private let firstChildVC: InformationUserViewController
+    let changeInformationUserVC: ChangeInformationUserViewController
     
     let containerView = UIView()
     
-    let imageView = UIImageView()
-    let nameLabel = UILabel(text: "Gandi", font: .sfProDisplay(ofSize: 20, weight: .medium))
-    let ageLabel = UILabel(text: "21", font: .sfProDisplay(ofSize: 20, weight: .medium))
-    let ratingLabel = UILabel(text: "􀋂 0", font: .sfProDisplay(ofSize: 16, weight: .medium))
+    let avatarImageView = UIImageView()
+    private let nameLabel = UILabel(text: "Gandi", font: .sfProDisplay(ofSize: 20, weight: .medium))
+    private let ageLabel = UILabel(text: "21", font: .sfProDisplay(ofSize: 20, weight: .medium))
+    private let ratingLabel = UILabel(text: "􀋂 0", font: .sfProDisplay(ofSize: 16, weight: .medium))
     
-    let segmentedControl = UISegmentedControl(first: "Информация", second: "Аккаунт")
+    private let segmentedControl = UISegmentedControl(first: "Информация", second: "Аккаунт")
     
-    var dateFormatter: DateFormatter = {
+    // MARK: - Properties
+    private lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_RU")
         dateFormatter.dateFormat = "dd-MM-yyyy"
@@ -34,29 +36,35 @@ class ProfileViewController: UIViewController {
     
     var currentUser: PUser
     
+    // MARK: - Lifecycle
     init(currentUser: PUser) {
         self.currentUser = currentUser
-        
-        if currentUser.avatarStringURL != "" {
-            self.imageView.sd_setImage(with: URL(string: currentUser.avatarStringURL), completed: nil)
-        } else {
-            self.imageView.image = UIImage(systemName: "person.crop.circle")
-        }
-        
-        self.nameLabel.text = currentUser.username
-        
-        let birthdayString = currentUser.birthday
-        let birthday = dateFormatter.date(from: birthdayString)
-        let now = Date()
-        let calendar = Calendar.current
-        let ageComponents = calendar.dateComponents([.year], from: birthday!, to: now)
-        self.ageLabel.text = String(ageComponents.year!)
         
         firstChildVC = InformationUserViewController(currentUser: currentUser)
         secondChildVC = AccountUserViewController(currentUser: currentUser)
         changeInformationUserVC = ChangeInformationUserViewController(currentUser: currentUser)
         
         super.init(nibName: nil, bundle: nil)
+        
+        if currentUser.avatarStringURL != "" {
+            self.avatarImageView.sd_setImage(with: URL(string: currentUser.avatarStringURL), completed: nil)
+        } else {
+            self.avatarImageView.image = UIImage(systemName: "person.crop.circle")
+        }
+        
+        self.nameLabel.text = currentUser.username
+        
+        let birthdayString = currentUser.birthday
+        let birthday = self.dateFormatter.date(from: birthdayString)
+        let now = Date()
+        let calendar = Calendar.current
+        let ageComponents = calendar.dateComponents([.year], from: birthday!, to: now)
+        self.ageLabel.text = String(ageComponents.year!)
+        
+        if currentUser.personalColor != "" {
+            #warning("Нужно установить")
+//            containerView.layer = UIImage(named: currentUser.personalColor)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -74,19 +82,17 @@ class ProfileViewController: UIViewController {
         setupConstraints()
     }
     
-    private func setupTargets() {
-        segmentedControl.addTarget(self, action: #selector(segmentedControlTapped), for: .valueChanged)
-        firstChildVC.changeButton.addTarget(self, action: #selector(changeButtonTapped), for: .touchUpInside)
-    }
-    
+    // MARK: - Setup views
     private func setupCustomizations() {
-        imageView.layer.cornerRadius = 64
-        imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFill
+        avatarImageView.layer.cornerRadius = 64
+        avatarImageView.clipsToBounds = true
+        avatarImageView.contentMode = .scaleAspectFill
         
         containerView.backgroundColor = .white
         containerView.layer.cornerRadius = 30
         containerView.clipsToBounds = true
+        containerView.layer.borderColor = UIColor(red: 238.0/255.0, green: 238.0/255.0, blue: 239.0/255.0, alpha: 1.0).cgColor
+        containerView.layer.borderWidth = 2
     }
     
     private func addChildsVC() {
@@ -110,6 +116,12 @@ class ProfileViewController: UIViewController {
         secondChildVC.view.frame = childsContrainerView.bounds
         
         secondChildVC.view.isHidden = true
+    }
+    
+    // MARK: - Handlers
+    private func setupTargets() {
+        segmentedControl.addTarget(self, action: #selector(segmentedControlTapped), for: .valueChanged)
+        firstChildVC.changeButton.addTarget(self, action: #selector(changeButtonTapped), for: .touchUpInside)
     }
     
     @objc private func changeButtonTapped() {
@@ -144,13 +156,13 @@ extension ProfileViewController {
         
         view.addSubview(childsContrainerView)
         view.addSubview(containerView)
-        containerView.addSubview(imageView)
+        containerView.addSubview(avatarImageView)
         containerView.addSubview(nameAgeRaringStackView)
         containerView.addSubview(segmentedControl)
         
         if UIScreen.main.bounds.height < 700 {
             
-            imageView.snp.makeConstraints { (make) in
+            avatarImageView.snp.makeConstraints { (make) in
                 make.top.equalTo(containerView.snp.top).offset(29)
                 make.size.equalTo(128)
                 make.centerX.equalToSuperview()
@@ -162,15 +174,15 @@ extension ProfileViewController {
             }
             
             nameAgeRaringStackView.snp.makeConstraints { (make) in
-                make.top.equalTo(imageView.snp.bottom).offset(12)
+                make.top.equalTo(avatarImageView.snp.bottom).offset(12)
                 make.leading.trailing.equalToSuperview().inset(44)
             }
             
         } else {
             
-            imageView.snp.makeConstraints { (make) in
-                make.top.equalTo(containerView.snp.top).offset(58)
-                make.size.equalTo(128)
+            avatarImageView.snp.makeConstraints { (make) in
+                make.top.equalTo(containerView.snp.top).offset(32)
+                make.size.equalTo(192)
                 make.centerX.equalToSuperview()
             }
             
@@ -180,7 +192,7 @@ extension ProfileViewController {
             }
             
             nameAgeRaringStackView.snp.makeConstraints { (make) in
-                make.top.equalTo(imageView.snp.bottom).offset(24)
+                make.top.equalTo(avatarImageView.snp.bottom)
                 make.leading.trailing.equalToSuperview().inset(44)
             }
         }
@@ -208,7 +220,7 @@ struct ProfileViewControllerProvider: PreviewProvider {
     
     struct ContainerView: UIViewControllerRepresentable {
         
-        let mainTabBarController = MainTabBarController(currentUser: PUser(username: "", email: "", avatarStringURL: "", description: "", sex: "", birthday: "", interestsList: "", smoke: "", alco: "", id: ""))
+        let mainTabBarController = MainTabBarController(currentUser: PUser(username: "", email: "", avatarStringURL: "", description: "", sex: "", birthday: "", interestsList: "", smoke: "", alco: "", personalColor: "", id: ""))
         
         func makeUIViewController(context: Context) -> MainTabBarController {
             return mainTabBarController
