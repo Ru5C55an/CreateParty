@@ -9,11 +9,13 @@ import UIKit
 
 class WelcomeCarouselViewController: UIViewController {
     
+    // MARK: - UI Elements
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var presentTextLabel: UILabel!
     @IBOutlet weak var emojiLabel: UILabel!
     @IBOutlet weak var closeButton: UIButton!
     
+    // MARK: - Properties
     var presentText = ""
     var emoji = ""
     var currentPage = 0 // Текущая страница
@@ -21,6 +23,7 @@ class WelcomeCarouselViewController: UIViewController {
     
     var hideButton = true
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,6 +35,7 @@ class WelcomeCarouselViewController: UIViewController {
         closeButton.isHidden = hideButton
     }
     
+    // MARK: - Handlers
     @IBAction func tappedButton(_ sender: UIButton) {
         if sender == closeButton {
             let userDefaults = UserDefaults.standard
@@ -43,5 +47,4 @@ class WelcomeCarouselViewController: UIViewController {
     deinit {
         print("deinit", WelcomeCarouselViewController.self)
     }
-    
 }

@@ -10,6 +10,7 @@ import Firebase
 
 class SignUpViewController: UIViewController {
     
+    // MARK: - UI Elements
     let welcomeLabel = UILabel(text: "Рад вас видеть!", font: .sfProRounded(ofSize: 26, weight: .regular))
     
     let emailLabel = UILabel(text: "Эл. почта")
@@ -18,7 +19,7 @@ class SignUpViewController: UIViewController {
     let alreadyOnboardLabel = UILabel(text: "Уже есть аккаунт?")
     
     let signUpButton = UIButton(title: "Зарегистрироваться", titleColor: .black, backgroundColor: .white)
-    let loginButton: UIButton = {
+    lazy var loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Войти", for: .normal)
         button.setTitleColor(.blue, for: .normal)
@@ -32,6 +33,7 @@ class SignUpViewController: UIViewController {
     let passwordTextField = BubbleTextField(placeholder: "Минимум 6 символов")
     let confirmPasswordTextField = BubbleTextField(placeholder: "Введите пароль снова")
     
+    // MARK: - UI Elements
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,6 +50,7 @@ class SignUpViewController: UIViewController {
         loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
     }
     
+    // MARK: - Handlers
     @objc private func signUpButtonTapped() {
         
         signUpButton.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
@@ -125,34 +128,20 @@ extension SignUpViewController {
         view.addSubview(stackView)
         view.addSubview(bottomStackView)
         
-        NSLayoutConstraint.activate([
-            welcomeLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 32),
-            welcomeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 128),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44)
-        ])
-        
-        NSLayoutConstraint.activate([
-            bottomStackView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 128),
-            bottomStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
-            bottomStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44)
-        ])
-    }
-}
-
-extension UIViewController {
-    
-    func showAlert(title: String, message: String, completion: @escaping () -> Void = { }) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default) { (_) in
-            completion()
+        welcomeLabel.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(32)
+            make.centerX.equalToSuperview()
         }
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
+        
+        stackView.snp.makeConstraints { (make) in
+            make.top.equalTo(welcomeLabel.snp.bottom).offset(128)
+            make.leading.trailing.equalToSuperview().inset(44)
+        }
+        
+        bottomStackView.snp.makeConstraints { (make) in
+            make.top.equalTo(stackView.snp.bottom).offset(128)
+            make.leading.trailing.equalToSuperview().inset(44)
+        }
     }
 }
 

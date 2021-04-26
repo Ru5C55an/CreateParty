@@ -11,8 +11,7 @@ import Firebase
 
 class LoginViewController: UIViewController {
     
-    var pointOfStackView: CGPoint?
-    
+    // MARK: - UI Elements
     var stackView: UIStackView!
     
     let warnLabel = UILabel(text: "")
@@ -50,6 +49,9 @@ class LoginViewController: UIViewController {
         return button
     }()
     
+    var pointOfStackView: CGPoint?
+    
+    // MARK: - Delegate
     weak var delegate: AuthNavigationDelegate?
     
     override func viewDidLoad() {

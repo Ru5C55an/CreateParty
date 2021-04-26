@@ -9,7 +9,8 @@ import UIKit
 
 class PageViewController: UIPageViewController {
 
-    let presentScreenContent = [
+    // MARK: - Properties
+    private let presentScreenContent = [
         "asdasdasdasdasd",
         "asdasdasdasdasdas",
         "asdasdasdasdasdas",
@@ -17,8 +18,9 @@ class PageViewController: UIPageViewController {
         ""
     ]
     
-    let emojiArray = ["😄", "🥰", "🥳", "😎", ""]
+    private let emojiArray = ["😄", "🥰", "🥳", "😎", ""]
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -56,6 +58,7 @@ class PageViewController: UIPageViewController {
     }
 }
 
+// MARK: - UIPageViewControllerDataSource
 extension PageViewController: UIPageViewControllerDataSource {
     
     func pageViewController(_ pageViewController: UIPageViewController,
@@ -76,5 +79,4 @@ extension PageViewController: UIPageViewControllerDataSource {
         
         return showViewControllerAtIndex(pageNumber)
     }
-    
 }

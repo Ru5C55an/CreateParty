@@ -120,14 +120,16 @@ class FirestoreService {
         }
     }
     
-    func updateUserInformation(username: String, birthday: String, avatarStringURL: String, sex: String, description: String, completion: @escaping (Result<Void, Error>) -> Void) {
+    func updateUserInformation(username: String, birthday: String, avatarStringURL: String, sex: String, description: String, personalColor: String, interestsList: String, completion: @escaping (Result<Void, Error>) -> Void) {
         
         userRef.updateData([
             "description": description,
             "sex": sex,
             "avatarStringURL": avatarStringURL,
             "birthday": birthday,
-            "username": username
+            "username": username,
+            "personalColor": personalColor,
+            "interestsList": interestsList
         ]) { err in
             if let err = err {
                 completion(.failure(err))

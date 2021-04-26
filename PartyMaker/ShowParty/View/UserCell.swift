@@ -8,9 +8,7 @@
 import UIKit
 import SDWebImage
 
-class UserCell: UICollectionViewCell {
-    
-    static let reuseId: String = "UserCell"
+class UserCell: InCollectionViewCell {
     
     var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -65,32 +63,26 @@ extension UserCell {
         
         let stackView = UIStackView(arrangedSubviews: [horizontalStackView, userRatingText], axis: .vertical, spacing: 8)
         
-        userImageView.translatesAutoresizingMaskIntoConstraints = false
-        userAgeText.translatesAutoresizingMaskIntoConstraints = false
-        usernameText.translatesAutoresizingMaskIntoConstraints = false
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        
         addSubview(userImageView)
         addSubview(stackView)
         
-        NSLayoutConstraint.activate([
-            userAgeText.trailingAnchor.constraint(equalTo: stackView.trailingAnchor)
-        ])
+        userAgeText.snp.makeConstraints { (make) in
+            make.trailing.equalTo(stackView.snp.trailing)
+        }
+ 
+        usernameText.snp.makeConstraints { (make) in
+            make.trailing.equalTo(userAgeText.snp.leading).offset(-4)
+        }
         
-        NSLayoutConstraint.activate([
-            usernameText.trailingAnchor.constraint(equalTo: userAgeText.leadingAnchor, constant: -4)
-        ])
-        
-        NSLayoutConstraint.activate([
-            userImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            userImageView.heightAnchor.constraint(equalToConstant: 86),
-            userImageView.widthAnchor.constraint(equalToConstant: 86)
-        ])
-        
-        NSLayoutConstraint.activate([
-            stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            stackView.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 8),
-            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8)
-        ])
+        userImageView.snp.makeConstraints { (make) in
+            make.leading.equalToSuperview()
+            make.size.equalTo(86)
+        }
+  
+        stackView.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview()
+            make.leading.equalTo(userImageView.snp.trailing).offset(8)
+            make.trailing.equalToSuperview().offset(-8)
+        }
     }
 }

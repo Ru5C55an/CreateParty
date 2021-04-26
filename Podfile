@@ -20,6 +20,7 @@ target 'PartyMaker' do
   pod 'SDWebImage', '~> 5.0'
   pod 'MessageKit'
   pod 'UPCarouselFlowLayout'
+  pod 'iCarousel'
   
   pod 'Squircle'
   pod 'SoftUIView'
@@ -29,5 +30,3 @@ target 'PartyMaker' do
   pod 'SnapKit', '~> 5.0.0'
 
 end
-
-

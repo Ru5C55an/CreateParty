@@ -43,9 +43,13 @@ class ProfileViewController: UIViewController {
         firstChildVC = InformationUserViewController(currentUser: currentUser)
         secondChildVC = AccountUserViewController(currentUser: currentUser)
         changeInformationUserVC = ChangeInformationUserViewController(currentUser: currentUser)
-        
+        changeInformationUserVC.delegate = firstChildVC
+
         super.init(nibName: nil, bundle: nil)
-        
+        setupUser()
+    }
+    
+    func setupUser() {
         if currentUser.avatarStringURL != "" {
             self.avatarImageView.sd_setImage(with: URL(string: currentUser.avatarStringURL), completed: nil)
         } else {
@@ -62,8 +66,26 @@ class ProfileViewController: UIViewController {
         self.ageLabel.text = String(ageComponents.year!)
         
         if currentUser.personalColor != "" {
-            #warning("Нужно установить")
-//            containerView.layer = UIImage(named: currentUser.personalColor)
+            setupProfileColor(colorName: currentUser.personalColor)
+        }
+    }
+    
+    private func setupProfileColor(colorName: String? = nil) {
+        if let colorName = colorName {
+            
+            for view in containerView.subviews {
+                if view.tag == 1 {
+                    view.removeFromSuperview()
+                }
+            }
+            
+            let gradient = (PersonalColors(rawValue: colorName)?.gradient)!
+            gradient.tag = 1
+            
+            containerView.insertSubview(gradient, at: 0)
+            gradient.snp.makeConstraints { (make) in
+                make.edges.equalToSuperview()
+            }
         }
     }
     
@@ -128,6 +150,7 @@ class ProfileViewController: UIViewController {
         
         childsContrainerView.isHidden = true
         containerView.isHidden = true
+        changeInformationUserVC.hideSaveButton()
         changeInformationUserVC.view.isHidden = false
     }
     
@@ -181,8 +204,8 @@ extension ProfileViewController {
         } else {
             
             avatarImageView.snp.makeConstraints { (make) in
-                make.top.equalTo(containerView.snp.top).offset(32)
-                make.size.equalTo(192)
+                make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(8)
+                make.size.equalTo(156)
                 make.centerX.equalToSuperview()
             }
             
@@ -193,6 +216,7 @@ extension ProfileViewController {
             
             nameAgeRaringStackView.snp.makeConstraints { (make) in
                 make.top.equalTo(avatarImageView.snp.bottom)
+                make.bottom.equalTo(segmentedControl.snp.top)
                 make.leading.trailing.equalToSuperview().inset(44)
             }
         }

@@ -230,9 +230,9 @@ class ListenerService {
                 return
             }
             
-            dg.enter()
+    
             snapshot.documentChanges.forEach { (diff) in
-                
+                dg.enter()
                 FirestoreService.shared.getPartyBy(uid: diff.document.documentID) { (result) in
                     switch result {
                     case .success(let party):

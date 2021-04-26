@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol ChangeInformationUserDelegate {
+    func didChangeUserInfo(currentUser: PUser)
+}
+
 class ChangeInformationUserViewController: UIViewController {
     
     // MARK: - UI Elements
@@ -34,6 +38,13 @@ class ChangeInformationUserViewController: UIViewController {
     
     private let avatarImageView = UIImageView()
     
+    private lazy var changePersonalColorLabel: UILabel = {
+        let label = UILabel(text: "Выбрать цвет\n\n🎨", font: UIFont.sfProRounded(ofSize: 10, weight: .medium), textColor: .gray)
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
+    }()
+    
     private var changePersonalColorButton = UIView()
 
     private let nameTextField = BubbleTextField()
@@ -44,32 +55,33 @@ class ChangeInformationUserViewController: UIViewController {
     private let aboutText = AboutInputText(isEditable: true)
     
     private let interestsLabel = UILabel(text: "Выберите ваши интересы", font: .sfProDisplay(ofSize: 16, weight: .medium))
-    private let sportButton = InterestButton(emoji: "💪", title: "Спорт", backgroundColor: .white)
-    private let artButton = InterestButton(emoji: "🎨", title: "Искусство", backgroundColor: .white)
-    private let singingButton = InterestButton(emoji: "🎤", title: "Пение", backgroundColor: .white)
-    private let musicButton = InterestButton(emoji: "🎧", title: "Музыка", backgroundColor: .white)
-    private let musicianButton = InterestButton(emoji: "🎼", title: "Композитор", backgroundColor: .white)
-    private let cookingButton = InterestButton(emoji: "🧑‍🍳", title: "Кулинария", backgroundColor: .white)
-    private let itButton = InterestButton(emoji: "🧑‍💻", title: "IT", backgroundColor: .white)
-    private let cameraButton = InterestButton(emoji: "📷", title: "Камера", backgroundColor: .white)
-    private let gamepadButton = InterestButton(emoji: "🎮", title: "Игры", backgroundColor: .white)
-    private let travelButton = InterestButton(emoji: "🗺", title: "Путешествия", backgroundColor: .white)
-    private let skateButton = InterestButton(emoji: "🛹", title: "Скейтбординг", backgroundColor: .white)
-    private let scienceButton = InterestButton(emoji: "🔬", title: "Наука", backgroundColor: .white)
-    private var interestsList = ""
+    private let sportButton = InterestButton(emoji: "💪", emojiSize: 25, title: "Спорт", backgroundColor: .white)
+    private let artButton = InterestButton(emoji: "🎨", emojiSize: 25, title: "Искусство", backgroundColor: .white)
+    private let singingButton = InterestButton(emoji: "🎤", emojiSize: 25, title: "Пение", backgroundColor: .white)
+    private let musicButton = InterestButton(emoji: "🎧", emojiSize: 25, title: "Музыка", backgroundColor: .white)
+    private let musicianButton = InterestButton(emoji: "🎼", emojiSize: 25, title: "Композитор", backgroundColor: .white)
+    private let cookingButton = InterestButton(emoji: "🧑‍🍳", emojiSize: 25, title: "Кулинария", backgroundColor: .white)
+    private let itButton = InterestButton(emoji: "🧑‍💻", emojiSize: 25, title: "IT", backgroundColor: .white)
+    private let cameraButton = InterestButton(emoji: "📷", emojiSize: 25, title: "Камера", backgroundColor: .white)
+    private let gamepadButton = InterestButton(emoji: "🎮", emojiSize: 25, title: "Игры", backgroundColor: .white)
+    private let travelButton = InterestButton(emoji: "🗺", emojiSize: 25, title: "Путешествия", backgroundColor: .white)
+    private let skateButton = InterestButton(emoji: "🛹", emojiSize: 25, title: "Скейтбординг", backgroundColor: .white)
+    private let scienceButton = InterestButton(emoji: "🔬", emojiSize: 25, title: "Наука", backgroundColor: .white)
     
     private let alcoLabel = UILabel(text: "Алкоголь", font: .sfProDisplay(ofSize: 16, weight: .medium))
     private let alcoSwitcher = UISwitch()
     private let smokeLabel = UILabel(text: "Курение", font: .sfProDisplay(ofSize: 16, weight: .medium))
     private let smokeSwitcher = UISwitch()
     
-    private let saveButton = UIButton(title: "Сохранить", backgroundColor: .white)
-    private let cancelButton = UIButton(title: "Отмена", backgroundColor: .white)
-    var buttonsStackView = UIStackView()
+    private let saveButton = UIButton(title: "Сохранить", titleColor: .white)
+    private let cancelButton = UIButton(title: "Отмена", titleColor: .white)
     
     private let sexSegmentedControl = UISegmentedControl(first: "Мужской", second: "Женский")
     
     // MARK: - Properties
+    private var interestsList = ""
+    private var selectedProfileColor = ""
+    
     private lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_RU")
@@ -77,49 +89,80 @@ class ChangeInformationUserViewController: UIViewController {
         return dateFormatter
     }()
     
-    let avatarImageViewSize: Double = 148
-    let changePersonalColorButtonSize: Double = 148 / 2
+    private let avatarImageViewSize: Double = 148
+    private let changePersonalColorButtonSize: Double = 148 / 2
     
     private var imageChanged = false
     private var currentUser: PUser
     
+    // MARK: - Delegate
+    var delegate: ChangeInformationUserDelegate?
+    
     // MARK: - Lifecycle
     init(currentUser: PUser) {
         self.currentUser = currentUser
-        
+
         super.init(nibName: nil, bundle: nil)
- 
-        setupTargets()
         
-        self.nameTextField.text = currentUser.username
-        self.aboutText.textView.text = currentUser.description
-        self.birthdayDatePicker.date = self.dateFormatter.date(from: currentUser.birthday)!
+        self.setupUser()
+    }
+    
+    
+    private func setupUser() {
+        nameTextField.text = currentUser.username
+        aboutText.textView.text = currentUser.description
+        birthdayDatePicker.date = self.dateFormatter.date(from: currentUser.birthday)!
         
-        self.sexSegmentedControl.selectedSegmentIndex = Int(currentUser.sex)!
+        sexSegmentedControl.selectedSegmentIndex = Int(currentUser.sex)!
         
-        self.avatarImageView.contentMode = .scaleAspectFill
+        avatarImageView.contentMode = .scaleAspectFill
         
         if currentUser.avatarStringURL != "" {
-            self.avatarImageView.sd_setImage(with: URL(string: currentUser.avatarStringURL), completed: nil)
+            avatarImageView.sd_setImage(with: URL(string: currentUser.avatarStringURL), completed: nil)
             setupViewForHasImage()
         } else {
-            self.avatarImageView.image = UIImage(systemName: "plus.viewfinder")
+            avatarImageView.image = UIImage(systemName: "plus.viewfinder")
         }
        
         if currentUser.alco == "true" {
-            self.alcoSwitcher.isOn = true
+            alcoSwitcher.isOn = true
         } else {
-            self.alcoSwitcher.isOn = false
+            alcoSwitcher.isOn = false
         }
         
         if currentUser.smoke == "true" {
-            self.smokeSwitcher.isOn = true
+            smokeSwitcher.isOn = true
         } else {
-            self.smokeSwitcher.isOn = false
+            smokeSwitcher.isOn = false
         }
         
+        interestsList = currentUser.interestsList
+        
         if currentUser.personalColor == "" {
-            self.changePersonalColorButton = GradientView.viceCity
+            changePersonalColorButton.layer.borderWidth = 2
+            changePersonalColorButton.layer.borderColor = UIColor.gray.cgColor
+        } else {
+            setupProfileColor(colorName: currentUser.personalColor)
+        }
+    }
+    
+    private func setupProfileColor(colorName: String? = nil) {
+        if let colorName = colorName {
+
+            for view in changePersonalColorButton.subviews {
+                if view.tag == 1 {
+                    view.removeFromSuperview()
+                }
+            }
+            
+            let gradient = (PersonalColors(rawValue: colorName)?.gradient)!
+            gradient.tag = 1
+            
+            changePersonalColorButton.insertSubview(gradient, at: 0)
+            gradient.snp.makeConstraints { (make) in
+                make.edges.equalToSuperview()
+            }
+            changePersonalColorLabel.textColor = .white
         }
     }
     
@@ -149,6 +192,7 @@ class ChangeInformationUserViewController: UIViewController {
         containerView.layer.cornerRadius = 30
         containerView.clipsToBounds = true
         
+        setupTargets()
         setupConstraints()
         setupInterests()
     }
@@ -159,45 +203,60 @@ class ChangeInformationUserViewController: UIViewController {
         avatarImageView.addTap(action: selectPhoto)
         changeAvatarButton.addTarget(self, action: #selector(selectPhoto), for: .touchUpInside)
         removeAvatarButton.addTarget(self, action: #selector(deletePhoto), for: .touchUpInside)
+        changePersonalColorButton.addTap(action: changePersonalColorTapped)
+        sexSegmentedControl.addTarget(self, action: #selector(sexChanged), for: .valueChanged)
     }
     
     private func setupInterests() {
-        if currentUser.interestsList.contains("💪") {
-            sportButton.button.isSelected = true
+        if currentUser.interestsList.contains(sportButton.emoji) {
+            sportButton.isSelected = true
         }
-        if currentUser.interestsList.contains("🎨") {
-            artButton.button.isSelected = true
+        if currentUser.interestsList.contains(artButton.emoji) {
+            artButton.isSelected = true
         }
-        if currentUser.interestsList.contains("🎤") {
-            singingButton.button.isSelected = true
+        if currentUser.interestsList.contains(singingButton.emoji) {
+            singingButton.isSelected = true
         }
-        if currentUser.interestsList.contains("🎧") {
-            musicButton.button.isSelected = true
+        if currentUser.interestsList.contains(musicButton.emoji) {
+            musicButton.isSelected = true
         }
-        if currentUser.interestsList.contains("🎼") {
-            musicianButton.button.isSelected = true
+        if currentUser.interestsList.contains(musicianButton.emoji) {
+            musicianButton.isSelected = true
         }
-        if currentUser.interestsList.contains("🧑‍🍳") {
-            cookingButton.button.isSelected = true
+        if currentUser.interestsList.contains(cookingButton.emoji) {
+            cookingButton.isSelected = true
         }
-        if currentUser.interestsList.contains("🧑‍💻") {
-            itButton.button.isSelected = true
+        if currentUser.interestsList.contains(itButton.emoji) {
+            itButton.isSelected = true
         }
-        if currentUser.interestsList.contains("📷") {
-            cameraButton.button.isSelected = true
+        if currentUser.interestsList.contains(cameraButton.emoji) {
+            cameraButton.isSelected = true
         }
-        if currentUser.interestsList.contains("🎮") {
-            gamepadButton.button.isSelected = true
+        if currentUser.interestsList.contains(gamepadButton.emoji) {
+            gamepadButton.isSelected = true
         }
-        if currentUser.interestsList.contains("🗺") {
-            travelButton.button.isSelected = true
+        if currentUser.interestsList.contains(travelButton.emoji) {
+            travelButton.isSelected = true
         }
-        if currentUser.interestsList.contains("🛹") {
-            skateButton.button.isSelected = true
+        if currentUser.interestsList.contains(skateButton.emoji) {
+            skateButton.isSelected = true
         }
-        if currentUser.interestsList.contains("🔬") {
-            scienceButton.button.isSelected = true
+        if currentUser.interestsList.contains(scienceButton.emoji) {
+            scienceButton.isSelected = true
         }
+        
+        sportButton.addTarget(target: self, action: #selector(sportButtonTapped), for: .touchDown)
+        artButton.addTarget(target: self, action: #selector(artButtonTapped), for: .touchDown)
+        singingButton.addTarget(target: self, action: #selector(singingButtonTapped), for: .touchDown)
+        musicButton.addTarget(target: self, action: #selector(musicButtonTapped), for: .touchDown)
+        musicianButton.addTarget(target: self, action: #selector(musicianButtonTapped), for: .touchDown)
+        cookingButton.addTarget(target: self, action: #selector(cookingButtonTapped), for: .touchDown)
+        itButton.addTarget(target: self, action: #selector(itButtonTapped), for: .touchDown)
+        cameraButton.addTarget(target: self, action: #selector(cameraButtonTapped), for: .touchDown)
+        gamepadButton.addTarget(target: self, action: #selector(gamepadButtonTapped), for: .touchDown)
+        travelButton.addTarget(target: self, action: #selector(travelButtonTapped), for: .touchDown)
+        skateButton.addTarget(target: self, action: #selector(skateButtonTapped), for: .touchDown)
+        scienceButton.addTarget(target: self, action: #selector(scienceButtonTapped), for: .touchDown)
     }
     
     private func setupViewForHasImage() {
@@ -214,6 +273,139 @@ class ChangeInformationUserViewController: UIViewController {
     }
     
     // MARK: - Handlers
+    @objc private func sportButtonTapped() {
+        showSaveButton()
+        
+        if interestsList.contains(sportButton.emoji) {
+            interestsList.removeAll { $0 == sportButton.emoji.first }
+        } else {
+            interestsList.append(sportButton.emoji)
+        }
+    }
+    
+    @objc private func artButtonTapped() {
+        showSaveButton()
+        
+        if interestsList.contains(artButton.emoji) {
+            interestsList.removeAll { $0 == artButton.emoji.first }
+        } else {
+            interestsList.append(artButton.emoji)
+        }
+    }
+        
+    @objc private func singingButtonTapped() {
+        showSaveButton()
+        
+        if interestsList.contains(singingButton.emoji) {
+            interestsList.removeAll { $0 == singingButton.emoji.first }
+        } else {
+            interestsList.append(singingButton.emoji)
+        }
+    }
+    
+    @objc private func musicButtonTapped() {
+        showSaveButton()
+        
+        if interestsList.contains(musicButton.emoji) {
+            interestsList.removeAll { $0 == musicButton.emoji.first }
+        } else {
+            interestsList.append(musicButton.emoji)
+        }
+    }
+        
+        
+    @objc private func musicianButtonTapped() {
+        showSaveButton()
+        
+        if interestsList.contains(musicianButton.emoji) {
+            interestsList.removeAll { $0 == musicianButton.emoji.first }
+        } else {
+            interestsList.append(musicButton.emoji)
+        }
+    }
+    
+    @objc private func cookingButtonTapped() {
+        showSaveButton()
+        
+        if interestsList.contains(cookingButton.emoji) {
+            interestsList.removeAll { $0 == cookingButton.emoji.first }
+        } else {
+            interestsList.append(cookingButton.emoji)
+        }
+    }
+    
+    @objc private func itButtonTapped() {
+        showSaveButton()
+        
+        if interestsList.contains(itButton.emoji) {
+            interestsList.removeAll { $0 == itButton.emoji.first }
+        } else {
+            interestsList.append(itButton.emoji)
+        }
+    }
+    
+    @objc private func cameraButtonTapped() {
+        showSaveButton()
+        
+        if interestsList.contains(cameraButton.emoji) {
+            interestsList.removeAll { $0 == cameraButton.emoji.first }
+        } else {
+            interestsList.append(cameraButton.emoji)
+        }
+    }
+    
+    @objc private func gamepadButtonTapped() {
+        showSaveButton()
+        
+        if interestsList.contains(gamepadButton.emoji) {
+            interestsList.removeAll { $0 == gamepadButton.emoji.first }
+        } else {
+            interestsList.append(gamepadButton.emoji)
+        }
+    }
+    
+    @objc private func travelButtonTapped() {
+        showSaveButton()
+        
+        if interestsList.contains(travelButton.emoji) {
+            interestsList.removeAll { $0 == travelButton.emoji.first }
+        } else {
+            interestsList.append(travelButton.emoji)
+        }
+    }
+    
+    @objc private func skateButtonTapped() {
+        showSaveButton()
+        
+        if interestsList.contains(skateButton.emoji) {
+            interestsList.removeAll { $0 == skateButton.emoji.first }
+        } else {
+            interestsList.append(skateButton.emoji)
+        }
+    }
+    
+    @objc private func scienceButtonTapped() {
+        showSaveButton()
+        
+        if interestsList.contains(scienceButton.emoji) {
+            interestsList.removeAll { $0 == scienceButton.emoji.first }
+        } else {
+            interestsList.append(scienceButton.emoji)
+        }
+    }
+    
+    @objc private func sexChanged() {
+        currentUser.sex = String(sexSegmentedControl.selectedSegmentIndex)
+        showSaveButton()
+    }
+    
+    @objc private func changePersonalColorTapped() {
+        let selectProfileColorVC = SelectProfileColorViewController(currentUser: currentUser)
+        selectProfileColorVC.delegate = self
+        selectProfileColorVC.modalPresentationStyle = .fullScreen
+        present(selectProfileColorVC, animated: true, completion: nil)
+    }
+    
     @objc private func cancelButtonTapped() {
         
         let profileVC = self.parent as? ProfileViewController
@@ -251,7 +443,7 @@ class ChangeInformationUserViewController: UIViewController {
                 case .success(let url):
                     print("successfull changed user avatar image")
                     
-                    FirestoreService.shared.updateUserInformation(username: username, birthday: birthday, avatarStringURL: "\(url)", sex: String(self.sexSegmentedControl.selectedSegmentIndex), description: description) { [weak self] (result) in
+                    FirestoreService.shared.updateUserInformation(username: username, birthday: birthday, avatarStringURL: "\(url)", sex: String(self.sexSegmentedControl.selectedSegmentIndex), description: description, personalColor: self.selectedProfileColor, interestsList: self.interestsList) { [weak self] (result) in
                         
                         switch result {
                         
@@ -262,8 +454,9 @@ class ChangeInformationUserViewController: UIViewController {
                             profileVC?.childsContrainerView.isHidden = false
                             profileVC?.containerView.isHidden = false
                             profileVC?.changeInformationUserVC.view.isHidden = true
-                            profileVC?.currentUser = self!.currentUser
+                            profileVC?.currentUser = (self?.currentUser)!
                             profileVC?.avatarImageView.image = self?.avatarImageView.image
+                            self?.delegate?.didChangeUserInfo(currentUser: (self?.currentUser)!)
                             
                             self?.showAlert(title: "Успешно!", message: "Изменения были сохранены")
                             
@@ -280,7 +473,7 @@ class ChangeInformationUserViewController: UIViewController {
             #warning("Нужно удалять изображение с сервера")
             StorageService.shared.delete(stringUrl: "")
             
-            FirestoreService.shared.updateUserInformation(username: username, birthday: birthday, avatarStringURL: "", sex: String(sexSegmentedControl.selectedSegmentIndex), description: description) { [weak self] (result) in
+            FirestoreService.shared.updateUserInformation(username: username, birthday: birthday, avatarStringURL: "", sex: String(sexSegmentedControl.selectedSegmentIndex), description: description, personalColor: self.selectedProfileColor, interestsList: self.interestsList) { [weak self] (result) in
                 
                 switch result {
                 
@@ -293,6 +486,7 @@ class ChangeInformationUserViewController: UIViewController {
                     profileVC?.changeInformationUserVC.view.isHidden = true
                     profileVC?.currentUser = self!.currentUser
                     profileVC?.avatarImageView.image = UIImage(systemName: "person.crop.circle")
+                    self?.delegate?.didChangeUserInfo(currentUser: (self?.currentUser)!)
                     
                     self?.showAlert(title: "Успешно!", message: "Изменения были сохранены")
                     
@@ -302,7 +496,7 @@ class ChangeInformationUserViewController: UIViewController {
             }
         } else {
             
-            FirestoreService.shared.updateUserInformation(username: username, birthday: birthday, avatarStringURL: currentUser.avatarStringURL, sex: String(sexSegmentedControl.selectedSegmentIndex), description: description) { [weak self] (result) in
+            FirestoreService.shared.updateUserInformation(username: username, birthday: birthday, avatarStringURL: currentUser.avatarStringURL, sex: String(sexSegmentedControl.selectedSegmentIndex), description: description, personalColor: self.selectedProfileColor, interestsList: self.interestsList) { [weak self] (result) in
                 
                 switch result {
                 
@@ -314,6 +508,7 @@ class ChangeInformationUserViewController: UIViewController {
                     profileVC?.containerView.isHidden = false
                     profileVC?.changeInformationUserVC.view.isHidden = true
                     profileVC?.currentUser = self!.currentUser
+                    self?.delegate?.didChangeUserInfo(currentUser: (self?.currentUser)!)
                     
                     self?.showAlert(title: "Успешно!", message: "Изменения были сохранены")
                     
@@ -324,18 +519,46 @@ class ChangeInformationUserViewController: UIViewController {
         }
     }
     
-    private func infoEdited() {
-        buttonsStackView.addArrangedSubview(saveButton)
+    func hideSaveButton() {
+        cancelButton.snp.updateConstraints { (make) in
+            make.width.equalTo(UIScreen.main.bounds.width / 2 - 64)
+        }
         
+        saveButton.snp.updateConstraints { (make) in
+            make.width.equalTo(0)
+        }
         
+        cancelButton.setNeedsLayout()
+        cancelButton.layoutIfNeeded()
+        
+        saveButton.setNeedsLayout()
+        saveButton.layoutIfNeeded()
+        
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
+    }
+    
+    private func showSaveButton() {
+        cancelButton.snp.updateConstraints { (make) in
+            make.width.equalTo(UIScreen.main.bounds.width / 2 - 32)
+        }
+        
+        saveButton.snp.updateConstraints { (make) in
+            make.width.equalTo(UIScreen.main.bounds.width / 2 - 32)
+        }
+        
+        cancelButton.setNeedsLayout()
+        cancelButton.layoutIfNeeded()
+        
+        saveButton.setNeedsLayout()
+        saveButton.layoutIfNeeded()
         
         view.setNeedsLayout()
         view.layoutIfNeeded()
     }
     
     @objc private func selectPhoto() {
-        infoEdited()
-        
+   
         let cameraIcon = #imageLiteral(resourceName: "camera")
         let photoIcon = #imageLiteral(resourceName: "photo")
         
@@ -368,8 +591,9 @@ class ChangeInformationUserViewController: UIViewController {
         
         let alertController = UIAlertController(title: "Вы хотите удалить фото профиля?", message: nil, preferredStyle: .actionSheet)
         
-        let okAction = UIAlertAction(title: "Да", style: .destructive) { (_) in
-            self.setupViewForNoImage()
+        let okAction = UIAlertAction(title: "Да", style: .destructive) { [weak self] (_) in
+            self?.showSaveButton()
+            self?.setupViewForNoImage()
         }
         
         let cancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
@@ -405,7 +629,7 @@ extension ChangeInformationUserViewController: UIImagePickerControllerDelegate, 
         imageChanged = true
         avatarImageView.contentMode = .scaleAspectFill
         avatarImageView.clipsToBounds = true
-        
+        showSaveButton()
         setupViewForHasImage()
         
         dismiss(animated: true)
@@ -427,6 +651,7 @@ extension ChangeInformationUserViewController {
         containerView.addSubview(sexSegmentedControl)
         containerView.addSubview(changeAvatarButton)
         containerView.addSubview(removeAvatarButton)
+        changePersonalColorButton.addSubview(changePersonalColorLabel)
         
         containerView.snp.makeConstraints { (make) in
             make.leading.top.trailing.equalToSuperview()
@@ -450,9 +675,13 @@ extension ChangeInformationUserViewController {
         
         changePersonalColorButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(avatarImageView.snp.centerY)
-            make.leading.equalTo(avatarImageView.snp.trailing).offset(10)
-            make.trailing.equalToSuperview().inset(10)
-            make.height.equalTo(changePersonalColorButtonSize)
+            make.leading.equalTo(avatarImageView.snp.trailing).offset(25)
+            make.trailing.equalToSuperview().inset(25)
+            make.size.equalTo(changePersonalColorButtonSize)
+        }
+        
+        changePersonalColorLabel.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview().inset(10)
         }
         
         changeAvatarButton.snp.makeConstraints { (make) in
@@ -481,14 +710,12 @@ extension ChangeInformationUserViewController {
         let alcoStackView = UIStackView(arrangedSubviews: [alcoLabel, alcoSwitcher], axis: .horizontal, spacing: 8)
         let smokeStackView = UIStackView(arrangedSubviews: [smokeLabel, smokeSwitcher], axis: .horizontal, spacing: 8)
         let smokeAlcoStackView = UIStackView(arrangedSubviews: [smokeStackView, alcoStackView], axis: .horizontal, spacing: 32)
-        
-        buttonsStackView = UIStackView(arrangedSubviews: [cancelButton], axis: .horizontal, spacing: 8)
-        buttonsStackView.distribution = .fillEqually
 
         view.addSubview(aboutStackView)
         view.addSubview(emojiStackView)
         view.addSubview(smokeAlcoStackView)
-        view.addSubview(buttonsStackView)
+        view.addSubview(cancelButton)
+        view.addSubview(saveButton)
         
         aboutStackView.snp.makeConstraints { (make) in
             make.top.equalTo(containerView.snp.bottom).offset(16)
@@ -506,10 +733,26 @@ extension ChangeInformationUserViewController {
             make.leading.equalToSuperview().inset(44)
         }
         
-        buttonsStackView.snp.makeConstraints { (make) in
+        cancelButton.snp.makeConstraints { (make) in
             make.top.equalTo(smokeAlcoStackView.snp.bottom).offset(32)
-            make.leading.trailing.equalToSuperview().inset(32)
+            make.leading.equalToSuperview().inset(32)
+            make.width.equalTo(UIScreen.main.bounds.width - 64)
             make.height.equalTo(60)
         }
+        
+        saveButton.snp.makeConstraints { (make) in
+            make.centerY.equalTo(cancelButton.snp.centerY)
+            make.height.equalTo(60)
+            make.trailing.equalToSuperview().inset(32)
+            make.width.equalTo(0)
+        }
+    }
+}
+
+extension ChangeInformationUserViewController: SelectProfileColorDelegate {
+    func selectProfileColor(colorName: String) {
+        showSaveButton()
+        selectedProfileColor = colorName
+        setupProfileColor(colorName: colorName)
     }
 }

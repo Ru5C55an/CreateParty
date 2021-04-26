@@ -315,7 +315,7 @@ class ShowPartyViewController: UIViewController {
         collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 195, height: 86), collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         
-        collectionView.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseId)
+        collectionView.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseIdentifier)
         
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -510,7 +510,7 @@ extension ShowPartyViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.reuseId, for: indexPath) as! UserCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.reuseIdentifier, for: indexPath) as! UserCell
         
         cell.configure(with: approvedUsers[indexPath.row])
         

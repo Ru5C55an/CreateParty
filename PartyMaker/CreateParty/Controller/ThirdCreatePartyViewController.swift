@@ -15,18 +15,18 @@ class ThirdCreatePartyViewController: UIViewController {
     
     private let priceLabel = UILabel(text: "Цена за вход")
     
-    private let freeLabel = UILabel(text: "Бесплатно")
-    private let moneyLabel = UILabel(text: "Платно")
+    private let freeLabel = UILabel(text: "Бесплатно 😇")
+    private let moneyLabel = UILabel(text: "Платно 💶")
     private let moneySwitcher = UISwitch()
     
-    private let price = BubbleTextField(placeholder: "500")
+    private let priceTextField = BubbleTextField(placeholder: "500")
     
     let cityButton = UIButton(title: "Город", titleColor: #colorLiteral(red: 0.1921568627, green: 0.568627451, blue: 0.9882352941, alpha: 1), backgroundColor: #colorLiteral(red: 0.937254902, green: 0.937254902, blue: 0.9411764706, alpha: 1), isShadow: false, cornerRadius: 10)
     
     private let locationLabel = UILabel(text: "Адрес вечеринки")
     private let locationTextField = LocationTextField()
     
-    private  let doneButton = UIButton(title: "Готово")
+    private  let doneButton = UIButton(title: "Готово", titleColor: .white)
     
     // MARK: - Properties
     private let currentUser: PUser
@@ -38,6 +38,8 @@ class ThirdCreatePartyViewController: UIViewController {
         self.currentUser = currentUser
        
         super.init(nibName: nil, bundle: nil)
+        
+        title = "Последний штрих 🪄"
     }
     
     required init?(coder: NSCoder) {
@@ -57,13 +59,12 @@ class ThirdCreatePartyViewController: UIViewController {
         doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
         cityButton.addTarget(self, action: #selector(cityButtonTapped), for: .touchUpInside)
         
-        price.isHidden = true
+        priceTextField.isHidden = true
         moneySwitcher.addTarget(self, action: #selector(switchValueChanged), for: .touchUpInside)
         
         let gesture = UITapGestureRecognizer(target: self, action: #selector(selectPhoto))
         addPhoto.addGestureRecognizer(gesture)
         
-        title = "Последний штрих 🪄"
         setupConstraints()
     }
     
@@ -71,9 +72,9 @@ class ThirdCreatePartyViewController: UIViewController {
     // MARK: - Handlers
     @objc private func switchValueChanged() {
         if moneySwitcher.isOn {
-            price.isHidden = false
+            priceTextField.isHidden = false
         } else {
-            price.isHidden = true
+            priceTextField.isHidden = true
         }
     }
     
@@ -90,7 +91,7 @@ class ThirdCreatePartyViewController: UIViewController {
     @objc private func doneButtonTapped() {
         
         if moneySwitcher.isOn {
-            guard let price = price.text, price != "" else {
+            guard let price = priceTextField.text, price != "" else {
                 self.showAlert(title: "Ошибка", message: "Введите стоимость входа, либо сделайте бесплатной")
                 return
             }
@@ -164,6 +165,7 @@ extension ThirdCreatePartyViewController {
     private func setupConstraints() {
         
         let moneyStackView = UIStackView(arrangedSubviews: [freeLabel, moneySwitcher, moneyLabel], axis: .horizontal, spacing: 8)
+        moneyStackView.distribution = .equalSpacing
         
         let locationStackView = UIStackView(arrangedSubviews: [locationLabel, locationTextField], axis: .vertical, spacing: 8)
         
@@ -171,7 +173,7 @@ extension ThirdCreatePartyViewController {
         view.addSubview(addPhoto)
         view.addSubview(priceLabel)
         view.addSubview(moneyStackView)
-        view.addSubview(price)
+        view.addSubview(priceTextField)
         view.addSubview(cityButton)
         view.addSubview(locationStackView)
         view.addSubview(doneButton)
@@ -182,47 +184,45 @@ extension ThirdCreatePartyViewController {
         }
 
         
-        NSLayoutConstraint.activate([
-            addPhoto.topAnchor.constraint(equalTo: addPhotoLabel.bottomAnchor, constant: 8),
-            addPhoto.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
+        addPhoto.snp.makeConstraints { (make) in
+            make.top.equalTo(addPhotoLabel.snp.bottom).offset(8)
+            make.centerX.equalToSuperview()
+        }
         
-        NSLayoutConstraint.activate([
-            cityButton.topAnchor.constraint(equalTo: addPhoto.bottomAnchor, constant: 16),
-            cityButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
-            cityButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44)
-        ])
+        cityButton.snp.makeConstraints { (make) in
+            make.top.equalTo(addPhoto.snp.bottom).offset(16)
+            make.leading.trailing.equalToSuperview().inset(44)
+        }
         
-        NSLayoutConstraint.activate([
-            locationStackView.topAnchor.constraint(equalTo: cityButton.bottomAnchor, constant: 16),
-            locationStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
-            locationStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44)
-        ])
+        locationStackView.snp.makeConstraints { (make) in
+            make.top.equalTo(cityButton.snp.bottom).offset(16)
+            make.leading.trailing.equalToSuperview().inset(44)
+        }
         
-        NSLayoutConstraint.activate([
-            priceLabel.topAnchor.constraint(equalTo: locationStackView.bottomAnchor, constant: 16),
-            priceLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
-            priceLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44)
-        ])
+        priceLabel.snp.makeConstraints { (make) in
+            make.centerY.equalTo(priceTextField.snp.centerY)
+            make.leading.equalToSuperview().offset(44)
+        }
         
-        NSLayoutConstraint.activate([
-            moneyStackView.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 16),
-            moneyStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44)
-        ])
+        priceTextField.snp.makeConstraints { (make) in
+            make.top.equalTo(locationStackView.snp.bottom).offset(16)
+
+            make.trailing.equalToSuperview().inset(44)
+            make.leading.equalTo(priceLabel.snp.trailing).offset(10)
+            make.height.equalTo(44)
+        }
         
-        NSLayoutConstraint.activate([
-            price.topAnchor.constraint(equalTo: moneyStackView.bottomAnchor, constant: 16),
-            price.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
-            price.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44),
-            price.heightAnchor.constraint(equalToConstant: 44)
-        ])
+        moneyStackView.snp.makeConstraints { (make) in
+            make.top.equalTo(priceTextField.snp.bottom).offset(16)
+            make.leading.trailing.equalToSuperview().inset(44)
+        }
         
-        NSLayoutConstraint.activate([
-            doneButton.topAnchor.constraint(equalTo: price.bottomAnchor, constant: 32),
-            doneButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
-            doneButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44),
-            doneButton.heightAnchor.constraint(equalToConstant: 64)
-        ])
+        doneButton.snp.makeConstraints { (make) in
+            make.top.equalTo(moneyStackView.snp.bottom).offset(32)
+            make.leading.trailing.equalToSuperview().inset(44)
+            make.height.equalTo(64)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
+        }
     }
 }
 

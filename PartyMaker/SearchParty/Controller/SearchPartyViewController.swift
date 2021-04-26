@@ -25,15 +25,7 @@ class SearchPartyViewController: UIViewController {
             switch self {
             
             case .parties:
-                if partiesCount < 1 || partiesCount > 5 {
-                    return "\(partiesCount) вечеринок"
-                } else if partiesCount == 1 {
-                    return "\(partiesCount) вечеринка"
-                } else if partiesCount > 1 && partiesCount < 5 {
-                    return "\(partiesCount) вечеринки"
-                } else {
-                    return "\(partiesCount) вечеринок"
-                }
+                return partiesCount.parties()
             }
         }
     }
@@ -65,7 +57,6 @@ class SearchPartyViewController: UIViewController {
         filterView.cityButton.addTarget(self, action: #selector(selectCity), for: .touchUpInside)
         filterView.countStepper.addTarget(self, action: #selector(searchParties), for: .valueChanged)
         filterView.datePicker.addTarget(self, action: #selector(searchParties), for: .valueChanged)
-        
         barView.filterButton.addTarget(self, action: #selector(showFilter), for: .touchUpInside)
     }
     

@@ -11,7 +11,10 @@ import FirebaseFirestore
 class PartiesViewController: UIViewController {
     
     private var ascendingSorting = true
-    var reverseSortingBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "AZ"), style: .plain, target: self, action: #selector(reverseSortingBarButtonItemTapped))
+    lazy var reverseSortingBarButtonItem: UIBarButtonItem = {
+        UIBarButtonItem.init(image: #imageLiteral(resourceName: "AZ"), style: .plain, target: self, action: #selector(reverseSortingBarButtonItemTapped))
+    }()
+    
     let sortingSegmentedControl = UISegmentedControl(first: "Дата", second: "Имя")
     var sortingTypeSegmentControlBarButtonItem: UIBarButtonItem!
     private let partiesSegmentedControl = UISegmentedControl(items: ["✅", "⏳", "Мои"])
@@ -36,15 +39,7 @@ class PartiesViewController: UIViewController {
             switch self {
             
             case .parties:
-                if partiesCount < 1 || partiesCount > 5 {
-                    return "\(partiesCount) вечеринок"
-                } else if partiesCount == 1 {
-                    return "\(partiesCount) вечеринка"
-                } else if partiesCount > 1 && partiesCount < 5 {
-                    return "\(partiesCount) вечеринки"
-                } else {
-                    return "\(partiesCount) вечеринок"
-                }
+                return partiesCount.parties()
             }
         }
     }
@@ -103,7 +98,6 @@ class PartiesViewController: UIViewController {
                 self.myParties = parties
                 self.reloadPartiesType()
                 
-                
             case .failure(let error):
                 self.showAlert(title: "Ошибка!", message: error.localizedDescription)
             }
@@ -119,19 +113,20 @@ class PartiesViewController: UIViewController {
         case 0:
             parties = approvedParties
             target = "approved"
-            reloadData(with: nil)
         case 1:
             parties = waitingParties
             target = "waiting"
-            reloadData(with: nil)
         case 2:
             parties = myParties
             target = "my"
-            reloadData(with: nil)
-        
         default:
             break
         }
+        
+        reloadData(with: nil)
+        
+        // Костыльно наверное. Нужно чтобы число вечеринок обновлялось
+        collectionView.reloadData()
     }
     
     private func setupCollectionView() {
@@ -163,6 +158,7 @@ class PartiesViewController: UIViewController {
     
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = reverseSortingBarButtonItem
+        reverseSortingBarButtonItem.action = #selector(reverseSortingBarButtonItemTapped)
         navigationItem.rightBarButtonItem = sortingTypeSegmentControlBarButtonItem
         navigationItem.titleView = partiesSegmentedControl
     }
@@ -284,9 +280,7 @@ extension PartiesViewController {
 extension PartiesViewController {
     
     @objc func sortSelection() {
-        
-        //ToDo sorting
-//        sorting()
+        sorting()
     }
     
     @objc func reverseSortingBarButtonItemTapped() {
@@ -299,29 +293,38 @@ extension PartiesViewController {
             reverseSortingBarButtonItem.image = #imageLiteral(resourceName: "ZA")
         }
         
-        //ToDo sorting
-//        sorting()
+        sorting()
     }
     
-    // ToDo sorting
-//    private func sorting() {
-//        
-//        if sortingSegmentedControl.selectedSegmentIndex == 0 {
-//            parties = parties.sorted(by: { $0.date > $1.date })
-//        } else {
-//            parties = parties.sorted(by: { $0.username > $1.username })
-//        }
-//        
-//        reloadData(with: nil)
-//    }
+    private func sorting() {
+        
+        if sortingSegmentedControl.selectedSegmentIndex == 0 {
+            if ascendingSorting {
+                parties = parties.sorted(by: { $0.date > $1.date })
+            } else {
+                parties = parties.sorted(by: { $0.date < $1.date })
+            }
+        } else {
+            if ascendingSorting {
+                parties = parties.sorted(by: { $0.name > $1.name })
+            } else {
+                parties = parties.sorted(by: { $0.name < $1.name })
+            }
+        }
+        
+        reloadData(with: nil)
+    }
 }
 
 // MARK: - UISearchBarDelegate
 extension PartiesViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
         reloadData(with: searchText)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        reloadData(with: nil)
     }
 }
 

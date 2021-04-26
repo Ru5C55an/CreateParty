@@ -70,32 +70,31 @@ class SecondSetupProfileViewController: UIViewController {
     
     private func setupInterests() {
         
-        sportButton.button.addTarget(self, action: #selector(changeInterests), for: .touchDown)
-        artButton.button.addTarget(self, action: #selector(changeInterests), for: .touchDown)
-        singingButton.button.addTarget(self, action: #selector(changeInterests), for: .touchDown)
-        musicButton.button.addTarget(self, action: #selector(changeInterests), for: .touchDown)
-        musicianButton.button.addTarget(self, action: #selector(changeInterests), for: .touchDown)
-        itButton.button.addTarget(self, action: #selector(changeInterests), for: .touchDown)
-        cameraButton.button.addTarget(self, action: #selector(changeInterests), for: .touchDown)
-        gamepadButton.button.addTarget(self, action: #selector(changeInterests), for: .touchDown)
-        travelButton.button.addTarget(self, action: #selector(changeInterests), for: .touchDown)
-        skateButton.button.addTarget(self, action: #selector(changeInterests), for: .touchDown)
-        scienceButton.button.addTarget(self, action: #selector(changeInterests), for: .touchDown)
+        sportButton.addTap(action: changeInterests)
+        singingButton.addTap(action: changeInterests)
+        musicButton.addTap(action: changeInterests)
+        musicianButton.addTap(action: changeInterests)
+        itButton.addTap(action: changeInterests)
+        cameraButton.addTap(action: changeInterests)
+        gamepadButton.addTap(action: changeInterests)
+        travelButton.addTap(action: changeInterests)
+        skateButton.addTap(action: changeInterests)
+        scienceButton.addTap(action: changeInterests)
     }
     
     @objc private func changeInterests() {
         
-        let sportInterest = sportButton.button.isSelected ? "💪" : ""
-        let artInterest = artButton.button.isSelected ? "🎨" : ""
-        let singingInterest = singingButton.button.isSelected ? "🎤" : ""
-        let musicInterest = musicButton.button.isSelected ? "🎧" : ""
-        let musicianInterest = musicianButton.button.isSelected ? "🎼" : ""
-        let itInterest = itButton.button.isSelected ? "🧑‍💻" : ""
-        let cameraInterest = cameraButton.button.isSelected ? "📷" : ""
-        let gamepadInterest = gamepadButton.button.isSelected ? "🎮" : ""
-        let travelInterest = travelButton.button.isSelected ? "🗺" : ""
-        let skateInterest = skateButton.button.isSelected ? "🛹" : ""
-        let scienceInterest = scienceButton.button.isSelected ? "🔬" : ""
+        let sportInterest = sportButton.isSelected ? "💪" : ""
+        let artInterest = artButton.isSelected ? "🎨" : ""
+        let singingInterest = singingButton.isSelected ? "🎤" : ""
+        let musicInterest = musicButton.isSelected ? "🎧" : ""
+        let musicianInterest = musicianButton.isSelected ? "🎼" : ""
+        let itInterest = itButton.isSelected ? "🧑‍💻" : ""
+        let cameraInterest = cameraButton.isSelected ? "📷" : ""
+        let gamepadInterest = gamepadButton.isSelected ? "🎮" : ""
+        let travelInterest = travelButton.isSelected ? "🗺" : ""
+        let skateInterest = skateButton.isSelected ? "🛹" : ""
+        let scienceInterest = scienceButton.isSelected ? "🔬" : ""
         interestsList = sportInterest + artInterest + singingInterest + musicInterest + musicianInterest + itInterest + cameraInterest + gamepadInterest + travelInterest + skateInterest + scienceInterest
     }
     

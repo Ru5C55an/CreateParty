@@ -53,6 +53,7 @@
 		444074CC259F52C700C8667E /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444074CB259F52C700C8667E /* UserCell.swift */; };
 		444074D1259F651D00C8667E /* aprovedUsers.json in Resources */ = {isa = PBXBuildFile; fileRef = 444074D0259F651D00C8667E /* aprovedUsers.json */; };
 		444074DB259FBC4900C8667E /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444074DA259FBC4900C8667E /* MessageModel.swift */; };
+		444D626D2637691C007A31E7 /* Int + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444D626C2637691C007A31E7 /* Int + Extension.swift */; };
 		4463BD33260E785F00848E29 /* SpiderWeb.json in Resources */ = {isa = PBXBuildFile; fileRef = 4463BD32260E785F00848E29 /* SpiderWeb.json */; };
 		4465EB2D257956C30096F3B7 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EB2C257956C30096F3B7 /* MainTabBarController.swift */; };
 		4465EB32257957160096F3B7 /* MyPartiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EB31257957160096F3B7 /* MyPartiesViewController.swift */; };
@@ -116,6 +117,7 @@
 		44D3EC662621DA3800717A9B /* CALayer + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D3EC652621DA3800717A9B /* CALayer + Extension.swift */; };
 		44D3EC6B262200BE00717A9B /* MenuButton.json in Resources */ = {isa = PBXBuildFile; fileRef = 44D3EC6A262200BD00717A9B /* MenuButton.json */; };
 		44D3EC722622175C00717A9B /* ColorAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D3EC712622175C00717A9B /* ColorAssets.swift */; };
+		44D3EC7D262327F600717A9B /* SelectProfileColorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D3EC7C262327F600717A9B /* SelectProfileColorViewController.swift */; };
 		44D6561A25AA29C50045ABD9 /* WaitingGuestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D6561925AA29C50045ABD9 /* WaitingGuestsViewController.swift */; };
 		44D6561F25AA2B9F0045ABD9 /* WaitingGuestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D6561E25AA2B9F0045ABD9 /* WaitingGuestCell.swift */; };
 		44D6562525AA45020045ABD9 /* PartyRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D6562425AA45020045ABD9 /* PartyRequestViewController.swift */; };
@@ -191,6 +193,7 @@
 		444074CB259F52C700C8667E /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		444074D0259F651D00C8667E /* aprovedUsers.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = aprovedUsers.json; sourceTree = "<group>"; };
 		444074DA259FBC4900C8667E /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
+		444D626C2637691C007A31E7 /* Int + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int + Extension.swift"; sourceTree = "<group>"; };
 		4463BD32260E785F00848E29 /* SpiderWeb.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SpiderWeb.json; sourceTree = "<group>"; };
 		4465EB2C257956C30096F3B7 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		4465EB31257957160096F3B7 /* MyPartiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPartiesViewController.swift; sourceTree = "<group>"; };
@@ -261,6 +264,7 @@
 		44D3EC652621DA3800717A9B /* CALayer + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer + Extension.swift"; sourceTree = "<group>"; };
 		44D3EC6A262200BD00717A9B /* MenuButton.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MenuButton.json; sourceTree = "<group>"; };
 		44D3EC712622175C00717A9B /* ColorAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorAssets.swift; sourceTree = "<group>"; };
+		44D3EC7C262327F600717A9B /* SelectProfileColorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProfileColorViewController.swift; sourceTree = "<group>"; };
 		44D6561925AA29C50045ABD9 /* WaitingGuestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingGuestsViewController.swift; sourceTree = "<group>"; };
 		44D6561E25AA2B9F0045ABD9 /* WaitingGuestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingGuestCell.swift; sourceTree = "<group>"; };
 		44D6562425AA45020045ABD9 /* PartyRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyRequestViewController.swift; sourceTree = "<group>"; };
@@ -353,6 +357,7 @@
 				44CF4B8F25D08EE100206F35 /* Color + Extension.swift */,
 				44999367261BA65600363CD3 /* TextFieldWithoutInteract.swift */,
 				44D3EC5A2621CF3900717A9B /* InCollectionViewCell.swift */,
+				444D626C2637691C007A31E7 /* Int + Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -779,6 +784,7 @@
 				4465EB452579585A0096F3B7 /* ProfileViewController.swift */,
 				440CEDFB258A917500553673 /* InformationUserViewController.swift */,
 				4404C2ED25A7409100A495EC /* ChangeInformationUserViewController.swift */,
+				44D3EC7C262327F600717A9B /* SelectProfileColorViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1150,9 +1156,11 @@
 				447EE8C1257676A700D8698F /* AuthViewController.swift in Sources */,
 				4465EB2D257956C30096F3B7 /* MainTabBarController.swift in Sources */,
 				4420BD6E2596128A005A4FAE /* UIImageView + Extension.swift in Sources */,
+				44D3EC7D262327F600717A9B /* SelectProfileColorViewController.swift in Sources */,
 				4420BD9C25964BCF005A4FAE /* AddProfilePhotoView.swift in Sources */,
 				4420BDA9259655D8005A4FAE /* UIDatePicker + Extension.swift in Sources */,
 				4424A5752597FA6600B420F7 /* AboutUserViewController.swift in Sources */,
+				444D626D2637691C007A31E7 /* Int + Extension.swift in Sources */,
 				4465EB97257AB2750096F3B7 /* CreatePartyViewController.swift in Sources */,
 				447DD936259A6D18007C4DA4 /* UIApplication + Extension.swift in Sources */,
 				44A63EE325A0960700F125F7 /* WaitingChatsNavigation.swift in Sources */,

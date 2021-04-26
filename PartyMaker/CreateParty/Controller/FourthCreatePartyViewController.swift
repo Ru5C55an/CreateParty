@@ -10,25 +10,32 @@ import UPCarouselFlowLayout
 
 class FourthCreatePartyViewController: UIViewController {
     
-    let subscribeLabel = UILabel(text: "Настройка фона и другие 🍪 доступны по подписке")
+    // MARK: - UI Elements
+    private let subscribeLabel = UILabel(text: "Настройка фона и другие 🍪 доступны по подписке")
     
-    let doneButton = UIButton(title: "Пропустить", titleColor: .white)
-    let getSubscribeButton = UIButton(title: "О подписке", titleColor: .white)
+    private let doneButton = UIButton(title: "Пропустить", titleColor: .white)
+    private let getSubscribeButton = UIButton(title: "О подписке", titleColor: .white)
     
-    var collectionView: UICollectionView!
+    private var collectionView: UICollectionView!
     
-    let cardView = CardView()
+    private let cardView = CardView()
     
-    var backgrounds: [UIImage] = []
+    // MARK: - Properties
+    private var backgrounds: [UIImage] = []
+    
+    private var prevIndex = 0
     
     private var party: Party
     private var partyImage: UIImage
     
+    // MARK: - Lifecycle
     init(party: Party, image: UIImage) {
         self.party = party
         self.partyImage = image
- 
+        
         super.init(nibName: nil, bundle: nil)
+        
+        title = "Выберите фон 🎨"
     }
     
     required init?(coder: NSCoder) {
@@ -39,32 +46,14 @@ class FourthCreatePartyViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .mainWhite()
-
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.topItem?.title = "Выберите фон"
-        navigationController?.navigationItem.largeTitleDisplayMode = .automatic
         
-        for item in 1...34 {
-            backgrounds.append(UIImage(named: "bc\(item)")!)
-        }
+        setupNavigationBar()
+        setupCards()
         
-        doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
+        setupTargets()
         
         setupCollectionView()
         setupConstraints()
-    }
-    
-    @objc private func doneButtonTapped() {
-        
-        FirestoreService.shared.savePartyWith(party: party, partyImage: partyImage) { [weak self] (result) in
-            switch result {
-            
-            case .success(_):
-                self?.navigationController?.popToRootViewController(animated: true)
-            case .failure(let error):
-                self?.showAlert(title: "Ошибка", message: error.localizedDescription)
-            }
-        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -72,6 +61,24 @@ class FourthCreatePartyViewController: UIViewController {
         
         doneButton.applyGradients(cornerRadius: doneButton.layer.cornerRadius, from: .bottomLeading, to: .topTrailing, startColor: #colorLiteral(red: 0.8980392157, green: 0.7294117647, blue: 0.1294117647, alpha: 1), endColor: #colorLiteral(red: 0.8196078431, green: 0.3647058824, blue: 0.1725490196, alpha: 1))
         getSubscribeButton.applyGradients(cornerRadius: getSubscribeButton.layer.cornerRadius, from: .bottomLeading, to: .topTrailing, startColor: #colorLiteral(red: 0.1960784314, green: 0.5647058824, blue: 0.6, alpha: 1), endColor: #colorLiteral(red: 0.1490196078, green: 0.1450980392, blue: 0.7490196078, alpha: 1))
+    }
+    
+    private func setupCards() {
+        for item in 1...34 {
+            backgrounds.append(UIImage(named: "bc\(item)")!)
+        }
+    }
+    
+    private func setupTargets() {
+        doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
+        getSubscribeButton.addTarget(self, action: #selector(getSubscribeButtonTapped), for: .touchUpInside)
+    }
+    
+    // MARK: - Setup views
+    private func setupNavigationBar() {
+//        navigationController?.navigationBar.prefersLargeTitles = true
+//        navigationController?.navigationBar.topItem?.title = "Выберите фон"
+//        navigationController?.navigationItem.largeTitleDisplayMode = .automatic
     }
     
     private func setupCollectionView() {
@@ -91,6 +98,32 @@ class FourthCreatePartyViewController: UIViewController {
         
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        print("skldasdjasoidjasdioajs: ", backgrounds.count / 2)
+ 
+
+        collectionView.scrollToItem(at: [0, 7], at: .centeredHorizontally, animated: true)
+//        collectionView.selectItem(at: [0, backgrounds.count / 2 % backgrounds.count], animated: true, scrollPosition: .right)
+    }
+    
+    // MARK: - Handlers
+    @objc private func doneButtonTapped() {
+        
+        FirestoreService.shared.savePartyWith(party: party, partyImage: partyImage) { [weak self] (result) in
+            switch result {
+            
+            case .success(_):
+                self?.showAlert(title: "Ура! 🎉", message: "Вечеринка создана. Вы можете найти ее в Мои вечеринки") {
+                    self?.navigationController?.popToRootViewController(animated: true)
+                }
+            case .failure(let error):
+                self?.showAlert(title: "Ошибка", message: error.localizedDescription)
+            }
+        }
+    }
+    
+    @objc private func getSubscribeButtonTapped() {
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -105,8 +138,6 @@ extension FourthCreatePartyViewController {
         
         let buttonsStackView = UIStackView(arrangedSubviews: [doneButton, getSubscribeButton], axis: .horizontal, spacing: 8)
         buttonsStackView.distribution = .fillEqually
-        doneButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        getSubscribeButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
         subscribeLabel.numberOfLines = 2
         subscribeLabel.textAlignment = .center
@@ -116,36 +147,36 @@ extension FourthCreatePartyViewController {
         view.addSubview(subscribeLabel)
         view.addSubview(buttonsStackView)
         
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        cardView.translatesAutoresizingMaskIntoConstraints = false
-        subscribeLabel.translatesAutoresizingMaskIntoConstraints = false
-        buttonsStackView.translatesAutoresizingMaskIntoConstraints = false
+        cardView.snp.makeConstraints { (make) in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(32)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(224)
+        }
         
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 112),
-            collectionView.heightAnchor.constraint(equalToConstant: 300),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
+        collectionView.snp.makeConstraints { (make) in
+            make.top.equalTo(cardView.snp.bottom).offset(16)
+            make.height.equalTo(246)
+            make.leading.trailing.equalToSuperview()
+        }
         
-        NSLayoutConstraint.activate([
-            cardView.topAnchor.constraint(equalTo: collectionView.bottomAnchor),
-            cardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            cardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            cardView.heightAnchor.constraint(equalToConstant: 224)
-        ])
+        subscribeLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(collectionView.snp.bottom).offset(16)
+            make.leading.trailing.equalToSuperview().inset(44)
+        } 
         
-        NSLayoutConstraint.activate([
-            subscribeLabel.topAnchor.constraint(equalTo: cardView.bottomAnchor, constant: 32),
-            subscribeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
-            subscribeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44),
-        ])
+        buttonsStackView.snp.makeConstraints { (make) in
+            make.top.equalTo(subscribeLabel.snp.bottom).offset(16)
+            make.leading.trailing.equalToSuperview().inset(44)
+//            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
+        }
         
-        NSLayoutConstraint.activate([
-            buttonsStackView.topAnchor.constraint(equalTo: subscribeLabel.bottomAnchor, constant: 16),
-            buttonsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 44),
-            buttonsStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44),
-        ])
+        doneButton.snp.makeConstraints { (make) in
+            make.height.equalTo(60)
+        }
+        
+        getSubscribeButton.snp.makeConstraints { (make) in
+            make.height.equalTo(60)
+        }
     }
 }
 
@@ -153,11 +184,9 @@ extension FourthCreatePartyViewController {
 extension FourthCreatePartyViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print(indexPath.row)
-//        cardView.imageView.image = backgrounds[indexPath.row % backgrounds.count]
-//        cardView.setNeedsDisplay()
-       
-       
+        //        print(indexPath.row)
+        //        cardView.imageView.image = backgrounds[indexPath.row % backgrounds.count]
+        //        cardView.setNeedsDisplay()
     }
 }
 
@@ -175,11 +204,35 @@ extension FourthCreatePartyViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-                
+        
+        print("asodijasdoiasdi: ", indexPath)
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CardBackgroundCell.reuseId, for: indexPath) as! CardBackgroundCell
         
         cell.configure(image: backgrounds[indexPath.row % backgrounds.count])
-        cardView.imageView.image = backgrounds[indexPath.row % backgrounds.count]
+        
+        if (prevIndex - indexPath.row % backgrounds.count) == 3 {
+            cardView.imageView.image = backgrounds[indexPath.row % backgrounds.count + 1]
+        } else if ((prevIndex - indexPath.row % backgrounds.count) == 1) && ((indexPath.row % backgrounds.count - 1) != -1) {
+            cardView.imageView.image = backgrounds[indexPath.row % backgrounds.count + 1]
+        } else if (indexPath.row % backgrounds.count - 1) != -1 {
+            cardView.imageView.image = backgrounds[indexPath.row % backgrounds.count - 1]
+        } else {
+            cardView.imageView.image = backgrounds[indexPath.row % backgrounds.count]
+        }
+        
+        //        if (prevIndex - indexPath.row) == 3 {
+        //            cardView.imageView.image = backgrounds[indexPath.row + 1]
+        //        } else if ((prevIndex - indexPath.row) == 1) && ((indexPath.row - 1) != -1) {
+        //            cardView.imageView.image = backgrounds[indexPath.row + 1]
+        //        } else if (indexPath.row - 1) != -1 {
+        //            cardView.imageView.image = backgrounds[indexPath.row - 1]
+        //        } else {
+        //            cardView.imageView.image = backgrounds[indexPath.row]
+        //        }
+        
+        prevIndex = indexPath.row % backgrounds.count
+        
         cardView.setNeedsDisplay()
         
         return cell

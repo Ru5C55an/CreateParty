@@ -28,13 +28,14 @@ class SecondCreatePartyViewController: UIViewController {
         return stepper
     }()
     
-    private let nextButton = UIButton(title: "Далее")
+    private let nextButton = UIButton(title: "Далее", titleColor: .white)
     private let alcoLabel = UILabel(text: "Присутсвие алкоголя")
     private let alcoSwitcher = UISwitch()
+    private var alcoSwitcherEmoji = UIImageView(image: "🚱".textToImage()!)
     
     // MARK: - Properties
     private var pickedType = ""
-    private var pickerData: [String] = [String]()
+    private let pickerData = ["Музыкальная", "Танцевальная", "Вписка", "Поэтическая", "Творческая", "Праздничная", "Игровая", "Научная", "Домашний хакатон", "Особая тематика"]
     
     private let currentUser: PUser
     internal var party: Party
@@ -64,20 +65,33 @@ class SecondCreatePartyViewController: UIViewController {
         
         view.backgroundColor = .systemBackground
         
-        pickerData = ["Музыкальная", "Танцевальная", "Вписка", "Поэтическая", "Творческая", "Праздничная", "Игровая", "Научная", "Домашний хакатон", "Особая тематика"]
-        
         pickedType = pickerData.first!
         
         typePicker.delegate = self
         typePicker.dataSource = self
         
-        countStepper.addTarget(self, action: #selector(countStepperTapped), for: .valueChanged)
-        nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+        typePicker.selectRow(pickerData.count / 2, inComponent: 0, animated: false)
         
+        setupTargets()
         setupConstraints()
     }
     
+    // MARK: - Setup targets
+    private func setupTargets() {
+        countStepper.addTarget(self, action: #selector(countStepperTapped), for: .valueChanged)
+        nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+        alcoSwitcher.addTarget(self, action: #selector(alcoSwitcherChanged), for: .valueChanged)
+    }
+    
     // MARK: - Handlers
+    @objc private func alcoSwitcherChanged() {
+        if alcoSwitcher.isOn {
+            alcoSwitcherEmoji.image = "🥃".textToImage()!
+        } else {
+            alcoSwitcherEmoji.image = "🚱".textToImage()!
+        }
+    }
+    
     @objc private func countStepperTapped() {
         countPeople.text = String(Int(countStepper.value))
     }
@@ -126,12 +140,12 @@ extension SecondCreatePartyViewController {
         
         let aboutPartyStackView = UIStackView(arrangedSubviews: [aboutPartyLabel, aboutPartyTextView], axis: .vertical, spacing: 8)
         
-        let typeStackView = UIStackView(arrangedSubviews: [typeLabel, typePicker], axis: .vertical, spacing: 0)
+        let typeStackView = UIStackView(arrangedSubviews: [typeLabel, typePicker], axis: .vertical, spacing: -10)
         
         let countPeopleStackView = UIStackView(arrangedSubviews: [countPeopleLabel, countPeople, countStepper], axis: .horizontal, spacing: 8)
         countPeopleStackView.distribution = .equalSpacing
         
-        let alcoStackView = UIStackView(arrangedSubviews: [alcoLabel, alcoSwitcher], axis: .horizontal, spacing: 8)
+        let alcoStackView = UIStackView(arrangedSubviews: [alcoLabel, alcoSwitcher, alcoSwitcherEmoji], axis: .horizontal, spacing: 16)
         alcoStackView.alignment = .firstBaseline
         
         let stackView = UIStackView(arrangedSubviews: [partynameStackView, aboutPartyStackView, typeStackView, countPeopleStackView], axis: .vertical, spacing: 16)
@@ -139,7 +153,6 @@ extension SecondCreatePartyViewController {
         view.addSubview(stackView)
         view.addSubview(alcoStackView)
         view.addSubview(nextButton)
-        
         
         stackView.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(112)
@@ -156,17 +169,18 @@ extension SecondCreatePartyViewController {
         
         alcoStackView.snp.makeConstraints { (make) in
             make.top.equalTo(stackView.snp.bottom).offset(32)
-            make.leading.equalToSuperview().offset(44)
+            make.leading.trailing.equalToSuperview().inset(44)
         }
         
-        alcoSwitcher.snp.makeConstraints { (make) in
-            make.centerY.equalTo(alcoLabel.snp.centerY)
+        alcoSwitcherEmoji.snp.makeConstraints { (make) in
+            make.size.equalTo(30)
         }
         
         nextButton.snp.makeConstraints { (make) in
             make.top.equalTo(alcoStackView.snp.bottom).offset(32)
             make.leading.trailing.equalToSuperview().inset(44)
             make.height.equalTo(64)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
         }
     }
 }
