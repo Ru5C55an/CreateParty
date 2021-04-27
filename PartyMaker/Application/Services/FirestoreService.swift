@@ -373,15 +373,14 @@ class FirestoreService {
         }
     }
     
-    func searchPartiesWith(city: String? = nil, type: String? = nil, date: String? = nil, maximumPeople: String? = nil, price: String? = nil, completion: @escaping (Result<[Party], Error>) -> Void) {
+    func searchPartiesWith(city: String? = nil, type: String? = nil, date: String? = nil, countPeoples: String? = nil, price: String? = nil, charCountPeoples: String? = nil, charPrice: String? = nil, completion: @escaping (Result<[Party], Error>) -> Void) {
         
         var query: Query = db.collection("parties")
         
-        if city != nil && city != "Любой" { query = query.whereField("city", isEqualTo : city!) }
-        if type != nil && type != "Любой" { query = query.whereField("type", isEqualTo : type!) }
-        //        if date != nil && date != "" { query = query.whereField("date", isEqualTo : date) }
-        if maximumPeople != nil && maximumPeople != "" { query = query.whereField("maximumPeople", isEqualTo : maximumPeople!) }
-        if price != nil && price != "" && price != "0" { query = query.whereField("price", isEqualTo : price!) }
+        if let city = city, city != "Любой" { query = query.whereField("city", isEqualTo : city) }
+        if let type = type, type != "Любой" { query = query.whereField("type", isEqualTo : type) }
+        if let date = date, date != "" { query = query.whereField("date", isEqualTo : date) }
+
         query = query.whereField("userId", isNotEqualTo: Auth.auth().currentUser!.uid)
         
         query.getDocuments() { (querySnapshot, err) in

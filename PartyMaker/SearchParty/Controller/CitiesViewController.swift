@@ -358,7 +358,7 @@ extension CitiesViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if let searchPartyVC = self.parent as? SearchPartyViewController {
+        if let searchPartyVC = self.parent as? SearchPartiesFilteredVC {
             searchPartyVC.filterView.cityButton.setTitle(cities[indexPath.row], for: .normal)
         }
         

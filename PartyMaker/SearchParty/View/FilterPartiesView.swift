@@ -7,21 +7,26 @@
 
 import UIKit
 
+protocol FilterPartiesViewDelegate {
+    func showCities()
+}
+
 class FilterPartiesView: UIView {
     
     let cityLabel = UILabel(text: "Город")
     let cityButton = UIButton(title: "Любой", titleColor: #colorLiteral(red: 0.1921568627, green: 0.568627451, blue: 0.9882352941, alpha: 1), backgroundColor: #colorLiteral(red: 0.937254902, green: 0.937254902, blue: 0.9411764706, alpha: 1), isShadow: false, cornerRadius: 4)
-    let datePicker = UIDatePicker()
     
-    let dateLabel = UILabel(text: "Дата")
-    var pickedType = ""
-    var pickerData: [String] = [String]()
     var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_RU")
         dateFormatter.dateFormat = "dd-MM-yyyy"
         return dateFormatter
     }()
+    let dateLabel = UILabel(text: "Дата")
+    let datePicker = UIDatePicker()
+    
+    var pickedType = ""
+    var pickerData: [String] = [String]()
     
     let typePicker = UIPickerView()
     let typeLabel = UILabel(text: "Тип")
@@ -42,6 +47,8 @@ class FilterPartiesView: UIView {
         stepper.maximumValue = 1000
         return stepper
     }()
+    
+    var delegate: FilterPartiesViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -66,10 +73,16 @@ class FilterPartiesView: UIView {
         typeBackgroundView.layer.cornerRadius = 5
         
         datePicker.datePickerMode = .date
+        
+        cityButton.addTarget(self, action: #selector(cityButtonTapped), for: .touchUpInside)
     
         setupToolbar()
         setupConstraints()
         addTargets()
+    }
+    
+    @objc private func cityButtonTapped() {
+        delegate?.showCities()
     }
     
     private func addTargets() {
@@ -134,6 +147,7 @@ extension FilterPartiesView {
             make.top.equalToSuperview().offset(5)
             make.leading.equalToSuperview()
         }
+        
         cityButton.snp.makeConstraints { (make) in
             make.top.equalToSuperview()
             make.trailing.equalToSuperview().offset(-5)
@@ -144,10 +158,12 @@ extension FilterPartiesView {
             make.top.equalTo(cityLabel.snp.bottom).offset(16)
             make.leading.equalToSuperview()
         }
+        
         typeTextField.snp.makeConstraints { (make) in
             make.centerY.equalTo(typeLabel.snp.centerY)
             make.leading.equalTo(typeLabel.snp.trailing).offset(10)
         }
+        
         typeBackgroundView.snp.makeConstraints { (make) in
             make.edges.equalTo(typeTextField).inset(-5)
         }

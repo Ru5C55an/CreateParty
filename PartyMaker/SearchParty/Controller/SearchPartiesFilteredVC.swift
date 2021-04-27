@@ -25,6 +25,9 @@ class SearchPartiesFilteredVC: UIViewController {
         let button = UIButton(type: .close)
         return button
     }()
+    
+    //MARK: - Delegate
+    var delegate: SearchPartyFilterDelegate?
         
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -40,11 +43,43 @@ class SearchPartiesFilteredVC: UIViewController {
         
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         
+        filterView.delegate = self
+    
         setupConstraints()
     }
     
     // MARK: - Handlers
     @objc private func closeButtonTapped() {
+        var filter = [String: String]()
+        filter["city"] = filterView.cityLabel.text
+        filter["countPeoples"] = filterView.countText.text
+        filter["date"] = filterView.dateFormatter.string(from: filterView.datePicker.date)
+        filter["price"] = filterView.priceTextField.text
+        filter["type"] = filterView.pickedType
+        
+        switch filterView.segmentedCharCount.selectedSegmentIndex {
+        case 0:
+            filter["charCountPeoples"] = ">"
+        case 1:
+            filter["charCountPeoples"] = "<"
+        case 2:
+            filter["charCountPeoples"] = "="
+        default:
+            break
+        }
+        
+        switch filterView.segmentedCharPrice.selectedSegmentIndex {
+        case 0:
+            filter["charPrice"] = ">"
+        case 1:
+            filter["charPrice"] = "<"
+        case 2:
+            filter["charPrice"] = "="
+        default:
+            break
+        }
+      
+        delegate?.didChangeFilter(filter: filter)
         dismiss(animated: true, completion: nil)
     }
 }
@@ -80,5 +115,17 @@ extension SearchPartiesFilteredVC {
             make.leading.trailing.equalToSuperview().inset(10)
             make.bottom.equalToSuperview().inset(10)
         }
+    }
+}
+
+extension SearchPartiesFilteredVC: FilterPartiesViewDelegate {
+    func showCities() {
+        let citiesVC = CitiesViewController()
+            
+        self.addChild(citiesVC)
+        citiesVC.view.frame = self.view.frame
+        self.view.addSubview(citiesVC.view)
+            
+        citiesVC.didMove(toParent: self)
     }
 }

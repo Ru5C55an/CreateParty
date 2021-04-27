@@ -7,11 +7,15 @@
 
 import UIKit
 import Hero
+import FirebaseAuth
+
+protocol SearchPartyFilterDelegate {
+    func didChangeFilter(filter: [String: String])
+}
 
 class SearchPartyViewController: UIViewController {
         
     // MARK: - UI Elements
-    let filterView = FilterPartiesView()
     let barView = SearchPartiesBar()
     
     var collectionView: UICollectionView!
@@ -32,14 +36,14 @@ class SearchPartyViewController: UIViewController {
     
     var parties: [Party] = []
     var dataSource: UICollectionViewDiffableDataSource<Section, Party>!
-        
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
     
         view.backgroundColor = .systemGroupedBackground
         
-        searchParties()
+        searchParties(filter: [String : String]())
         addTargets()
         setupNavigationBar()
         setupCollectionView()
@@ -54,9 +58,6 @@ class SearchPartyViewController: UIViewController {
     
     // MARK: - Handlers
     private func addTargets() {
-        filterView.cityButton.addTarget(self, action: #selector(selectCity), for: .touchUpInside)
-        filterView.countStepper.addTarget(self, action: #selector(searchParties), for: .valueChanged)
-        filterView.datePicker.addTarget(self, action: #selector(searchParties), for: .valueChanged)
         barView.filterButton.addTarget(self, action: #selector(showFilter), for: .touchUpInside)
     }
     
@@ -66,8 +67,9 @@ class SearchPartyViewController: UIViewController {
 //        filterView.hero.id = "batMan"
         
         let searchPartiesFilteredVC = SearchPartiesFilteredVC()
+        searchPartiesFilteredVC.modalPresentationStyle = .overFullScreen
 //        searchPartiesFilteredVC.hero.isEnabled = true
-        
+        searchPartiesFilteredVC.delegate = self
         present(searchPartiesFilteredVC, animated: true, completion: nil)
     }
     
@@ -81,15 +83,38 @@ class SearchPartyViewController: UIViewController {
         citiesVC.didMove(toParent: self)
     }
     
-    @objc private func searchParties() {
+    @objc private func searchParties(filter: [String: String]) {
         
-        FirestoreService.shared.searchPartiesWith(city: filterView.cityButton.titleLabel?.text, type: filterView.pickedType, date: filterView.dateFormatter.string(from: filterView.datePicker.date), maximumPeople: filterView.countText.text, price: filterView.priceTextField.text) { [weak self] (result) in
+        FirestoreService.shared.searchPartiesWith(city: filter["city"], type: filter["type"], date: filter["date"], countPeoples: filter["countPeoples"], price: filter["price"], charCountPeoples: filter["charCountPeoples"], charPrice: filter["charPrice"]) { [weak self] (result) in
             
             switch result {
             
             case .success(let parties):
+           
+          
                 self?.parties = parties
+                
+                if filter["charCountPeoples"] == ">" {
+                    if let countPeoples = filter["countPeoples"], countPeoples != "" { self?.parties.removeAll(where: { $0.maximumPeople < countPeoples }) }
+                } else if filter["charCountPeoples"] == "<" {
+                    if let countPeoples = filter["countPeoples"], countPeoples != "" { self?.parties.removeAll(where: { $0.maximumPeople > countPeoples }) }
+                } else if filter["charCountPeoples"] == "=" {
+                    if let countPeoples = filter["countPeoples"], countPeoples != "" { self?.parties.removeAll(where: { $0.maximumPeople != countPeoples }) }
+                }
+                
+                if filter["charPrice"] == ">" {
+                    if let price = filter["price"], price != "" {  self?.parties.removeAll(where: { $0.price < price }) }
+                } else if filter["charPrice"] == "<" {
+                    if let price = filter["price"], price != "" { self?.parties.removeAll(where: { $0.price > price }) }
+                } else if filter["charPrice"] == "=" {
+                    if let price = filter["price"], price != "" { self?.parties.removeAll(where: { $0.price != price }) }
+                }
+                
                 self?.reloadData()
+                
+                // Костыльно наверное. Нужно чтобы число вечеринок обновлялось
+                self?.collectionView.reloadData()
+                
             case .failure(let error):
                 print(error.localizedDescription)
                 self?.showAlert(title: "Ошибка", message: error.localizedDescription)
@@ -242,6 +267,13 @@ extension SearchPartyViewController: UICollectionViewDelegate {
         
         let showPartyVC = ShowPartyViewController(party: party, target: "search")
         present(showPartyVC, animated: true, completion: nil)
+    }
+}
+
+extension SearchPartyViewController: SearchPartyFilterDelegate {
+    func didChangeFilter(filter: [String : String]) {
+       
+        searchParties(filter: filter)
     }
 }
 
