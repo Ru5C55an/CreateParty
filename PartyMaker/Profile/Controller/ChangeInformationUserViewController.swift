@@ -191,6 +191,8 @@ class ChangeInformationUserViewController: UIViewController {
         containerView.backgroundColor = .white
         containerView.layer.cornerRadius = 30
         containerView.clipsToBounds = true
+        containerView.layer.borderColor = UIColor.white.cgColor
+        containerView.layer.borderWidth = 2
         
         setupTargets()
         setupConstraints()
@@ -456,6 +458,7 @@ class ChangeInformationUserViewController: UIViewController {
                             profileVC?.changeInformationUserVC.view.isHidden = true
                             profileVC?.currentUser = (self?.currentUser)!
                             profileVC?.avatarImageView.image = self?.avatarImageView.image
+                            profileVC?.setupUser()
                             self?.delegate?.didChangeUserInfo(currentUser: (self?.currentUser)!)
                             
                             self?.showAlert(title: "Успешно!", message: "Изменения были сохранены")
@@ -486,6 +489,7 @@ class ChangeInformationUserViewController: UIViewController {
                     profileVC?.changeInformationUserVC.view.isHidden = true
                     profileVC?.currentUser = self!.currentUser
                     profileVC?.avatarImageView.image = UIImage(systemName: "person.crop.circle")
+                    profileVC?.setupUser()
                     self?.delegate?.didChangeUserInfo(currentUser: (self?.currentUser)!)
                     
                     self?.showAlert(title: "Успешно!", message: "Изменения были сохранены")
@@ -508,6 +512,7 @@ class ChangeInformationUserViewController: UIViewController {
                     profileVC?.containerView.isHidden = false
                     profileVC?.changeInformationUserVC.view.isHidden = true
                     profileVC?.currentUser = self!.currentUser
+                    profileVC?.setupUser()
                     self?.delegate?.didChangeUserInfo(currentUser: (self?.currentUser)!)
                     
                     self?.showAlert(title: "Успешно!", message: "Изменения были сохранены")
@@ -654,7 +659,7 @@ extension ChangeInformationUserViewController {
         changePersonalColorButton.addSubview(changePersonalColorLabel)
         
         containerView.snp.makeConstraints { (make) in
-            make.leading.top.trailing.equalToSuperview()
+            make.top.leading.trailing.equalToSuperview().inset(-2)
             make.height.equalTo(286)
         }
         

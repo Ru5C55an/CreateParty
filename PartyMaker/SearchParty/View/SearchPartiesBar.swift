@@ -18,21 +18,34 @@ class SearchPartiesBar: UIView {
     let sortButton: UIButton = {
         let button = UIButton()
         button.layer.contents = UIImage(systemName: "arrow.up.arrow.down.circle")?.imageWithColor(color: .gray)?.cgImage
-//        arrow.down
         return button
     }()
+    
+    let partiesSegmentedControl = UISegmentedControl(items: ["🗓", "Имя", "🙋‍♀️🙋‍♂️", "💶"])
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
 //        backgroundColor = .clear
-    
+        partiesSegmentedControl.isHidden = true
+        partiesSegmentedControl.selectedSegmentIndex = 0
         setupConstraints()
-        addTargets()
+    }
+
+   func sortAscending() {
+        sortButton.layer.contents = UIImage(systemName: "arrow.down.circle.fill")?.imageWithColor(color: .gray)?.cgImage
+    partiesSegmentedControl.isHidden = false
     }
     
-    private func addTargets() {
-       
+    
+    func sortDescending() {
+         sortButton.layer.contents = UIImage(systemName: "arrow.up.circle.fill")?.imageWithColor(color: .gray)?.cgImage
+        partiesSegmentedControl.isHidden = false
+    }
+    
+    func clearSort() {
+        sortButton.layer.contents = UIImage(systemName: "arrow.up.arrow.down.circle")?.imageWithColor(color: .gray)?.cgImage
+        partiesSegmentedControl.isHidden = true
     }
     
     required init?(coder: NSCoder) {
@@ -43,8 +56,9 @@ class SearchPartiesBar: UIView {
 extension SearchPartiesBar {
     
     private func setupConstraints() {
-        self.addSubview(filterButton)
-        self.addSubview(sortButton)
+        addSubview(filterButton)
+        addSubview(sortButton)
+        addSubview(partiesSegmentedControl)
         
         filterButton.snp.makeConstraints { (make) in
             make.trailing.top.bottom.equalToSuperview()
@@ -54,6 +68,12 @@ extension SearchPartiesBar {
         sortButton.snp.makeConstraints { (make) in
             make.leading.top.bottom.equalToSuperview()
             make.size.equalTo(30)
+        }
+        
+        partiesSegmentedControl.snp.makeConstraints { (make) in
+            make.top.equalToSuperview()
+            make.leading.equalTo(sortButton.snp.trailing).offset(10)
+            make.trailing.equalTo(filterButton.snp.leading).offset(-10)
         }
     }
 }

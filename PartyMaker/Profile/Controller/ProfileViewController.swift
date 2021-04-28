@@ -67,17 +67,15 @@ class ProfileViewController: UIViewController {
         
         if currentUser.personalColor != "" {
             setupProfileColor(colorName: currentUser.personalColor)
+        } else {
+            clearPersonalColor()
         }
     }
     
     private func setupProfileColor(colorName: String? = nil) {
         if let colorName = colorName {
             
-            for view in containerView.subviews {
-                if view.tag == 1 {
-                    view.removeFromSuperview()
-                }
-            }
+            clearPersonalColor()
             
             let gradient = (PersonalColors(rawValue: colorName)?.gradient)!
             gradient.tag = 1
@@ -85,6 +83,14 @@ class ProfileViewController: UIViewController {
             containerView.insertSubview(gradient, at: 0)
             gradient.snp.makeConstraints { (make) in
                 make.edges.equalToSuperview()
+            }
+        }
+    }
+    
+    private func clearPersonalColor() {
+        for view in containerView.subviews {
+            if view.tag == 1 {
+                view.removeFromSuperview()
             }
         }
     }
@@ -192,7 +198,7 @@ extension ProfileViewController {
             }
             
             containerView.snp.makeConstraints { (make) in
-                make.top.leading.trailing.equalToSuperview()
+                make.top.leading.trailing.equalToSuperview().inset(-2)
                 make.height.equalTo(230)
             }
             
@@ -210,7 +216,7 @@ extension ProfileViewController {
             }
             
             containerView.snp.makeConstraints { (make) in
-                make.top.leading.trailing.equalToSuperview()
+                make.top.leading.trailing.equalToSuperview().inset(-2)
                 make.height.equalTo(286)
             }
             

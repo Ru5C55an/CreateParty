@@ -58,7 +58,65 @@ class SearchPartyViewController: UIViewController {
     
     // MARK: - Handlers
     private func addTargets() {
+        barView.sortButton.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
         barView.filterButton.addTarget(self, action: #selector(showFilter), for: .touchUpInside)
+        barView.partiesSegmentedControl.addTarget(self, action: #selector(sorting), for: .valueChanged)
+    }
+  
+    var countTapSorting = 0
+    @objc private func sortButtonTapped() {
+        switch countTapSorting {
+        case 0:
+            countTapSorting += 1
+            barView.sortAscending()
+            sorting()
+        case 1:
+            countTapSorting += 1
+            barView.sortDescending()
+            sorting()
+        case 2:
+            countTapSorting = 0
+            barView.clearSort()
+            parties = parties.shuffled()
+        default:
+            break
+        }
+        
+        reloadData()
+    }
+    
+    @objc private func sorting() {
+        switch countTapSorting {
+        case 0:
+            switch barView.partiesSegmentedControl.selectedSegmentIndex {
+            case 0:
+                parties = parties.sorted(by: { $0.date > $1.date })
+            case 1:
+                parties = parties.sorted(by: { $0.name > $1.name })
+            case 2:
+                parties = parties.sorted(by: { $0.maximumPeople > $1.maximumPeople })
+            case 3:
+                parties = parties.sorted(by: { $0.price > $1.price })
+            default:
+                break
+            }
+            
+        case 1:
+            switch barView.partiesSegmentedControl.selectedSegmentIndex {
+            case 0:
+                parties = parties.sorted(by: { $0.date < $1.date })
+            case 1:
+                parties = parties.sorted(by: { $0.name < $1.name })
+            case 2:
+                parties = parties.sorted(by: { $0.maximumPeople < $1.maximumPeople })
+            case 3:
+                parties = parties.sorted(by: { $0.price < $1.price })
+            default:
+                break
+            }
+        default:
+            break
+        }
     }
     
     @objc private func showFilter() {

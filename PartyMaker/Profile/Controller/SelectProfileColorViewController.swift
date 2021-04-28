@@ -136,6 +136,8 @@ class SelectProfileColorViewController: UIViewController {
         profileView.backgroundColor = .white
         profileView.layer.cornerRadius = 30
         profileView.clipsToBounds = true
+        profileView.layer.borderColor = UIColor(red: 238.0/255.0, green: 238.0/255.0, blue: 239.0/255.0, alpha: 1.0).cgColor
+        profileView.layer.borderWidth = 2
     }
     
     private func setupNavigationBar() {
@@ -191,7 +193,7 @@ extension SelectProfileColorViewController {
         profileView.addSubview(avatarImageView)
 
         profileView.snp.makeConstraints { (make) in
-            make.top.leading.trailing.equalToSuperview()
+            make.top.leading.trailing.equalToSuperview().inset(-2)
             make.height.equalTo(266)
         }
         
