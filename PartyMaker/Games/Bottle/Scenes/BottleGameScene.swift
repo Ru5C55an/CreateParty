@@ -15,13 +15,26 @@ class BottleGameScene: BottleGameParentScene {
     
     fileprivate var playButtonTextureArrayAnimation = [SKTexture]()
     fileprivate let playButton = SKSpriteNode(texture: SKTexture(imageNamed: "playButton1"))
+    fileprivate var isBottleStopped = true
     fileprivate var buttonEnabled = false
     
     fileprivate let hud = BottleGameHUD()
     
     fileprivate let screenSize = UIScreen.main.bounds.size
     
+    fileprivate var firstSelectedPlayer: SKNode? = nil
+    fileprivate var secondSelectedPlayer: SKNode? = nil
+    
+    fileprivate var screenCenterPoint: CGPoint = CGPoint(x: 0, y: 0)
+    
     override func didMove(to view: SKView) {
+        
+        let confetti = ConfettiEffect()
+        view.addSubview(confetti)
+        confetti.popConfetti()
+        
+        screenCenterPoint = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
+        
         self.scene?.isPaused = false
         guard sceneManager.gameScene == nil else { return }
         sceneManager.gameScene = self
@@ -42,6 +55,7 @@ class BottleGameScene: BottleGameParentScene {
     }
     
     func testRotateBottle() {
+        isBottleStopped = false
         buttonEnabled = false
         
         let distributionRepeat = GKRandomDistribution(lowestValue: 7, highestValue: 11)
@@ -87,33 +101,15 @@ class BottleGameScene: BottleGameParentScene {
     
     fileprivate func checkFromTo() {
         
-//        guard let maxY = bottle.texture?.textureRect().maxY else {
-//            print("error get maxY bottle")
-//            return
-//        }
-//
-//        guard let minY = bottle.texture?.textureRect().minY else {
-//            print("error get minY bottle")
-//            return
-//        }
-//
-//        var from: CGFloat
-//        var to: CGFloat
-//
-//        if finalPoint > ((2 * 3.14 * 150 / 150) / 2) {
-//            from = maxY
-//            to = minY
-//        } else {
-//            from = minY
-//            to = maxY
-//        }
-//
-//        print("from: ", from, "to: ", to)
-        self.buttonEnabled = true
+        buttonEnabled = true
+        isBottleStopped = true
+        
+        if let firstSelectedPlayer = firstSelectedPlayer, let secondSelectedPlayer = secondSelectedPlayer {
+            firstSelectedPlayer.run(BottleGameScene.move(from: firstSelectedPlayer.position, to: CGPoint(x: screenCenterPoint.x, y: screenCenterPoint.y - screenCenterPoint.y / 2 - screenCenterPoint.y / 4)))
+        }
     }
     
     fileprivate func configureStartScene() {
-        let screenCenterPoint = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
         
         var count = 8
         for i in 1...count {
@@ -267,11 +263,24 @@ extension BottleGameScene: SKPhysicsContactDelegate {
         let bottleNeck = BottleGameBitMaskCategory.bottleNeck
         let bottleBottom = BottleGameBitMaskCategory.bottleBottom
 
-        if bodyA == player && bodyB == bottleNeck || bodyB == player && bodyA == bottleNeck {
-            print("player vs bottleNeck")
-        } else if bodyA == player && bodyB == bottleBottom || bodyB == player && bodyA == bottleBottom {
-            print("player vs bottleBottom")
-        }
+     
+            if bodyA == player && bodyB == bottleNeck || bodyB == player && bodyA == bottleNeck {
+                if let bodyA = contact.bodyA.node?.name, bodyA == "bottle" {
+                    secondSelectedPlayer = contact.bodyB.node
+                } else {
+                    secondSelectedPlayer = contact.bodyA.node
+                }
+                print("player vs bottleNeck")
+            } else if bodyA == player && bodyB == bottleBottom || bodyB == player && bodyA == bottleBottom {
+                if let bodyA = contact.bodyA.node?.name, bodyA == "bottle" {
+                    firstSelectedPlayer = contact.bodyB.node
+                } else {
+                    firstSelectedPlayer = contact.bodyA.node
+                }
+            
+                print("player vs bottleBottom")
+            }
+        
     }
     
     func didEnd(_ contact: SKPhysicsContact) {

@@ -10,7 +10,7 @@ import GameplayKit
 
 final class BottleGameHead: SKSpriteNode, GameSpritable {
 
-    static func populateSprite(at point: CGPoint, name: String? = nil) -> BottleGameHead {
+    static func populateSprite(at point: CGPoint, name: String? = nil, id: Int? = 1) -> BottleGameHead {
         
         var headImageName = name ?? configureHeadName()
         let head = BottleGameHead(imageNamed: headImageName)
@@ -62,7 +62,7 @@ final class BottleGameHead: SKSpriteNode, GameSpritable {
    
         head.position = fromPoint
         head.zPosition = 1
-        head.name = "head"
+        head.name = "head\(id!)"
         
         head.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 105, height: 105))
         head.physicsBody?.isDynamic = true

@@ -64,6 +64,7 @@
 		44547C00264B30DB00C221AD /* BottleGameParentScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44547BFF264B30DB00C221AD /* BottleGameParentScene.swift */; };
 		44547C02264B332300C221AD /* BottleGameOptionsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44547C01264B332300C221AD /* BottleGameOptionsScene.swift */; };
 		44547C06264C7F8C00C221AD /* BottleGameHistoryScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44547C05264C7F8C00C221AD /* BottleGameHistoryScene.swift */; };
+		44547C0F264DD8DE00C221AD /* ConfettiEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44547C0E264DD8DD00C221AD /* ConfettiEffect.swift */; };
 		4463BD33260E785F00848E29 /* SpiderWeb.json in Resources */ = {isa = PBXBuildFile; fileRef = 4463BD32260E785F00848E29 /* SpiderWeb.json */; };
 		4465EB2D257956C30096F3B7 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EB2C257956C30096F3B7 /* MainTabBarController.swift */; };
 		4465EB32257957160096F3B7 /* MyPartiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EB31257957160096F3B7 /* MyPartiesViewController.swift */; };
@@ -225,6 +226,7 @@
 		44547BFF264B30DB00C221AD /* BottleGameParentScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleGameParentScene.swift; sourceTree = "<group>"; };
 		44547C01264B332300C221AD /* BottleGameOptionsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleGameOptionsScene.swift; sourceTree = "<group>"; };
 		44547C05264C7F8C00C221AD /* BottleGameHistoryScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleGameHistoryScene.swift; sourceTree = "<group>"; };
+		44547C0E264DD8DD00C221AD /* ConfettiEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConfettiEffect.swift; path = ../../../../../../../Documents/ConfettiEffect.swift; sourceTree = "<group>"; };
 		4463BD32260E785F00848E29 /* SpiderWeb.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SpiderWeb.json; sourceTree = "<group>"; };
 		4465EB2C257956C30096F3B7 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		4465EB31257957160096F3B7 /* MyPartiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyPartiesViewController.swift; path = "../New Group/MyPartiesViewController.swift"; sourceTree = "<group>"; };
@@ -476,6 +478,7 @@
 		442DD271263F4981004C4780 /* Bottle */ = {
 			isa = PBXGroup;
 			children = (
+				44547C0D264DD8BF00C221AD /* Resources */,
 				446714A62645E7BE00DC63AA /* Atlases */,
 				446714A42645E77500DC63AA /* Classes */,
 				446714A32645E72F00DC63AA /* Protocols + Extensions */,
@@ -493,6 +496,14 @@
 				44AD68C52640834D005F81DB /* GamesViewController.swift */,
 			);
 			path = Games;
+			sourceTree = "<group>";
+		};
+		44547C0D264DD8BF00C221AD /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				44547C0E264DD8DD00C221AD /* ConfettiEffect.swift */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		446714A32645E72F00DC63AA /* Protocols + Extensions */ = {
@@ -1235,6 +1246,7 @@
 				44BA15D82645EF3A00014AE9 /* BottleGameAbout.swift in Sources */,
 				445137ED263D72BC00441352 /* BottleGameHead.swift in Sources */,
 				44CF4B9025D08EE100206F35 /* Color + Extension.swift in Sources */,
+				44547C0F264DD8DE00C221AD /* ConfettiEffect.swift in Sources */,
 				447DD9D2259BE3C7007C4DA4 /* EditPartyViewController.swift in Sources */,
 				44AD68C62640834D005F81DB /* GamesViewController.swift in Sources */,
 				44D3EC662621DA3800717A9B /* CALayer + Extension.swift in Sources */,

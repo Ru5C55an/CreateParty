@@ -14,7 +14,7 @@ final class BottleGameBottle: SKSpriteNode, GameSpritable {
     let motionManager = CMMotionManager()
     var xAcceleration: CGFloat = 0
     
-    static func populateSprite(at point: CGPoint, name: String? = nil) -> BottleGameBottle {
+    static func populateSprite(at point: CGPoint, name: String? = nil, id: Int? = nil) -> BottleGameBottle {
         
         let bottleImageName = configureBottleName()
         let bottleTexture = SKTexture(imageNamed: bottleImageName)
