@@ -21,7 +21,7 @@ class InformationUserViewController: UIViewController {
     let smokeLabel = UILabel(text: "Курение", font: .sfProRounded(ofSize: 16, weight: .medium))
     let smokeEmoji = UILabel(text: "🚭", font: .sfProDisplay(ofSize: 26, weight: .medium))
     
-    let changeButton = UIButton(title: "Редактировать", titleColor: .white)
+    let changeButton = UIButton(title: "Редактировать".uppercased(), titleColor: .white, buttonColor: .blue)
     
     // MARK: - Properties
     private var currentUser: PUser
@@ -70,7 +70,7 @@ class InformationUserViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        changeButton.applyGradients(cornerRadius: changeButton.layer.cornerRadius, from: .bottomLeading, to: .topTrailing, startColor: #colorLiteral(red: 0.1960784314, green: 0.5647058824, blue: 0.6, alpha: 1), endColor: #colorLiteral(red: 0.1490196078, green: 0.1450980392, blue: 0.7490196078, alpha: 1))
+        changeButton.applyGradients(cornerRadius: changeButton.layer.cornerRadius, from: .top, to: .bottom, startColor: #colorLiteral(red: 0, green: 0.537254902, blue: 0.9921568627, alpha: 1), endColor: #colorLiteral(red: 0, green: 0.8235294118, blue: 0.862745098, alpha: 1))
     }
     
     override func viewDidLoad() {
@@ -142,8 +142,8 @@ extension InformationUserViewController {
 
         changeButton.snp.makeConstraints { (make) in
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
-            make.height.equalTo(60)
-            make.leading.trailing.equalToSuperview().inset(32)
+            make.height.equalTo(ComponentsSizes.buttonHeight)
+            make.leading.trailing.equalToSuperview().inset(44)
         }
     }
 }

@@ -55,7 +55,6 @@ class AccountUserViewController: UIViewController {
         setupConstraints()
     }
     
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         

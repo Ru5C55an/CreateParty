@@ -26,7 +26,19 @@ target 'PartyMaker' do
   pod 'SoftUIView'
   pod 'Hero', '~> 1.5.0'
   pod 'lottie-ios'
+  pod 'fluid-slider'
+  pod 'RAMAnimatedTabBarController'
   
   pod 'SnapKit', '~> 5.0.0'
+  
+  pod 'SPPermissions/Notification'
+  pod 'SPPermissions/Camera'
+  pod 'SPPermissions/Location'
+  pod 'SPPermissions/Contacts'
+  pod 'SPPermissions/PhotoLibrary'
 
+  pod 'SwiftEntryKit', '1.2.7'
+  
+  pod 'Cards'
+  
 end

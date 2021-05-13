@@ -742,12 +742,12 @@ extension ChangeInformationUserViewController {
             make.top.equalTo(smokeAlcoStackView.snp.bottom).offset(32)
             make.leading.equalToSuperview().inset(32)
             make.width.equalTo(UIScreen.main.bounds.width - 64)
-            make.height.equalTo(60)
+            make.height.equalTo(ComponentsSizes.buttonHeight)
         }
         
         saveButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(cancelButton.snp.centerY)
-            make.height.equalTo(60)
+            make.height.equalTo(ComponentsSizes.buttonHeight)
             make.trailing.equalToSuperview().inset(32)
             make.width.equalTo(0)
         }

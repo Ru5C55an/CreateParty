@@ -49,11 +49,21 @@
 		4424A5822598AA0C00B420F7 /* UIView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4424A5812598AA0C00B420F7 /* UIView + Extension.swift */; };
 		4424A58D2598C90900B420F7 /* UITextField + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4424A58C2598C90900B420F7 /* UITextField + Extension.swift */; };
 		4424A5942598E5F900B420F7 /* ChatRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4424A5932598E5F900B420F7 /* ChatRequestViewController.swift */; };
+		442BE41D264325990046FAC5 /* BottleGameBitMaskCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442BE41C264325990046FAC5 /* BottleGameBitMaskCategory.swift */; };
+		442DD25E263EC16A004C4780 /* BottleGameBottle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442DD25D263EC16A004C4780 /* BottleGameBottle.swift */; };
+		442DD263263F032B004C4780 /* GameSpritable + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442DD262263F032A004C4780 /* GameSpritable + Extension.swift */; };
+		442DD279263F4A4A004C4780 /* BottleGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442DD278263F4A4A004C4780 /* BottleGameScene.swift */; };
 		442FE7A125A8C65E00719641 /* PartyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442FE7A025A8C65E00719641 /* PartyError.swift */; };
 		444074CC259F52C700C8667E /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444074CB259F52C700C8667E /* UserCell.swift */; };
 		444074D1259F651D00C8667E /* aprovedUsers.json in Resources */ = {isa = PBXBuildFile; fileRef = 444074D0259F651D00C8667E /* aprovedUsers.json */; };
 		444074DB259FBC4900C8667E /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444074DA259FBC4900C8667E /* MessageModel.swift */; };
 		444D626D2637691C007A31E7 /* Int + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444D626C2637691C007A31E7 /* Int + Extension.swift */; };
+		445137E8263CA75C00441352 /* BottleGameBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445137E7263CA75C00441352 /* BottleGameBackground.swift */; };
+		445137ED263D72BC00441352 /* BottleGameHead.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445137EC263D72BC00441352 /* BottleGameHead.swift */; };
+		445137F2263E0B9900441352 /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445137F1263E0B9900441352 /* GlobalConstants.swift */; };
+		44547C00264B30DB00C221AD /* BottleGameParentScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44547BFF264B30DB00C221AD /* BottleGameParentScene.swift */; };
+		44547C02264B332300C221AD /* BottleGameOptionsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44547C01264B332300C221AD /* BottleGameOptionsScene.swift */; };
+		44547C06264C7F8C00C221AD /* BottleGameHistoryScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44547C05264C7F8C00C221AD /* BottleGameHistoryScene.swift */; };
 		4463BD33260E785F00848E29 /* SpiderWeb.json in Resources */ = {isa = PBXBuildFile; fileRef = 4463BD32260E785F00848E29 /* SpiderWeb.json */; };
 		4465EB2D257956C30096F3B7 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EB2C257956C30096F3B7 /* MainTabBarController.swift */; };
 		4465EB32257957160096F3B7 /* MyPartiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EB31257957160096F3B7 /* MyPartiesViewController.swift */; };
@@ -70,6 +80,7 @@
 		4465EB97257AB2750096F3B7 /* CreatePartyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EB96257AB2750096F3B7 /* CreatePartyViewController.swift */; };
 		4465EBA6257BC8D90096F3B7 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EBA5257BC8D90096F3B7 /* StorageManager.swift */; };
 		4465EBAB257BF7830096F3B7 /* EditPartyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EBAA257BF7820096F3B7 /* EditPartyTableViewController.swift */; };
+		446714A22645E59A00DC63AA /* BottleGameHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446714A12645E59A00DC63AA /* BottleGameHUD.swift */; };
 		44733E55258CCA2500CCC778 /* PartiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44733E54258CCA2500CCC778 /* PartiesViewController.swift */; };
 		447DD936259A6D18007C4DA4 /* UIApplication + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447DD935259A6D18007C4DA4 /* UIApplication + Extension.swift */; };
 		447DD95C259A736A007C4DA4 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447DD95B259A736A007C4DA4 /* StorageService.swift */; };
@@ -102,7 +113,15 @@
 		449D7C8625993DC300FE575F /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D7C8525993DC300FE575F /* FirestoreService.swift */; };
 		449D7CC32599414900FE575F /* UserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D7CC22599414900FE575F /* UserError.swift */; };
 		44A63EE325A0960700F125F7 /* WaitingChatsNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A63EE225A0960700F125F7 /* WaitingChatsNavigation.swift */; };
+		44AD68C126407D09005F81DB /* PermissionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AD68C026407D09005F81DB /* PermissionsService.swift */; };
+		44AD68C62640834D005F81DB /* GamesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AD68C52640834D005F81DB /* GamesViewController.swift */; };
 		44B6A3E825A0BCCE00204B20 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B6A3E725A0BCCE00204B20 /* ChatViewController.swift */; };
+		44BA15D42645EEED00014AE9 /* BottleGameMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BA15D32645EEED00014AE9 /* BottleGameMenuScene.swift */; };
+		44BA15D62645EEFC00014AE9 /* playButton.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 44BA15D52645EEFC00014AE9 /* playButton.atlas */; };
+		44BA15D82645EF3A00014AE9 /* BottleGameAbout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BA15D72645EF3A00014AE9 /* BottleGameAbout.swift */; };
+		44BA15DA2645EF4600014AE9 /* BottleGameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BA15D92645EF4600014AE9 /* BottleGameVC.swift */; };
+		44BA15DC2645F76C00014AE9 /* BottleGameAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BA15DB2645F76C00014AE9 /* BottleGameAssets.swift */; };
+		44BA15DE26460B2800014AE9 /* BottleGameModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BA15DD26460B2800014AE9 /* BottleGameModeButton.swift */; };
 		44BAA97D258013D600F9B362 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BAA97C258013D600F9B362 /* MapViewController.swift */; };
 		44BAA98A2582842800F9B362 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BAA9892582842800F9B362 /* MapManager.swift */; };
 		44CF4B8B25D08C2600206F35 /* EmojiImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CF4B8A25D08C2600206F35 /* EmojiImage.swift */; };
@@ -125,6 +144,8 @@
 		44DF5D58258E2CCA000BF557 /* PartyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DF5D57258E2CCA000BF557 /* PartyCell.swift */; };
 		44EFFA9925A2081C00827A8D /* FilterPartiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EFFA9825A2081C00827A8D /* FilterPartiesView.swift */; };
 		44EFFA9E25A2459600827A8D /* CitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EFFA9D25A2459600827A8D /* CitiesViewController.swift */; };
+		44FB5B6A2647FDC000BE3178 /* BottleGamePauseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FB5B692647FDC000BE3178 /* BottleGamePauseScene.swift */; };
+		44FB5B6C2648045D00BE3178 /* BottleGameSceneManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FB5B6B2648045D00BE3178 /* BottleGameSceneManager.swift */; };
 		A2909814D001A7C89E55FF33 /* Pods_PartyMaker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE2BCBDA8C3F9650C7B0894 /* Pods_PartyMaker.framework */; };
 /* End PBXBuildFile section */
 
@@ -189,14 +210,24 @@
 		4424A5812598AA0C00B420F7 /* UIView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extension.swift"; sourceTree = "<group>"; };
 		4424A58C2598C90900B420F7 /* UITextField + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField + Extension.swift"; sourceTree = "<group>"; };
 		4424A5932598E5F900B420F7 /* ChatRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRequestViewController.swift; sourceTree = "<group>"; };
+		442BE41C264325990046FAC5 /* BottleGameBitMaskCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleGameBitMaskCategory.swift; sourceTree = "<group>"; };
+		442DD25D263EC16A004C4780 /* BottleGameBottle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleGameBottle.swift; sourceTree = "<group>"; };
+		442DD262263F032A004C4780 /* GameSpritable + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameSpritable + Extension.swift"; sourceTree = "<group>"; };
+		442DD278263F4A4A004C4780 /* BottleGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottleGameScene.swift; sourceTree = "<group>"; };
 		442FE7A025A8C65E00719641 /* PartyError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyError.swift; sourceTree = "<group>"; };
 		444074CB259F52C700C8667E /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		444074D0259F651D00C8667E /* aprovedUsers.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = aprovedUsers.json; sourceTree = "<group>"; };
 		444074DA259FBC4900C8667E /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
 		444D626C2637691C007A31E7 /* Int + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int + Extension.swift"; sourceTree = "<group>"; };
+		445137E7263CA75C00441352 /* BottleGameBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleGameBackground.swift; sourceTree = "<group>"; };
+		445137EC263D72BC00441352 /* BottleGameHead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleGameHead.swift; sourceTree = "<group>"; };
+		445137F1263E0B9900441352 /* GlobalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
+		44547BFF264B30DB00C221AD /* BottleGameParentScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleGameParentScene.swift; sourceTree = "<group>"; };
+		44547C01264B332300C221AD /* BottleGameOptionsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleGameOptionsScene.swift; sourceTree = "<group>"; };
+		44547C05264C7F8C00C221AD /* BottleGameHistoryScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleGameHistoryScene.swift; sourceTree = "<group>"; };
 		4463BD32260E785F00848E29 /* SpiderWeb.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SpiderWeb.json; sourceTree = "<group>"; };
 		4465EB2C257956C30096F3B7 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
-		4465EB31257957160096F3B7 /* MyPartiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPartiesViewController.swift; sourceTree = "<group>"; };
+		4465EB31257957160096F3B7 /* MyPartiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyPartiesViewController.swift; path = "../New Group/MyPartiesViewController.swift"; sourceTree = "<group>"; };
 		4465EB36257957E40096F3B7 /* SearchPartyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPartyViewController.swift; sourceTree = "<group>"; };
 		4465EB3B257958170096F3B7 /* ChatlistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatlistViewController.swift; sourceTree = "<group>"; };
 		4465EB452579585A0096F3B7 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -210,6 +241,7 @@
 		4465EB96257AB2750096F3B7 /* CreatePartyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePartyViewController.swift; sourceTree = "<group>"; };
 		4465EBA5257BC8D90096F3B7 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		4465EBAA257BF7820096F3B7 /* EditPartyTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPartyTableViewController.swift; sourceTree = "<group>"; };
+		446714A12645E59A00DC63AA /* BottleGameHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleGameHUD.swift; sourceTree = "<group>"; };
 		44733E54258CCA2500CCC778 /* PartiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartiesViewController.swift; sourceTree = "<group>"; };
 		447DD935259A6D18007C4DA4 /* UIApplication + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication + Extension.swift"; sourceTree = "<group>"; };
 		447DD95B259A736A007C4DA4 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
@@ -249,7 +281,15 @@
 		449D7C8525993DC300FE575F /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		449D7CC22599414900FE575F /* UserError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserError.swift; sourceTree = "<group>"; };
 		44A63EE225A0960700F125F7 /* WaitingChatsNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingChatsNavigation.swift; sourceTree = "<group>"; };
+		44AD68C026407D09005F81DB /* PermissionsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsService.swift; sourceTree = "<group>"; };
+		44AD68C52640834D005F81DB /* GamesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesViewController.swift; sourceTree = "<group>"; };
 		44B6A3E725A0BCCE00204B20 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		44BA15D32645EEED00014AE9 /* BottleGameMenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottleGameMenuScene.swift; sourceTree = "<group>"; };
+		44BA15D52645EEFC00014AE9 /* playButton.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; name = playButton.atlas; path = PartyMaker/Games/Bottle/playButton.atlas; sourceTree = SOURCE_ROOT; };
+		44BA15D72645EF3A00014AE9 /* BottleGameAbout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottleGameAbout.swift; path = PartyMaker/Games/Bottle/BottleGameAbout.swift; sourceTree = SOURCE_ROOT; };
+		44BA15D92645EF4600014AE9 /* BottleGameVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottleGameVC.swift; path = PartyMaker/Games/Bottle/BottleGameVC.swift; sourceTree = SOURCE_ROOT; };
+		44BA15DB2645F76C00014AE9 /* BottleGameAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleGameAssets.swift; sourceTree = "<group>"; };
+		44BA15DD26460B2800014AE9 /* BottleGameModeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleGameModeButton.swift; sourceTree = "<group>"; };
 		44BAA97C258013D600F9B362 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		44BAA9892582842800F9B362 /* MapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
 		44CF4B8A25D08C2600206F35 /* EmojiImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiImage.swift; sourceTree = "<group>"; };
@@ -272,6 +312,8 @@
 		44DF5D57258E2CCA000BF557 /* PartyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyCell.swift; sourceTree = "<group>"; };
 		44EFFA9825A2081C00827A8D /* FilterPartiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPartiesView.swift; sourceTree = "<group>"; };
 		44EFFA9D25A2459600827A8D /* CitiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesViewController.swift; sourceTree = "<group>"; };
+		44FB5B692647FDC000BE3178 /* BottleGamePauseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleGamePauseScene.swift; sourceTree = "<group>"; };
+		44FB5B6B2648045D00BE3178 /* BottleGameSceneManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleGameSceneManager.swift; sourceTree = "<group>"; };
 		72F75DAB934302CF0EB6A6EB /* Pods-PartyMaker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PartyMaker.debug.xcconfig"; path = "Target Support Files/Pods-PartyMaker/Pods-PartyMaker.debug.xcconfig"; sourceTree = "<group>"; };
 		B7AA99F768CA0848EB83D150 /* Pods-PartyMaker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PartyMaker.release.xcconfig"; path = "Target Support Files/Pods-PartyMaker/Pods-PartyMaker.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -431,6 +473,90 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		442DD271263F4981004C4780 /* Bottle */ = {
+			isa = PBXGroup;
+			children = (
+				446714A62645E7BE00DC63AA /* Atlases */,
+				446714A42645E77500DC63AA /* Classes */,
+				446714A32645E72F00DC63AA /* Protocols + Extensions */,
+				446714A72645E7DF00DC63AA /* Scenes */,
+				446714A82645E7FB00DC63AA /* Controllers */,
+				446714A52645E7A300DC63AA /* Managers */,
+			);
+			path = Bottle;
+			sourceTree = "<group>";
+		};
+		445137B0263C814A00441352 /* Games */ = {
+			isa = PBXGroup;
+			children = (
+				442DD271263F4981004C4780 /* Bottle */,
+				44AD68C52640834D005F81DB /* GamesViewController.swift */,
+			);
+			path = Games;
+			sourceTree = "<group>";
+		};
+		446714A32645E72F00DC63AA /* Protocols + Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				442DD262263F032A004C4780 /* GameSpritable + Extension.swift */,
+			);
+			path = "Protocols + Extensions";
+			sourceTree = "<group>";
+		};
+		446714A42645E77500DC63AA /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				445137E7263CA75C00441352 /* BottleGameBackground.swift */,
+				445137EC263D72BC00441352 /* BottleGameHead.swift */,
+				442DD25D263EC16A004C4780 /* BottleGameBottle.swift */,
+				446714A12645E59A00DC63AA /* BottleGameHUD.swift */,
+				44BA15DD26460B2800014AE9 /* BottleGameModeButton.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		446714A52645E7A300DC63AA /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				442BE41C264325990046FAC5 /* BottleGameBitMaskCategory.swift */,
+				44BA15DB2645F76C00014AE9 /* BottleGameAssets.swift */,
+				44FB5B6B2648045D00BE3178 /* BottleGameSceneManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		446714A62645E7BE00DC63AA /* Atlases */ = {
+			isa = PBXGroup;
+			children = (
+				44BA15D52645EEFC00014AE9 /* playButton.atlas */,
+			);
+			name = Atlases;
+			path = "New Group1";
+			sourceTree = "<group>";
+		};
+		446714A72645E7DF00DC63AA /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				44BA15D32645EEED00014AE9 /* BottleGameMenuScene.swift */,
+				442DD278263F4A4A004C4780 /* BottleGameScene.swift */,
+				44FB5B692647FDC000BE3178 /* BottleGamePauseScene.swift */,
+				44547BFF264B30DB00C221AD /* BottleGameParentScene.swift */,
+				44547C01264B332300C221AD /* BottleGameOptionsScene.swift */,
+				44547C05264C7F8C00C221AD /* BottleGameHistoryScene.swift */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		446714A82645E7FB00DC63AA /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				44BA15D72645EF3A00014AE9 /* BottleGameAbout.swift */,
+				44BA15D92645EF4600014AE9 /* BottleGameVC.swift */,
+			);
+			name = Controllers;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		447DD9C0259BE13D007C4DA4 /* ShowParty */ = {
 			isa = PBXGroup;
 			children = (
@@ -473,6 +599,7 @@
 		447EE8BB257676A600D8698F /* PartyMaker */ = {
 			isa = PBXGroup;
 			children = (
+				445137B0263C814A00441352 /* Games */,
 				447DD9C0259BE13D007C4DA4 /* ShowParty */,
 				449D7C4C25990F8300FE575F /* PartyMaker.entitlements */,
 				4420BD87259623C5005A4FAE /* SignIn&Auth */,
@@ -486,7 +613,6 @@
 				44D6562325AA44D10045ABD9 /* PartyRequest */,
 				44DF5EA125923827000BF557 /* EditParty */,
 				44DF5E9825923776000BF557 /* Map */,
-				44DF5E9625923753000BF557 /* SearchParty */,
 				44DF5E9425923737000BF557 /* Profile */,
 				44DF5E8D259236C4000BF557 /* CreateParty */,
 				44DF5E8F259236D6000BF557 /* Application */,
@@ -529,6 +655,7 @@
 				449D7C8525993DC300FE575F /* FirestoreService.swift */,
 				447DD95B259A736A007C4DA4 /* StorageService.swift */,
 				447DD9FF259D5353007C4DA4 /* ListenerService.swift */,
+				44AD68C026407D09005F81DB /* PermissionsService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -564,6 +691,14 @@
 				4420BDB025965B0D005A4FAE /* SecondSetupProfileViewController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		44AD6831264064D8005F81DB /* MyParties */ = {
+			isa = PBXGroup;
+			children = (
+				4465EB31257957160096F3B7 /* MyPartiesViewController.swift */,
+			);
+			path = MyParties;
 			sourceTree = "<group>";
 		};
 		44B6A3CF25A0BC9C00204B20 /* Chat */ = {
@@ -669,6 +804,8 @@
 		44DF5E5C2592361F000BF557 /* Parties */ = {
 			isa = PBXGroup;
 			children = (
+				44AD6831264064D8005F81DB /* MyParties */,
+				44DF5E9625923753000BF557 /* SearchParty */,
 				44DF5E712592365E000BF557 /* Model */,
 				44DF5E6D25923649000BF557 /* Controller */,
 				44DF5E6025923638000BF557 /* View */,
@@ -689,7 +826,6 @@
 		44DF5E6D25923649000BF557 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				4465EB31257957160096F3B7 /* MyPartiesViewController.swift */,
 				44733E54258CCA2500CCC778 /* PartiesViewController.swift */,
 				44D6561925AA29C50045ABD9 /* WaitingGuestsViewController.swift */,
 			);
@@ -755,6 +891,7 @@
 				44DF5E90259236F3000BF557 /* Controller */,
 				44BAA99B2583D05700F9B362 /* View */,
 				44BAA9982583CFF300F9B362 /* Models */,
+				445137F1263E0B9900441352 /* GlobalConstants.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -993,6 +1130,7 @@
 				444074D1259F651D00C8667E /* aprovedUsers.json in Resources */,
 				4420BD48259609CB005A4FAE /* SF-Pro-Display-Semibold.otf in Resources */,
 				4420BD3825960998005A4FAE /* SF-Pro-Rounded-Medium.otf in Resources */,
+				44BA15D62645EEFC00014AE9 /* playButton.atlas in Resources */,
 				4420BD4D259609E0005A4FAE /* SF-Pro-Display-Medium.otf in Resources */,
 				447EE8CC257676AA00D8698F /* LaunchScreen.storyboard in Resources */,
 				449D7C54259912AB00FE575F /* GoogleService-Info.plist in Resources */,
@@ -1094,8 +1232,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				447DD9B7259BCFE5007C4DA4 /* LocationTextField.swift in Sources */,
+				44BA15D82645EF3A00014AE9 /* BottleGameAbout.swift in Sources */,
+				445137ED263D72BC00441352 /* BottleGameHead.swift in Sources */,
 				44CF4B9025D08EE100206F35 /* Color + Extension.swift in Sources */,
 				447DD9D2259BE3C7007C4DA4 /* EditPartyViewController.swift in Sources */,
+				44AD68C62640834D005F81DB /* GamesViewController.swift in Sources */,
 				44D3EC662621DA3800717A9B /* CALayer + Extension.swift in Sources */,
 				44D3EC722622175C00717A9B /* ColorAssets.swift in Sources */,
 				44D002E125A37E10009F419B /* CardView.swift in Sources */,
@@ -1103,6 +1244,7 @@
 				44D6561F25AA2B9F0045ABD9 /* WaitingGuestCell.swift in Sources */,
 				44D3EB6D261E24CA00717A9B /* SearchPartiesBar.swift in Sources */,
 				44D002F325A3A55B009F419B /* BackgroundCardCell.swift in Sources */,
+				445137E8263CA75C00441352 /* BottleGameBackground.swift in Sources */,
 				4465EBA6257BC8D90096F3B7 /* StorageManager.swift in Sources */,
 				4420BDE3259740DE005A4FAE /* ActiveChatCell.swift in Sources */,
 				4424A5942598E5F900B420F7 /* ChatRequestViewController.swift in Sources */,
@@ -1110,8 +1252,10 @@
 				4420BE0A25975D3F005A4FAE /* SectionHeader.swift in Sources */,
 				4465EB4B25795E3E0096F3B7 /* WelcomeCarouselViewController.swift in Sources */,
 				4424A5822598AA0C00B420F7 /* UIView + Extension.swift in Sources */,
+				44FB5B6A2647FDC000BE3178 /* BottleGamePauseScene.swift in Sources */,
 				447DD9C3259BE159007C4DA4 /* ShowPartyViewController.swift in Sources */,
 				440CEDFC258A917500553673 /* InformationUserViewController.swift in Sources */,
+				44BA15DE26460B2800014AE9 /* BottleGameModeButton.swift in Sources */,
 				449D7C8625993DC300FE575F /* FirestoreService.swift in Sources */,
 				4465EB5025795E800096F3B7 /* PageViewController.swift in Sources */,
 				449D7C6F25992D1500FE575F /* Validators.swift in Sources */,
@@ -1128,11 +1272,14 @@
 				44999368261BA65600363CD3 /* TextFieldWithoutInteract.swift in Sources */,
 				442FE7A125A8C65E00719641 /* PartyError.swift in Sources */,
 				4465EB462579585A0096F3B7 /* ProfileViewController.swift in Sources */,
+				44BA15DA2645EF4600014AE9 /* BottleGameVC.swift in Sources */,
 				4424A56025976E5E00B420F7 /* ChatModel.swift in Sources */,
 				4465EB8A257A9E6E0096F3B7 /* PartyTableViewCell.swift in Sources */,
+				446714A22645E59A00DC63AA /* BottleGameHUD.swift in Sources */,
 				449D7CC32599414900FE575F /* UserError.swift in Sources */,
 				44D002EC25A38719009F419B /* FourthCreatePartyViewController.swift in Sources */,
 				4465EBAB257BF7830096F3B7 /* EditPartyTableViewController.swift in Sources */,
+				44547C00264B30DB00C221AD /* BottleGameParentScene.swift in Sources */,
 				4420BDB125965B0D005A4FAE /* SecondSetupProfileViewController.swift in Sources */,
 				44DF5D58258E2CCA000BF557 /* PartyCell.swift in Sources */,
 				444074CC259F52C700C8667E /* UserCell.swift in Sources */,
@@ -1142,9 +1289,11 @@
 				448157BD25777FC9004F06FF /* LoginViewController.swift in Sources */,
 				4424A55A25976D4600B420F7 /* PartyModel.swift in Sources */,
 				4420BD8F2596284B005A4FAE /* BubbleTextField.swift in Sources */,
+				445137F2263E0B9900441352 /* GlobalConstants.swift in Sources */,
 				44D3EB9E261E2DF100717A9B /* SearchPartiesFilteredVC.swift in Sources */,
 				44733E55258CCA2500CCC778 /* PartiesViewController.swift in Sources */,
 				449D7C7E2599397700FE575F /* AuthNavigationDelegate.swift in Sources */,
+				44547C02264B332300C221AD /* BottleGameOptionsScene.swift in Sources */,
 				440CED92258A14AA00553673 /* UserModel.swift in Sources */,
 				447EE8C7257676A700D8698F /* CreateParty.xcdatamodeld in Sources */,
 				447DD95C259A736A007C4DA4 /* StorageService.swift in Sources */,
@@ -1153,6 +1302,7 @@
 				4420BD972596444E005A4FAE /* SetupProfileViewController.swift in Sources */,
 				448157AE2576C559004F06FF /* SignUpViewController.swift in Sources */,
 				4420BD7B259614D6005A4FAE /* ButtonFormView.swift in Sources */,
+				44547C06264C7F8C00C221AD /* BottleGameHistoryScene.swift in Sources */,
 				447EE8C1257676A700D8698F /* AuthViewController.swift in Sources */,
 				4465EB2D257956C30096F3B7 /* MainTabBarController.swift in Sources */,
 				4420BD6E2596128A005A4FAE /* UIImageView + Extension.swift in Sources */,
@@ -1160,26 +1310,33 @@
 				4420BD9C25964BCF005A4FAE /* AddProfilePhotoView.swift in Sources */,
 				4420BDA9259655D8005A4FAE /* UIDatePicker + Extension.swift in Sources */,
 				4424A5752597FA6600B420F7 /* AboutUserViewController.swift in Sources */,
+				44FB5B6C2648045D00BE3178 /* BottleGameSceneManager.swift in Sources */,
 				444D626D2637691C007A31E7 /* Int + Extension.swift in Sources */,
 				4465EB97257AB2750096F3B7 /* CreatePartyViewController.swift in Sources */,
+				44BA15DC2645F76C00014AE9 /* BottleGameAssets.swift in Sources */,
 				447DD936259A6D18007C4DA4 /* UIApplication + Extension.swift in Sources */,
 				44A63EE325A0960700F125F7 /* WaitingChatsNavigation.swift in Sources */,
 				44BAA97D258013D600F9B362 /* MapViewController.swift in Sources */,
 				44EFFA9E25A2459600827A8D /* CitiesViewController.swift in Sources */,
+				442DD25E263EC16A004C4780 /* BottleGameBottle.swift in Sources */,
 				440CEE04258A919400553673 /* AccountUserViewController.swift in Sources */,
 				449B4E16257F7CB6001B009E /* RatingControl.swift in Sources */,
+				442BE41D264325990046FAC5 /* BottleGameBitMaskCategory.swift in Sources */,
 				4465EB32257957160096F3B7 /* MyPartiesViewController.swift in Sources */,
 				4420BD8025961CD7005A4FAE /* StackView + Extension.swift in Sources */,
 				44BAA98A2582842800F9B362 /* MapManager.swift in Sources */,
+				44AD68C126407D09005F81DB /* PermissionsService.swift in Sources */,
 				4420BDF12597516F005A4FAE /* GradientView.swift in Sources */,
 				4424A58D2598C90900B420F7 /* UITextField + Extension.swift in Sources */,
 				44CF4B8B25D08C2600206F35 /* EmojiImage.swift in Sources */,
 				4465EB8F257AA3360096F3B7 /* PartyModel2.swift in Sources */,
 				44EFFA9925A2081C00827A8D /* FilterPartiesView.swift in Sources */,
 				4404C2EE25A7409100A495EC /* ChangeInformationUserViewController.swift in Sources */,
+				442DD279263F4A4A004C4780 /* BottleGameScene.swift in Sources */,
 				449D7C7425992F4200FE575F /* AuthError.swift in Sources */,
 				4420BDA425965480005A4FAE /* UISegmentedControl  + Extension.swift in Sources */,
 				4420BDC525968AE0005A4FAE /* AboutInputText.swift in Sources */,
+				442DD263263F032B004C4780 /* GameSpritable + Extension.swift in Sources */,
 				4420BD262596072A005A4FAE /* UIFont + Extension.swift in Sources */,
 				44D6562525AA45020045ABD9 /* PartyRequestViewController.swift in Sources */,
 				447DD9AA259BC14D007C4DA4 /* SecondCreatePartyViewController.swift in Sources */,
@@ -1187,6 +1344,7 @@
 				444074DB259FBC4900C8667E /* MessageModel.swift in Sources */,
 				4424A57D2598A5F000B420F7 /* MessageTextField.swift in Sources */,
 				447EE8BF257676A700D8698F /* SceneDelegate.swift in Sources */,
+				44BA15D42645EEED00014AE9 /* BottleGameMenuScene.swift in Sources */,
 				4465EB37257957E40096F3B7 /* SearchPartyViewController.swift in Sources */,
 				447DDA00259D5353007C4DA4 /* ListenerService.swift in Sources */,
 			);

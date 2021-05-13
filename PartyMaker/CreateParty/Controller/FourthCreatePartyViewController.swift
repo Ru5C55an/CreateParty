@@ -171,11 +171,11 @@ extension FourthCreatePartyViewController {
         }
         
         doneButton.snp.makeConstraints { (make) in
-            make.height.equalTo(60)
+            make.height.equalTo(ComponentsSizes.buttonHeight)
         }
         
         getSubscribeButton.snp.makeConstraints { (make) in
-            make.height.equalTo(60)
+            make.height.equalTo(ComponentsSizes.buttonHeight)
         }
     }
 }

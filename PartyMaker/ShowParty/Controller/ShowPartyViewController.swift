@@ -481,13 +481,13 @@ extension ShowPartyViewController {
             view.addSubview(cancelPartyButton)
             
             requestsButton.snp.makeConstraints { make in
-                make.height.equalTo(60)
+                make.height.equalTo(ComponentsSizes.buttonHeight)
                 make.bottom.equalTo(cancelPartyButton.snp.top).offset(-16)
                 make.leading.trailing.equalToSuperview().inset(22)
             }
             
             cancelPartyButton.snp.makeConstraints { make in
-                make.height.equalTo(60)
+                make.height.equalTo(ComponentsSizes.buttonHeight)
                 make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
                 make.leading.trailing.equalToSuperview().inset(22)
             }

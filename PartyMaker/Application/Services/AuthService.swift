@@ -14,7 +14,6 @@ class AuthService {
     
     let userDefaults = UserDefaults.standard
     
-    
     static let shared = AuthService()
     private let auth = Auth.auth()
     

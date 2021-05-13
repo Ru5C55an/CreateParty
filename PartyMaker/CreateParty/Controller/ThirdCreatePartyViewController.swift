@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import fluid_slider
 
 class ThirdCreatePartyViewController: UIViewController {
     
@@ -15,11 +16,7 @@ class ThirdCreatePartyViewController: UIViewController {
     
     private let priceLabel = UILabel(text: "Цена за вход")
     
-    private let freeLabel = UILabel(text: "Бесплатно 😇")
-    private let moneyLabel = UILabel(text: "Платно 💶")
-    private let moneySwitcher = UISwitch()
-    
-    private let priceTextField = BubbleTextField(placeholder: "500")
+    private let moneySlider = Slider()
     
     let cityButton = UIButton(title: "Город", titleColor: #colorLiteral(red: 0.1921568627, green: 0.568627451, blue: 0.9882352941, alpha: 1), backgroundColor: #colorLiteral(red: 0.937254902, green: 0.937254902, blue: 0.9411764706, alpha: 1), isShadow: false, cornerRadius: 10)
     
@@ -36,7 +33,7 @@ class ThirdCreatePartyViewController: UIViewController {
     init(party: Party, currentUser: PUser) {
         self.party = party
         self.currentUser = currentUser
-       
+        
         super.init(nibName: nil, bundle: nil)
         
         title = "Последний штрих 🪄"
@@ -59,24 +56,58 @@ class ThirdCreatePartyViewController: UIViewController {
         doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
         cityButton.addTarget(self, action: #selector(cityButtonTapped), for: .touchUpInside)
         
-        priceTextField.isHidden = true
-        moneySwitcher.addTarget(self, action: #selector(switchValueChanged), for: .touchUpInside)
-        
         let gesture = UITapGestureRecognizer(target: self, action: #selector(selectPhoto))
         addPhoto.addGestureRecognizer(gesture)
         
-        setupConstraints()
-    }
-    
-    
-    // MARK: - Handlers
-    @objc private func switchValueChanged() {
-        if moneySwitcher.isOn {
-            priceTextField.isHidden = false
-        } else {
-            priceTextField.isHidden = true
+        let labelTextAttributes: [NSAttributedString.Key : Any] = [.font: UIFont.systemFont(ofSize: 12, weight: .bold), .foregroundColor: UIColor.white]
+//        moneySlider.attributedTextForFraction = { fraction in
+//            let formatter = NumberFormatter()
+//            formatter.maximumIntegerDigits = 3
+//            formatter.maximumFractionDigits = 0
+//            let string = formatter.string(from: (fraction * 500) as NSNumber) ?? ""
+//            return NSAttributedString(string: string, attributes: [.font: UIFont.systemFont(ofSize: 12, weight: .bold), .foregroundColor: UIColor.black])
+//        }
+//        moneySlider.setMinimumLabelAttributedText(NSAttributedString(string: "0", attributes: labelTextAttributes))
+//        moneySlider.setMaximumLabelAttributedText(NSAttributedString(string: "500", attributes: labelTextAttributes))
+//        moneySlider.fraction = 0.5
+//        moneySlider.shadowOffset = CGSize(width: 0, height: 10)
+//        moneySlider.shadowBlur = 5
+//        moneySlider.shadowColor = UIColor(white: 0, alpha: 0.1)
+//        moneySlider.contentViewColor = UIColor(red: 78/255.0, green: 77/255.0, blue: 224/255.0, alpha: 1)
+//        moneySlider.valueViewColor = .white
+//
+//        moneySlider.didBeginTracking = { [weak self] _ in
+//            self?.setLabelHidden(true, animated: true)
+//        }
+//        moneySlider.didEndTracking = { [weak self] _ in
+//            self?.setLabelHidden(false, animated: true)
+//        }
+        
+        moneySlider.attributedTextForFraction = { fraction in
+            let formatter = NumberFormatter()
+            formatter.maximumIntegerDigits = 4
+            formatter.maximumFractionDigits = 0
+            formatter.maximumSignificantDigits = 2
+            let string = formatter.string(from: (fraction * 9000) as NSNumber) ?? ""
+            return NSAttributedString(string: string, attributes: [.font: UIFont.sfProDisplay(ofSize: 12, weight: .medium), .foregroundColor: UIColor.black])
         }
-    }
+        
+        moneySlider.setMinimumImage("😇".textToImage())
+        moneySlider.setMaximumImage("🤑".textToImage())
+        
+//        moneySlider.imagesColor = UIColor.white.withAlphaComponent(0.8)
+        
+        moneySlider.setMinimumLabelAttributedText(NSAttributedString(string: "0", attributes: labelTextAttributes))
+        moneySlider.setMaximumLabelAttributedText(NSAttributedString(string: "9000", attributes: labelTextAttributes))
+        moneySlider.fraction = 0.5
+        moneySlider.shadowOffset = CGSize(width: 0, height: 10)
+        moneySlider.shadowBlur = 5
+        moneySlider.shadowColor = UIColor(white: 0, alpha: 0.1)
+        moneySlider.contentViewColor = UIColor.purple
+        moneySlider.valueViewColor = .white
+    
+    setupConstraints()
+}
     
     @objc private func cityButtonTapped() {
         let citiesVC = CitiesViewController()
@@ -90,16 +121,8 @@ class ThirdCreatePartyViewController: UIViewController {
     
     @objc private func doneButtonTapped() {
         
-        if moneySwitcher.isOn {
-            guard let price = priceTextField.text, price != "" else {
-                self.showAlert(title: "Ошибка", message: "Введите стоимость входа, либо сделайте бесплатной")
-                return
-            }
-        
-            party.price = price
-        } else {
-            party.price = "0"
-        }
+        print("asudjaisodjaisd: ", round(moneySlider.fraction * 10000))
+//        party.price = moneySlider.va
         
         guard let city = cityButton.titleLabel?.text, city != "Город" else {
             self.showAlert(title: "Ошибка", message: "Выберите город")
@@ -163,17 +186,13 @@ class ThirdCreatePartyViewController: UIViewController {
 extension ThirdCreatePartyViewController {
     
     private func setupConstraints() {
-        
-        let moneyStackView = UIStackView(arrangedSubviews: [freeLabel, moneySwitcher, moneyLabel], axis: .horizontal, spacing: 8)
-        moneyStackView.distribution = .equalSpacing
-        
+                
         let locationStackView = UIStackView(arrangedSubviews: [locationLabel, locationTextField], axis: .vertical, spacing: 8)
         
         view.addSubview(addPhotoLabel)
         view.addSubview(addPhoto)
         view.addSubview(priceLabel)
-        view.addSubview(moneyStackView)
-        view.addSubview(priceTextField)
+        view.addSubview(moneySlider)
         view.addSubview(cityButton)
         view.addSubview(locationStackView)
         view.addSubview(doneButton)
@@ -183,7 +202,6 @@ extension ThirdCreatePartyViewController {
             make.centerX.equalToSuperview()
         }
 
-        
         addPhoto.snp.makeConstraints { (make) in
             make.top.equalTo(addPhotoLabel.snp.bottom).offset(8)
             make.centerX.equalToSuperview()
@@ -200,25 +218,18 @@ extension ThirdCreatePartyViewController {
         }
         
         priceLabel.snp.makeConstraints { (make) in
-            make.centerY.equalTo(priceTextField.snp.centerY)
+            make.top.equalTo(locationStackView.snp.bottom).offset(16)
             make.leading.equalToSuperview().offset(44)
         }
         
-        priceTextField.snp.makeConstraints { (make) in
-            make.top.equalTo(locationStackView.snp.bottom).offset(16)
-
-            make.trailing.equalToSuperview().inset(44)
-            make.leading.equalTo(priceLabel.snp.trailing).offset(10)
+        moneySlider.snp.makeConstraints { (make) in
+            make.top.equalTo(priceLabel.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview().inset(44)
             make.height.equalTo(44)
         }
         
-        moneyStackView.snp.makeConstraints { (make) in
-            make.top.equalTo(priceTextField.snp.bottom).offset(16)
-            make.leading.trailing.equalToSuperview().inset(44)
-        }
-        
         doneButton.snp.makeConstraints { (make) in
-            make.top.equalTo(moneyStackView.snp.bottom).offset(32)
+            make.top.equalTo(moneySlider.snp.bottom).offset(32)
             make.leading.trailing.equalToSuperview().inset(44)
             make.height.equalTo(64)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)

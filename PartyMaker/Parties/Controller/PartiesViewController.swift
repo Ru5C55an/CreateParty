@@ -17,9 +17,11 @@ class PartiesViewController: UIViewController {
     
     let sortingSegmentedControl = UISegmentedControl(first: "Дата", second: "Имя")
     var sortingTypeSegmentControlBarButtonItem: UIBarButtonItem!
-    private let partiesSegmentedControl = UISegmentedControl(items: ["✅", "⏳", "Мои"])
+    private let partiesSegmentedControl = UISegmentedControl(items: ["􀊫", "􀆅", "􀇲", "􀉩"])
     
     private var parties = [Party]()
+    
+    private var searchedParties = [Party]()
     
     private var waitingPartiesListener: ListenerRegistration?
     private var waitingParties = [Party]()
@@ -55,6 +57,8 @@ class PartiesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
                 
+        partiesSegmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.sfProDisplay(ofSize: 12, weight: .medium)], for: .normal)
+        
         sortingSegmentedControl.addTarget(self, action: #selector(sortSelection), for: .valueChanged)
         partiesSegmentedControl.addTarget(self, action: #selector(reloadPartiesType), for: .valueChanged)
         partiesSegmentedControl.selectedSegmentIndex = 0
@@ -109,14 +113,16 @@ class PartiesViewController: UIViewController {
     @objc private func reloadPartiesType() {
         
         switch partiesSegmentedControl.selectedSegmentIndex {
-        
         case 0:
+            searchParties(filter: [String : String]())
+            target = "searched"
+        case 1:
             parties = approvedParties
             target = "approved"
-        case 1:
+        case 2:
             parties = waitingParties
             target = "waiting"
-        case 2:
+        case 3:
             parties = myParties
             target = "my"
         default:
@@ -335,6 +341,57 @@ extension PartiesViewController: UICollectionViewDelegate {
         
         let showPartyVC = ShowPartyViewController(party: party, target: target)
         present(showPartyVC, animated: true, completion: nil)
+    }
+}
+
+// MARK: - Search parties
+extension PartiesViewController {
+    @objc private func searchParties(filter: [String: String]) {
+        
+        FirestoreService.shared.searchPartiesWith(city: filter["city"], type: filter["type"], date: filter["date"], countPeoples: filter["countPeoples"], price: filter["price"], charCountPeoples: filter["charCountPeoples"], charPrice: filter["charPrice"]) { [weak self] (result) in
+            
+            switch result {
+            
+            case .success(let parties):
+           
+          
+                self?.searchedParties = parties
+                
+                if filter["charCountPeoples"] == ">" {
+                    if let countPeoples = filter["countPeoples"], countPeoples != "" { self?.searchedParties.removeAll(where: { $0.maximumPeople < countPeoples }) }
+                } else if filter["charCountPeoples"] == "<" {
+                    if let countPeoples = filter["countPeoples"], countPeoples != "" { self?.searchedParties.removeAll(where: { $0.maximumPeople > countPeoples }) }
+                } else if filter["charCountPeoples"] == "=" {
+                    if let countPeoples = filter["countPeoples"], countPeoples != "" { self?.searchedParties.removeAll(where: { $0.maximumPeople != countPeoples }) }
+                }
+                
+                if filter["charPrice"] == ">" {
+                    if let price = filter["price"], price != "" {  self?.searchedParties.removeAll(where: { $0.price < price }) }
+                } else if filter["charPrice"] == "<" {
+                    if let price = filter["price"], price != "" { self?.searchedParties.removeAll(where: { $0.price > price }) }
+                } else if filter["charPrice"] == "=" {
+                    if let price = filter["price"], price != "" { self?.searchedParties.removeAll(where: { $0.price != price }) }
+                }
+                
+                self?.parties = self?.searchedParties ?? [Party]()
+                
+                self?.reloadData(with: nil)
+                
+                // Костыльно наверное. Нужно чтобы число вечеринок обновлялось
+                self?.collectionView.reloadData()
+                
+            case .failure(let error):
+                self?.parties = [Party]()
+                print(error.localizedDescription)
+                self?.showAlert(title: "Ошибка", message: error.localizedDescription)
+            }
+        }
+    }
+}
+
+extension PartiesViewController: SearchPartyFilterDelegate {
+    func didChangeFilter(filter: [String : String]) {
+        searchParties(filter: filter)
     }
 }
 

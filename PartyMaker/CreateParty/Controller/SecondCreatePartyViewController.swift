@@ -35,7 +35,7 @@ class SecondCreatePartyViewController: UIViewController {
     
     // MARK: - Properties
     private var pickedType = ""
-    private let pickerData = ["Музыкальная", "Танцевальная", "Вписка", "Поэтическая", "Творческая", "Праздничная", "Игровая", "Научная", "Домашний хакатон", "Особая тематика"]
+    private let pickerData = ["Музыкальная 􀫀", "Танцевальная 􀳾􀝢􀝻", "Вписка 􀆿", "Поэтическая 􀉇", "Творческая 􀝥", "Праздничная 􀳇", "Игровая 􀛸", "Научная 􀬗", "Домашний хакатон 􀙚", "Домашний кинотеатр 􀪃", "Особая тематика 􀣳"]
     
     private let currentUser: PUser
     internal var party: Party
@@ -57,7 +57,7 @@ class SecondCreatePartyViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
-        nextButton.applyGradients(cornerRadius: nextButton.layer.cornerRadius, from: .bottomLeading, to: .topTrailing, startColor: #colorLiteral(red: 0.7098039216, green: 0.7843137255, blue: 0.1921568627, alpha: 1), endColor: #colorLiteral(red: 0.2784313725, green: 0.6078431373, blue: 0.3529411765, alpha: 1))
+
     }
     
     override func viewDidLoad() {
@@ -204,6 +204,19 @@ extension SecondCreatePartyViewController: UIPickerViewDataSource, UIPickerViewD
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         pickedType = String(pickerData[row])
     }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+       let label = (view as? UILabel) ?? UILabel()
+
+       label.textColor = .black
+       label.textAlignment = .center
+       label.font = .sfProDisplay(ofSize: 18, weight: .semibold)
+
+       // where data is an Array of String
+       label.text = pickerData[row]
+
+       return label
+     }
 }
 
 // MARK: - SwiftUI

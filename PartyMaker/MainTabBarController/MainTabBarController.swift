@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import RAMAnimatedTabBarController
 
-class MainTabBarController: UITabBarController {
+class MainTabBarController: RAMAnimatedTabBarController {
     
     private let currentUser: PUser
     
@@ -31,6 +32,7 @@ class MainTabBarController: UITabBarController {
         let createPartyViewController = CreatePartyViewController(currentUser: currentUser)
         let chatlistViewController = ChatlistViewController(currentUser: currentUser)
         let profileViewController = ProfileViewController(currentUser: currentUser)
+        let gamesViewController = GamesViewController()
         
         let boldConfig = UIImage.SymbolConfiguration(weight: .medium)
         
@@ -39,22 +41,25 @@ class MainTabBarController: UITabBarController {
         let createImage = UIImage(systemName: "plus", withConfiguration: boldConfig)!
         let messaggesImage = UIImage(systemName: "bubble.left.and.bubble.right", withConfiguration: boldConfig)!
         let profileImage = UIImage(systemName: "person", withConfiguration: boldConfig)!
-        
+        let gamesImage = UIImage(systemName: "gamecontroller", withConfiguration: boldConfig)!
+
         viewControllers = [
-            generateNavigationController(rootViewController: searchPartyViewController, title: "Поиск", image: searchImage),
-            generateNavigationController(rootViewController: profileViewController, title: "Профиль", image: profileImage),
-            generateNavigationController(rootViewController: createPartyViewController, title: "Создать", image: createImage),
-            generateNavigationController(rootViewController: partiesViewController, title: "Вечеринки", image: partiesImage),
-            generateNavigationController(rootViewController: chatlistViewController, title: "Сообщения", image: messaggesImage),
+//            generateNavigationController(rootViewController: searchPartyViewController, title: "Поиск", image: searchImage, animation: RAMBounceAnimation(), tag: 0),
+            generateNavigationController(rootViewController: profileViewController, title: "Профиль", image: profileImage, animation: RAMBounceAnimation(), tag: 0),
+            generateNavigationController(rootViewController: createPartyViewController, title: "Создать", image: createImage, animation: RAMBounceAnimation(), tag: 1),
+            generateNavigationController(rootViewController: partiesViewController, title: "Вечеринки", image: partiesImage, animation: RAMBounceAnimation(), tag: 2),
+            generateNavigationController(rootViewController: chatlistViewController, title: "Сообщения", image: messaggesImage, animation: RAMBounceAnimation(), tag: 3),
+            generateNavigationController(rootViewController: gamesViewController, title: "Игры", image: gamesImage, animation: RAMBounceAnimation(), tag: 4),
         ]
     }
-    
-    private func generateNavigationController(rootViewController: UIViewController, title: String, image: UIImage) -> UIViewController {
-        
+
+    private func generateNavigationController(rootViewController: UIViewController, title: String, image: UIImage, animation: RAMBounceAnimation, tag: Int) -> UIViewController {
+
         let navigationVC = UINavigationController(rootViewController: rootViewController)
-        navigationVC.tabBarItem.title = title
-        navigationVC.tabBarItem.image = image
-        
+        let tabBarItem = RAMAnimatedTabBarItem(title: title, image: image, tag: tag)
+        tabBarItem.animation = animation
+        navigationVC.tabBarItem = tabBarItem
+
         return navigationVC
     }
     
