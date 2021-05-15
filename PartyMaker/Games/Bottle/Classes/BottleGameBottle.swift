@@ -34,13 +34,13 @@ final class BottleGameBottle: SKSpriteNode, GameSpritable {
         bottomBottlePoint.zPosition = 2
         
         topBottlePoint.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 60, height: 60))
-        topBottlePoint.physicsBody?.isDynamic = false
+        topBottlePoint.physicsBody?.isDynamic = true
         topBottlePoint.physicsBody?.categoryBitMask = BottleGameBitMaskCategory.bottleNeck
         topBottlePoint.physicsBody?.collisionBitMask = BottleGameBitMaskCategory.player
         topBottlePoint.physicsBody?.contactTestBitMask = BottleGameBitMaskCategory.player
         
         bottomBottlePoint.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 60, height: 60))
-        bottomBottlePoint.physicsBody?.isDynamic = false
+        bottomBottlePoint.physicsBody?.isDynamic = true
         bottomBottlePoint.physicsBody?.categoryBitMask = BottleGameBitMaskCategory.bottleBottom
         bottomBottlePoint.physicsBody?.collisionBitMask = BottleGameBitMaskCategory.player
         bottomBottlePoint.physicsBody?.contactTestBitMask = BottleGameBitMaskCategory.player

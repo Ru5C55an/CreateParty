@@ -114,6 +114,10 @@
 		449D7C8625993DC300FE575F /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D7C8525993DC300FE575F /* FirestoreService.swift */; };
 		449D7CC32599414900FE575F /* UserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D7CC22599414900FE575F /* UserError.swift */; };
 		44A63EE325A0960700F125F7 /* WaitingChatsNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A63EE225A0960700F125F7 /* WaitingChatsNavigation.swift */; };
+		44A84E37264F11AE00FC63AB /* bottleGlassSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 44A84E35264F11A700FC63AB /* bottleGlassSound.mp3 */; };
+		44A84E38264F11AE00FC63AB /* bottlePlasticSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 44A84E36264F11AE00FC63AB /* bottlePlasticSound.mp3 */; };
+		44A84E3A264F13B700FC63AB /* ES_Make It Back - Cushy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 44A84E39264F13B700FC63AB /* ES_Make It Back - Cushy.mp3 */; };
+		44A84E3C264F166400FC63AB /* BottleGameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A84E3B264F166400FC63AB /* BottleGameSettings.swift */; };
 		44AD68C126407D09005F81DB /* PermissionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AD68C026407D09005F81DB /* PermissionsService.swift */; };
 		44AD68C62640834D005F81DB /* GamesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AD68C52640834D005F81DB /* GamesViewController.swift */; };
 		44B6A3E825A0BCCE00204B20 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B6A3E725A0BCCE00204B20 /* ChatViewController.swift */; };
@@ -283,6 +287,10 @@
 		449D7C8525993DC300FE575F /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		449D7CC22599414900FE575F /* UserError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserError.swift; sourceTree = "<group>"; };
 		44A63EE225A0960700F125F7 /* WaitingChatsNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingChatsNavigation.swift; sourceTree = "<group>"; };
+		44A84E35264F11A700FC63AB /* bottleGlassSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bottleGlassSound.mp3; sourceTree = "<group>"; };
+		44A84E36264F11AE00FC63AB /* bottlePlasticSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bottlePlasticSound.mp3; sourceTree = "<group>"; };
+		44A84E39264F13B700FC63AB /* ES_Make It Back - Cushy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "ES_Make It Back - Cushy.mp3"; sourceTree = "<group>"; };
+		44A84E3B264F166400FC63AB /* BottleGameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleGameSettings.swift; sourceTree = "<group>"; };
 		44AD68C026407D09005F81DB /* PermissionsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsService.swift; sourceTree = "<group>"; };
 		44AD68C52640834D005F81DB /* GamesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesViewController.swift; sourceTree = "<group>"; };
 		44B6A3E725A0BCCE00204B20 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -501,6 +509,9 @@
 		44547C0D264DD8BF00C221AD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				44A84E35264F11A700FC63AB /* bottleGlassSound.mp3 */,
+				44A84E39264F13B700FC63AB /* ES_Make It Back - Cushy.mp3 */,
+				44A84E36264F11AE00FC63AB /* bottlePlasticSound.mp3 */,
 				44547C0E264DD8DD00C221AD /* ConfettiEffect.swift */,
 			);
 			path = Resources;
@@ -532,6 +543,7 @@
 				442BE41C264325990046FAC5 /* BottleGameBitMaskCategory.swift */,
 				44BA15DB2645F76C00014AE9 /* BottleGameAssets.swift */,
 				44FB5B6B2648045D00BE3178 /* BottleGameSceneManager.swift */,
+				44A84E3B264F166400FC63AB /* BottleGameSettings.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -1147,6 +1159,7 @@
 				449D7C54259912AB00FE575F /* GoogleService-Info.plist in Resources */,
 				4463BD33260E785F00848E29 /* SpiderWeb.json in Resources */,
 				447EE8C9257676AA00D8698F /* Assets.xcassets in Resources */,
+				44A84E37264F11AE00FC63AB /* bottleGlassSound.mp3 in Resources */,
 				447EE8C4257676A700D8698F /* Main.storyboard in Resources */,
 				440CEDEF258A46BA00553673 /* HelloScreen.json in Resources */,
 				4420BD40259609BA005A4FAE /* SF-Pro-Rounded-Regular.otf in Resources */,
@@ -1158,7 +1171,9 @@
 				44D3EC6B262200BE00717A9B /* MenuButton.json in Resources */,
 				4420BD52259609EB005A4FAE /* SF-Pro-Display-Regular.otf in Resources */,
 				4465EB81257A89B00096F3B7 /* GradientBackground.json in Resources */,
+				44A84E3A264F13B700FC63AB /* ES_Make It Back - Cushy.mp3 in Resources */,
 				4420BDDD2596AD8D005A4FAE /* waitingChats.json in Resources */,
+				44A84E38264F11AE00FC63AB /* bottlePlasticSound.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1312,6 +1327,7 @@
 				4420BDF6259757D6005A4FAE /* WaitingChatCell.swift in Sources */,
 				4420BDB625965D35005A4FAE /* InterestButton.swift in Sources */,
 				4420BD972596444E005A4FAE /* SetupProfileViewController.swift in Sources */,
+				44A84E3C264F166400FC63AB /* BottleGameSettings.swift in Sources */,
 				448157AE2576C559004F06FF /* SignUpViewController.swift in Sources */,
 				4420BD7B259614D6005A4FAE /* ButtonFormView.swift in Sources */,
 				44547C06264C7F8C00C221AD /* BottleGameHistoryScene.swift in Sources */,

@@ -13,7 +13,18 @@ class BottleGameMenuScene: BottleGameParentScene {
     var playButtonTextureArrayAnimation = [SKTexture]()
     let playButton = SKSpriteNode(texture: SKTexture(imageNamed: "playButton1"))
     
+    // MARK: - Modes buttons
+    fileprivate let tappedModeButtonScale: CGFloat = 0.3
+    fileprivate let untappedModeButtonScale: CGFloat = 0.4
+    
+    fileprivate let modeButtonKisses = BottleGameHandButton(title: "На поцелуи", color: #colorLiteral(red: 0.9882352941, green: 0.431372549, blue: 0.2745098039, alpha: 1), hand: HandButtons.love, scale: 0.4)
+    fileprivate let modeButtonSecrets = BottleGameHandButton(title: "На секреты", color: #colorLiteral(red: 0.9882352941, green: 0.831372549, blue: 0.007843137255, alpha: 1), hand: HandButtons.secret, scale: 0.4)
+    fileprivate let modeButtonDrink = BottleGameHandButton(title: "На выпивку", color: #colorLiteral(red: 0.9882352941, green: 0.831372549, blue: 0.007843137255, alpha: 1), hand: HandButtons.drink, scale: 0.4)
+    fileprivate let modeButtonDesires = BottleGameHandButton(title: "На желания", color: #colorLiteral(red: 0.7921568627, green: 0.2823529412, blue: 0.2274509804, alpha: 1), hand: HandButtons.idea, scale: 0.4)
+    
     override func didMove(to view: SKView) {
+        
+        gameSettings.loadGameMode()
         
         if !BottleGameAssets.shared.isLoaded {
             BottleGameAssets.shared.preloadAssets()
@@ -67,25 +78,21 @@ class BottleGameMenuScene: BottleGameParentScene {
         modeLabel.position = CGPoint(x: self.frame.midX, y: self.frame.midY - 200)
         addChild(modeLabel)
         
-        let modeButtonSecrets = BottleGameHandButton(title: "На секреты", color: #colorLiteral(red: 0.9882352941, green: 0.831372549, blue: 0.007843137255, alpha: 1), hand: HandButtons.secret, scale: 0.4)
         modeButtonSecrets.position = CGPoint(x: self.frame.midX - 125, y: self.frame.midY - 270)
         modeButtonSecrets.name = "modeButtonSecrets"
         modeButtonSecrets.label.name = "modeButtonSecrets"
         addChild(modeButtonSecrets)
         
-        let modeButtonKisses = BottleGameHandButton(title: "На поцелуи", color: #colorLiteral(red: 0.9882352941, green: 0.431372549, blue: 0.2745098039, alpha: 1), hand: HandButtons.love, scale: 0.4)
         modeButtonKisses.position = CGPoint(x: self.frame.midX - 45, y: self.frame.midY - 270)
         modeButtonKisses.name = "modeButtonKisses"
         modeButtonKisses.label.name = "modeButtonKisses"
         addChild(modeButtonKisses)
         
-        let modeButtonDrink = BottleGameHandButton(title: "На выпивку", color: #colorLiteral(red: 0.9882352941, green: 0.831372549, blue: 0.007843137255, alpha: 1), hand: HandButtons.drink, scale: 0.4)
         modeButtonDrink.position = CGPoint(x: self.frame.midX + 45, y: self.frame.midY - 270)
         modeButtonDrink.name = "modeButtonDrink"
         modeButtonDrink.label.name = "modeButtonDrink"
         addChild(modeButtonDrink)
         
-        let modeButtonDesires = BottleGameHandButton(title: "На желания", color: #colorLiteral(red: 0.7921568627, green: 0.2823529412, blue: 0.2274509804, alpha: 1), hand: HandButtons.idea, scale: 0.4)
         modeButtonDesires.position = CGPoint(x: self.frame.midX + 125, y: self.frame.midY - 270)
         modeButtonDesires.name = "modeButtonDesires"
         modeButtonDesires.label.name = "modeButtonDesires"
@@ -96,6 +103,27 @@ class BottleGameMenuScene: BottleGameParentScene {
             playButton.setScale(0.35)
             playButton.name = "playButton"
             self.addChild(playButton)
+        }
+        
+        checkGameMode()
+    }
+    
+    func checkGameMode() {
+        switch gameSettings.gameMode {
+        case 1:
+
+            modeButtonKisses.setScale(tappedModeButtonScale)
+        case 2:
+
+            modeButtonDrink.setScale(tappedModeButtonScale)
+        case 3:
+
+            modeButtonSecrets.setScale(tappedModeButtonScale)
+        case 4:
+
+            modeButtonDesires.setScale(tappedModeButtonScale)
+        default:
+            break
         }
     }
     
@@ -132,6 +160,47 @@ class BottleGameMenuScene: BottleGameParentScene {
             historyScene.scaleMode = .aspectFill
             
             self.scene!.view?.presentScene(historyScene, transition: transition)
+        } else if node.name == "modeButtonSecrets" {
+            setMode(index: 3)
+        } else if node.name == "modeButtonKisses" {
+            setMode(index: 1)
+        } else if node.name == "modeButtonDrink" {
+            setMode(index: 2)
+        } else if node.name == "modeButtonDesires" {
+            setMode(index: 4)
+        }
+    }
+    
+    func setMode(index: Int) {
+        
+        modeButtonKisses.setScale(untappedModeButtonScale)
+        modeButtonDrink.setScale(untappedModeButtonScale)
+        modeButtonSecrets.setScale(untappedModeButtonScale)
+        modeButtonDesires.setScale(untappedModeButtonScale)
+        
+        let colorizeAction = SKAction.colorize(with: .yellow, colorBlendFactor: 1, duration: 0.5)
+        let uncolorizeAction = colorizeAction.reversed()
+        let colorSequence = SKAction.sequence([colorizeAction, uncolorizeAction])
+        
+        switch index {
+        case 1:
+            modeButtonKisses.run(colorSequence)
+            gameSettings.saveGameMode(1)
+            modeButtonKisses.setScale(tappedModeButtonScale)
+        case 2:
+            modeButtonDrink.run(colorSequence)
+            gameSettings.saveGameMode(2)
+            modeButtonDrink.setScale(tappedModeButtonScale)
+        case 3:
+            modeButtonSecrets.run(colorSequence)
+            gameSettings.saveGameMode(3)
+            modeButtonSecrets.setScale(tappedModeButtonScale)
+        case 4:
+            modeButtonDesires.run(colorSequence)
+            gameSettings.saveGameMode(4)
+            modeButtonDesires.setScale(tappedModeButtonScale)
+        default:
+            break
         }
     }
     

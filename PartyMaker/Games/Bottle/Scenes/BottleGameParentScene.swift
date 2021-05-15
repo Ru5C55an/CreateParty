@@ -8,6 +8,8 @@
 import SpriteKit
 
 class BottleGameParentScene: SKScene {
+    let gameSettings = BottleGameSettings()
+    
     let sceneManager = BottleGameSceneManager.shared
     
     var backScene: SKScene? = nil

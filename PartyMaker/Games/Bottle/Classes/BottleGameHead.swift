@@ -66,6 +66,10 @@ final class BottleGameHead: SKSpriteNode, GameSpritable {
         
         head.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 105, height: 105))
         head.physicsBody?.isDynamic = true
+//        head.physicsBody?.affectedByGravity = false
+//        head.physicsBody?.allowsRotation = false
+//        head.physicsBody?.isResting = false
+//        head.physicsBody?.usesPreciseCollisionDetection = false
         head.physicsBody?.categoryBitMask = BottleGameBitMaskCategory.player
         head.physicsBody?.collisionBitMask = BottleGameBitMaskCategory.bottleBottom | BottleGameBitMaskCategory.bottleNeck
         head.physicsBody?.contactTestBitMask = BottleGameBitMaskCategory.bottleBottom | BottleGameBitMaskCategory.bottleNeck

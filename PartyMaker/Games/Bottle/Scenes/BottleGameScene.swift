@@ -11,6 +11,9 @@ import GameplayKit
 
 class BottleGameScene: BottleGameParentScene {
     
+    fileprivate var backgroundMusic: SKAudioNode!
+    fileprivate var bottleSound: SKAudioNode!
+    
     fileprivate var bottle: BottleGameBottle!
     
     fileprivate var playButtonTextureArrayAnimation = [SKTexture]()
@@ -28,6 +31,14 @@ class BottleGameScene: BottleGameParentScene {
     fileprivate var screenCenterPoint: CGPoint = CGPoint(x: 0, y: 0)
     
     override func didMove(to view: SKView) {
+        
+        gameSettings.loadGameSettings()
+        if gameSettings.isMusic == true, backgroundMusic == nil {
+            if let backgroundMusicURL = Bundle.main.url(forResource: "ES_Make It Back - Cushy", withExtension: "mp3") {
+                backgroundMusic = SKAudioNode(url: backgroundMusicURL)
+                addChild(backgroundMusic)
+            }
+        }
         
         let confetti = ConfettiEffect()
         view.addSubview(confetti)
@@ -55,6 +66,11 @@ class BottleGameScene: BottleGameParentScene {
     }
     
     func testRotateBottle() {
+        
+        if gameSettings.isSound {
+            self.run(SKAction.playSoundFileNamed("bottleGlassSound", waitForCompletion: false))
+        }
+        
         isBottleStopped = false
         buttonEnabled = false
         
@@ -104,7 +120,14 @@ class BottleGameScene: BottleGameParentScene {
         buttonEnabled = true
         isBottleStopped = true
         
+        self.run(SKAction.stop())
+        
         if let firstSelectedPlayer = firstSelectedPlayer, let secondSelectedPlayer = secondSelectedPlayer {
+            
+            if let firstName = firstSelectedPlayer.name, let secondName = secondSelectedPlayer.name {
+                gameSettings.saveHistory(firstPlayer: firstName, secondPlayer: secondName, action: "Целует")
+            }
+    
             firstSelectedPlayer.run(BottleGameScene.move(from: firstSelectedPlayer.position, to: CGPoint(x: screenCenterPoint.x, y: screenCenterPoint.y - screenCenterPoint.y / 2 - screenCenterPoint.y / 4)))
         }
     }
