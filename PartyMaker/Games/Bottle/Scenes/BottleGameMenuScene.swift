@@ -9,7 +9,7 @@ import SpriteKit
 import GameplayKit
 
 class BottleGameMenuScene: BottleGameParentScene {
-        
+    
     var playButtonTextureArrayAnimation = [SKTexture]()
     let playButton = SKSpriteNode(texture: SKTexture(imageNamed: "playButton1"))
     
@@ -23,6 +23,11 @@ class BottleGameMenuScene: BottleGameParentScene {
     fileprivate let modeButtonDesires = BottleGameHandButton(title: "На желания", color: #colorLiteral(red: 0.7921568627, green: 0.2823529412, blue: 0.2274509804, alpha: 1), hand: HandButtons.idea, scale: 0.4)
     
     override func didMove(to view: SKView) {
+        
+        gameSettings.settingsChanged = false
+        
+        guard sceneManager.menuScene == nil else { return }
+        sceneManager.menuScene = self
         
         gameSettings.loadGameMode()
         
@@ -63,10 +68,10 @@ class BottleGameMenuScene: BottleGameParentScene {
         addChild(historyButton)
         
         let countPlayersButton = BottleGameHandButton(title: "Игроки",
-                                                 color: #colorLiteral(red: 0.9882352941, green: 0.431372549, blue: 0.2745098039, alpha: 1),
-                                                 hand: HandButtons.players,
-                                                 scale: 0.5,
-                                                 fontSize: 30)
+                                                      color: #colorLiteral(red: 0.9882352941, green: 0.431372549, blue: 0.2745098039, alpha: 1),
+                                                      hand: HandButtons.players,
+                                                      scale: 0.5,
+                                                      fontSize: 30)
         countPlayersButton.position = CGPoint(x: self.frame.midX + 110, y: self.frame.midY + 90)
         countPlayersButton.name = "countPlayersButton"
         addChild(countPlayersButton)
@@ -78,52 +83,53 @@ class BottleGameMenuScene: BottleGameParentScene {
         modeLabel.position = CGPoint(x: self.frame.midX, y: self.frame.midY - 200)
         addChild(modeLabel)
         
+        
+        
         modeButtonSecrets.position = CGPoint(x: self.frame.midX - 125, y: self.frame.midY - 270)
         modeButtonSecrets.name = "modeButtonSecrets"
         modeButtonSecrets.label.name = "modeButtonSecrets"
         addChild(modeButtonSecrets)
+        
+        
         
         modeButtonKisses.position = CGPoint(x: self.frame.midX - 45, y: self.frame.midY - 270)
         modeButtonKisses.name = "modeButtonKisses"
         modeButtonKisses.label.name = "modeButtonKisses"
         addChild(modeButtonKisses)
         
+        
+        
         modeButtonDrink.position = CGPoint(x: self.frame.midX + 45, y: self.frame.midY - 270)
         modeButtonDrink.name = "modeButtonDrink"
         modeButtonDrink.label.name = "modeButtonDrink"
         addChild(modeButtonDrink)
+        
+        
         
         modeButtonDesires.position = CGPoint(x: self.frame.midX + 125, y: self.frame.midY - 270)
         modeButtonDesires.name = "modeButtonDesires"
         modeButtonDesires.label.name = "modeButtonDesires"
         addChild(modeButtonDesires)
         
-        if scene?.childNode(withName: "playButton") == nil {
-            playButton.position = CGPoint(x: self.frame.midX, y: self.frame.midY - 80)
-            playButton.setScale(0.35)
-            playButton.name = "playButton"
-            self.addChild(playButton)
-        }
+        playButton.position = CGPoint(x: self.frame.midX, y: self.frame.midY - 80)
+        playButton.setScale(0.35)
+        playButton.name = "playButton"
+        self.addChild(playButton)
+        
         
         checkGameMode()
     }
     
     func checkGameMode() {
         switch gameSettings.gameMode {
-        case 1:
-
+        case .kiss:
             modeButtonKisses.setScale(tappedModeButtonScale)
-        case 2:
-
+        case .drink:
             modeButtonDrink.setScale(tappedModeButtonScale)
-        case 3:
-
+        case .secret:
             modeButtonSecrets.setScale(tappedModeButtonScale)
-        case 4:
-
+        case .desire:
             modeButtonDesires.setScale(tappedModeButtonScale)
-        default:
-            break
         }
     }
     
@@ -161,17 +167,24 @@ class BottleGameMenuScene: BottleGameParentScene {
             
             self.scene!.view?.presentScene(historyScene, transition: transition)
         } else if node.name == "modeButtonSecrets" {
-            setMode(index: 3)
+            setMode(mode: .secret)
         } else if node.name == "modeButtonKisses" {
-            setMode(index: 1)
+            setMode(mode: .kiss)
         } else if node.name == "modeButtonDrink" {
-            setMode(index: 2)
+            setMode(mode: .drink)
         } else if node.name == "modeButtonDesires" {
-            setMode(index: 4)
+            setMode(mode: .desire)
+        } else if node.name == "countPlayersButton" {
+            let transition = SKTransition.crossFade(withDuration: 1.0)
+            let playersScene = BottleGamePlayersScene(size: self.size)
+            playersScene.backScene = self
+            playersScene.scaleMode = .aspectFill
+            
+            self.scene!.view?.presentScene(playersScene, transition: transition)
         }
     }
     
-    func setMode(index: Int) {
+    func setMode(mode: BottleGameModes) {
         
         modeButtonKisses.setScale(untappedModeButtonScale)
         modeButtonDrink.setScale(untappedModeButtonScale)
@@ -182,50 +195,45 @@ class BottleGameMenuScene: BottleGameParentScene {
         let uncolorizeAction = colorizeAction.reversed()
         let colorSequence = SKAction.sequence([colorizeAction, uncolorizeAction])
         
-        switch index {
-        case 1:
+        gameSettings.saveGameMode(mode)
+        
+        switch mode {
+        case .kiss:
             modeButtonKisses.run(colorSequence)
-            gameSettings.saveGameMode(1)
             modeButtonKisses.setScale(tappedModeButtonScale)
-        case 2:
+        case .drink:
             modeButtonDrink.run(colorSequence)
-            gameSettings.saveGameMode(2)
             modeButtonDrink.setScale(tappedModeButtonScale)
-        case 3:
+        case .secret:
             modeButtonSecrets.run(colorSequence)
-            gameSettings.saveGameMode(3)
             modeButtonSecrets.setScale(tappedModeButtonScale)
-        case 4:
+        case .desire:
             modeButtonDesires.run(colorSequence)
-            gameSettings.saveGameMode(4)
             modeButtonDesires.setScale(tappedModeButtonScale)
-        default:
-            break
         }
     }
     
     fileprivate func playButtonFillArray() {
-         
-            self.playButtonTextureArrayAnimation = {
-                
-                var array =  [SKTexture]()
-                
-                for i in stride(from: 1, through: 3, by: +1) {
-                    let texture = SKTexture(imageNamed: "playButton\(i)")
-                    array.append(texture)
-                }
-                
-                SKTexture.preload(array) {
-                    print("playButtonTextureArrayAnimation preload done")
-                }
-                
-                return array
-            }()
         
+        self.playButtonTextureArrayAnimation = {
+            
+            var array =  [SKTexture]()
+            
+            for i in stride(from: 1, through: 3, by: +1) {
+                let texture = SKTexture(imageNamed: "playButton\(i)")
+                array.append(texture)
+            }
+            
+            SKTexture.preload(array) {
+                print("playButtonTextureArrayAnimation preload done")
+            }
+            
+            return array
+        }()
     }
     
     fileprivate func animateTapButton(completion: (() -> Void)? = nil) {
-                
+        
         let fadeAction = SKAction.fadeAlpha(by: 0, duration: 1)
         
         let resizeAction = SKAction.scale(to: 0.15, duration: 0.1)
@@ -233,7 +241,7 @@ class BottleGameMenuScene: BottleGameParentScene {
         playButton.run(resizeAction)
         
         let forwardAction = SKAction.animate(with: playButtonTextureArrayAnimation, timePerFrame: 0.05, resize: true, restore: false)
-//        let backwardAction = SKAction.animate(with: playButtonTextureArrayAnimation.reversed(), timePerFrame: 0.05, resize: true, restore: false)
+        //        let backwardAction = SKAction.animate(with: playButtonTextureArrayAnimation.reversed(), timePerFrame: 0.05, resize: true, restore: false)
         
         let sequenceAction = SKAction.sequence([forwardAction, fadeAction])
         

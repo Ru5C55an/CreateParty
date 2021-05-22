@@ -13,7 +13,6 @@ import GameplayKit
 class BottleGameVC: UIViewController {
     
     let closeButton = UIImageView(image: UIImage(systemName: "xmark"))
-    let resetButton = UIButton(title: "Перезагрузить сцену".uppercased())
     
     var gameView = SKView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
     
@@ -50,17 +49,11 @@ class BottleGameVC: UIViewController {
     
     private func setupViews() {
         view.addSubview(closeButton)
-        view.addSubview(resetButton)
         
         closeButton.snp.makeConstraints { (make) in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
             make.trailing.equalToSuperview().offset(-10)
             make.size.equalTo(30)
-        }
-        
-        resetButton.snp.makeConstraints { (make) in
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
-            make.centerX.equalToSuperview()
         }
     }
     
@@ -68,14 +61,6 @@ class BottleGameVC: UIViewController {
         closeButton.addTap {
             self.navigationController?.popViewController(animated: true)
         }
-        
-        resetButton.addTarget(self, action: #selector(resetScene), for: .touchUpInside)
-    }
-    
-    @objc private func resetScene() {
-        dismiss(animated: true, completion: nil)
-        view = SKView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-        setupScene()
     }
     
     override var shouldAutorotate: Bool {

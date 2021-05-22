@@ -22,9 +22,9 @@ class BottleGameHUD: SKNode {
         
         matchLabel.horizontalAlignmentMode = .center
         matchLabel.zPosition = 4
-        matchLabel.position = CGPoint(x: screenSize.width / 2, y: screenSize.height - screenSize.height / 5)
+        matchLabel.position = CGPoint(x: screenSize.width / 2, y: screenSize.height + 50)
         matchLabel.fontName = "SFProRounded-Semibold"
-        matchLabel.fontSize = 25
+        matchLabel.fontSize = 30
         matchLabel.color = #colorLiteral(red: 0.9882352941, green: 0.4666666667, blue: 0.3137254902, alpha: 1)
         addChild(matchLabel)
     }

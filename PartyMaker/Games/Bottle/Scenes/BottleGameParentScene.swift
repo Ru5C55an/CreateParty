@@ -7,19 +7,27 @@
 
 import SpriteKit
 
-class BottleGameParentScene: SKScene {
+class BottleGameParentScene: SKScene, Alertable {
+    
     let gameSettings = BottleGameSettings()
     
     let sceneManager = BottleGameSceneManager.shared
     
     var backScene: SKScene? = nil
     
+    let screenSize = UIScreen.main.bounds.size
+    
+    var screenCenterPoint: CGPoint = CGPoint(x: 0, y: 0)
+    
+    let headerLabel = SKLabelNode(text: "Заголовок экрана")
+    
     func setHeader(withTitle title: String) {
-        let headerLabel = SKLabelNode(text: title)
+        headerLabel.text = title
         headerLabel.fontSize = 40
         headerLabel.fontName = "SFProRounded-Semibold"
         headerLabel.fontColor = #colorLiteral(red: 0.3098039216, green: 0.4156862745, blue: 0.9411764706, alpha: 1)
-        headerLabel.position = CGPoint(x: self.frame.midX, y: self.frame.midY + 300)
+        headerLabel.position = CGPoint(x: self.frame.midX, y: self.frame.midY + 330)
+        headerLabel.numberOfLines = 0
         addChild(headerLabel)
     }
     

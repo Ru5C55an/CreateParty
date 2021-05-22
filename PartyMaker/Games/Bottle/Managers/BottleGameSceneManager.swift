@@ -9,4 +9,6 @@ class BottleGameSceneManager {
     static let shared = BottleGameSceneManager()
     
     var gameScene: BottleGameScene?
+    var pauseMenuScene: BottleGamePauseScene?
+    var menuScene:  BottleGameMenuScene?
 }

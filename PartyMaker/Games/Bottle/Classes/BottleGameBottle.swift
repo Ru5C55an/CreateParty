@@ -14,7 +14,7 @@ final class BottleGameBottle: SKSpriteNode, GameSpritable {
     let motionManager = CMMotionManager()
     var xAcceleration: CGFloat = 0
     
-    static func populateSprite(at point: CGPoint, name: String? = nil, id: Int? = nil) -> BottleGameBottle {
+    static func populateSprite(at point: CGPoint, name: String? = nil, id: Int? = nil, scale: CGFloat? = nil, titleText: String? = nil) -> BottleGameBottle {
         
         let bottleImageName = configureBottleName()
         let bottleTexture = SKTexture(imageNamed: bottleImageName)
@@ -24,8 +24,8 @@ final class BottleGameBottle: SKSpriteNode, GameSpritable {
         bottle.setScale(0.35)
         bottle.name = "bottle"
         
-        let topBottlePoint = SKSpriteNode(color: .blue, size: CGSize(width: 30, height: 30))
-        let bottomBottlePoint = SKSpriteNode(color: .yellow, size: CGSize(width: 30, height: 30))
+        let topBottlePoint = SKSpriteNode(color: .blue, size: CGSize(width: 10, height: 10))
+        let bottomBottlePoint = SKSpriteNode(color: .yellow, size: CGSize(width: 10, height: 10))
         
         topBottlePoint.position = CGPoint(x: 0, y: 400)
         bottomBottlePoint.position = CGPoint(x: 0, y: -400)
@@ -33,17 +33,19 @@ final class BottleGameBottle: SKSpriteNode, GameSpritable {
         topBottlePoint.zPosition = 2
         bottomBottlePoint.zPosition = 2
         
-        topBottlePoint.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 60, height: 60))
-        topBottlePoint.physicsBody?.isDynamic = true
+        topBottlePoint.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 10, height: 10))
+        topBottlePoint.physicsBody?.isDynamic = false
         topBottlePoint.physicsBody?.categoryBitMask = BottleGameBitMaskCategory.bottleNeck
         topBottlePoint.physicsBody?.collisionBitMask = BottleGameBitMaskCategory.player
         topBottlePoint.physicsBody?.contactTestBitMask = BottleGameBitMaskCategory.player
+        topBottlePoint.alpha = 0
         
-        bottomBottlePoint.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 60, height: 60))
-        bottomBottlePoint.physicsBody?.isDynamic = true
+        bottomBottlePoint.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 10, height: 10))
+        bottomBottlePoint.physicsBody?.isDynamic = false
         bottomBottlePoint.physicsBody?.categoryBitMask = BottleGameBitMaskCategory.bottleBottom
         bottomBottlePoint.physicsBody?.collisionBitMask = BottleGameBitMaskCategory.player
         bottomBottlePoint.physicsBody?.contactTestBitMask = BottleGameBitMaskCategory.player
+        bottomBottlePoint.alpha = 0
         
         bottle.addChild(topBottlePoint)
         bottle.addChild(bottomBottlePoint)

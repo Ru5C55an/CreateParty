@@ -1,5 +1,5 @@
 //
-//  BottleGameModeButton.swift
+//  BottleGameHandButton.swift
 //  PartyMaker
 //
 //  Created by Руслан Садыков on 08.05.2021.
@@ -10,9 +10,9 @@ import SpriteKit
 struct HandButtons {
     let rawValue: String
     
-    static let love = "handAlco"
-    static let drink = "handDesires"
-    static let idea = "handKisses"
+    static let drink = "handAlco"
+    static let idea = "handDesires"
+    static let love = "handKisses"
     static let history = "handHistory"
     static let back = "handBack"
     static let options = "handOptions"
@@ -20,6 +20,7 @@ struct HandButtons {
     static let image = "handImage"
     static let players = "handCount"
     static let secret = "handSecret"
+    static let yes = "handYes"
 }
 
 class BottleGameHandButton: SKSpriteNode {

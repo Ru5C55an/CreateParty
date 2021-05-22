@@ -9,7 +9,7 @@ import SpriteKit
 import GameplayKit
 
 protocol GameSpritable {
-    static func populateSprite(at point: CGPoint, name: String?, id: Int?) -> Self
+    static func populateSprite(at point: CGPoint, name: String?, id: Int?, scale: CGFloat?, titleText: String?) -> Self
     static func randomImageName(maxCount: Int, prefixName: String) -> String
 }
 

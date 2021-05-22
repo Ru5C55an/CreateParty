@@ -9,11 +9,45 @@ import SpriteKit
 import GameplayKit
 
 final class BottleGameHead: SKSpriteNode, GameSpritable {
-
-    static func populateSprite(at point: CGPoint, name: String? = nil, id: Int? = 1) -> BottleGameHead {
+              
+    static func populateSprite(at point: CGPoint, name: String? = nil, id: Int? = 1, scale: CGFloat? = nil, titleText: String? = nil) -> BottleGameHead {
         
         var headImageName = name ?? configureHeadName()
+        
+        if name == nil {
+            if id != nil {
+                headImageName = "head\(id!)"
+            }
+        }
+        
         let head = BottleGameHead(imageNamed: headImageName)
+        head.name = "head\(id!)"
+        
+        if let titleText = titleText {
+            
+            let label: SKLabelNode = {
+                let l = SKLabelNode(text: "a")
+                l.fontName = "SFProRounded-Medium"
+                l.horizontalAlignmentMode = .center
+                l.verticalAlignmentMode = .center
+                l.zPosition = 2
+                l.fontSize = 20
+                l.text = titleText
+                return l
+            }()
+            
+            label.position = CGPoint(x: head.frame.midX, y: head.frame.minY - 30)
+            
+            head.addChild(label)
+            
+            head.accessibilityLabel = titleText
+        } else {
+            head.accessibilityLabel = head.name!
+        }
+        
+        if let scale = scale {
+            head.setScale(scale)
+        }
         
         let shortDistance: CGFloat = 100.0
         let middleDistance: CGFloat = 200.0
@@ -62,19 +96,22 @@ final class BottleGameHead: SKSpriteNode, GameSpritable {
    
         head.position = fromPoint
         head.zPosition = 1
-        head.name = "head\(id!)"
+
         
         head.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 105, height: 105))
         head.physicsBody?.isDynamic = true
 //        head.physicsBody?.affectedByGravity = false
-//        head.physicsBody?.allowsRotation = false
+        head.physicsBody?.allowsRotation = false
 //        head.physicsBody?.isResting = false
-//        head.physicsBody?.usesPreciseCollisionDetection = false
+        head.physicsBody?.usesPreciseCollisionDetection = true
         head.physicsBody?.categoryBitMask = BottleGameBitMaskCategory.player
         head.physicsBody?.collisionBitMask = BottleGameBitMaskCategory.bottleBottom | BottleGameBitMaskCategory.bottleNeck
         head.physicsBody?.contactTestBitMask = BottleGameBitMaskCategory.bottleBottom | BottleGameBitMaskCategory.bottleNeck
         
-        head.run(move(from: fromPoint, to: point))
+        head.run(move(from: fromPoint, to: point, head: head)) {
+            head.physicsBody?.pinned = true
+            head.physicsBody?.isDynamic = true
+        }
         
         return head
     }
@@ -88,7 +125,8 @@ final class BottleGameHead: SKSpriteNode, GameSpritable {
         head.run(SKAction.rotate(toAngle: angle, duration: 0))
     }
     
-    static func move(from: CGPoint, to: CGPoint) -> SKAction {
+    private static func move(from: CGPoint, to: CGPoint, head: BottleGameHead) -> SKAction {
+
         let movePoint = to
         let moveDistance = sqrt((to.x - from.x)*(to.x - from.x) + (to.y - from.y)*(to.y - from.y))
         
@@ -106,6 +144,16 @@ final class BottleGameHead: SKSpriteNode, GameSpritable {
         print("moveDistance: ", moveDistance)
         print("duration: ", duration)
 
+        head.physicsBody?.isDynamic = false
+        head.physicsBody?.pinned = false
         return SKAction.move(to: movePoint, duration: TimeInterval(duration))
+    }
+    
+    static func move(from: CGPoint, to: CGPoint, head: BottleGameHead, completion: (() -> Void)? = nil) {
+        head.run(move(from: from, to: to, head: head)) {
+            head.physicsBody?.pinned = true
+            head.physicsBody?.isDynamic = true
+            completion?()
+        }
     }
 }

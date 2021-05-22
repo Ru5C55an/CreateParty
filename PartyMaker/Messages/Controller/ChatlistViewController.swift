@@ -249,7 +249,6 @@ extension ChatlistViewController {
     
     private func createWaitingChats() -> NSCollectionLayoutSection {
         
-        
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
