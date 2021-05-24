@@ -90,8 +90,8 @@ class BottleGameOptionsScene: BottleGameParentScene {
         soundLabel.position = CGPoint(x: self.frame.midX - 50, y: self.frame.midY - 50)
         addChild(soundLabel)
         
-        let backButton = BottleGameHandButton(title: "Назад", color: #colorLiteral(red: 0.9882352941, green: 0.431372549, blue: 0.2745098039, alpha: 1), hand: HandButtons.back, scale: 0.6, fontSize: 30)
-        backButton.position = CGPoint(x: self.frame.midX, y: self.frame.minY + 200)
+        let backButton = BottleGameHandButton(title: "Назад", color: #colorLiteral(red: 0.9882352941, green: 0.431372549, blue: 0.2745098039, alpha: 1), hand: HandButtons.back, scale: 0.3, fontSize: 40)
+        backButton.position = CGPoint(x: self.frame.midX, y: self.frame.minY + 100)
         backButton.name = "backButton"
         addChild(backButton)
     }

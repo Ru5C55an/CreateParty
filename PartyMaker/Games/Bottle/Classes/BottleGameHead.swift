@@ -31,12 +31,12 @@ final class BottleGameHead: SKSpriteNode, GameSpritable {
                 l.horizontalAlignmentMode = .center
                 l.verticalAlignmentMode = .center
                 l.zPosition = 2
-                l.fontSize = 20
+                l.fontSize = 16
                 l.text = titleText
                 return l
             }()
             
-            label.position = CGPoint(x: head.frame.midX, y: head.frame.minY - 30)
+            label.position = CGPoint(x: head.frame.midX, y: head.frame.minY - 10)
             
             head.addChild(label)
             
@@ -97,7 +97,6 @@ final class BottleGameHead: SKSpriteNode, GameSpritable {
         head.position = fromPoint
         head.zPosition = 1
 
-        
         head.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 105, height: 105))
         head.physicsBody?.isDynamic = true
 //        head.physicsBody?.affectedByGravity = false

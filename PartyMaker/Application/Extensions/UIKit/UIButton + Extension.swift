@@ -8,12 +8,14 @@
 import UIKit
 import SnapKit
 
+let buttonHeight = 36
+
 extension UIButton {
     
     convenience init(title: String? = "",
                      titleColor: UIColor? = .black,
                      backgroundColor: UIColor? = .white,
-                     font: UIFont? = .sfProRounded(ofSize: 16, weight: .medium),
+                     font: UIFont? = .sfProRounded(ofSize: 16, weight: .semibold),
                      isShadow: Bool = true,
                      cornerRadius: CGFloat = 10,
                      buttonColor: colorButtons = .blue) {

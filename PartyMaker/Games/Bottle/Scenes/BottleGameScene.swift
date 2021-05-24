@@ -176,13 +176,13 @@ class BottleGameScene: BottleGameParentScene {
         if isHaveFirstPlayer {
             allPlayers.forEach({ node in
                 if node != firstSelectedPlayer, node != secondSelectedPlayer {
-                    node.run(SKAction.fadeOut(withDuration: 1))
+                    node.run(SKAction.fadeIn(withDuration: 1))
                 }
             })
         } else {
             allPlayers.forEach({ node in
                 if node != secondSelectedPlayer {
-                    node.run(SKAction.fadeOut(withDuration: 1))
+                    node.run(SKAction.fadeIn(withDuration: 1))
                 }
             })
         }
@@ -194,13 +194,13 @@ class BottleGameScene: BottleGameParentScene {
         if isHaveFirstPlayer {
             allPlayers.forEach({ node in
                 if node != firstSelectedPlayer, node != secondSelectedPlayer {
-                    node.run(SKAction.fadeIn(withDuration: 1))
+                    node.run(SKAction.fadeOut(withDuration: 1))
                 }
             })
         } else {
             allPlayers.forEach({ node in
                 if node != secondSelectedPlayer {
-                    node.run(SKAction.fadeIn(withDuration: 1))
+                    node.run(SKAction.fadeOut(withDuration: 1))
                 }
             })
         }
