@@ -54,6 +54,7 @@
 		442DD263263F032B004C4780 /* GameSpritable + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442DD262263F032A004C4780 /* GameSpritable + Extension.swift */; };
 		442DD279263F4A4A004C4780 /* BottleGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442DD278263F4A4A004C4780 /* BottleGameScene.swift */; };
 		442FE7A125A8C65E00719641 /* PartyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442FE7A025A8C65E00719641 /* PartyError.swift */; };
+		44379C31265C42E4003582BE /* ConfettiEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44379C30265C42E4003582BE /* ConfettiEffect.swift */; };
 		444074CC259F52C700C8667E /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444074CB259F52C700C8667E /* UserCell.swift */; };
 		444074D1259F651D00C8667E /* aprovedUsers.json in Resources */ = {isa = PBXBuildFile; fileRef = 444074D0259F651D00C8667E /* aprovedUsers.json */; };
 		444074DB259FBC4900C8667E /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444074DA259FBC4900C8667E /* MessageModel.swift */; };
@@ -227,6 +228,7 @@
 		442DD262263F032A004C4780 /* GameSpritable + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameSpritable + Extension.swift"; sourceTree = "<group>"; };
 		442DD278263F4A4A004C4780 /* BottleGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottleGameScene.swift; sourceTree = "<group>"; };
 		442FE7A025A8C65E00719641 /* PartyError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyError.swift; sourceTree = "<group>"; };
+		44379C30265C42E4003582BE /* ConfettiEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfettiEffect.swift; sourceTree = "<group>"; };
 		444074CB259F52C700C8667E /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		444074D0259F651D00C8667E /* aprovedUsers.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = aprovedUsers.json; sourceTree = "<group>"; };
 		444074DA259FBC4900C8667E /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
@@ -829,6 +831,7 @@
 				4463BD32260E785F00848E29 /* SpiderWeb.json */,
 				44D3EC6A262200BD00717A9B /* MenuButton.json */,
 				4465EB7C257A89B00096F3B7 /* Confetti.json */,
+				44379C30265C42E4003582BE /* ConfettiEffect.swift */,
 				4496325326546FE50029659F /* Music.json */,
 				4496325226546FDF0029659F /* Sound.json */,
 				4465EB7D257A89B00096F3B7 /* GradientBackground.json */,
@@ -1372,6 +1375,7 @@
 				4420BD6E2596128A005A4FAE /* UIImageView + Extension.swift in Sources */,
 				44D3EC7D262327F600717A9B /* SelectProfileColorViewController.swift in Sources */,
 				4420BD9C25964BCF005A4FAE /* AddProfilePhotoView.swift in Sources */,
+				44379C31265C42E4003582BE /* ConfettiEffect.swift in Sources */,
 				4420BDA9259655D8005A4FAE /* UIDatePicker + Extension.swift in Sources */,
 				4424A5752597FA6600B420F7 /* AboutUserViewController.swift in Sources */,
 				44FB5B6C2648045D00BE3178 /* BottleGameSceneManager.swift in Sources */,
