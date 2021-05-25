@@ -54,7 +54,6 @@
 		442DD263263F032B004C4780 /* GameSpritable + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442DD262263F032A004C4780 /* GameSpritable + Extension.swift */; };
 		442DD279263F4A4A004C4780 /* BottleGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442DD278263F4A4A004C4780 /* BottleGameScene.swift */; };
 		442FE7A125A8C65E00719641 /* PartyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442FE7A025A8C65E00719641 /* PartyError.swift */; };
-		44379C31265C42E4003582BE /* ConfettiEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44379C30265C42E4003582BE /* ConfettiEffect.swift */; };
 		444074CC259F52C700C8667E /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444074CB259F52C700C8667E /* UserCell.swift */; };
 		444074D1259F651D00C8667E /* aprovedUsers.json in Resources */ = {isa = PBXBuildFile; fileRef = 444074D0259F651D00C8667E /* aprovedUsers.json */; };
 		444074DB259FBC4900C8667E /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444074DA259FBC4900C8667E /* MessageModel.swift */; };
@@ -81,7 +80,6 @@
 		4465EB8A257A9E6E0096F3B7 /* PartyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EB89257A9E6E0096F3B7 /* PartyTableViewCell.swift */; };
 		4465EB8F257AA3360096F3B7 /* PartyModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EB8E257AA3360096F3B7 /* PartyModel2.swift */; };
 		4465EB97257AB2750096F3B7 /* CreatePartyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EB96257AB2750096F3B7 /* CreatePartyViewController.swift */; };
-		4465EBA6257BC8D90096F3B7 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EBA5257BC8D90096F3B7 /* StorageManager.swift */; };
 		4465EBAB257BF7830096F3B7 /* EditPartyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4465EBAA257BF7820096F3B7 /* EditPartyTableViewController.swift */; };
 		446714A22645E59A00DC63AA /* BottleGameHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446714A12645E59A00DC63AA /* BottleGameHUD.swift */; };
 		44733E55258CCA2500CCC778 /* PartiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44733E54258CCA2500CCC778 /* PartiesViewController.swift */; };
@@ -228,7 +226,6 @@
 		442DD262263F032A004C4780 /* GameSpritable + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameSpritable + Extension.swift"; sourceTree = "<group>"; };
 		442DD278263F4A4A004C4780 /* BottleGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottleGameScene.swift; sourceTree = "<group>"; };
 		442FE7A025A8C65E00719641 /* PartyError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyError.swift; sourceTree = "<group>"; };
-		44379C30265C42E4003582BE /* ConfettiEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfettiEffect.swift; sourceTree = "<group>"; };
 		444074CB259F52C700C8667E /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		444074D0259F651D00C8667E /* aprovedUsers.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = aprovedUsers.json; sourceTree = "<group>"; };
 		444074DA259FBC4900C8667E /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
@@ -255,7 +252,6 @@
 		4465EB89257A9E6E0096F3B7 /* PartyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyTableViewCell.swift; sourceTree = "<group>"; };
 		4465EB8E257AA3360096F3B7 /* PartyModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyModel2.swift; sourceTree = "<group>"; };
 		4465EB96257AB2750096F3B7 /* CreatePartyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePartyViewController.swift; sourceTree = "<group>"; };
-		4465EBA5257BC8D90096F3B7 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		4465EBAA257BF7820096F3B7 /* EditPartyTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPartyTableViewController.swift; sourceTree = "<group>"; };
 		446714A12645E59A00DC63AA /* BottleGameHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleGameHUD.swift; sourceTree = "<group>"; };
 		44733E54258CCA2500CCC778 /* PartiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartiesViewController.swift; sourceTree = "<group>"; };
@@ -831,7 +827,6 @@
 				4463BD32260E785F00848E29 /* SpiderWeb.json */,
 				44D3EC6A262200BD00717A9B /* MenuButton.json */,
 				4465EB7C257A89B00096F3B7 /* Confetti.json */,
-				44379C30265C42E4003582BE /* ConfettiEffect.swift */,
 				4496325326546FE50029659F /* Music.json */,
 				4496325226546FDF0029659F /* Sound.json */,
 				4465EB7D257A89B00096F3B7 /* GradientBackground.json */,
@@ -1020,7 +1015,6 @@
 		44DF5E9A259237C7000BF557 /* StorageManager */ = {
 			isa = PBXGroup;
 			children = (
-				4465EBA5257BC8D90096F3B7 /* StorageManager.swift */,
 			);
 			path = StorageManager;
 			sourceTree = "<group>";
@@ -1306,7 +1300,6 @@
 				44D3EB6D261E24CA00717A9B /* SearchPartiesBar.swift in Sources */,
 				44D002F325A3A55B009F419B /* BackgroundCardCell.swift in Sources */,
 				445137E8263CA75C00441352 /* BottleGameBackground.swift in Sources */,
-				4465EBA6257BC8D90096F3B7 /* StorageManager.swift in Sources */,
 				4420BDE3259740DE005A4FAE /* ActiveChatCell.swift in Sources */,
 				4424A5942598E5F900B420F7 /* ChatRequestViewController.swift in Sources */,
 				44D3EC5B2621CF3900717A9B /* InCollectionViewCell.swift in Sources */,
@@ -1375,7 +1368,6 @@
 				4420BD6E2596128A005A4FAE /* UIImageView + Extension.swift in Sources */,
 				44D3EC7D262327F600717A9B /* SelectProfileColorViewController.swift in Sources */,
 				4420BD9C25964BCF005A4FAE /* AddProfilePhotoView.swift in Sources */,
-				44379C31265C42E4003582BE /* ConfettiEffect.swift in Sources */,
 				4420BDA9259655D8005A4FAE /* UIDatePicker + Extension.swift in Sources */,
 				4424A5752597FA6600B420F7 /* AboutUserViewController.swift in Sources */,
 				44FB5B6C2648045D00BE3178 /* BottleGameSceneManager.swift in Sources */,

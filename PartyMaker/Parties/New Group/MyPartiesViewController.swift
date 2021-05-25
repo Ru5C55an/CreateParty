@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import RealmSwift
 import Cosmos
 
 class MyPartiesViewController: UIViewController {

@@ -395,11 +395,6 @@ PODS:
   - PromisesObjC (1.2.12)
   - QuickLayout (3.0.0)
   - RAMAnimatedTabBarController (5.2.0)
-  - Realm (10.7.4):
-    - Realm/Headers (= 10.7.4)
-  - Realm/Headers (10.7.4)
-  - RealmSwift (10.7.4):
-    - Realm (= 10.7.4)
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
   - SDWebImage/Core (5.11.1)
@@ -437,7 +432,6 @@ DEPENDENCIES:
   - lottie-ios
   - MessageKit
   - RAMAnimatedTabBarController
-  - RealmSwift
   - SDWebImage (~> 5.0)
   - SnapKit (~> 5.0.0)
   - SoftUIView
@@ -488,8 +482,6 @@ SPEC REPOS:
     - PromisesObjC
     - QuickLayout
     - RAMAnimatedTabBarController
-    - Realm
-    - RealmSwift
     - SDWebImage
     - SnapKit
     - SoftUIView
@@ -535,8 +527,6 @@ SPEC CHECKSUMS:
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   QuickLayout: 07b45a72b10083fee3f095990cfed1c1e7b27f0a
   RAMAnimatedTabBarController: 6863a386e7ae2ab227cd60aa73ab8ff56cdacfdd
-  Realm: f08ce1a85649a41303ecfe1cbd914c62e9e6d710
-  RealmSwift: 60ec49d165f23d040ab48811d8dd177e09baf4d3
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SoftUIView: 6c17070dae6e7216d26d3be4745bafd202cdfb75
@@ -545,6 +535,6 @@ SPEC CHECKSUMS:
   SwiftEntryKit: 537c92699d6034efb1ef9c32b11e0b37c97aa589
   UPCarouselFlowLayout: 4c7d2c43a10ebb1597bde502a53699d378341dad
 
-PODFILE CHECKSUM: 004c27fba62e699253a795def4615678820b721e
+PODFILE CHECKSUM: e8d90e187b22708d26e1030e72dc8b994e6c0813
 
 COCOAPODS: 1.10.1
